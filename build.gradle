@@ -1,13 +1,36 @@
 plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'java'
-    id 'checkstyle'
 }
 
-group = 'mops'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '13'
+
+repositories {
+    maven {
+        url = 'https://s3.cs.hhu.de/public/mops/'
+        metadataSources {
+            artifact()
+        }
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'checkstyle'
+
+    group = 'mops'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '13'
+
+    repositories {
+        mavenCentral()
+    }
+
+    checkstyle {
+        toolVersion '8.29'
+        configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+        ignoreFailures = true
+    }
+}
 
 configurations {
     developmentOnly
@@ -19,17 +42,8 @@ configurations {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url='https://s3.cs.hhu.de/public/mops/'
-        metadataSources {
-            artifact()
-        }
-    }
-}
-
 dependencies {
+    implementation project(':model')
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -49,10 +63,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-checkstyle {
-    toolVersion '8.29'
-    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-    ignoreFailures = true
 }
