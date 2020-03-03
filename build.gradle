@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'java'
+    id 'checkstyle'
 }
 
 group = 'mops'
@@ -48,4 +49,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+checkstyle {
+    toolVersion '8.29'
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    ignoreFailures = true
 }
