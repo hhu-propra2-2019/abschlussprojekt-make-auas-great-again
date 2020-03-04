@@ -3,15 +3,15 @@ package mops.feedback.formulare;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
-@Table("Formular")
-public class FormularDAO {
+@Table("Fragen")
+public class FragenDao {
+
   @Id
   Long id;
-  @DateTimeFormat
-  String erstelltAm;
-  @DateTimeFormat
-  String guerltigBis;
+  String antwortmoeglichkeiten;
+  String fragentext;
+  String typ;
+  Long formularId;
 }

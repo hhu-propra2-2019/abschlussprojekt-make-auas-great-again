@@ -5,13 +5,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table("Fragen")
-public class FragenDAO {
-
+@Table("Antworten")
+public class AntwortenDao {
   @Id
   Long id;
-  String Antwortmoeglichkeiten;
-  String fragentext;
-  String typ;
-  Long formularId;
+  Long frageId;
+  String antworttext;
 }
