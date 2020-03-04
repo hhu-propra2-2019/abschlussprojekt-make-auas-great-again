@@ -14,9 +14,10 @@ public class Formular {
   private LocalDate enddatum;
 
   public Status getStatus(LocalDate heute) {
-    if (heute.isAfter(startdatum) && heute.isBefore(enddatum)) {
+    if (heute.isAfter(startdatum.minusDays(1)) && heute.isBefore(enddatum.plusDays(1))) {
       return Status.VERFUEGBAR;
     }
     return Status.NICHTVERFUEGBAR;
   }
 }
+

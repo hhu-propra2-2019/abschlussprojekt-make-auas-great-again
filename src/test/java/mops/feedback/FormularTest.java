@@ -22,11 +22,32 @@ public class FormularTest {
   }
 
   @Test
-  public void getStatusTest(){
+  @DisplayName("Datum im Zeitintervall")
+  public void getStatusVERFUEGBAR1(){
     LocalDate heute = LocalDate.of(2020, 3, 5);
 
     Status status = formular.getStatus(heute);
 
     Assertions.assertEquals(status, Status.VERFUEGBAR);
+  }
+
+  @Test
+  @DisplayName("heutiges Datum ist Startdatum")
+  public void getStatusVERFUEGBAR2(){
+    LocalDate heute = LocalDate.of(2020, 3, 3);
+
+    Status status = formular.getStatus(heute);
+
+    Assertions.assertEquals(status, Status.VERFUEGBAR);
+  }
+
+  @Test
+  @DisplayName("Datum nicht im Zeitintervall")
+  public void getStatusNICHTVERFUEGBAR(){
+    LocalDate heute = LocalDate.of(2020, 3, 22);
+
+    Status status = formular.getStatus(heute);
+
+    Assertions.assertEquals(status, Status.NICHTVERFUEGBAR);
   }
 }
