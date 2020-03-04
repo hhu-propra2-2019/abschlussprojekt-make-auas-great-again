@@ -15,11 +15,12 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <div class="card" style="width: 22rem;">
-        <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-deck">
+    <div class="card text-center" style="width: 22rem;">
+        <img class="card-img-top" src="http://webdav.is.mpg.de/pixel/workshops/mlmcp-nips2010/images/stefan.jpg" alt="Card image cap">
         <div class="card-body">
-            <h2 class="card-title">Algorithms and Datastructures</h2>
-            <span id="nextDateText">am <strong id="nextDate"></strong></span></p>
+            <h2 class="card-title">Programmierung</h2>
+            <span id="nextDateText2">am <strong id="nextDate2"></strong></span></p>
             <p class="card-text">Feedback ends in</p>
             <table style="margin: auto">
                 <tr class="clock_times">
@@ -39,10 +40,33 @@
             <a href="#" class="btn btn-primary">Feedback Geben!</a>
         </div>
     </div>
-
+    <div class="card text-center" style="width: 22rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h2 class="card-title">Algorithmen und Daten Strukturen</h2>
+                <span id="nextDateText">am <strong id="nextDate"></strong></span></p>
+                <p class="card-text">Feedback ends in</p>
+                <table style="margin: auto">
+                    <tr class="clock_times">
+                        <td id="clock_tage2">--</td>
+                        <td id="clock_stunden2">--</td>
+                        <td id="clock_minuten2">--</td>
+                        <td id="clock_sekunden2">--
+                            </td>
+                    </tr>
+                    <tr class="clock_names">
+                        <td>Days</td>
+                        <td>Hours</td>
+                        <td>Min.</td>
+                        <td>Sec.</td>
+                    </tr>
+                </table>
+                <a href="#" class="btn btn-primary">Feedback Geben!</a>
+            </div>
+        </div>
+    </div>
 
     <hr>
-
     <p>
         <script>
     var countDownDate = new Date("Mar 10, 2020 09:30:00");
@@ -60,9 +84,12 @@
         document.getElementById("anmeldung").remove();
     } else if (nowDate > countDownDate) {
         document.getElementById("nextDate").innerHTML = countDownDate2.toLocaleDateString("de-DE");
+        document.getElementById("nextDate2").innerHTML = countDownDate2.toLocaleDateString("de-DE");
         document.getElementById("anmeldung").remove();
     } else {
         document.getElementById("nextDate").innerHTML = countDownDate.toLocaleDateString("de-DE");
+        document.getElementById("nextDate2").innerHTML = countDownDate.toLocaleDateString("de-DE");
+
     }
 
 
@@ -88,6 +115,11 @@
             document.getElementById("clock_stunden").innerHTML = hours;
             document.getElementById("clock_minuten").innerHTML = minutes;
             document.getElementById("clock_sekunden").innerHTML = seconds;
+
+            document.getElementById("clock_tage2").innerHTML = days;
+            document.getElementById("clock_stunden2").innerHTML = hours;
+            document.getElementById("clock_minuten2").innerHTML = minutes;
+            document.getElementById("clock_sekunden2").innerHTML = seconds;
         }
 
 
