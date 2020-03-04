@@ -1,0 +1,5 @@
+= Kontextabgrenzung
+
+== Fachliche Abgrenzung
+
+Unser Subsystem sammelt und verwaltet Feedback zu bestimmten Einheiten. Die Verwaltung dieser Einheiten (beispielsweise das Erstellen der Übungsblätter oder das Vorlesungsverzeichnis) liegt jedoch außerhalb des Zuständigkeitsbereiches unseres Systems.
