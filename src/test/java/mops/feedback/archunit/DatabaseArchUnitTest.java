@@ -13,4 +13,8 @@ public class DatabaseArchUnitTest {
   @ArchTest
   static final ArchRule repositoriesareindatabasepackage = classes().that()
       .areAnnotatedWith(Repository.class).should().haveSimpleNameEndingWith("Repository");
+
+  @ArchTest
+  static final ArchRule dtosareindtopackage =
+      classes().that().resideInAPackage("..dto..").should().haveSimpleNameEndingWith("Dto");
 }
