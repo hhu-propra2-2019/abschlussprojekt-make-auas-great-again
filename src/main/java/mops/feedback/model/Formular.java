@@ -13,4 +13,12 @@ public class Formular {
   private LocalDate startdatum;
   private LocalDate enddatum;
   private Status status;
+
+  public Status getStatus() {
+    LocalDate jetzt = LocalDate.now();
+    if (jetzt.isAfter(startdatum) && jetzt.isBefore(enddatum)) {
+      return Status.VERFUEGBAR;
+    }
+    return Status.NICHTVERFUEGBAR;
+  }
 }
