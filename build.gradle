@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id "com.github.spotbugs" version "4.0.0"
 }
 
 
@@ -30,6 +31,12 @@ allprojects {
         configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
         ignoreFailures = true
     }
+
+    spotbugs {
+        ignoreFailures = true
+        effort = "max"
+        reportLevel = "high"
+    }
 }
 
 configurations {
@@ -44,11 +51,12 @@ configurations {
 
 dependencies {
     implementation project(':model')
+    implementation project(':services')
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'mops:styleguide:1.0.0'
+    implementation 'mops:styleguide:2.0.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
@@ -59,6 +67,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     testImplementation 'org.springframework.security:spring-security-test'
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
 }
 
 test {
