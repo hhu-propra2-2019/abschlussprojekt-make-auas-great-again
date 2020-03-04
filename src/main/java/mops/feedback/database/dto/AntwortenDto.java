@@ -1,4 +1,4 @@
-package mops.feedback.formulare;
+package mops.feedback.database.dto;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -6,7 +6,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @Table("Antworten")
-public class AntwortenDao {
+public class AntwortenDto {
   @Id
   Long id;
   Long frageId;
