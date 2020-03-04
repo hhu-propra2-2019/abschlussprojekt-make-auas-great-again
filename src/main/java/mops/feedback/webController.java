@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 public class webController {
     @GetMapping("/")
     public String init(Model model){
+
         return "index";
     }
 }
