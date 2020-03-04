@@ -8,15 +8,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("Fragen")
 public class FragenDAO {
 
-    @Id
-    Long id;
-
-    String Antwortmoeglichkeiten;
-
-    String fragentext;
-
-    String typ;
-
-    Long formularId;
-
+  @Id
+  Long id;
+  String Antwortmoeglichkeiten;
+  String fragentext;
+  String typ;
+  Long formularId;
 }

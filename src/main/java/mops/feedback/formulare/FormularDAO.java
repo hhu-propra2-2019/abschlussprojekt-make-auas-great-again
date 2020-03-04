@@ -8,14 +8,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @Table("Formular")
 public class FormularDAO {
-    @Id
-    Long id;
-
-    @DateTimeFormat
-    String erstelltAm;
-
-    @DateTimeFormat
-    String guerltigBis;
-
-
+  @Id
+  Long id;
+  @DateTimeFormat
+  String erstelltAm;
+  @DateTimeFormat
+  String guerltigBis;
 }
