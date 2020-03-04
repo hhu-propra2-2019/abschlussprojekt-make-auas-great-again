@@ -1,1 +1,7 @@
 = Entwurfsentscheidungen
+
+== Architektur
+
+Zu Beginn hatten wir uns für eine einfache Schichtenarchitektur entschieden, mit der Datenbank auf der untersten Schicht, darüber die Datenrepräsentation in Java, darüber die Business-Logik und auf der obersten Schicht das User Interface.
+
+Bereits am dritten Tag haben wir uns aber doch für eine Onion-Architektur entschieden, da dies das Testing vereinfacht und eine bessere Kapselung der Business-Logik ermöglicht.
