@@ -1,6 +1,6 @@
 package mops.feedback;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mops.feedback.model.Formular;
 import mops.feedback.model.Status;
 import org.junit.jupiter.api.Assertions;
@@ -15,8 +15,8 @@ public class FormularTest {
 
   @BeforeEach
   private void setUp(){
-    LocalDate startdatum = LocalDate.of(2020, 3, 3);
-    LocalDate enddatum   = LocalDate.of(2020, 3, 20);
+    LocalDateTime startdatum = LocalDateTime.of(2020, 3, 3 , 6, 30);
+    LocalDateTime enddatum   = LocalDateTime.of(2020, 3, 20, 6, 30);
     formular = new Formular("Programing", "Sam", null, startdatum, enddatum );
 
   }
@@ -24,7 +24,7 @@ public class FormularTest {
   @Test
   @DisplayName("Datum im Zeitintervall")
   public void getStatusVERFUEGBAR1(){
-    LocalDate heute = LocalDate.of(2020, 3, 5);
+    LocalDateTime heute = LocalDateTime.of(2020, 3, 5, 6, 30);
 
     Status status = formular.getStatus(heute);
 
@@ -34,7 +34,18 @@ public class FormularTest {
   @Test
   @DisplayName("heutiges Datum ist Startdatum")
   public void getStatusVERFUEGBAR2(){
-    LocalDate heute = LocalDate.of(2020, 3, 3);
+    LocalDateTime heute = LocalDateTime.of(2020, 3, 3, 6, 30);
+
+    Status status = formular.getStatus(heute);
+
+    Assertions.assertEquals(status, Status.VERFUEGBAR);
+  }
+
+  @Test
+  @DisplayName("heutiges Datum ist enddatum")
+
+  public void getStatusVERFUEGBAR3(){
+    LocalDateTime heute = LocalDateTime.of(2020, 3, 3, 6, 30);
 
     Status status = formular.getStatus(heute);
 
@@ -44,7 +55,7 @@ public class FormularTest {
   @Test
   @DisplayName("Datum nicht im Zeitintervall")
   public void getStatusNICHTVERFUEGBAR(){
-    LocalDate heute = LocalDate.of(2020, 3, 22);
+    LocalDateTime heute = LocalDateTime.of(2020, 3, 22, 6, 30);
 
     Status status = formular.getStatus(heute);
 
