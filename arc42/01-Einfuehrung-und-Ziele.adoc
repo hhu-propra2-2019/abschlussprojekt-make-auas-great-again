@@ -1,1 +1,12 @@
 = Einführung und Ziele
+
+Für die _Modulare Organisationsplattform für Studierende (MOPS)_ soll eine Anwendung zum Erstellen und Einsammeln von Feedback für verschiedene universitäre Veranstaltungen, wie beispielsweise Vorlesungen und Übungen, erstellt werden. Diese Anwendung wird als Self-Contained-System implementiert.
+
+Wichtigstes Ziel ist, dass das Feedback der Studenten anonym bleibt. Jedoch dürfen nur berechtigte Studenten – also Studenten, die die Veranstaltung auch besuchen – Feedback abgeben, und jeder darf nur einmal ein Feedback zu einer Einheit abgeben.
+
+Organisatoren sollen für beliebige Einheiten, also für Vorlesungen oder auch für Übungsblätter, einen Feedback-Bogen anlegen können und diesen für einen bestimmten Zeitraum für die Studenten zur Beantwortung frei. Nach der Bearbeitung soll das abgegebene Feedback den Organisatoren schnell und übersichtlich angezeigt werden. Diese können das Feedback dann komplett oder auch teilweise veröffentlichen.
+
+== Stakeholder
+
+- *Studenten*: Möglichkeit, Feedback zu sämtlichen Einheiten einer Veranstaltung zu geben
+- *Organisatoren*: möglichst schnelles Anzeigen der Ergebnisse, Möglichkeit der Verbesserung der eigenen Veranstaltung aufgrund des Feedbacks
