@@ -1,21 +1,15 @@
 package mops.feedback.formulare;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table
-@AllArgsConstructor
-@Getter
-@Setter
-public class FrageDAO {
+@Table("Fragen")
+public class FragenDAO {
 
     @Id
-    int id;
+    Integer id;
 
     String Antwortmoeglichkeiten;
 
@@ -23,8 +17,6 @@ public class FrageDAO {
 
     String typ;
 
-
-
-    int formularId;
+    Integer formularId;
 
 }
