@@ -67,7 +67,7 @@
         <div class="card text-center" style="width: 22rem;">
             <img class="img-thumbnail" src="..." alt="Card image cap" >
             <div class="card-body">
-                <h2 class="card-title">Programmierung</h2>
+                <h2 class="card-title">Hardwarenahe Programmierung</h2>
                 <span id="nextDateText3">am <strong id="nextDate3"></strong></span></p>
                 <p class="card-text">Feedback ends in</p>
                 <table style="margin: auto">
@@ -92,6 +92,7 @@
     <hr>
     <p>
         <script>
+        @TODO Receive a time object and replace the following code
     var countDownDate = new Date("Mar 10, 2020 09:30:00");
     var countDownDate2 = new Date("Mar 3, 2020 09:30:00");
 
@@ -108,10 +109,14 @@
     } else if (nowDate > countDownDate) {
         document.getElementById("nextDate").innerHTML = countDownDate2.toLocaleDateString("de-DE");
         document.getElementById("nextDate2").innerHTML = countDownDate2.toLocaleDateString("de-DE");
+        document.getElementById("nextDate3").innerHTML = countDownDate2.toLocaleDateString("de-DE");
+
         document.getElementById("anmeldung").remove();
     } else {
         document.getElementById("nextDate").innerHTML = countDownDate.toLocaleDateString("de-DE");
         document.getElementById("nextDate2").innerHTML = countDownDate.toLocaleDateString("de-DE");
+        document.getElementById("nextDate3").innerHTML = countDownDate2.toLocaleDateString("de-DE");
+
 
     }
 
@@ -143,6 +148,11 @@
             document.getElementById("clock_stunden2").innerHTML = hours;
             document.getElementById("clock_minuten2").innerHTML = minutes;
             document.getElementById("clock_sekunden2").innerHTML = seconds;
+
+            document.getElementById("clock_tage3").innerHTML = days;
+            document.getElementById("clock_stunden3").innerHTML = hours;
+            document.getElementById("clock_minuten3").innerHTML = minutes;
+            document.getElementById("clock_sekunden3").innerHTML = seconds;
         }
 
 
