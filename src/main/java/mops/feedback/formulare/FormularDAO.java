@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table("Formular")
 public class FormularDAO {
     @Id
-    Integer id;
+    Long id;
 
     @DateTimeFormat
     String erstelltAm;

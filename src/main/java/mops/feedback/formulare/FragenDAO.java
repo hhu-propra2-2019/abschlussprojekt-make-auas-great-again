@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class FragenDAO {
 
     @Id
-    Integer id;
+    Long id;
 
     String Antwortmoeglichkeiten;
 
@@ -17,6 +17,6 @@ public class FragenDAO {
 
     String typ;
 
-    Integer formularId;
+    Long formularId;
 
 }

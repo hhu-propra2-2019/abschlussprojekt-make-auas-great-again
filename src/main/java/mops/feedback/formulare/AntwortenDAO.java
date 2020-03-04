@@ -9,9 +9,9 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("Antworten")
 public class AntwortenDAO {
     @Id
-    Integer id;
+    Long id;
 
-    Integer frageId;
+    Long frageId;
 
     String antworttext;
 
