@@ -7,16 +7,14 @@ import lombok.Value;
 @Value
 public class Formular {
 
-  private String nameVeranstaltung;
-  private String nameProfessor;
+  private String Veranstaltungsname;
+  private String Professorenname;
   private List<Frage> fragen;
   private LocalDate startdatum;
   private LocalDate enddatum;
-  private Status status;
 
   public Status getStatus() {
-    LocalDate jetzt = LocalDate.now();
-    if (jetzt.isAfter(startdatum) && jetzt.isBefore(enddatum)) {
+    if (LocalDate.now().isAfter(startdatum) && LocalDate.now().isBefore(enddatum)) {
       return Status.VERFUEGBAR;
     }
     return Status.NICHTVERFUEGBAR;
