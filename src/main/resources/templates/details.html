@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{mopslayout :: html(name='Fragebogen', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}">
+<head>
+    <meta charset="utf-8">
+    <title>Fragebogen</title>
+    <th:block th:fragment="headcontent">
+        <!-- Links, Skripts, Styles hier einfügen! -->
+    </th:block>
+</head>
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <!-- Navigation als ungeordnete Liste mit einfachen Links hier einfügen! -->
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <h1>Fragebogen Fach1</h1>
+    <form method="post">
+        <h2>FrageZeile</h2>
+        <ul>
+            <label>Frage1</label><br><br>
+            <input type="text" name="antwort1" id="0">
+        </ul>
+        <ul>
+            <label>Frage2</label><br><br>
+            <input type="text" name="antwort2" id="01"><br><br>
+        </ul>
+        <h2>FrageText</h2>
+        <ul>
+            <label>Frage1</label><br><br>
+            <label for="text"></label>
+            <textarea id="text" name="text" cols="35" rows="4"></textarea>
+        </ul>
+        <h2>FrageCheck</h2>
+        <ul>
+            <label>Frage1</label><br><br>
+                <input type="radio" name="answer" id="1" >
+                <label for="1">Trifft völlig zu</label>
+                <input type="radio" name="answer" id="2" >
+                <label for="2">Trifft teilweise zu</label>
+                <input type="radio" name="answer" id="3" >
+                <label for="3">Trifft teils zu</label>
+                <input type="radio" name="answer" id="4" >
+                <label for="4">Trifft nicht zu</label>
+                <input type="radio" name="answer" id="5" >
+                <label for="5">Trifft garnicht zu</label>
+        </ul>
+        <ul>
+            <label>Frage2</label><br><br>
+            <input type="radio" name="answer2" id="11" >
+            <label for="11">Trifft völlig zu</label>
+            <input type="radio" name="answer2" id="22" >
+            <label for="22">Trifft teilweise zu</label>
+            <input type="radio" name="answe2r" id="33" >
+            <label for="33">Trifft teils zu</label>
+            <input type="radio" name="answer2" id="44" >
+            <label for="44">Trifft nicht zu</label>
+            <input type="radio" name="answer2" id="55" >
+            <label for="55">Trifft garnicht zu</label>
+        </ul>
+        <h2>FrageJaNein</h2>
+        <ul>
+            <label>Frage1</label><br><br>
+            <input type="radio" name="answer3" id="31" >
+            <label for="31">Ja</label>
+            <input type="radio" name="answer3" id="32" >
+            <label for="32">Nein</label>
+        </ul>
+        <ul>
+            <label>Frage2</label><br><br>
+            <input type="radio" name="answer4" id="41" >
+            <label for="41">Ja</label>
+            <input type="radio" name="answer4" id="42" >
+            <label for="42">Nein</label>
+        </ul>
+        <input type="submit" value="Submit">
+    </form>
+</main>
+</body>
+</html>
