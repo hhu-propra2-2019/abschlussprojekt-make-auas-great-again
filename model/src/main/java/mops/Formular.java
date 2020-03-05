@@ -1,7 +1,12 @@
+package mops;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Builder;
 import lombok.Value;
 
+
+@Builder
 @Value
 public class Formular {
 
@@ -12,9 +17,10 @@ public class Formular {
   private LocalDateTime enddatum;
 
   /**
-   * gibt uns den Status von dem Formular.
-   * @param  heute als LocalDateTime
-   * @return enum Status ob VERFUEGBAR, NICHTVERFUEGBAR oder ABGESCHLOSSEN
+   * Gibt den Formularstatus zurück.
+   *
+   * @param heute als LocalDateTime
+   * @return enum mops.Status ob VERFUEGBAR, NICHTVERFUEGBAR oder ABGESCHLOSSEN
    */
   public Status getStatus(LocalDateTime heute) {
 

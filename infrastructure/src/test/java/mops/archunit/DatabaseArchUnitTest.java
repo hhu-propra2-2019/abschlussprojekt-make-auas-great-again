@@ -1,4 +1,4 @@
-package mops.feedback.archunit;
+package mops.archunit;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 

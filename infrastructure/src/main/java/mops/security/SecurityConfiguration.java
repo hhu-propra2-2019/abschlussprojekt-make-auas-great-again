@@ -1,4 +1,4 @@
-package mops.feedback.security;
+package mops.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

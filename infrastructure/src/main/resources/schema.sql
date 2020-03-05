@@ -18,9 +18,9 @@ CREATE SCHEMA IF NOT EXISTS `feedback` ;
 USE `feedback` ;
 
 -- -----------------------------------------------------
--- Table `feedback`.`Formular`
+-- Table `feedback`.`mops.Formular`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `feedback`.`Formular` (
+CREATE TABLE IF NOT EXISTS `feedback`.`mops.Formular` (
   `Formular_ID` BIGINT NOT NULL AUTO_INCREMENT,
   `Erstellungsdatum` DATETIME GENERATED ALWAYS AS (),
   `Ersteller` TEXT NOT NULL,
@@ -31,9 +31,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `feedback`.`Frage`
+-- Table `feedback`.`mops.Frage`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `feedback`.`Frage` (
+CREATE TABLE IF NOT EXISTS `feedback`.`mops.Frage` (
   `Frage_ID` BIGINT NOT NULL AUTO_INCREMENT,
   `Fragetext` TEXT NOT NULL,
   `Fragetyp` TEXT NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `feedback`.`Frage` (
   INDEX `Formular_ID_idx` (`Formular_ID` ASC) VISIBLE,
   CONSTRAINT `fk_formularID`
     FOREIGN KEY (`Formular_ID`)
-    REFERENCES `feedback`.`Formular` (`Formular_ID`)
+    REFERENCES `feedback`.`mops.Formular` (`Formular_ID`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `feedback`.`Antwort` (
   INDEX `fk_frageID_idx` (`Frage_ID` ASC) VISIBLE,
   CONSTRAINT `fk_frageID`
     FOREIGN KEY (`Frage_ID`)
-    REFERENCES `feedback`.`Frage` (`Frage_ID`)
+    REFERENCES `feedback`.`mops.Frage` (`Frage_ID`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `feedback`.`Template` (
   INDEX `Formular_ID_idx` (`Formular_ID` ASC) VISIBLE,
   CONSTRAINT `fk_formularID`
     FOREIGN KEY (`Formular_ID`)
-    REFERENCES `feedback`.`Formular` (`Formular_ID`)
+    REFERENCES `feedback`.`mops.Formular` (`Formular_ID`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
