@@ -1,4 +1,4 @@
-package mops.feedback.formulare;
+package mops.feedback.database.dto;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Table("Formular")
-public class FormularDao {
+public class FormularDto {
   @Id
   Long id;
   @DateTimeFormat
