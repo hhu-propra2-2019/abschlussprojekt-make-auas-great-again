@@ -11,8 +11,19 @@ public class FeedbackController {
   public String uebersicht(Model model) {
     return "index";
   }
+
   @GetMapping("/details")
   public String fragebogen(Model model) {
     return "details";
+  }
+
+  @GetMapping("/kontakt")
+  public String kontakt(Model model) {
+    return "Kontakt";
+  }
+
+  @GetMapping("/uebungen")
+  public String uebungEval(Model model) {
+    return "uebungen";
   }
 }
