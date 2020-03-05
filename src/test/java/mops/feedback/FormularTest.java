@@ -45,7 +45,7 @@ public class FormularTest {
   @DisplayName("heutiges Datum ist enddatum")
 
   public void getStatusVERFUEGBAR3(){
-    LocalDateTime heute = LocalDateTime.of(2020, 3, 3, 6, 30);
+    LocalDateTime heute = LocalDateTime.of(2020, 3, 20, 6, 30);
 
     Status status = formular.getStatus(heute);
 
