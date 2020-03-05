@@ -1,8 +1,13 @@
 plugins {
     id 'org.springframework.boot' version '2.2.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id "com.github.spotbugs" version "4.0.0"
 }
 
+spotbugs {
+    effort = "max"
+    reportLevel = "high"
+}
 
 repositories {
     maven {

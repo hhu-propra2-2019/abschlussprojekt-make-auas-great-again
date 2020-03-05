@@ -1,7 +1,7 @@
+
 allprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
-    //apply plugin: 'com.github.spotbugs'
 
     group = 'mops'
     version = '0.0.1-SNAPSHOT'
@@ -16,10 +16,6 @@ allprojects {
         configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     }
 
-    //spotbugs {
-    //   effort = "max"
-    //  reportLevel = "high"
-    //   toolVersion = '3.1.3'
-    //}
 }
+
 

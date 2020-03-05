@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - Integrationsbranch
+      - Data-translation
   pull_request:
     branches:
       - master
@@ -21,4 +22,6 @@ jobs:
           java-version: 13
       - name: Run Tests
         run: ./gradlew check
+      - name: SpotBugs
+        run: ./gradlew spotBugsMain
 
