@@ -5,7 +5,6 @@ on:
     branches:
       - master
       - Integrationsbranch
-      - Data-translation
   pull_request:
     branches:
       - master
