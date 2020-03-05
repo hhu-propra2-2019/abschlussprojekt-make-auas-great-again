@@ -12,23 +12,7 @@
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <ul>
-            <li class="active">
-                <a href="./uebungen">Übung Evaluieren</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="active">
-                <a href="./">Homepage</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="active">
-                <a href="./kontakt">Contact us</a>
-            </li>
-        </ul>
-
-    </nav>
+        <div th:replace="fragments :: navlist">navlist</div>
     </nav>
 </header>
 <main th:fragment="bodycontent">

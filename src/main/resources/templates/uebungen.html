@@ -12,16 +12,7 @@
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <ul>
-            <li class="active">
-                <a href="./">Startseite</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="active">
-                <a href="./kontakt">Contact us</a>
-            </li>
-        </ul>
+        <div th:replace="fragments :: navlist">test</div>
     </nav>
 </header>
 <main th:fragment="bodycontent">
@@ -30,138 +21,19 @@
             <img alt="Card image cap" class="img-thumbnail" src="...">
             <div class="card-body">
                 <h2 class="card-title">Programmierung Übung</h2>
-                <span id="nextDateText2">am <strong id="nextDate2"></strong></span></p>
-                <p class="card-text">Feedback ends in</p>
-                <table style="margin: auto">
-                    <tr class="clock_times">
-                        <td id="clock_tage">--</td>
-                        <td id="clock_stunden">--</td>
-                        <td id="clock_minuten">--</td>
-                        <td id="clock_sekunden">--
-                        </td>
-                    </tr>
-                    <tr class="clock_names">
-                        <td>Days</td>
-                        <td>Hours</td>
-                        <td>Min.</td>
-                        <td>Sec.</td>
-                    </tr>
-                </table>
-                <a class="btn btn-primary" href="#">Feedback Geben!</a>
+                <a class="btn btn-primary" href="./details">Feedback Geben!</a>
             </div>
         </div>
         <div class="card text-center" style="width: 22rem;">
             <img alt="Card image cap" class="card-img-top" src="...">
             <div class="card-body">
                 <h2 class="card-title">Algorithmen und Daten Strukturen Übung</h2>
-                <span id="nextDateText">am <strong id="nextDate"></strong></span></p>
-                <p class="card-text">Feedback ends in</p>
-                <table style="margin: auto">
-                    <tr class="clock_times">
-                        <td id="clock_tage2">--</td>
-                        <td id="clock_stunden2">--</td>
-                        <td id="clock_minuten2">--</td>
-                        <td id="clock_sekunden2">--
-                        </td>
-                    </tr>
-                    <tr class="clock_names">
-                        <td>Days</td>
-                        <td>Hours</td>
-                        <td>Min.</td>
-                        <td>Sec.</td>
-                    </tr>
-                </table>
-                <a class="btn btn-primary" href="#">Feedback Geben!</a>
+                <a class="btn btn-primary" href="./details">Feedback Geben!</a>
             </div>
         </div>
-        <hr>
-        <p>
-            <script>
-    var countDownDate = new Date("Mar 10, 2020 09:30:00");
-    var countDownDate2 = new Date("Mar 3, 2020 09:30:00");
-
-
-    function pad(num) {
-        var s = "00" + num;
-        return s.substr(s.length - 2);
-    }
-
-    var nowDate = new Date();
-    if (nowDate > countDownDate && nowDate > countDownDate2) {
-        document.getElementById("nextDateText").innerHTML = "bald"
-        document.getElementById("anmeldung").remove();
-    } else if (nowDate > countDownDate) {
-        document.getElementById("nextDate").innerHTML = countDownDate2.toLocaleDateString("de-DE");
-        document.getElementById("nextDate2").innerHTML = countDownDate2.toLocaleDateString("de-DE");
-        document.getElementById("nextDate3").innerHTML = countDownDate2.toLocaleDateString("de-DE");
-
-        document.getElementById("anmeldung").remove();
-    } else {
-        document.getElementById("nextDate").innerHTML = countDownDate.toLocaleDateString("de-DE");
-        document.getElementById("nextDate2").innerHTML = countDownDate.toLocaleDateString("de-DE");
-        document.getElementById("nextDate3").innerHTML = countDownDate2.toLocaleDateString("de-DE");
-
-
-    }
-
-
-    var x = setInterval(function () {
-        var now = new Date().getTime();
-        var distance = countDownDate.getTime() - now;
-        if (distance < 0) {
-            var distance = countDownDate2.getTime() - now;
-        }
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("clock_tage").innerHTML = "--";
-            document.getElementById("clock_stunden").innerHTML = "--";
-            document.getElementById("clock_minuten").innerHTML = "--";
-            document.getElementById("clock_sekunden").innerHTML = "--";
-        } else {
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-            var minutes = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-            var seconds = pad(Math.floor((distance % (1000 * 60)) / 1000));
-
-            document.getElementById("clock_tage").innerHTML = days;
-            document.getElementById("clock_stunden").innerHTML = hours;
-            document.getElementById("clock_minuten").innerHTML = minutes;
-            document.getElementById("clock_sekunden").innerHTML = seconds;
-
-            document.getElementById("clock_tage2").innerHTML = days;
-            document.getElementById("clock_stunden2").innerHTML = hours;
-            document.getElementById("clock_minuten2").innerHTML = minutes;
-            document.getElementById("clock_sekunden2").innerHTML = seconds;
-
-            document.getElementById("clock_tage3").innerHTML = days;
-            document.getElementById("clock_stunden3").innerHTML = hours;
-            document.getElementById("clock_minuten3").innerHTML = minutes;
-            document.getElementById("clock_sekunden3").innerHTML = seconds;
-        }
-
-
-    }, 1000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </script>
     </div>
+    <hr>
+    <p>
 </main>
 </body>
 </html>

@@ -12,16 +12,7 @@
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <ul>
-            <li class="active">
-                <a href="./uebungen">Übung Evaluieren</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="active">
-                <a href="./kontakt">Contact us</a>
-            </li>
-        </ul>
+        <div th:replace="fragments :: navlist">test</div>
 
     </nav>
 </header>
@@ -169,25 +160,7 @@
     }, 1000);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </script>
-
 </main>
 </body>
 </html>
