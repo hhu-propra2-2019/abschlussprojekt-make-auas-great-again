@@ -69,6 +69,7 @@ dependencies {
     }
     testImplementation 'org.springframework.security:spring-security-test'
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.7.1'
+    implementation 'org.junit.jupiter:junit-jupiter'
 }
 
 test {
