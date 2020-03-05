@@ -1,5 +1,3 @@
-package mops.feedback.model;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Value;
