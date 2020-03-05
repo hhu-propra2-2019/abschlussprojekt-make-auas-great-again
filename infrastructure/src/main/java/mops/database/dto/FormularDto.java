@@ -1,4 +1,4 @@
-package mops.feedback.database.dto;
+package mops.database.dto;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

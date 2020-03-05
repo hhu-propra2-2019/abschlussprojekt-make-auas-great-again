@@ -1,4 +1,4 @@
-package mops.feedback.archunit;
+package mops.archunit;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @AnalyzeClasses(packagesOf = FeedbackApplication.class)
 public class ControllerArchUnitTest {
 
-  //@ArchTest
-  //static final ArchRule annotationofcontrollers = classes().that()
-   //   .areAnnotatedWith(Controller.class).should().beAnnotatedWith(RequestMapping.class);
+  @ArchTest
+  static final ArchRule annotationofcontrollers = classes().that()
+      .areAnnotatedWith(Controller.class).should().beAnnotatedWith(RequestMapping.class);
 }
