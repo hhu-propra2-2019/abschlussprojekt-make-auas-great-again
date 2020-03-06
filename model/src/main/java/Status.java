@@ -1,3 +1,0 @@
-public enum Status {
-  VERFUEGBAR, NICHTVERFUEGBAR, ABGESCHLOSSEN;
-}

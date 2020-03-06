@@ -21,4 +21,7 @@ jobs:
           java-version: 13
       - name: Run Tests
         run: ./gradlew check
-
+      - name: SpotBugs Main
+        run: ./gradlew spotBugsMain
+      - name: SpotBugs Test
+        run: ./gradlew spotBugsTest

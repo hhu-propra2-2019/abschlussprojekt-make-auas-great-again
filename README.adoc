@@ -168,7 +168,7 @@ IMPORTANT: Könnte man das vielleicht auch mit kryptographischen Quittungen lös
 In jedem Semester werden studentische Hilfskräfte für den Übungsbetrieb benötigt. In (zumindest) den Grundlagenveranstaltungen wird dazu ein gemeinsames Bewerbungsverfahren benutzt:
 
 * Bewerber füllen einen Fragebogen aus.
-* Nach Ablauf der Frist werden die Bewerberinnen, die potentiell für eine Stelle in Frage kommen gruppiert und den Verantwortlichen der Veranstaltung zur Verfügung gestellt. Bewerberinnen kommen in Frage, wenn sie eine Veranstaltung nicht ausgeschlossen haben.
+* Nach Ablauf der Frist werden die Bewerberinnen, die potentiell für eine Stelle in mops.Frage kommen gruppiert und den Verantwortlichen der Veranstaltung zur Verfügung gestellt. Bewerberinnen kommen in mops.Frage, wenn sie eine Veranstaltung nicht ausgeschlossen haben.
 * Die Verantwortlichen geben für jede Bewerbung eine Priorität an.
 * Die Verteilung auf die einzelnen Veranstaltungen werden von einer verantwortlichen Person manuell durchgeführt, dazu wird aber eine hinreichend gute Darstellung der gesammelten Informationen gebraucht
 * Am Ende sollen automatisch die Einstellungsbögen für die Personalabteilung als PDF erzeugt werden
