@@ -91,11 +91,6 @@ create table if not exists multipleFrage(
     references frage(id)
 );
 
-create table if not exists antwort(
-    id integer not null,
-    primary key(id)
-);
-
 create table if not exists kurzeAntwort(
     id integer not null,
     antwort varchar(100),
@@ -116,7 +111,7 @@ create table if not exists langeAntwort(
 
 create table if not exists boolscheAntwort(
     id integer not null,
-    antwort boolean,
+    antwort bool,
     frage integer not null,
     primary key(id),
     foreign key(frage)
