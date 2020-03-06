@@ -1,17 +1,13 @@
 package mops.database.dto;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import lombok.Data;
 
 @Data
-@Table("Fragen")
-public class FragenDto {
-
+@Table("langeAntwort")
+public class LangeAntwortDto {
   @Id
   Long id;
-  String antwortmoeglichkeiten;
-  String fragentext;
-  String typ;
-  Long formularId;
+  String antwort;
 }

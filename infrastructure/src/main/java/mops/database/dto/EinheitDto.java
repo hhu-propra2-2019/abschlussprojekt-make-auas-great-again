@@ -1,14 +1,13 @@
 package mops.database.dto;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import lombok.Data;
 
 @Data
-@Table("Antworten")
-public class AntwortenDto {
+@Table("einheit")
+public class EinheitDto {
   @Id
   Long id;
-  Long frageId;
-  String antworttext;
+  String name;
 }
