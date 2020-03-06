@@ -28,14 +28,11 @@ public class FeedbackController {
     return "uebungen";
   }
 
-  @GetMapping("/kontaktend")
-  public String kontaktended(Model model) {
-    return "kontaktend";
-  }
 
   @PostMapping("/kontakt")
   public String postMessage(Model model) {
     model.addAttribute("post", "post");
+    model.addAttribute("submit", "submit");
     return "kontakt";
   }
 
