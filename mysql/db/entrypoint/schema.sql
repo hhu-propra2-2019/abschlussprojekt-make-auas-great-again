@@ -136,3 +136,13 @@ create table if not exists studentBeantwortetFragebogen(
     foreign key(fragebogen)
     references fragebogen(id)
 );
+
+create table if not exists studentBelegtEinheit(
+    student integer not null,
+    einheit integer not null,
+    primary key (student, einheit),
+    foreign key(student)
+    references student(id),
+    foreign key(einheit)
+    references einheit(id)
+);
