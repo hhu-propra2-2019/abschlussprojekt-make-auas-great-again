@@ -9,5 +9,5 @@ import lombok.Data;
 public class MultipleAntwortDto {
   @Id
   Long id;
-  int antwort;
+  Integer antwort;
 }

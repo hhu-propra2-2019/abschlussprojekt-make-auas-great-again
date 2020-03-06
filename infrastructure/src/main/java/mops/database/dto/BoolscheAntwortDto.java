@@ -9,5 +9,5 @@ import lombok.Data;
 public class BoolscheAntwortDto {
   @Id
   Long id;
-  boolean antwort;
+  Boolean antwort;
 }
