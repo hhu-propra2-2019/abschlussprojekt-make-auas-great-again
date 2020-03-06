@@ -1,7 +1,7 @@
-
 allprojects {
     apply plugin: 'java'
     apply plugin: 'checkstyle'
+    apply plugin: 'pmd'
 
     group = 'mops'
     version = '0.0.1-SNAPSHOT'
@@ -15,7 +15,13 @@ allprojects {
         toolVersion '8.29'
         configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     }
-
+    pmd {
+        ruleSets = [
+                "category/java/errorprone.xml",
+                "category/java/bestpractices.xml",
+                "category/java/design.xml"
+        ]
+    }
 }
 
 

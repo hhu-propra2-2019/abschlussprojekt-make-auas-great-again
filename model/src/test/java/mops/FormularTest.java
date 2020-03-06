@@ -7,21 +7,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Formular Methods Test")
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class FormularTest {
 
-  private Formular formular;
+  private transient Formular formular;
 
   @BeforeEach
-  private void setUp() {
+  public void setUp() {
     LocalDateTime startdatum = LocalDateTime.of(2020, 3, 3, 6, 30);
     LocalDateTime enddatum = LocalDateTime.of(2020, 3, 20, 6, 30);
     formular = new Formular("Programing", "Sam", null, startdatum, enddatum);
-
   }
 
   @Test
   @DisplayName("Datum im Zeitintervall")
-  public void getStatusVERFUEGBAR1() {
+  public void getStatusVerfuegbar1() {
     LocalDateTime heute = LocalDateTime.of(2020, 3, 5, 6, 30);
 
     Status status = formular.getStatus(heute);
@@ -31,7 +31,7 @@ class FormularTest {
 
   @Test
   @DisplayName("heutiges Datum ist Startdatum")
-  public void getStatusVERFUEGBAR2() {
+  public void getStatusVerfuegbar2() {
     LocalDateTime heute = LocalDateTime.of(2020, 3, 3, 6, 30);
 
     Status status = formular.getStatus(heute);
@@ -42,7 +42,7 @@ class FormularTest {
   @Test
   @DisplayName("heutiges Datum ist enddatum")
 
-  public void getStatusVERFUEGBAR3() {
+  public void getStatusVerfuegbar3() {
     LocalDateTime heute = LocalDateTime.of(2020, 3, 20, 6, 30);
 
     Status status = formular.getStatus(heute);
@@ -52,7 +52,7 @@ class FormularTest {
 
   @Test
   @DisplayName("Datum nicht im Zeitintervall")
-  public void getStatusNICHTVERFUEGBAR() {
+  public void getStatusNichtVerfuegbar() {
     LocalDateTime heute = LocalDateTime.of(2020, 3, 22, 6, 30);
 
     Status status = formular.getStatus(heute);
