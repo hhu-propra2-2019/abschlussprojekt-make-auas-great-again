@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{mopslayout :: html(name='Fragebogen', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}">
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='Fragebogen', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Fragebogen</title>
@@ -11,7 +12,7 @@
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <!-- Navigation als ungeordnete Liste mit einfachen Links hier einfügen! -->
+        <div th:replace="fragments :: navlist">navlist</div>
     </nav>
 </header>
 <main th:fragment="bodycontent">
@@ -20,58 +21,58 @@
         <h2>FrageZeile</h2>
         <ul>
             <label>Frage1</label><br><br>
-            <input type="text" name="antwort1" id="0">
+            <input id="0" name="antwort1" type="text">
         </ul>
         <ul>
             <label>Frage2</label><br><br>
-            <input type="text" name="antwort2" id="01"><br><br>
+            <input id="01" name="antwort2" type="text"><br><br>
         </ul>
         <h2>FrageText</h2>
         <ul>
             <label>Frage1</label><br><br>
             <label for="text"></label>
-            <textarea id="text" name="text" cols="35" rows="4"></textarea>
+            <textarea cols="35" id="text" name="text" rows="4"></textarea>
         </ul>
         <h2>FrageCheck</h2>
         <ul>
             <label>Frage1</label><br><br>
-                <input type="radio" name="answer" id="1" >
-                <label for="1">Trifft völlig zu</label>
-                <input type="radio" name="answer" id="2" >
-                <label for="2">Trifft teilweise zu</label>
-                <input type="radio" name="answer" id="3" >
-                <label for="3">Trifft teils zu</label>
-                <input type="radio" name="answer" id="4" >
-                <label for="4">Trifft nicht zu</label>
-                <input type="radio" name="answer" id="5" >
-                <label for="5">Trifft garnicht zu</label>
+            <input id="1" name="answer" type="radio">
+            <label for="1">Trifft völlig zu</label>
+            <input id="2" name="answer" type="radio">
+            <label for="2">Trifft teilweise zu</label>
+            <input id="3" name="answer" type="radio">
+            <label for="3">Trifft teils zu</label>
+            <input id="4" name="answer" type="radio">
+            <label for="4">Trifft nicht zu</label>
+            <input id="5" name="answer" type="radio">
+            <label for="5">Trifft garnicht zu</label>
         </ul>
         <ul>
             <label>Frage2</label><br><br>
-            <input type="radio" name="answer2" id="11" >
+            <input id="11" name="answer2" type="radio">
             <label for="11">Trifft völlig zu</label>
-            <input type="radio" name="answer2" id="22" >
+            <input id="22" name="answer2" type="radio">
             <label for="22">Trifft teilweise zu</label>
-            <input type="radio" name="answe2r" id="33" >
+            <input id="33" name="answe2r" type="radio">
             <label for="33">Trifft teils zu</label>
-            <input type="radio" name="answer2" id="44" >
+            <input id="44" name="answer2" type="radio">
             <label for="44">Trifft nicht zu</label>
-            <input type="radio" name="answer2" id="55" >
+            <input id="55" name="answer2" type="radio">
             <label for="55">Trifft garnicht zu</label>
         </ul>
         <h2>FrageJaNein</h2>
         <ul>
             <label>Frage1</label><br><br>
-            <input type="radio" name="answer3" id="31" >
+            <input id="31" name="answer3" type="radio">
             <label for="31">Ja</label>
-            <input type="radio" name="answer3" id="32" >
+            <input id="32" name="answer3" type="radio">
             <label for="32">Nein</label>
         </ul>
         <ul>
             <label>Frage2</label><br><br>
-            <input type="radio" name="answer4" id="41" >
+            <input id="41" name="answer4" type="radio">
             <label for="41">Ja</label>
-            <input type="radio" name="answer4" id="42" >
+            <input id="42" name="answer4" type="radio">
             <label for="42">Nein</label>
         </ul>
         <input type="submit" value="Submit">

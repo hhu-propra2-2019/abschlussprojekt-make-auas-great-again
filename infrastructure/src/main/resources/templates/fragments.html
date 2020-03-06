@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Feedback</title>
+
+</head>
+<body>
+<header>
+
+</header>
+<main th:fragment="bodycontent">
+    <!-- Restlichen Inhalt hier einfügen! -->
+</main>
+<div th:fragment="navlist">
+    <ul>
+        <li class="active">
+            <a href="./uebungen">Übung Evaluieren</a>
+        </li>
+    </ul>
+
+    <ul>
+        <li class="active">
+            <a href="./">Startseite</a>
+        </li>
+    </ul>
+    <ul>
+        <li class="active">
+            <a href="./kontakt">Contact us</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
+
