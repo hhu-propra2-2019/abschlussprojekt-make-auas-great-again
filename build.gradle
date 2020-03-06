@@ -19,7 +19,6 @@ allprojects {
         ruleSets = [
                 "category/java/errorprone.xml",
                 "category/java/bestpractices.xml",
-                "category/java/design.xml"
         ]
     }
 }
