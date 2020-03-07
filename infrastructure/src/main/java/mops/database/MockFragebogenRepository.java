@@ -50,6 +50,10 @@ public class MockFragebogenRepository implements FragebogenRepository {
     fragenliste.add(getFragebogenById(1L));
     fragenliste.add(getFragebogenById(2L));
     fragenliste.add(getFragebogenById(3L));
+    fragenliste.add(getFragebogenById(4L));
+    fragenliste.add(getFragebogenById(5L));
+    fragenliste.add(getFragebogenById(6L));
+    fragenliste.add(getFragebogenById(7L));
     return fragenliste;
   }
 }
