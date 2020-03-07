@@ -5,15 +5,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import mops.Fragebogen;
+import mops.controllers.FragebogenRepository;
 import org.junit.jupiter.api.Test;
 
-class MockFragebogenRepositoryImplTest {
-  FragebogenRepository frageboegen = new MockFragebogenRepositoryImpl();
+class MockFragebogenRepositoryTest {
+  private transient FragebogenRepository frageboegen = new MockFragebogenRepository();
 
   @Test
   void getFragebogenByIdTest() {
     Fragebogen fragebogen = frageboegen.getFragebogenById(1L);
-    assertThat(fragebogen).isInstanceOf(Fragebogen.class);
     assertThat(fragebogen.getProfessorenname()).isEqualTo("Jens Bendisposto");
   }
 

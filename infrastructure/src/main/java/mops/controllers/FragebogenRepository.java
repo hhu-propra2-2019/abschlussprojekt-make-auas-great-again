@@ -1,4 +1,4 @@
-package mops.database;
+package mops.controllers;
 
 import java.util.List;
 import mops.Fragebogen;

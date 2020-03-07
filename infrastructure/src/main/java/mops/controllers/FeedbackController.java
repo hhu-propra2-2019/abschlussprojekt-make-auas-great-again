@@ -1,7 +1,6 @@
 package mops.controllers;
 
-import mops.database.FragebogenRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class FeedbackController {
 
-  @Autowired
-  private FragebogenRepository frageboegen;
+  private final transient FragebogenRepository frageboegen;
+
+  public FeedbackController() {
+    this.frageboegen = new MockFragebogenRepository();
+  }
 
   @GetMapping("/")
   public String uebersicht(Model model) {

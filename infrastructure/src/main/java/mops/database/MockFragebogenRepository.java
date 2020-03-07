@@ -8,12 +8,13 @@ import java.util.Random;
 import mops.Frage;
 import mops.Fragebogen;
 import mops.TextFrage;
+import mops.controllers.FragebogenRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MockFragebogenRepositoryImpl implements FragebogenRepository {
-  private List<String> fragen = new ArrayList<>(Arrays.asList("hey", "Yo", "Foo", "Bar", "This",
-      "Random", "List", "Has", "Very Random", "Words", "And", "Stuff"));
+public class MockFragebogenRepository implements FragebogenRepository {
+  private transient List<String> fragen = new ArrayList<>(Arrays.asList("hey", "Yo", "Foo",
+      "This", "Random", "Bar", "List", "Has", "Very Random", "Words", "And", "Stuff"));
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
