@@ -1,15 +1,14 @@
 package mops;
 
-import lombok.Value;
+import lombok.Getter;
+import lombok.Setter;
 
-@Value
-public class TextFrage implements Frage {
-  String titel;
-  String antwort;
+public class TextFrage extends Frage {
+  @Getter
+  @Setter
+  private String antwort;
 
-  public TextFrage(String titel) {
-    this.titel = titel;
-    antwort = "";
+  public TextFrage(String frage) {
+    super(frage);
   }
-
 }
