@@ -20,6 +20,7 @@ public class Fragebogen {
   private List<Frage> fragen;
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
+  private Einheit type;
 
   /**
    * Gibt den Formularstatus zurück.

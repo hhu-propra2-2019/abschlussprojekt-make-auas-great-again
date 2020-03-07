@@ -24,6 +24,7 @@ public class FeedbackController {
 
   @GetMapping("/")
   public String uebersicht(Model model) {
+    model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("frageboegen", frageboegen.getAll());
     return "index";
   }
@@ -31,7 +32,7 @@ public class FeedbackController {
   @GetMapping("/details")
   public String fragebogen(Model model, @RequestParam Long id) {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
-    model.addAttribute("typeChecker", this.typeChecker);
+    model.addAttribute("typeChecker", typeChecker);
     return "details";
   }
 
@@ -39,12 +40,6 @@ public class FeedbackController {
   public String kontakt(Model model) {
     return "kontakt";
   }
-
-  @GetMapping("/uebungen")
-  public String uebungEval(Model model) {
-    return "uebungen";
-  }
-
 
   @PostMapping("/kontakt")
   public String postMessage(Model model) {

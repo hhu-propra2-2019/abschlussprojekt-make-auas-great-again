@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import mops.Einheit;
 import mops.Frage;
 import mops.Fragebogen;
 import mops.MultipleChoiceFrage;
@@ -20,9 +21,9 @@ public class MockFragebogenRepository implements FragebogenRepository {
   @Override
   public Fragebogen getFragebogenById(Long id) {
     List<Frage> fragenliste = new ArrayList<>();
-    Frage frage1 = new MultipleChoiceFrage(1L, getRandonFrageText());
-    Frage frage2 = new MultipleChoiceFrage(2L, getRandonFrageText());
-    Frage frage3 = new TextFrage(3L, getRandonFrageText());
+    Frage frage1 = new MultipleChoiceFrage(1L, getRandomFrageText());
+    Frage frage2 = new MultipleChoiceFrage(2L, getRandomFrageText());
+    Frage frage3 = new TextFrage(3L, getRandomFrageText());
     fragenliste.add(frage1);
     fragenliste.add(frage2);
     fragenliste.add(frage3);
@@ -34,11 +35,21 @@ public class MockFragebogenRepository implements FragebogenRepository {
         .fragen(fragenliste)
         .professorenname("Jens Bendisposto")
         .veranstaltungsname("Softwareentwicklung im Team")
+        .type(getRandomType())
         .bogennr(id);
     return fragebogen.build();
   }
 
-  private String getRandonFrageText() {
+  private Einheit getRandomType() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(2);
+    if (index == 0) {
+      return Einheit.UEBUNG;
+    }
+    return Einheit.VORLESUNG;
+  }
+
+  private String getRandomFrageText() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(fragen.size());
     return fragen.get(index);
