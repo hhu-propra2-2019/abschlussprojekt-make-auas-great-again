@@ -3,13 +3,16 @@ package mops;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 
 @Builder
 @Value
+@EqualsAndHashCode(of = "bogennr")
 public class Fragebogen {
 
+  Long bogennr;
   String veranstaltungsname;
   String professorenname;
   List<Frage> fragen;

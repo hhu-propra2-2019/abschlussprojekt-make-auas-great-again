@@ -17,11 +17,11 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <div class="card-deck">
+    <div class="card-deck" th:each="fragebogen :${frageboegen}" th:remove="all-but-first">
         <div class="card text-center" style="width: 22rem;">
             <img alt="Card image cap" class="img-thumbnail" src="...">
             <div class="card-body">
-                <h2 class="card-title">Programmierung</h2>
+                <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
                 <span id="nextDateText2">am <strong id="nextDate2"></strong></span></p>
                 <p class="card-text">Feedback ends in</p>
                 <table style="margin: auto">
@@ -39,7 +39,7 @@
                         <td>Sec.</td>
                     </tr>
                 </table>
-                <a class="btn btn-primary" href="./details">Feedback Geben!</a>
+                <a class="btn btn-primary" th:href="@{details(id=${fragebogen.bogennr})}">Feedback Geben!</a>
             </div>
         </div>
         <div class="card text-center" style="width: 22rem;">
@@ -94,70 +94,70 @@
     <hr>
     <p>
         <script>
-    var countDownDate = new Date("Mar 10, 2020 09:30:00");
-    var countDownDate2 = new Date("Mar 3, 2020 09:30:00");
+            var countDownDate = new Date("Mar 10, 2020 09:30:00");
+            var countDownDate2 = new Date("Mar 3, 2020 09:30:00");
 
 
-    function pad(num) {
-        var s = "00" + num;
-        return s.substr(s.length - 2);
-    }
+            function pad(num) {
+                var s = "00" + num;
+                return s.substr(s.length - 2);
+            }
 
-    var nowDate = new Date();
-    if (nowDate > countDownDate && nowDate > countDownDate2) {
-        document.getElementById("nextDateText").innerHTML = "bald"
-        document.getElementById("anmeldung").remove();
-    } else if (nowDate > countDownDate) {
-        document.getElementById("nextDate").innerHTML = countDownDate2.toLocaleDateString("de-DE");
-        document.getElementById("nextDate2").innerHTML = countDownDate2.toLocaleDateString("de-DE");
-        document.getElementById("nextDate3").innerHTML = countDownDate2.toLocaleDateString("de-DE");
+            var nowDate = new Date();
+            if (nowDate > countDownDate && nowDate > countDownDate2) {
+                document.getElementById("nextDateText").innerHTML = "bald"
+                document.getElementById("anmeldung").remove();
+            } else if (nowDate > countDownDate) {
+                document.getElementById("nextDate").innerHTML = countDownDate2.toLocaleDateString("de-DE");
+                document.getElementById("nextDate2").innerHTML = countDownDate2.toLocaleDateString("de-DE");
+                document.getElementById("nextDate3").innerHTML = countDownDate2.toLocaleDateString("de-DE");
 
-        document.getElementById("anmeldung").remove();
-    } else {
-        document.getElementById("nextDate").innerHTML = countDownDate.toLocaleDateString("de-DE");
-        document.getElementById("nextDate2").innerHTML = countDownDate.toLocaleDateString("de-DE");
-        document.getElementById("nextDate3").innerHTML = countDownDate2.toLocaleDateString("de-DE");
-
-
-    }
+                document.getElementById("anmeldung").remove();
+            } else {
+                document.getElementById("nextDate").innerHTML = countDownDate.toLocaleDateString("de-DE");
+                document.getElementById("nextDate2").innerHTML = countDownDate.toLocaleDateString("de-DE");
+                document.getElementById("nextDate3").innerHTML = countDownDate2.toLocaleDateString("de-DE");
 
 
-    var x = setInterval(function () {
-        var now = new Date().getTime();
-        var distance = countDownDate.getTime() - now;
-        if (distance < 0) {
-            var distance = countDownDate2.getTime() - now;
-        }
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("clock_tage").innerHTML = "--";
-            document.getElementById("clock_stunden").innerHTML = "--";
-            document.getElementById("clock_minuten").innerHTML = "--";
-            document.getElementById("clock_sekunden").innerHTML = "--";
-        } else {
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-            var minutes = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-            var seconds = pad(Math.floor((distance % (1000 * 60)) / 1000));
-
-            document.getElementById("clock_tage").innerHTML = days;
-            document.getElementById("clock_stunden").innerHTML = hours;
-            document.getElementById("clock_minuten").innerHTML = minutes;
-            document.getElementById("clock_sekunden").innerHTML = seconds;
-
-            document.getElementById("clock_tage2").innerHTML = days;
-            document.getElementById("clock_stunden2").innerHTML = hours;
-            document.getElementById("clock_minuten2").innerHTML = minutes;
-            document.getElementById("clock_sekunden2").innerHTML = seconds;
-
-            document.getElementById("clock_tage3").innerHTML = days;
-            document.getElementById("clock_stunden3").innerHTML = hours;
-            document.getElementById("clock_minuten3").innerHTML = minutes;
-            document.getElementById("clock_sekunden3").innerHTML = seconds;
-        }
+            }
 
 
-    }, 1000);
+            var x = setInterval(function () {
+                var now = new Date().getTime();
+                var distance = countDownDate.getTime() - now;
+                if (distance < 0) {
+                    var distance = countDownDate2.getTime() - now;
+                }
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("clock_tage").innerHTML = "--";
+                    document.getElementById("clock_stunden").innerHTML = "--";
+                    document.getElementById("clock_minuten").innerHTML = "--";
+                    document.getElementById("clock_sekunden").innerHTML = "--";
+                } else {
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                    var minutes = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                    var seconds = pad(Math.floor((distance % (1000 * 60)) / 1000));
+
+                    document.getElementById("clock_tage").innerHTML = days;
+                    document.getElementById("clock_stunden").innerHTML = hours;
+                    document.getElementById("clock_minuten").innerHTML = minutes;
+                    document.getElementById("clock_sekunden").innerHTML = seconds;
+
+                    document.getElementById("clock_tage2").innerHTML = days;
+                    document.getElementById("clock_stunden2").innerHTML = hours;
+                    document.getElementById("clock_minuten2").innerHTML = minutes;
+                    document.getElementById("clock_sekunden2").innerHTML = seconds;
+
+                    document.getElementById("clock_tage3").innerHTML = days;
+                    document.getElementById("clock_stunden3").innerHTML = hours;
+                    document.getElementById("clock_minuten3").innerHTML = minutes;
+                    document.getElementById("clock_sekunden3").innerHTML = seconds;
+                }
+
+
+            }, 1000);
 
 
         </script>

@@ -27,7 +27,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
         .enddatum(LocalDateTime.now().plusHours(24))
         .fragen(fragenliste)
         .professorenname("Jens Bendisposto")
-        .veranstaltungsname("Softwareentwicklung im Team");
+        .veranstaltungsname("Softwareentwicklung im Team")
+        .bogennr(id);
     return fragebogen.build();
   }
 
@@ -41,8 +42,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
   public List<Fragebogen> getAll() {
     List<Fragebogen> fragenliste = new ArrayList<>();
     fragenliste.add(getFragebogenById(1L));
-    fragenliste.add(getFragebogenById(1L));
-    fragenliste.add(getFragebogenById(1L));
+    fragenliste.add(getFragebogenById(2L));
+    fragenliste.add(getFragebogenById(3L));
     return fragenliste;
   }
 }
