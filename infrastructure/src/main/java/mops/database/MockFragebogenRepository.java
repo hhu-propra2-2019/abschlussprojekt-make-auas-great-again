@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 import mops.Frage;
 import mops.Fragebogen;
+import mops.MultipleChoiceFrage;
 import mops.TextFrage;
 import mops.controllers.FragebogenRepository;
 import org.springframework.stereotype.Repository;
@@ -19,8 +20,13 @@ public class MockFragebogenRepository implements FragebogenRepository {
   @Override
   public Fragebogen getFragebogenById(Long id) {
     List<Frage> fragenliste = new ArrayList<>();
-    Frage frage = new TextFrage(1L, getRandonFrageText());
-    fragenliste.add(frage);
+    Frage frage1 = new MultipleChoiceFrage(1L, getRandonFrageText());
+    Frage frage2 = new MultipleChoiceFrage(2L, getRandonFrageText());
+    Frage frage3 = new TextFrage(3L, getRandonFrageText());
+    fragenliste.add(frage1);
+    fragenliste.add(frage2);
+    fragenliste.add(frage3);
+
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     fragebogen = fragebogen
         .startdatum(LocalDateTime.now())

@@ -6,13 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TextFrage extends Frage {
-  private String antwort;
   private String fragentext;
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
   public TextFrage(Long id, String frage) {
     super(id);
     this.fragentext = frage;
-    this.antwort = "";
   }
 }

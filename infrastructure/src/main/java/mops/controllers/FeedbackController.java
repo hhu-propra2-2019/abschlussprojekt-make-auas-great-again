@@ -1,5 +1,6 @@
 package mops.controllers;
 
+import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class FeedbackController {
 
   private final transient FragebogenRepository frageboegen;
+  private final transient TypeChecker typeChecker;
+
 
   public FeedbackController() {
     this.frageboegen = new MockFragebogenRepository();
+    this.typeChecker = new TypeChecker();
   }
 
   @GetMapping("/")
@@ -27,6 +31,7 @@ public class FeedbackController {
   @GetMapping("/details")
   public String fragebogen(Model model, @RequestParam Long id) {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
+    model.addAttribute("typeChecker", this.typeChecker);
     return "details";
   }
 
