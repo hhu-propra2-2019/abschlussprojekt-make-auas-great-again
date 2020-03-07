@@ -3,12 +3,16 @@ package mops;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class TextFrage extends Frage {
-  @Getter
-  @Setter
   private String antwort;
+  private String fragentext;
 
-  public TextFrage(String frage) {
-    super(frage);
+  @SuppressWarnings("checkstyle:MissingJavadocMethod")
+  public TextFrage(Long id, String frage) {
+    super(id);
+    this.fragentext = frage;
+    this.antwort = "";
   }
 }

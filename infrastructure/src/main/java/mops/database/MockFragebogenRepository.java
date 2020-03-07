@@ -19,7 +19,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
   @Override
   public Fragebogen getFragebogenById(Long id) {
     List<Frage> fragenliste = new ArrayList<>();
-    Frage frage = new TextFrage(getRandonFrageText());
+    Frage frage = new TextFrage(1L, getRandonFrageText());
     fragenliste.add(frage);
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     fragebogen = fragebogen

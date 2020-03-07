@@ -1,12 +1,16 @@
 package mops;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@EqualsAndHashCode(of = "frage")
+@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
+@EqualsAndHashCode(of = "id")
 public abstract class Frage {
-  private String frage;
 
-  public Frage(String frage) {
-    this.frage = frage;
+  @Getter
+  private transient Long id;
+
+  public Frage(Long id) {
+    this.id = id;
   }
 }
