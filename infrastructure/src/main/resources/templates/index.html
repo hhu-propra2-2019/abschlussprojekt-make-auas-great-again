@@ -12,13 +12,15 @@
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <div th:replace="fragments :: navlist">test</div>
-
+        <ul>
+            <li class="active"><a th:href="@{/}">Startseite</a></li>
+            <li><a th:href="@{/kontakt}">Contact us</a></li>
+        </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
     <div class="card-deck">
-        <div class="card text-center" style="width: 22rem;" th:each="fragebogen :${frageboegen}">
+        <div class="card text-center" th:each="fragebogen :${frageboegen}">
             <img alt="..." class="card-img-top" src="abc-books-chalk-chalkboard-265076.jpg">
             <div class="card-body">
                 <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
@@ -26,9 +28,9 @@
                 <p class="card-text">Feedback ends in</p>
                 <table style="margin: auto">
                     <tr class="clock_times">
-                        <td id="clock_stunden" th:text="${fragebogen.getRemainingHours()}">--</td>
-                        <td id="clock_minuten" th:text="${fragebogen.getRemainingMinutes()}">--</td>
-                        <td id="clock_sekunden" th:text="${fragebogen.getRemainingSeconds()}">--</td>
+                        <td th:text="${fragebogen.getRemainingHours()}">--</td>
+                        <td th:text="${fragebogen.getRemainingMinutes()}">--</td>
+                        <td th:text="${fragebogen.getRemainingSeconds()}">--</td>
                     </tr>
                     <tr class="clock_names">
                         <td>Hours</td>
