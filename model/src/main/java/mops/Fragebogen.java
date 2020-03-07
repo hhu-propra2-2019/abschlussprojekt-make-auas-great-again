@@ -8,13 +8,13 @@ import lombok.Value;
 
 @Builder
 @Value
-public class Formular {
+public class Fragebogen {
 
-  private String veranstaltungsname;
-  private String professorenname;
-  private List<Frage> fragen;
-  private LocalDateTime startdatum;
-  private LocalDateTime enddatum;
+  String veranstaltungsname;
+  String professorenname;
+  List<Frage> fragen;
+  LocalDateTime startdatum;
+  LocalDateTime enddatum;
 
   /**
    * Gibt den Formularstatus zurück.

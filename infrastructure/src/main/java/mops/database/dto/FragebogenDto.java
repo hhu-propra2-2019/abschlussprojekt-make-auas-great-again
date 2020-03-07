@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Table("Formular")
-public class FormularDto {
+public class FragebogenDto {
   @Id
   Long id;
   @DateTimeFormat
