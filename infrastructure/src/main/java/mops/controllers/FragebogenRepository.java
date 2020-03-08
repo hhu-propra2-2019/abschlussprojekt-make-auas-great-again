@@ -8,4 +8,6 @@ public interface FragebogenRepository {
   Fragebogen getFragebogenById(Long id);
 
   List<Fragebogen> getAll();
+
+  List<Fragebogen> getAllContaining(String search);
 }

@@ -23,10 +23,16 @@ public class FeedbackController {
   }
 
   @GetMapping("/")
-  public String uebersicht(Model model) {
+  public String uebersicht(Model model, String search) {
+    if (!search.equals("")) {
+      model.addAttribute("typeChecker", typeChecker);
+      model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
+      return "index";
+    }
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("frageboegen", frageboegen.getAll());
     return "index";
+
   }
 
   @GetMapping("/details")

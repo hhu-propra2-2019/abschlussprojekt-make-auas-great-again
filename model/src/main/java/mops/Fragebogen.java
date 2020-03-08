@@ -63,5 +63,19 @@ public class Fragebogen {
   public String getRemainingSeconds() {
     return "59";
   }
+
+  /**
+   * Checked ob der Fragebogen den seach Parameter enthält.
+   *
+   * @param search Der Suchbegriff als String
+   * @return True wenn der Suchbegriff gefunden wurde
+   */
+  public boolean contains(String search) {
+    if (professorenname.toLowerCase().contains(search.toLowerCase())) {
+      return true;
+    } else {
+      return veranstaltungsname.toLowerCase().contains(search.toLowerCase());
+    }
+  }
 }
 

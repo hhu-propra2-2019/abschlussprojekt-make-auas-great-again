@@ -95,13 +95,21 @@ public class MockFragebogenRepository implements FragebogenRepository {
   @Override
   public List<Fragebogen> getAll() {
     List<Fragebogen> fragenliste = new ArrayList<>();
-    fragenliste.add(getFragebogenById(1L));
-    fragenliste.add(getFragebogenById(2L));
-    fragenliste.add(getFragebogenById(3L));
-    fragenliste.add(getFragebogenById(4L));
-    fragenliste.add(getFragebogenById(5L));
-    fragenliste.add(getFragebogenById(6L));
-    fragenliste.add(getFragebogenById(7L));
+    for (long i = 1L; i < 10L; i++) {
+      fragenliste.add(getFragebogenById(i));
+    }
+    return fragenliste;
+  }
+
+  @Override
+  public List<Fragebogen> getAllContaining(String search) {
+    List<Fragebogen> fragenliste = new ArrayList<>();
+    for (long i = 1L; i < 10L; i++) {
+      Fragebogen fragebogen = getFragebogenById(i);
+      if (fragebogen.contains(search)) {
+        fragenliste.add(fragebogen);
+      }
+    }
     return fragenliste;
   }
 }
