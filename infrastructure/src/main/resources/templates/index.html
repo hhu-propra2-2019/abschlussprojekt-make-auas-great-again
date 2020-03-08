@@ -19,9 +19,10 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
+    <h1 class="display-1">Dein Feedback</h1>
     <div class="row row-cols-1 row-cols-md-4">
         <div class="col mb-4" th:each="fragebogen :${frageboegen}">
-            <div class="card bg-light border-dark text-center h-100">
+            <div class="card bg-light border-dark text-center">
                 <img alt="..." class="card-img-top" src="uebung.jpg"
                      th:if="${typeChecker.isUebung(fragebogen)}">
                 <img alt="..." class="card-img-top" src="lecture.jpg"
@@ -41,7 +42,8 @@
                             <td>Sec.</td>
                         </tr>
                     </table>
-                    <a class="btn btn-primary" th:href="@{details(id=${fragebogen.bogennr})}">Feedback Geben!</a>
+                    <a class="btn btn-primary" th:href="@{details(id=${fragebogen.bogennr})}">Feedback
+                        Geben!</a>
                 </div>
             </div>
         </div>
