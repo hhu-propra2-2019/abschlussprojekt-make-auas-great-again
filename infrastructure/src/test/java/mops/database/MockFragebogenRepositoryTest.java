@@ -14,7 +14,7 @@ class MockFragebogenRepositoryTest {
   @Test
   void getFragebogenByIdTest() {
     Fragebogen fragebogen = frageboegen.getFragebogenById(1L);
-    assertThat(fragebogen.getProfessorenname()).isEqualTo("Jens Bendisposto");
+    assertThat(fragebogen.getBogennr()).isEqualTo(1L);
   }
 
   @Test

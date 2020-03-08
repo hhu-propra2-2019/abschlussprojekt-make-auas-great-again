@@ -21,7 +21,7 @@
 <main th:fragment="bodycontent">
     <div class="row row-cols-1 row-cols-md-4">
         <div class="col mb-4" th:each="fragebogen :${frageboegen}">
-            <div class="card bg-light border-dark text-center">
+            <div class="card bg-light border-dark text-center h-100">
                 <img alt="..." class="card-img-top" src="abc-books-chalk-chalkboard-265076.jpg"
                      th:if="${typeChecker.isUebung(fragebogen)}">
                 <img alt="..." class="card-img-top" src="lecture.jpg"

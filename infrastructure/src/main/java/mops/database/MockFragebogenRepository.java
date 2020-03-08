@@ -15,44 +15,70 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MockFragebogenRepository implements FragebogenRepository {
-  private transient List<String> fragen = new ArrayList<>(Arrays.asList("hey", "Yo", "Foo",
-      "This", "Random", "Bar", "List", "Has", "Very Random", "Words", "And", "Stuff"));
+  private final transient List<String> frage = new ArrayList<>(Arrays.asList("Wie geht's?",
+      "Was hattest du zum Frühstück?", "Was ist dein Geschlecht?"));
+
+  private final transient List<String> professor = new ArrayList<>(Arrays.asList("Jens Bendisposto",
+      "Christian Meter", "Jan Roßbach", "Luke Skywalker"));
+
+  private final transient List<String> vorlesung = new ArrayList<>(Arrays.asList(
+      "Professioneller Softwareentwicklung im Team", "Lineare Algebra I", "Analysis II",
+      "Theoretische Informatik", "Machine Learning"));
+
+  private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
+      + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
+      + "Machine Learning"));
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
     List<Frage> fragenliste = new ArrayList<>();
-    Frage frage1 = new MultipleChoiceFrage(1L, getRandomFrageText());
-    Frage frage2 = new MultipleChoiceFrage(2L, getRandomFrageText());
-    Frage frage3 = new TextFrage(3L, getRandomFrageText());
+    Frage frage1 = new MultipleChoiceFrage(1L, getRandomFrage());
+    Frage frage2 = new MultipleChoiceFrage(2L, getRandomFrage());
+    Frage frage3 = new TextFrage(3L, getRandomFrage());
     fragenliste.add(frage1);
     fragenliste.add(frage2);
     fragenliste.add(frage3);
-
+    Einheit einheit = Einheit.getRandomEinheit();
+    String name;
+    if (einheit == Einheit.VORLESUNG) {
+      name = getRandomVorlesung();
+    } else {
+      name = getRandomUebung();
+    }
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     fragebogen = fragebogen
         .startdatum(LocalDateTime.now())
         .enddatum(LocalDateTime.now().plusHours(24))
         .fragen(fragenliste)
-        .professorenname("Jens Bendisposto")
-        .veranstaltungsname("Softwareentwicklung im Team")
-        .type(getRandomType())
+        .professorenname(getRandomProfessor())
+        .veranstaltungsname(name)
+        .type(einheit)
         .bogennr(id);
     return fragebogen.build();
   }
 
-  private Einheit getRandomType() {
+  private String getRandomVorlesung() {
     Random randomGenerator = new Random();
-    int index = randomGenerator.nextInt(2);
-    if (index == 0) {
-      return Einheit.UEBUNG;
-    }
-    return Einheit.VORLESUNG;
+    int index = randomGenerator.nextInt(vorlesung.size());
+    return vorlesung.get(index);
   }
 
-  private String getRandomFrageText() {
+  private String getRandomProfessor() {
     Random randomGenerator = new Random();
-    int index = randomGenerator.nextInt(fragen.size());
-    return fragen.get(index);
+    int index = randomGenerator.nextInt(professor.size());
+    return professor.get(index);
+  }
+
+  private String getRandomFrage() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(frage.size());
+    return frage.get(index);
+  }
+
+  private String getRandomUebung() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(uebung.size());
+    return uebung.get(index);
   }
 
   @Override
