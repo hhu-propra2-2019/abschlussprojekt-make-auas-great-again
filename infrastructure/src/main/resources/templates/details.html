@@ -29,9 +29,10 @@
                     <textarea class="form-control" id="textfrage"></textarea>
                 </div>
                 <div class="form-group" th:if="${typeChecker.isMultipleChoice(frage)}">
-                    <div class="form-check">
-                        <input class="form-check-input" id="multiple-choice" type="checkbox" value="">
-                        <label for="multiple-choice" th:text="${frage.fragentext}">Label</label>
+                    <h5 th:text="${frage.fragentext}">Fragetext</h5>
+                    <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
+                        <input class="form-check-input" id="multiple-choice" type="checkbox">
+                        <label for="multiple-choice" th:text="${choice.label}">Label</label>
                     </div>
                 </div>
             </div>

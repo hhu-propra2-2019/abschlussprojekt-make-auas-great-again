@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import mops.Auswahl;
 import mops.Einheit;
 import mops.Frage;
 import mops.Fragebogen;
@@ -15,8 +16,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MockFragebogenRepository implements FragebogenRepository {
-  private final transient List<String> frage = new ArrayList<>(Arrays.asList("Wie geht's?",
-      "Was hattest du zum Frühstück?", "Was ist dein Geschlecht?"));
+  private final transient List<String> frage = new ArrayList<>(Arrays.asList("Was geht?",
+      "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
 
   private final transient List<String> professor = new ArrayList<>(Arrays.asList("Jens Bendisposto",
       "Christian Meter", "Jan Roßbach", "Luke Skywalker"));
@@ -32,8 +33,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
   @Override
   public Fragebogen getFragebogenById(Long id) {
     List<Frage> fragenliste = new ArrayList<>();
-    Frage frage1 = new MultipleChoiceFrage(1L, getRandomFrage());
-    Frage frage2 = new MultipleChoiceFrage(2L, getRandomFrage());
+    Frage frage1 = generateMultipleChoice();
+    Frage frage2 = generateMultipleChoice();
     Frage frage3 = new TextFrage(3L, getRandomFrage());
     fragenliste.add(frage1);
     fragenliste.add(frage2);
@@ -55,6 +56,16 @@ public class MockFragebogenRepository implements FragebogenRepository {
         .type(einheit)
         .bogennr(id);
     return fragebogen.build();
+  }
+
+  private Frage generateMultipleChoice() {
+    MultipleChoiceFrage frage = new MultipleChoiceFrage(1L, getRandomFrage());
+    frage.addChoice(new Auswahl("1"));
+    frage.addChoice(new Auswahl("2"));
+    frage.addChoice(new Auswahl("3"));
+    frage.addChoice(new Auswahl("4"));
+    frage.addChoice(new Auswahl("5"));
+    return frage;
   }
 
   private String getRandomVorlesung() {
