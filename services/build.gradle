@@ -11,5 +11,11 @@ dependencies {
     implementation project(':model')
     compileOnly 'org.projectlombok:lombok:1.18.10'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
-    testCompile 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    testCompile "org.mockito:mockito-core:2.+"
+}
+
+test {
+    useJUnitPlatform()
 }
