@@ -19,7 +19,8 @@ class FeedbackControllerTest {
 
   @Test
   void uebersicht() throws Exception {
-    mvc.perform(get("/"))
+    mvc.perform(
+        get("/").param("search", ""))
         .andExpect(status().isOk())
         .andExpect(view().name("index"));
   }

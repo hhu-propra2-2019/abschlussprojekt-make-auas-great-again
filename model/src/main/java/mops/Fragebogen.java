@@ -2,6 +2,7 @@ package mops;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -71,10 +72,11 @@ public class Fragebogen {
    * @return True wenn der Suchbegriff gefunden wurde
    */
   public boolean contains(String search) {
-    if (professorenname.toLowerCase().contains(search.toLowerCase())) {
+    if (professorenname.toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN))) {
       return true;
     } else {
-      return veranstaltungsname.toLowerCase().contains(search.toLowerCase());
+      return veranstaltungsname.toLowerCase(Locale.GERMAN)
+          .contains(search.toLowerCase(Locale.GERMAN));
     }
   }
 }

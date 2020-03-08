@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class FeedbackController {
 
+  private static final String emptySearchString = "";
   private final transient FragebogenRepository frageboegen;
   private final transient TypeChecker typeChecker;
 
@@ -24,7 +25,7 @@ public class FeedbackController {
 
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
-    if (!search.equals("")) {
+    if (!emptySearchString.equals(search)) {
       model.addAttribute("typeChecker", typeChecker);
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
       return "index";
