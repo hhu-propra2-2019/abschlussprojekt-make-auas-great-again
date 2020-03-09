@@ -28,7 +28,23 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
       + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
-      + "Machine Learning"));
+      + " Uebung Machine Learning"));
+
+  private final transient List<String> aufgabe = new ArrayList<>(Arrays.asList(
+      "Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken", "Aufgabe 13 Analysis",
+      "Theoretische Informatik Blatt 15", "Machine Learning Programmieraufgabe"));
+
+  private final transient List<String> gruppe = new ArrayList<>(Arrays.asList(
+      "Gruppe 15", "Gruppe 4"));
+
+  private final transient List<String> dozent = new ArrayList<>(Arrays.asList(
+      "Jens Bendisposto", "Christian Meter"));
+
+  private final transient List<String> beratung = new ArrayList<>(Arrays.asList(
+      "Studienberatung", "Rückmeldungen"));
+
+  private final transient List<String> praktikum = new ArrayList<>(Arrays.asList(
+      "Praktikum Hardwarenahe Programmierung", "Softwarentwicklung im Team Praktikum"));
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
@@ -43,9 +59,20 @@ public class MockFragebogenRepository implements FragebogenRepository {
     String name;
     if (einheit == Einheit.VORLESUNG) {
       name = getRandomVorlesung();
-    } else {
+    }else if(einheit == Einheit.UEBUNG) {
       name = getRandomUebung();
+    }else if(einheit == Einheit.GRUPPE) {
+      name = getRandomGruppe();
+    }else if(einheit == Einheit.DOZENT) {
+      name = getRandomDozent();
+    }else if(einheit == Einheit.PRAKTIKUM) {
+      name = getRandomPraktikum();
+    }else if(einheit == Einheit.AUFGABE) {
+      name = getRandomAufgabe();
+    }else{
+      name = getRandomBeratung();
     }
+
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     fragebogen = fragebogen
         .startdatum(LocalDateTime.now())
@@ -90,6 +117,36 @@ public class MockFragebogenRepository implements FragebogenRepository {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(uebung.size());
     return uebung.get(index);
+  }
+
+  private String getRandomAufgabe() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(aufgabe.size());
+    return aufgabe.get(index);
+  }
+
+  private String getRandomGruppe() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(gruppe.size());
+    return gruppe.get(index);
+  }
+
+  private String getRandomDozent() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(dozent.size());
+    return dozent.get(index);
+  }
+
+  private String getRandomBeratung() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(beratung.size());
+    return beratung.get(index);
+  }
+
+  private String getRandomPraktikum() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(praktikum.size());
+    return praktikum.get(index);
   }
 
   @Override
