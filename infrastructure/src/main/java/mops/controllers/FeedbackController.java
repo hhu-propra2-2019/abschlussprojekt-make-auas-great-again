@@ -25,7 +25,7 @@ public class FeedbackController {
 
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
-    if (!emptySearchString.equals(search)) {
+    if (!emptySearchString.equals(search) && search != null) {
       model.addAttribute("typeChecker", typeChecker);
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
       return "index";
@@ -33,7 +33,6 @@ public class FeedbackController {
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("frageboegen", frageboegen.getAll());
     return "index";
-
   }
 
   @GetMapping("/details")
