@@ -1,8 +1,8 @@
 package mops;
 
-import lombok.Getter;
+import lombok.Value;
 
-@Getter
+@Value
 public class TextAntwort extends Antwort {
 
   String antworttext;

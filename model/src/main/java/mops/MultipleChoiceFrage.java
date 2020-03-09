@@ -10,10 +10,10 @@ import lombok.Setter;
 public class MultipleChoiceFrage extends Frage {
   private transient String fragentext;
   private transient List<Auswahl> choices;
-  private final boolean hasMultipleResponse;
+  private boolean hasMultipleResponse;
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
-  public MultipleChoiceFrage(Long id, String fragentext,boolean hasMultipleResponse) {
+  public MultipleChoiceFrage(Long id, String fragentext, boolean hasMultipleResponse) {
     super(id);
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();

@@ -6,7 +6,8 @@ import lombok.Getter;
 @SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 @EqualsAndHashCode(of = "id")
 public abstract class Frage {
-  public String fragetext;
+  @Getter
+  private String fragentext;
   @Getter
   private transient Long id;
 

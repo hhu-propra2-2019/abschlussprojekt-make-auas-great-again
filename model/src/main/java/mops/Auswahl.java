@@ -7,6 +7,4 @@ import lombok.Getter;
 @Getter
 public class Auswahl {
   private String label;
-
-
 }
