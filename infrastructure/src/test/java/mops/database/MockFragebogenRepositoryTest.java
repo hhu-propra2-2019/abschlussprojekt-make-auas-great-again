@@ -2,7 +2,6 @@ package mops.database;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 import java.util.List;
 import mops.Fragebogen;
 import mops.controllers.FragebogenRepository;

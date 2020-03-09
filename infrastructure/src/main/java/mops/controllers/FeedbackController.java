@@ -1,8 +1,5 @@
 package mops.controllers;
 
-import static ch.qos.logback.core.joran.action.ActionConst.NULL;
-
-import javax.validation.constraints.Null;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
