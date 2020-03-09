@@ -1,15 +1,16 @@
 package mops;
 
-import lombok.Value;
+import lombok.Getter;
+import lombok.Setter;
 
-@Value
-public class TextFrage implements Frage {
-  String titel;
-  String antwort;
+@Getter
+@Setter
+public class TextFrage extends Frage {
+  private String fragentext;
 
-  public TextFrage(String titel) {
-    this.titel = titel;
-    antwort = "";
+  @SuppressWarnings("checkstyle:MissingJavadocMethod")
+  public TextFrage(Long id, String frage) {
+    super(id);
+    this.fragentext = frage;
   }
-
 }

@@ -16,14 +16,15 @@
         <script crossorigin="anonymous"
                 integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
                 src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
-
     </th:block>
 </head>
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <div th:replace="fragments :: navlist">navlist</div>
+        <ul>
+            <li><a th:href="@{/}">Startseite</a></li>
+            <li class="active"><a th:href="@{/kontakt}">Contact us</a></li>
+        </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
@@ -100,21 +101,15 @@
                             try
                         </button>
                     </form>
-                    <script th:if="${submit}">{
-                        alert("hellohhii");}
-
-
-
-
-
-
+                    <script th:if="${submit}">
+                        {
+                            alert("hellohhii");
+                        }
                     </script>
                 </div>
             </div>
         </div>
     </div>
-
-
 </main>
 </body>
 </html>

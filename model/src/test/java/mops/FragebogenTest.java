@@ -8,15 +8,16 @@ import org.junit.jupiter.api.Test;
 
 @DisplayName("Formular Methods Test")
 @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
-class FormularTest {
+class FragebogenTest {
 
-  private transient Formular formular;
+  private transient Fragebogen fragebogen;
 
   @BeforeEach
   public void setUp() {
     LocalDateTime startdatum = LocalDateTime.of(2020, 3, 3, 6, 30);
     LocalDateTime enddatum = LocalDateTime.of(2020, 3, 20, 6, 30);
-    formular = new Formular("Programing", "Sam", null, startdatum, enddatum);
+    fragebogen = new Fragebogen(1L, "Programing", "Sam",
+        null, startdatum, enddatum, Einheit.VORLESUNG);
   }
 
   @Test
@@ -24,7 +25,7 @@ class FormularTest {
   public void getStatusVerfuegbar1() {
     LocalDateTime heute = LocalDateTime.of(2020, 3, 5, 6, 30);
 
-    Status status = formular.getStatus(heute);
+    Status status = fragebogen.getStatus(heute);
 
     Assertions.assertEquals(status, Status.VERFUEGBAR);
   }
@@ -34,7 +35,7 @@ class FormularTest {
   public void getStatusVerfuegbar2() {
     LocalDateTime heute = LocalDateTime.of(2020, 3, 3, 6, 30);
 
-    Status status = formular.getStatus(heute);
+    Status status = fragebogen.getStatus(heute);
 
     Assertions.assertEquals(status, Status.VERFUEGBAR);
   }
@@ -45,7 +46,7 @@ class FormularTest {
   public void getStatusVerfuegbar3() {
     LocalDateTime heute = LocalDateTime.of(2020, 3, 20, 6, 30);
 
-    Status status = formular.getStatus(heute);
+    Status status = fragebogen.getStatus(heute);
 
     Assertions.assertEquals(status, Status.VERFUEGBAR);
   }
@@ -55,7 +56,7 @@ class FormularTest {
   public void getStatusNichtVerfuegbar() {
     LocalDateTime heute = LocalDateTime.of(2020, 3, 22, 6, 30);
 
-    Status status = formular.getStatus(heute);
+    Status status = fragebogen.getStatus(heute);
 
     Assertions.assertEquals(status, Status.NICHTVERFUEGBAR);
   }
