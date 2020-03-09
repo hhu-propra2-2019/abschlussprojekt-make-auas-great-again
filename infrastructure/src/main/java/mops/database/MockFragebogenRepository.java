@@ -59,7 +59,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
   }
 
   private Frage generateMultipleChoice() {
-    MultipleChoiceFrage frage = new MultipleChoiceFrage(1L, getRandomFrage());
+    MultipleChoiceFrage frage = new MultipleChoiceFrage(Long.valueOf(1), getRandomFrage(),false);
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));

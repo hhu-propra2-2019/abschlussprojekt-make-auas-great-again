@@ -13,13 +13,13 @@ public class TypeCheckerTest {
 
   @Test
   public void isTextFrageTest() {
-    Frage textFrage = new TextFrage(1L, "Wie geht's?");
+    Frage textFrage = new TextFrage(Long.valueOf(1), "Wie geht's?");
     assertTrue(TypeChecker.isTextFrage(textFrage));
   }
 
   @Test
   public void isMultipleChoiceTest() {
-    Frage frage = new MultipleChoiceFrage(1L, "Wie geht's?");
+    Frage frage = new MultipleChoiceFrage(Long.valueOf(1), "Wie geht's?",false);
     assertTrue(TypeChecker.isMultipleChoice(frage));
   }
 
