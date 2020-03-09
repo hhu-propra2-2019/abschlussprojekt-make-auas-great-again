@@ -12,7 +12,7 @@ import mops.database.dto.DozentDto;
 class FeedbackApplicationTests {
 
   @Autowired
-  private DozentJdbcRepository dozRepository;
+  private transient DozentJdbcRepository dozRepository;
 
   @Test
   @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
