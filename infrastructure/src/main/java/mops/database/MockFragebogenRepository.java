@@ -76,7 +76,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     fragebogen = fragebogen
         .startdatum(LocalDateTime.now())
-        .enddatum(LocalDateTime.now().plusHours(24))
+        .enddatum(LocalDateTime.now().plusHours(2))
         .fragen(fragenliste)
         .professorenname(getRandomProfessor())
         .veranstaltungsname(name)

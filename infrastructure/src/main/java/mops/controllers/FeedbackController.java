@@ -28,6 +28,7 @@ public class FeedbackController {
     if (!emptySearchString.equals(search) && search != null) {
       model.addAttribute("typeChecker", typeChecker);
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
+      model.addAttribute("numberofentries", 5);
       return "index";
     }
     model.addAttribute("typeChecker", typeChecker);
