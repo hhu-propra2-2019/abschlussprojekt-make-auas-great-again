@@ -97,7 +97,7 @@ public class FeedbackController {
 
   @PostMapping("/addTextFrage")
   public String addTextFrage(Model model, Long id, TextFrage frage) {
-    System.out.println(frage.getFragentext());
+    frageboegen.addTextFrage(id,frage);
     return creatForm(model, id);
   }
 
