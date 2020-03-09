@@ -4,7 +4,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,14 +19,14 @@ class FeedbackControllerTest {
   @Test
   void uebersicht() throws Exception {
     mvc.perform(
-        get("/").param("search", ""))
+        get("/feedback/").param("search", ""))
         .andExpect(status().isOk())
         .andExpect(view().name("index"));
   }
 
   @Test
   void fragebogen() throws Exception {
-    mvc.perform(get("/details")
+    mvc.perform(get("/feedback/details")
         .param("id", "1"))
         .andExpect(status().isOk())
         .andExpect(view().name("details"));
