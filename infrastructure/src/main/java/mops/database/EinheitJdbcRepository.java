@@ -1,7 +1,7 @@
 package mops.database;
 
-import org.springframework.data.repository.CrudRepository;
 import mops.database.dto.EinheitDto;
+import org.springframework.data.repository.CrudRepository;
 
 public interface EinheitJdbcRepository extends CrudRepository<EinheitDto, Long> {
 }

@@ -1,7 +1,7 @@
 package mops.database;
 
-import org.springframework.data.repository.CrudRepository;
 import mops.database.dto.DozentDto;
+import org.springframework.data.repository.CrudRepository;
 
 public interface DozentJdbcRepository extends CrudRepository<DozentDto, Long> {
 

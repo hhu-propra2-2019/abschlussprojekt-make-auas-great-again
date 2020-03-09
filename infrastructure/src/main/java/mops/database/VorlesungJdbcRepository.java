@@ -1,7 +1,7 @@
 package mops.database;
 
-import org.springframework.data.repository.CrudRepository;
 import mops.database.dto.VorlesungDto;
+import org.springframework.data.repository.CrudRepository;
 
 public interface VorlesungJdbcRepository extends CrudRepository<VorlesungDto, Long> {
 }
