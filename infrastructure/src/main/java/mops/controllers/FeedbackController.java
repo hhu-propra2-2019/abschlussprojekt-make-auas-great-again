@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("")
+@RequestMapping("/feedback")
 @Controller
 public class FeedbackController {
 
@@ -33,7 +33,6 @@ public class FeedbackController {
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("frageboegen", frageboegen.getAll());
     return "index";
-
   }
 
   @GetMapping("/details")

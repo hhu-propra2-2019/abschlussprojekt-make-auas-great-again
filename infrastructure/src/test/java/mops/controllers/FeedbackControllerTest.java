@@ -19,14 +19,14 @@ class FeedbackControllerTest {
   @Test
   void uebersicht() throws Exception {
     mvc.perform(
-        get("/").param("search", ""))
+        get("/feedback/").param("search", ""))
         .andExpect(status().isOk())
         .andExpect(view().name("index"));
   }
 
   @Test
   void fragebogen() throws Exception {
-    mvc.perform(get("/details")
+    mvc.perform(get("/feedback/details")
         .param("id", "1"))
         .andExpect(status().isOk())
         .andExpect(view().name("details"));
