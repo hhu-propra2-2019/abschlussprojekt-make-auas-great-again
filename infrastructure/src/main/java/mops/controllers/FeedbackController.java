@@ -1,5 +1,8 @@
 package mops.controllers;
 
+import static ch.qos.logback.core.joran.action.ActionConst.NULL;
+
+import javax.validation.constraints.Null;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
@@ -25,7 +28,7 @@ public class FeedbackController {
 
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
-    if (!emptySearchString.equals(search)) {
+    if (!emptySearchString.equals(search) && search != null) {
       model.addAttribute("typeChecker", typeChecker);
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
       return "index";

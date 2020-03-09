@@ -23,10 +23,20 @@
     <div class="row row-cols-1 row-cols-md-4">
         <div class="col mb-4" th:each="fragebogen :${frageboegen}">
             <div class="card bg-light border-dark text-center">
-                <img alt="..." class="card-img-top" src="uebung.jpg"
+                <img alt="..." class="card-img-top" src="uebung.jpg" height="150" weidth="225"
                      th:if="${typeChecker.isUebung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="lecture.jpg"
+                <img alt="..." class="card-img-top" src="vorlesung.jpg " height="150" weidth="225"
                      th:if="${typeChecker.isVorlesung(fragebogen)}">
+                <img alt="..." class="card-img-top" src="aufgabe.jpg" height="150" weidth="225"
+                     th:if="${typeChecker.isAufgabe(fragebogen)}">
+                <img alt="..." class="card-img-top" src="praktikum.jpg" height="150" weidth="225"
+                     th:if="${typeChecker.isPraktikum(fragebogen)}">
+                <img alt="..." class="card-img-top" src="dozent.jpg" height="150" weidth="225"
+                     th:if="${typeChecker.isDozent(fragebogen)}">
+                <img alt="..." class="card-img-top" src="gruppen.jpg" height="150" weidth="225"
+                     th:if="${typeChecker.isGruppe(fragebogen)}">
+                <img alt="..." class="card-img-top" src="beratung.jpg" height="150" weidth="225"
+                     th:if="${typeChecker.isBeratung(fragebogen)}">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
                     <p class="card-text">Verbleibende Zeit:</p>
