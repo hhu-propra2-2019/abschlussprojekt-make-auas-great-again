@@ -14,7 +14,7 @@
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
             <li class="active"><a th:href="@{/}">Startseite</a></li>
-            <li><a th:href="@{/kontakt}">Contact us</a></li>
+            <li><a th:href="@{/feedback/kontakt}">Contact us</a></li>
         </ul>
     </nav>
 </header>
@@ -23,9 +23,9 @@
     <div class="row row-cols-1 row-cols-md-4">
         <div class="col mb-4" th:each="fragebogen :${frageboegen}">
             <div class="card bg-light border-dark text-center">
-                <img alt="..." class="card-img-top" src="uebung.jpg"
+                <img alt="..." class="card-img-top" src="/uebung.jpg"
                      th:if="${typeChecker.isUebung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="lecture.jpg"
+                <img alt="..." class="card-img-top" src="/lecture.jpg"
                      th:if="${typeChecker.isVorlesung(fragebogen)}">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
