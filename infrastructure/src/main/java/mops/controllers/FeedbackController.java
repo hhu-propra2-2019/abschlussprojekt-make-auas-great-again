@@ -1,5 +1,12 @@
 package mops.controllers;
 
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
+import mops.DateTimeService;
+import mops.Fragebogen;
+import mops.SkalarFrage;
+import mops.TextFrage;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
@@ -17,6 +24,7 @@ public class FeedbackController {
   private final transient FragebogenRepository frageboegen;
   private final transient TypeChecker typeChecker;
 
+  private final DateTimeService dateTimeService = new DateTimeService();
 
   public FeedbackController() {
     this.frageboegen = new MockFragebogenRepository();
@@ -52,5 +60,92 @@ public class FeedbackController {
     model.addAttribute("post", "post");
     model.addAttribute("submit", "submit");
     return "kontakt";
+  }
+
+  /**
+   * zeigt die Seite fürs Erstellen von FeedbackBogen.
+   * lädet alle Fragen
+   *
+   * @param model Model
+   * @return
+   */
+  @GetMapping("/creatForm")
+  public String creatForm(Model model, Long id) {
+    List<TextFrage> allTextFragen = frageboegen.getAllTextFragenById(id);
+    List<SkalarFrage> allSkalarFragen = frageboegen.getAllSkalarFragenById(id);
+    model.addAttribute("textFragen", allTextFragen);
+    model.addAttribute("skalarFragen", allSkalarFragen);
+    model.addAttribute("bogennr", id);
+    return "formCreator";
+  }
+
+  /**
+   * gibt die Übersicht für die Organisatoren zurück.
+   */
+  @GetMapping("/admin")
+  public String adminOverview(Model model) {
+    // dummy Daten, bis die Repesitory und services fertig sind
+    List<String> veranstaltungen = new LinkedList<>();
+    veranstaltungen.add("Vorlesung");
+    veranstaltungen.add("Theoretische Übung");
+    veranstaltungen.add("Praktische Übung");
+    model.addAttribute("veranstaltungen", veranstaltungen);
+    model.addAttribute("verName", "Programmierung");
+    model.addAttribute("bogennr", 1);
+    return "adminOverview";
+  }
+
+  @PostMapping("/addTextFrage")
+  public String addTextFrage(Model model, Long id, TextFrage frage) {
+    System.out.println(frage.getFragentext());
+    return creatForm(model, id);
+  }
+
+  @PostMapping("/addSkalarFrage")
+  public String addSkalarFrage(Model model, Long id, SkalarFrage frage) {
+    frageboegen.addSkalarFrage(id,frage);
+    return creatForm(model, id);
+  }
+
+  @GetMapping("/getFrageTyp")
+  public String getFrageTyp(Model model, @RequestParam(value = "type") String type, Long id) {
+    model.addAttribute("type", type);
+    return creatForm(model, id);
+  }
+
+  /**
+   * set the date and time of the feedback form.
+   * @param formId Long formularId
+   * @param startdate String startdate
+   * @param enddate String enddate
+   * @param start String startzeit
+   * @param end String endzeit
+   * @return
+   */
+  @GetMapping("/setDate")
+  public String setDate(Long formId,String startdate,String enddate,String start,String end) {
+
+    LocalDateTime startDate = dateTimeService.getLocalDateTimeFromString(startdate, start);
+    LocalDateTime endDate = dateTimeService.getLocalDateTimeFromString(enddate, end);
+
+    frageboegen.changeDateById(formId, startDate, endDate);
+
+    return "formCreator";
+  }
+
+  /**
+   * release Feedback form with success message.
+   * @param model Model
+   * @param formId Long
+   * @return
+   */
+  @GetMapping("/releaseForm")
+  public String releaseForm(Model model, @RequestParam(value = "formId") Long formId) {
+    Fragebogen fragebogen = frageboegen.getFragebogenById(formId);
+    String start = dateTimeService.getGermanFormat(fragebogen.getStartdatum());
+    String end = dateTimeService.getGermanFormat(fragebogen.getEnddatum());
+    model.addAttribute("message", "Sie haben das Formular erfolgreich veröffentlich");
+    model.addAttribute("date", "Start Zeit ist: " + start + " Endzeit ist :" + end);
+    return creatForm(model, formId);
   }
 }
