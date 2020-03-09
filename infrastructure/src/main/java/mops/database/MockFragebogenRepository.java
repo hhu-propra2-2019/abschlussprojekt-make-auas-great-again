@@ -27,8 +27,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
       "Theoretische Informatik", "Machine Learning"));
 
   private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
-      + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
-      + " Uebung Machine Learning"));
+      + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik",
+      "Uebung Machine Learning"));
 
   private final transient List<String> aufgabe = new ArrayList<>(Arrays.asList(
       "Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken", "Aufgabe 13 Analysis",
