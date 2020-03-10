@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest
 @DisplayName("Tests for SubmitController")
+@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class SubmitControllerTest {
   @Autowired
   private transient MockMvc mvc;
