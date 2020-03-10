@@ -15,14 +15,17 @@ import mops.MultipleChoiceFrage;
 import mops.TextAntwort;
 import mops.TextFrage;
 import mops.TypeChecker;
+import mops.services.SubmitService;
 
 @RequestMapping("/feedback/details/submit")
 @Controller
 public class SubmitController {
   private final transient FragebogenRepository frageboegen;
+  private final transient SubmitService service;
 
-  public SubmitController(FragebogenRepository frageboegen) {
+  public SubmitController(FragebogenRepository frageboegen, SubmitService service) {
     this.frageboegen = frageboegen;
+    this.service = service;
   }
 
   @PostMapping("/{bogennr}")
