@@ -23,7 +23,7 @@ public class FeedbackController {
     this.typeChecker = new TypeChecker();
   }
 
-  @GetMapping("/")
+  @GetMapping("/uebersicht")
   public String uebersicht(Model model, String search) {
     if (!emptySearchString.equals(search) && search != null) {
       model.addAttribute("typeChecker", typeChecker);
