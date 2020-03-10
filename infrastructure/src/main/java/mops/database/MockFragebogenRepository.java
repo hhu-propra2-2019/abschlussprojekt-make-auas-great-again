@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import org.springframework.stereotype.Repository;
 import mops.Auswahl;
 import mops.Einheit;
 import mops.Frage;
@@ -15,6 +14,7 @@ import mops.Fragebogen;
 import mops.MultipleChoiceFrage;
 import mops.TextFrage;
 import mops.controllers.FragebogenRepository;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class MockFragebogenRepository implements FragebogenRepository {
@@ -49,13 +49,10 @@ public class MockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> praktikum = new ArrayList<>(Arrays
       .asList("Praktikum Hardwarenahe Programmierung", "Softwarentwicklung im Team Praktikum"));
 
-  private final transient Random r = new Random();
+  private final transient Random idgenerator = new Random();
 
-  private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>(); // ist static, da
-                                                                                // die beiden
-                                                                                // Controller die
-                                                                                // gleiche Datenbank
-                                                                                // benötigen
+  // static, da beide Controller gleiche Datenbank brauchen
+  private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
@@ -65,7 +62,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
       List<Frage> fragenliste = new ArrayList<>();
       Frage frage1 = generateMultipleChoice();
       Frage frage2 = generateMultipleChoice();
-      Frage frage3 = new TextFrage(Long.valueOf(r.nextInt(100)), getRandomFrage());
+      Frage frage3 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
       fragenliste.add(frage1);
       fragenliste.add(frage2);
       fragenliste.add(frage3);
@@ -99,7 +96,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   private Frage generateMultipleChoice() {
     MultipleChoiceFrage frage =
-        new MultipleChoiceFrage(Long.valueOf(r.nextInt(100)), getRandomFrage(), false);
+        new MultipleChoiceFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage(), false);
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));
