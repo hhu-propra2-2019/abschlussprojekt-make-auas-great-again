@@ -62,27 +62,4 @@ public class FeedbackController {
     model.addAttribute("submit", "submit");
     return "kontakt";
   }
-
-  @PostMapping("/details/submit/{bogennr}")
-  public String submitFeedback(Model model, @PathVariable long bogennr, HttpServletRequest req) {
-    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
-    List<Frage> fragen = fragebogen.getFragen();
-    for (Frage frage : fragen) {
-      if (TypeChecker.isMultipleChoice(frage)) {
-        List<Auswahl> moeglicheantworten = ((MultipleChoiceFrage) frage).getChoices();
-        Auswahl auswahl = new Auswahl(req.getParameter("answer-" + frage.getId()));
-        if (moeglicheantworten.contains(auswahl)) {
-          ((MultipleChoiceFrage) frage).addAntwort(new MultipleChoiceAntwort(auswahl));
-          System.out.println("Antwort " + auswahl.toString() + " wurde zur Frage '"
-              + frage.getFragentext() + "' hinzugefügt"); // Debugging-Ausgabe, kann später gelöscht
-                                                          // werden
-        }
-      } else if (TypeChecker.isTextFrage(frage)) {
-        String antwort = req.getParameter("answer-" + frage.getId());
-        ((TextFrage) frage).addAntwort(new TextAntwort(antwort));
-        System.out.println("Antwort auf Frage '" + frage.getFragentext() + "': " + antwort); // Debugging-Ausgabe
-      }
-    }
-    return "redirect:/feedback/";
-  }
 }
