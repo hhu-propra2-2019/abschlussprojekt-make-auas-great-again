@@ -18,12 +18,14 @@ public class SubmitControllerTest {
   private transient MockMvc mvc;
 
   @Test
+  @DisplayName("Test to show that POST is allowed and you are redirected to /feedback")
   public void submit() throws Exception {
     mvc.perform(post("/feedback/details/submit/1")).andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/"));
   }
 
   @Test
+  @DisplayName("Test to show that GET is not allowed to avoid side effects")
   public void getIsNotAllowed() throws Exception {
     mvc.perform(get("/feedback/details/submit/1")).andExpect(status().isMethodNotAllowed());
   }
