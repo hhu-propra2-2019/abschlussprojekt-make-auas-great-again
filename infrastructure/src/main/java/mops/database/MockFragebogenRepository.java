@@ -15,9 +15,11 @@ import mops.MultipleChoiceFrage;
 import mops.SkalarFrage;
 import mops.TextFrage;
 import mops.controllers.FragebogenRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Qualifier("Faker")
 public class MockFragebogenRepository implements FragebogenRepository {
   private static final transient List<String> frage = new ArrayList<>(Arrays.asList("Was geht?",
       "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
