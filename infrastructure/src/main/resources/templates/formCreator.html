@@ -17,60 +17,56 @@
 </header>
 <main th:fragment="bodycontent">
     <!-- Restlichen Inhalt hier einfügen! -->
-
-    <!--    text Fragen laden-->
+<!--    alle Fragen Laden -->
     <div class="card">
-        <div class="card-header">Text Fragen</div>
+        <div class="card-header">Fragen</div>
         <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Frage</th>
-                    <th scope="col">Antwort</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="frage : ${textFragen}">
-                    <td th:text="${frage.getFragentext()}">frage text</td>
-                    <td >Antwort</td>
-<!--                    <td th:text="${frage.getAntwort()}">antwort</td>-->
-                </tr>
-                </tbody>
-            </table>
+            <tr th:each="frage: ${fragebogen.getFragen()}">
+                <div th:if="${typeChecker.isTextFrage(frage)}">
+                        <!--    text Fragen laden-->
+                    <span>
+                                <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Frage</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                                </thead>
+                                    <tbody>
+                                    <td th:text="${frage.getFragentext()}">frage text</td>
+                                    <td>delete</td>
+                                    </tbody>
+                                </table>
+                    </span>
+                </div>
+                <div th:if="${typeChecker.isSkalarFrage(frage)}">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Frage</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <td th:text="${frage.getFragentext()}">frage text</td>
+                                    <td>
+                                        <input id="customRadio1" name="antwort" type="radio" value="1">
+                                        <label for="customRadio1">ein</label>
+                                        <input id="customRadio2" name="antwort" type="radio" value="2">
+                                        <label for="customRadio2">zwei</label>
+                                        <input id="customRadio3" name="antwort" type="radio" value="3">
+                                        <label for="customRadio3">drei</label>
+                                        <input id="customRadio4" name="antwort" type="radio" value="4">
+                                        <label for="customRadio4">vier</label>
+                                        <input id="customRadio5" name="antwort" type="radio" value="5">
+                                        <label for="customRadio5">fünf</label>
+                                    </td>
+                                </tbody>
+                            </table>
+                </div>
+            </tr>
         </div>
     </div>
-    <!--    skalar fragen laden-->
-    <div class="card">
-        <div class="card-header">Skalar Fragen</div>
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Frage</th>
-                    <th scope="col">Antwort</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="frage : ${skalarFragen}">
-                    <td th:text="${frage.getFragentext()}">frage text</td>
-                    <td>
-                        <input id="customRadio1" name="antwort" type="radio" value="1">
-                        <label for="customRadio1">ein</label>
-                        <input id="customRadio2" name="antwort" type="radio" value="2">
-                        <label for="customRadio2">zwei</label>
-                        <input id="customRadio3" name="antwort" type="radio" value="3">
-                        <label for="customRadio3">drei</label>
-                        <input id="customRadio4" name="antwort" type="radio" value="4">
-                        <label for="customRadio4">vier</label>
-                        <input id="customRadio5" name="antwort" type="radio" value="5">
-                        <label for="customRadio5">fünf</label>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
     <!--    alle arten von Fragen Frage hinzufügen -->
     <div class="card">
         <h5 class="card-header">Featured</h5>
@@ -82,6 +78,7 @@
                     <option th:text="text" th:value="'text'">m</option>
                     <option th:text="skalar" th:value="'skalar'">w</option>
                 </select>
+                <input name="id" th:value="${bogennr}" type="hidden">
                 <button class="btn btn-light btn-sm" type="submit">neue Frage erstellen</button>
             </form>
             <br>

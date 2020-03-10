@@ -3,6 +3,7 @@ package mops.database;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -18,22 +19,38 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MockFragebogenRepository implements FragebogenRepository {
-  private final transient List<String> frage = new ArrayList<>(Arrays.asList("Was geht?",
+  private static final transient List<String> frage = new ArrayList<>(Arrays.asList("Was geht?",
       "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
 
-  private final transient List<String> professor = new ArrayList<>(Arrays.asList("Jens Bendisposto",
+  private static final transient List<String> professor = new ArrayList<>(Arrays.asList("Jens Bendisposto",
       "Christian Meter", "Jan Roßbach", "Luke Skywalker"));
 
-  private final transient List<String> vorlesung = new ArrayList<>(Arrays.asList(
+  private static final transient List<String> vorlesung = new ArrayList<>(Arrays.asList(
       "Professioneller Softwareentwicklung im Team", "Lineare Algebra I", "Analysis II",
       "Theoretische Informatik", "Machine Learning"));
 
-  private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
+  private static final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
       + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
       + "Machine Learning"));
+  private static HashMap<Long, Fragebogen> fragebogen;
+
+  static {
+    fragebogen = new HashMap<>();
+    List<Fragebogen> fragebogens = generateTenFragebogen();
+    Long index = 1L;
+    for (Fragebogen fragebogen1 : fragebogens) {
+      fragebogen.put(index, fragebogen1);
+      index++;
+    }
+
+  }
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
+    return fragebogen.get(id);
+  }
+
+  private static Fragebogen getRandomFragebogen() {
     List<Frage> fragenliste = new ArrayList<>();
     Frage frage1 = generateMultipleChoice();
     Frage frage2 = generateMultipleChoice();
@@ -56,11 +73,11 @@ public class MockFragebogenRepository implements FragebogenRepository {
         .professorenname(getRandomProfessor())
         .veranstaltungsname(name)
         .type(einheit)
-        .bogennr(id);
+        .bogennr(1L);
     return fragebogen.build();
   }
 
-  private Frage generateMultipleChoice() {
+  private static Frage generateMultipleChoice() {
     MultipleChoiceFrage frage = new MultipleChoiceFrage(1L, getRandomFrage());
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
@@ -70,25 +87,25 @@ public class MockFragebogenRepository implements FragebogenRepository {
     return frage;
   }
 
-  private String getRandomVorlesung() {
+  private static String getRandomVorlesung() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(vorlesung.size());
     return vorlesung.get(index);
   }
 
-  private String getRandomProfessor() {
+  private static String getRandomProfessor() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(professor.size());
     return professor.get(index);
   }
 
-  private String getRandomFrage() {
+  private static String getRandomFrage() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(frage.size());
     return frage.get(index);
   }
 
-  private String getRandomUebung() {
+  private static String getRandomUebung() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(uebung.size());
     return uebung.get(index);
@@ -96,9 +113,13 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public List<Fragebogen> getAll() {
+    return List.copyOf(fragebogen.values());
+  }
+
+  private static List<Fragebogen> generateTenFragebogen() {
     List<Fragebogen> fragenliste = new ArrayList<>();
     for (long i = 1L; i < 10L; i++) {
-      fragenliste.add(getFragebogenById(i));
+      fragenliste.add(getRandomFragebogen());
     }
     return fragenliste;
   }
