@@ -36,15 +36,11 @@ public class SubmitService {
     Auswahl auswahl = new Auswahl(req.getParameter("answer-" + frage.getId()));
     if (moeglicheantworten.contains(auswahl)) {
       ((MultipleChoiceFrage) frage).addAntwort(new MultipleChoiceAntwort(auswahl));
-      System.out.println("Antwort " + auswahl.toString() + " wurde zur Frage '"
-          + frage.getFragentext() + "' hinzugefügt"); // Debugging-Ausgabe, kann später gelöscht
-                                                      // werden
     }
   }
 
   private void saveTextantwort(HttpServletRequest req, Frage frage) {
     String antwort = req.getParameter("answer-" + frage.getId());
     ((TextFrage) frage).addAntwort(new TextAntwort(antwort));
-    System.out.println("Antwort auf Frage '" + frage.getFragentext() + "': " + antwort); // Debugging-Ausgabe
   }
 }
