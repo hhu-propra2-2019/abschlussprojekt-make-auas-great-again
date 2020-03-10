@@ -19,6 +19,5 @@ public class TextFrage extends Frage {
   public void addAntwort(String text) {
     TextAntwort antwort = new TextAntwort(text);
     this.antworten.add(antwort);
-    System.out.println("Gespeichert: " + antwort.getAntworttext());
   }
 }

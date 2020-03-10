@@ -36,7 +36,6 @@ public class MultipleChoiceFrage extends Frage {
     Auswahl auswahl = new Auswahl(antwort);
     if (choices.contains(auswahl)) {
       this.antworten.add(new MultipleChoiceAntwort(auswahl));
-      System.out.println("Gespeichert: " + auswahl.toString());
     }
   }
 }
