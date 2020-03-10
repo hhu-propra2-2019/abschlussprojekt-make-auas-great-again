@@ -16,7 +16,9 @@ public class TextFrage extends Frage {
     this.antworten = new HashSet<>();
   }
   
-  public void addAntwort(TextAntwort antwort) {
+  public void addAntwort(String text) {
+    TextAntwort antwort = new TextAntwort(text);
     this.antworten.add(antwort);
+    System.out.println("Gespeichert: " + antwort.getAntworttext());
   }
 }

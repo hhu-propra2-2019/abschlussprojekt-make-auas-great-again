@@ -32,7 +32,11 @@ public class MultipleChoiceFrage extends Frage {
     return choices.size();
   }
   
-  public void addAntwort(MultipleChoiceAntwort antwort) {
-    this.antworten.add(antwort);
+  public void addAntwort(String antwort) {
+    Auswahl auswahl = new Auswahl(antwort);
+    if (choices.contains(auswahl)) {
+      this.antworten.add(new MultipleChoiceAntwort(auswahl));
+      System.out.println("Gespeichert: " + auswahl.toString());
+    }
   }
 }
