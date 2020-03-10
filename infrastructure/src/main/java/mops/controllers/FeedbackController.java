@@ -1,5 +1,7 @@
 package mops.controllers;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RequestMapping("/feedback")
 @Controller
@@ -23,6 +26,14 @@ public class FeedbackController {
     this.typeChecker = new TypeChecker();
   }
 
+  String formatDate(LocalDateTime date) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm:ss");
+
+    String formatDateTime = date.format(formatter);
+    return formatDateTime;
+
+  }
+
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
     if (!emptySearchString.equals(search) && search != null) {
@@ -31,6 +42,13 @@ public class FeedbackController {
       model.addAttribute("numberofentries", 5);
       return "index";
     }
+    //@TODO Law of Demeter FIX !!
+    //FOR LOOP TO ITERATE  LIST OF FRAGEBOGEN
+    long id = frageboegen.getFragebogenById(1L).getBogennr();
+    LocalDateTime start = frageboegen.getFragebogenById(id).getStartdatum();
+    LocalDateTime end = frageboegen.getFragebogenById(id).getEnddatum();
+    model.addAttribute("startdate", formatDate(start));
+    model.addAttribute("enddate", formatDate(end));
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("frageboegen", frageboegen.getAll());
     return "index";
