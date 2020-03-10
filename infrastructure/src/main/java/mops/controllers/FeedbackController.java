@@ -1,6 +1,7 @@
 package mops.controllers;
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import mops.Frage;
 import mops.Fragebogen;
+import mops.MultipleChoiceFrage;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
 
@@ -20,7 +22,6 @@ public class FeedbackController {
   private static final String emptySearchString = "";
   private final transient FragebogenRepository frageboegen;
   private final transient TypeChecker typeChecker;
-
 
   public FeedbackController() {
     frageboegen = new MockFragebogenRepository();
@@ -59,10 +60,14 @@ public class FeedbackController {
   }
 
   @PostMapping("/details/submit/{bogennr}")
-  public String submitFeedback(Model model, @PathVariable long bogennr) {
+  public String submitFeedback(Model model, @PathVariable long bogennr, HttpServletRequest req) {
     Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
     List<Frage> fragen = fragebogen.getFragen();
-    System.out.println("Fragebogen " + bogennr);
+    for (Frage frage : fragen) {
+      if (frage instanceof MultipleChoiceFrage) {
+        System.out.println(req.getParameter("answer-" + frage.getId()));
+      }
+    }
     return "redirect:/feedback/";
   }
 }
