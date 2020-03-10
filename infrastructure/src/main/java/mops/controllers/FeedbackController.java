@@ -1,21 +1,11 @@
 package mops.controllers;
 
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import mops.Auswahl;
-import mops.Frage;
-import mops.Fragebogen;
-import mops.MultipleChoiceAntwort;
-import mops.MultipleChoiceFrage;
-import mops.TextAntwort;
-import mops.TextFrage;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
 
