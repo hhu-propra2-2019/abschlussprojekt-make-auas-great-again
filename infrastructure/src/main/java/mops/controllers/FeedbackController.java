@@ -1,13 +1,17 @@
 package mops.controllers;
 
-import mops.TypeChecker;
-import mops.database.MockFragebogenRepository;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import mops.Frage;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.database.MockFragebogenRepository;
 
 @RequestMapping("/feedback")
 @Controller
@@ -19,13 +23,13 @@ public class FeedbackController {
 
 
   public FeedbackController() {
-    this.frageboegen = new MockFragebogenRepository();
-    this.typeChecker = new TypeChecker();
+    frageboegen = new MockFragebogenRepository();
+    typeChecker = new TypeChecker();
   }
 
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
-    if (!emptySearchString.equals(search) && search != null) {
+    if (!emptySearchString.equals(search) && (search != null)) {
       model.addAttribute("typeChecker", typeChecker);
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
       return "index";
@@ -52,5 +56,13 @@ public class FeedbackController {
     model.addAttribute("post", "post");
     model.addAttribute("submit", "submit");
     return "kontakt";
+  }
+
+  @PostMapping("/details/submit/{bogennr}")
+  public String submitFeedback(Model model, @PathVariable long bogennr) {
+    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+    List<Frage> fragen = fragebogen.getFragen();
+    System.out.println("Fragebogen " + bogennr);
+    return "redirect:/feedback/";
   }
 }
