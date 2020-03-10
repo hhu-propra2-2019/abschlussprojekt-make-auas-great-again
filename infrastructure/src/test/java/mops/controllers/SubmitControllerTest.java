@@ -1,6 +1,7 @@
 package mops.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -20,5 +21,10 @@ public class SubmitControllerTest {
   public void submit() throws Exception {
     mvc.perform(post("/feedback/details/submit/1")).andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/"));
+  }
+
+  @Test
+  public void getIsNotAllowed() throws Exception {
+    mvc.perform(get("/feedback/details/submit/1")).andExpect(status().isMethodNotAllowed());
   }
 }
