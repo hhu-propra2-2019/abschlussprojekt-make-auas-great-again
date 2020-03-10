@@ -51,7 +51,11 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   private final transient Random r = new Random();
 
-  private final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
+  private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>(); // ist static, da
+                                                                                // die beiden
+                                                                                // Controller die
+                                                                                // gleiche Datenbank
+                                                                                // benötigen
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
