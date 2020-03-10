@@ -66,7 +66,7 @@ public class FeedbackController {
     Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
     List<Frage> fragen = fragebogen.getFragen();
     for (Frage frage : fragen) {
-      if (frage instanceof MultipleChoiceFrage) {
+      if (TypeChecker.isMultipleChoice(frage)) {
         List<Auswahl> moeglicheantworten = ((MultipleChoiceFrage) frage).getChoices();
         Auswahl auswahl = new Auswahl(req.getParameter("answer-" + frage.getId()));
         if (moeglicheantworten.contains(auswahl)) {
