@@ -15,4 +15,8 @@ public class TextFrage extends Frage {
     this.fragentext = frage;
     this.antworten = new HashSet<>();
   }
+  
+  public void addAntwort(TextAntwort antwort) {
+    this.antworten.add(antwort);
+  }
 }
