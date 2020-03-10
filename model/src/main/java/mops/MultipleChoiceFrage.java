@@ -32,6 +32,7 @@ public class MultipleChoiceFrage extends Frage {
     return choices.size();
   }
   
+  @Override
   public void addAntwort(String antwort) {
     Auswahl auswahl = new Auswahl(antwort);
     if (choices.contains(auswahl)) {

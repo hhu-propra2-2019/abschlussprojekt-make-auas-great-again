@@ -7,7 +7,7 @@ import java.util.Set;
 public class MultipleResponseAntwort extends Antwort {
   transient Set<Integer> gewaehlteAntworten;
 
-  public MultipleResponseAntwort(Long id) {
+  public MultipleResponseAntwort() {
     gewaehlteAntworten = new HashSet<>();
   }
 
