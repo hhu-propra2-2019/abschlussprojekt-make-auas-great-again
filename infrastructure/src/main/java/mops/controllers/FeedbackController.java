@@ -8,7 +8,6 @@ import mops.Fragebogen;
 import mops.SkalarFrage;
 import mops.TextFrage;
 import mops.TypeChecker;
-import mops.database.MockFragebogenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -30,6 +29,7 @@ public class FeedbackController {
   private transient DateTimeService dateTimeService = new DateTimeService();
   private transient TypeChecker typeChecker = new TypeChecker();
 
+  @SuppressWarnings("checkstyle:MissingJavadocMethod")
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
     if (!emptySearchString.equals(search) && search != null) {
@@ -42,6 +42,7 @@ public class FeedbackController {
     return "index";
   }
 
+  @SuppressWarnings("checkstyle:MissingJavadocMethod")
   @GetMapping("/details")
   public String fragebogen(Model model, @RequestParam Long id) {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
@@ -54,6 +55,7 @@ public class FeedbackController {
     return "kontakt";
   }
 
+  @SuppressWarnings("checkstyle:MissingJavadocMethod")
   @PostMapping("/kontakt")
   public String postMessage(Model model) {
     model.addAttribute("post", "post");
@@ -127,14 +129,15 @@ public class FeedbackController {
    * @return
    */
   @GetMapping("/setDate")
-  public String setDate(Long formId,String startdate,String enddate,String start,String end,Model m) {
+  public String setDate(Long formId,String startdate,String enddate,String start,String end) {
 
     LocalDateTime startDate = dateTimeService.getLocalDateTimeFromString(startdate, start);
     LocalDateTime endDate = dateTimeService.getLocalDateTimeFromString(enddate, end);
 
     frageboegen.changeDateById(formId, startDate, endDate);
 
-    return creatForm(m, formId);
+    String formatString = "redirect:/feedback/creatForm?id=%d";
+    return String.format(formatString, formId);
   }
 
 

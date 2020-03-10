@@ -33,11 +33,11 @@ public class MockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
       + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
       + "Machine Learning"));
-  private HashMap<Long, Fragebogen> fragebogen;
+  private transient HashMap<Long, Fragebogen> fragebogen;
   //simuliert Daten Bank Frage id
-  private Long frageId = 0L;
+  private transient Long frageId = 0L;
 
-  public MockFragebogenRepository(){
+  public MockFragebogenRepository() {
     initial();
   }
 
@@ -92,17 +92,17 @@ public class MockFragebogenRepository implements FragebogenRepository {
     String name;
     if (einheit == Einheit.VORLESUNG) {
       name = getRandomVorlesung();
-    }else if(einheit == Einheit.UEBUNG) {
+    } else if (einheit == Einheit.UEBUNG) {
       name = getRandomUebung();
-    }else if(einheit == Einheit.GRUPPE) {
+    } else if (einheit == Einheit.GRUPPE) {
       name = getRandomGruppe();
-    }else if(einheit == Einheit.DOZENT) {
+    } else if (einheit == Einheit.DOZENT) {
       name = getRandomDozent();
-    }else if(einheit == Einheit.PRAKTIKUM) {
+    } else if (einheit == Einheit.PRAKTIKUM) {
       name = getRandomPraktikum();
-    }else if(einheit == Einheit.AUFGABE) {
+    } else if (einheit == Einheit.AUFGABE) {
       name = getRandomAufgabe();
-    }else{
+    } else {
       name = getRandomBeratung();
     }
 
@@ -119,7 +119,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
   }
 
   private Frage generateMultipleChoice() {
-    MultipleChoiceFrage frage = new MultipleChoiceFrage(Long.valueOf(1), getRandomFrage(),false);
+    MultipleChoiceFrage frage = new MultipleChoiceFrage(Long.valueOf(1), getRandomFrage(), false);
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));
