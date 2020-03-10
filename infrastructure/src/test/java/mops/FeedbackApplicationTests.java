@@ -1,12 +1,14 @@
 package mops;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.HashSet;
+import mops.database.DozentJdbcRepository;
+import mops.database.dto.DozentDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import mops.database.DozentJdbcRepository;
-import mops.database.dto.DozentDto;
 
 @SpringBootTest
 class FeedbackApplicationTests {
@@ -21,6 +23,7 @@ class FeedbackApplicationTests {
   }
 
   @Test
+  @Disabled
   void saveDozent() {
     DozentDto doz = new DozentDto("Dozent1", new HashSet<>());
     DozentDto doz2 = new DozentDto("Dozent2", new HashSet<>());

@@ -19,8 +19,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 13
-      - name: Set up Database
-        run: docker-compose up -d
       - name: Run Tests
         run: ./gradlew check
       - name: SpotBugs Main
