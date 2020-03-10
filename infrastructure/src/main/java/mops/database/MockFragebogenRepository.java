@@ -48,6 +48,14 @@ public class MockFragebogenRepository implements FragebogenRepository {
   }
 
   @Override
+  public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
+    Fragebogen fragebogen = MockFragebogenRepository.fragebogen.get(formId);
+    List<Frage> fragen = fragebogen.getFragen();
+    fragen.removeIf(frage1 -> frage1.getId().equals(frageId));
+    fragebogen.setFragen(fragen);
+  }
+
+  @Override
   public Fragebogen getFragebogenById(Long id) {
     return fragebogen.get(id);
   }
@@ -136,50 +144,6 @@ public class MockFragebogenRepository implements FragebogenRepository {
       }
     }
     return fragenliste;
-  }
-
-  @Override
-  public List<TextFrage> getAllTextFragenById(Long id) {
-    Fragebogen fragebogen = getFragebogenById(id);
-    List<Frage> fragen = fragebogen.getFragen();
-    TextFrage textfrage1 = new TextFrage(id,"kommentare und anmerkungen ");
-    TextFrage textfrage2 = new TextFrage(id,"was machen wir gut?");
-    TextFrage textfrage3 = new TextFrage(id,"was können wir verbessern");
-
-    fragen.add(textfrage1);
-    fragen.add(textfrage2);
-    fragen.add(textfrage3);
-
-    List<TextFrage> textFragen = new LinkedList<>();
-    for (Frage frage : fragen) {
-      if (frage instanceof TextFrage) {
-        textFragen.add((TextFrage) frage);
-      }
-    }
-    return textFragen;
-  }
-
-  @Override
-  public List<SkalarFrage> getAllSkalarFragenById(Long id) {
-    Fragebogen fragebogen = getFragebogenById(id);
-    List<Frage> fragen = fragebogen.getFragen();
-
-    SkalarFrage skalarfrage1 = new SkalarFrage(id,"wie zufrieden waren mit der Vorlesung ");
-    SkalarFrage skalarfrage2 = new SkalarFrage(id,"wie zufrieden waren mit dem Proffesor");
-    SkalarFrage skalarfrage3 = new SkalarFrage(id,"wie zufrieden waren mit den Räumen");
-
-    fragen.add(skalarfrage1);
-    fragen.add(skalarfrage2);
-    fragen.add(skalarfrage3);
-
-    List<SkalarFrage> skalarFragen = new LinkedList<>();
-    for (Frage frage : fragen) {
-      if (frage instanceof SkalarFrage) {
-        skalarFragen.add((SkalarFrage) frage);
-      }
-    }
-
-    return skalarFragen;
   }
 
   @Override

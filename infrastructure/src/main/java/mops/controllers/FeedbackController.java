@@ -92,6 +92,12 @@ public class FeedbackController {
     return "adminOverview";
   }
 
+  @GetMapping("delete")
+  public String deleteFrageById(Model model, Long frageId, Long formId) {
+    frageboegen.deleteFrageByIdAndFrageId(formId, frageId);
+    return creatForm(model, formId);
+  }
+
   @PostMapping("/addTextFrage")
   public String addTextFrage(Model model, Long id, TextFrage frage) {
     frageboegen.addTextFrage(id,frage);

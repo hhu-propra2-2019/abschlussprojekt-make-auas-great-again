@@ -30,7 +30,11 @@
                                 </thead>
                                     <tbody>
                                     <td th:text="${frage.getFragentext()}">frage text</td>
-                                    <td>delete</td>
+                                    <td>
+<!--                                        <input name="formId" th:value="${bogennr}" type="hidden">-->
+                                        <a class="btn btn-primary"
+                                           th:href="@{/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
+                                    </td>
                                     </tbody>
                                 </table>
                     </span>
@@ -52,6 +56,13 @@
                                         <label for="customRadio4">vier</label>
                                         <input id="customRadio5" name="antwort" type="radio" value="5">
                                         <label for="customRadio5">fünf</label>
+                                    </td>
+                                    <td>
+                                    <td>
+<!--                                        <input name="formId" th:value="${bogennr}" type="hidden">-->
+                                        <a class="btn btn-primary"
+                                           th:href="@{/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
+                                    </td>
                                     </td>
                                 </tbody>
                             </table>
