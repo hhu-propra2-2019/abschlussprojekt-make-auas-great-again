@@ -25,18 +25,17 @@
                 <div th:if="${typeChecker.isTextFrage(frage)}">
                         <!--    text Fragen laden-->
                     <span>
-                                <table class="table table-striped">
+                        <table class="table table-striped">
                                 <thead>
                                 </thead>
                                     <tbody>
                                     <td th:text="${frage.getFragentext()}">frage text</td>
                                     <td>
-<!--                                        <input name="formId" th:value="${bogennr}" type="hidden">-->
                                         <a class="btn btn-primary"
-                                           th:href="@{/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
+                                           th:href="@{/feedback/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
                                     </td>
                                     </tbody>
-                                </table>
+                        </table>
                     </span>
                 </div>
                 <div th:if="${typeChecker.isSkalarFrage(frage)}">
@@ -61,7 +60,7 @@
                                     <td>
 <!--                                        <input name="formId" th:value="${bogennr}" type="hidden">-->
                                         <a class="btn btn-primary"
-                                           th:href="@{/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
+                                           th:href="@{/feedback/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
                                     </td>
                                     </td>
                                 </tbody>
@@ -74,7 +73,7 @@
     <div class="card">
         <h5 class="card-header">Featured</h5>
         <div class="card-body">
-            <form action="/getFrageTyp" method="get">
+            <form action="/feedback/getFrageTyp" method="get">
                 <label for="type">Frage Type</label>
                 <br>
                 <select id="type" name="type">
@@ -92,7 +91,7 @@
                     <div class="card">
                         <div class="card-header">Text Frage hinzufügen</div>
                         <div class="card-body">
-                            <form action="/addTextFrage" class="form-horizontal" is="mops-form" method="post">
+                            <form action="/feedback/addTextFrage" class="form-horizontal" is="mops-form" method="post">
                             <input name="id" th:value="${bogennr}" type="hidden">
                                 <input class="form-control" id="textfrage" name="fragentext" placeholder="frage" required="true" type="text">
                                 <br>
@@ -106,7 +105,7 @@
             <div class="card">
             <div class="card-header">Skalar Frage hinzufügen</div>
             <div class="card-body">
-                <form action="/addSkalarFrage" class="form-horizontal" is="mops-form" method="post">
+                <form action="/feedback/addSkalarFrage" class="form-horizontal" is="mops-form" method="post">
 
                     <input name="id" th:value="${bogennr}" type="hidden">
                     <input class="form-control" id="skalarFrage" name="fragentext" placeholder="frage" required="true" type="text">
@@ -128,7 +127,7 @@
             Datum festlegen
         </div>
         <div class="card-body">
-            <form action="/setDate" is="mops-form" method="get">
+            <form action="/feedback/setDate" is="mops-form" method="get">
                 <input name="formId" th:value="${bogennr}" type="hidden">
                 <label for="start">Startdate:</label>
                 <input id="start" name="startdate" type="date" value="2020-07-22" required>
@@ -155,7 +154,7 @@
         <div class="card-body">
             <span  class="text-info" style="width: 100%;" th:text="${message}" >0</span>
             <span  class="text-info" style="width: 100%;" th:text="${date}" >0</span>
-            <form action="/releaseForm" is="mops-form" method="get">
+            <form action="/feedback/releaseForm" is="mops-form" method="get">
                 <input name="formId" th:value="${bogennr}" type="hidden">
                 <button class="btn btn-success"  role="button">OK</button>
             </form>

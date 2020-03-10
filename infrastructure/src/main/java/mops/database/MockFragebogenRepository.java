@@ -33,17 +33,21 @@ public class MockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
       + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
       + "Machine Learning"));
-  private HashMap<Long, Fragebogen> fragebogen = new HashMap<>();
+  private HashMap<Long, Fragebogen> fragebogen;
 
-//  {
-//    fragebogen = new HashMap<>();
-//    List<Fragebogen> fragebogens = generateTenFragebogen();
-//    Long index = 1L;
-//    for (Fragebogen fragebogen1 : fragebogens) {
-//      fragebogen.put(index, fragebogen1);
-//      index++;
-//    }
-//  }
+  public MockFragebogenRepository(){
+    initial();
+  }
+
+  private void initial() {
+    fragebogen = new HashMap<>();
+    List<Fragebogen> fragebogens = generateTenFragebogen();
+    Long index = 1L;
+    for (Fragebogen fragebogen1 : fragebogens) {
+      fragebogen.put(index, fragebogen1);
+      index++;
+    }
+  }
 
   @Override
   public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
