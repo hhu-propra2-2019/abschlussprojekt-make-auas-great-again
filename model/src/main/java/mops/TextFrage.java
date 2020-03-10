@@ -7,8 +7,8 @@ public class TextFrage extends Frage {
   private String fragentext;
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
-  public TextFrage(Long id, String frage) {
+  public TextFrage(Long id, String fragentext) {
     super(id);
-    this.fragentext = frage;
+    this.fragentext = fragentext;
   }
 }
