@@ -1,14 +1,10 @@
 package mops;
 
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 @Value
+@AllArgsConstructor
 public class TextAntwort extends Antwort {
-
-  String antworttext;
-
-  public TextAntwort(Long id,String antworttext) {
-    super(id);
-    this.antworttext = antworttext;
-  }
+  private String antworttext;
 }

@@ -1,15 +1,10 @@
 package mops;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Value;
 
-@Getter
-@Setter
+@Value
+@AllArgsConstructor
 public class SingleResponseAntwort extends Antwort {
-  Integer antwort;
-
-  public SingleResponseAntwort(Long id,Integer antwort) {
-    super(id);
-    this.antwort = antwort;
-  }
+  private Integer antwort;
 }
