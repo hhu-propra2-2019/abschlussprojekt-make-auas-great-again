@@ -8,7 +8,6 @@ import mops.Fragebogen;
 import mops.SkalarFrage;
 import mops.TextFrage;
 import mops.TypeChecker;
-import mops.database.MockFragebogenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -27,16 +26,17 @@ public class FeedbackController {
   @Qualifier("Faker")
   private transient FragebogenRepository frageboegen;
 
-  private final DateTimeService dateTimeService = new DateTimeService();
+  private transient DateTimeService dateTimeService = new DateTimeService();
+  private transient TypeChecker typeChecker = new TypeChecker();
 
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
     if (!emptySearchString.equals(search) && search != null) {
-      model.addAttribute("typeChecker", new TypeChecker());
+      model.addAttribute("typeChecker", typeChecker);
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
       return "index";
     }
-    model.addAttribute("typeChecker", new TypeChecker());
+    model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("frageboegen", frageboegen.getAll());
     return "index";
   }
@@ -44,7 +44,7 @@ public class FeedbackController {
   @GetMapping("/details")
   public String fragebogen(Model model, @RequestParam Long id) {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
-    model.addAttribute("typeChecker", new TypeChecker());
+    model.addAttribute("typeChecker", typeChecker);
     return "details";
   }
 
@@ -71,7 +71,7 @@ public class FeedbackController {
   public String creatForm(Model model, Long id) {
     Fragebogen fragebogen = frageboegen.getFragebogenById(id);
     model.addAttribute("fragebogen", fragebogen);
-    model.addAttribute("typeChecker", new TypeChecker());
+    model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("bogennr", id);
     return "formCreator";
   }
@@ -126,14 +126,14 @@ public class FeedbackController {
    * @return
    */
   @GetMapping("/setDate")
-  public String setDate(Long formId,String startdate,String enddate,String start,String end, Model model) {
+  public String setDate(Long formId,String startdate,String enddate,String start,String end,Model m) {
 
     LocalDateTime startDate = dateTimeService.getLocalDateTimeFromString(startdate, start);
     LocalDateTime endDate = dateTimeService.getLocalDateTimeFromString(enddate, end);
 
     frageboegen.changeDateById(formId, startDate, endDate);
 
-    return creatForm(model, formId);
+    return creatForm(m, formId);
   }
 
 
