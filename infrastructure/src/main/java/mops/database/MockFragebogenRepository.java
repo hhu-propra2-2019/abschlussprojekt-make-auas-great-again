@@ -20,46 +20,61 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Qualifier("Faker")
 public class MockFragebogenRepository implements FragebogenRepository {
-  private static final transient List<String> frage = new ArrayList<>(Arrays.asList("Was geht?",
+  private final transient List<String> frage = new ArrayList<>(Arrays.asList("Was geht?",
       "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
 
-  private static final transient List<String> professor = new ArrayList<>(Arrays.asList("Jens Bendisposto",
+  private final transient List<String> professor = new ArrayList<>(Arrays.asList("Jens Bendisposto",
       "Christian Meter", "Jan Roßbach", "Luke Skywalker"));
 
-  private static final transient List<String> vorlesung = new ArrayList<>(Arrays.asList(
+  private final transient List<String> vorlesung = new ArrayList<>(Arrays.asList(
       "Professioneller Softwareentwicklung im Team", "Lineare Algebra I", "Analysis II",
       "Theoretische Informatik", "Machine Learning"));
 
-  private static final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
+  private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
       + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
       + "Machine Learning"));
-  private static HashMap<Long, Fragebogen> fragebogen;
+  private HashMap<Long, Fragebogen> fragebogen = new HashMap<>();
 
-  static {
-    fragebogen = new HashMap<>();
-    List<Fragebogen> fragebogens = generateTenFragebogen();
-    Long index = 1L;
-    for (Fragebogen fragebogen1 : fragebogens) {
-      fragebogen.put(index, fragebogen1);
-      index++;
-    }
-
-  }
+//  {
+//    fragebogen = new HashMap<>();
+//    List<Fragebogen> fragebogens = generateTenFragebogen();
+//    Long index = 1L;
+//    for (Fragebogen fragebogen1 : fragebogens) {
+//      fragebogen.put(index, fragebogen1);
+//      index++;
+//    }
+//  }
 
   @Override
   public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
-    Fragebogen fragebogen = MockFragebogenRepository.fragebogen.get(formId);
-    List<Frage> fragen = fragebogen.getFragen();
+    Fragebogen fragebogen1 = fragebogen.get(formId);
+    List<Frage> fragen = fragebogen1.getFragen();
     fragen.removeIf(frage1 -> frage1.getId().equals(frageId));
-    fragebogen.setFragen(fragen);
+    fragebogen1.setFragen(fragen);
   }
+
+  private final transient List<String> aufgabe = new ArrayList<>(Arrays.asList(
+      "Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken", "Aufgabe 13 Analysis",
+      "Theoretische Informatik Blatt 15", "Machine Learning Programmieraufgabe"));
+
+  private final transient List<String> gruppe = new ArrayList<>(Arrays.asList(
+      "Gruppe 15", "Gruppe 4"));
+
+  private final transient List<String> dozent = new ArrayList<>(Arrays.asList(
+      "Jens Bendisposto", "Christian Meter"));
+
+  private final transient List<String> beratung = new ArrayList<>(Arrays.asList(
+      "Studienberatung", "Rückmeldungen"));
+
+  private final transient List<String> praktikum = new ArrayList<>(Arrays.asList(
+      "Praktikum Hardwarenahe Programmierung", "Softwarentwicklung im Team Praktikum"));
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
     return fragebogen.get(id);
   }
 
-  private static Fragebogen getRandomFragebogen() {
+  private Fragebogen getRandomFragebogen() {
     List<Frage> fragenliste = new ArrayList<>();
     Frage frage1 = generateMultipleChoice();
     Frage frage2 = generateMultipleChoice();
@@ -71,9 +86,20 @@ public class MockFragebogenRepository implements FragebogenRepository {
     String name;
     if (einheit == Einheit.VORLESUNG) {
       name = getRandomVorlesung();
-    } else {
+    }else if(einheit == Einheit.UEBUNG) {
       name = getRandomUebung();
+    }else if(einheit == Einheit.GRUPPE) {
+      name = getRandomGruppe();
+    }else if(einheit == Einheit.DOZENT) {
+      name = getRandomDozent();
+    }else if(einheit == Einheit.PRAKTIKUM) {
+      name = getRandomPraktikum();
+    }else if(einheit == Einheit.AUFGABE) {
+      name = getRandomAufgabe();
+    }else{
+      name = getRandomBeratung();
     }
+
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     fragebogen = fragebogen
         .startdatum(LocalDateTime.now())
@@ -86,8 +112,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
     return fragebogen.build();
   }
 
-  private static Frage generateMultipleChoice() {
-    MultipleChoiceFrage frage = new MultipleChoiceFrage(1L, getRandomFrage());
+  private Frage generateMultipleChoice() {
+    MultipleChoiceFrage frage = new MultipleChoiceFrage(Long.valueOf(1), getRandomFrage(),false);
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));
@@ -96,28 +122,58 @@ public class MockFragebogenRepository implements FragebogenRepository {
     return frage;
   }
 
-  private static String getRandomVorlesung() {
+  private String getRandomVorlesung() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(vorlesung.size());
     return vorlesung.get(index);
   }
 
-  private static String getRandomProfessor() {
+  private String getRandomProfessor() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(professor.size());
     return professor.get(index);
   }
 
-  private static String getRandomFrage() {
+  private String getRandomFrage() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(frage.size());
     return frage.get(index);
   }
 
-  private static String getRandomUebung() {
+  private String getRandomUebung() {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(uebung.size());
     return uebung.get(index);
+  }
+
+  private String getRandomAufgabe() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(aufgabe.size());
+    return aufgabe.get(index);
+  }
+
+  private String getRandomGruppe() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(gruppe.size());
+    return gruppe.get(index);
+  }
+
+  private String getRandomDozent() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(dozent.size());
+    return dozent.get(index);
+  }
+
+  private String getRandomBeratung() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(beratung.size());
+    return beratung.get(index);
+  }
+
+  private String getRandomPraktikum() {
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(praktikum.size());
+    return praktikum.get(index);
   }
 
   @Override
@@ -125,7 +181,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
     return List.copyOf(fragebogen.values());
   }
 
-  private static List<Fragebogen> generateTenFragebogen() {
+  private List<Fragebogen> generateTenFragebogen() {
     List<Fragebogen> fragenliste = new ArrayList<>();
     for (long i = 1L; i < 10L; i++) {
       fragenliste.add(getRandomFragebogen());

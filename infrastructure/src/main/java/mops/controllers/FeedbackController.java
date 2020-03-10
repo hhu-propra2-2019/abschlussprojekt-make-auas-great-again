@@ -8,6 +8,7 @@ import mops.Fragebogen;
 import mops.SkalarFrage;
 import mops.TextFrage;
 import mops.TypeChecker;
+import mops.database.MockFragebogenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("")
+@RequestMapping("/feedback")
 @Controller
 public class FeedbackController {
 

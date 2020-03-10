@@ -22,4 +22,24 @@ public class TypeChecker {
   public static boolean isUebung(Fragebogen fragebogen) {
     return fragebogen.getType() == Einheit.UEBUNG;
   }
+
+  public static boolean isAufgabe(Fragebogen fragebogen) {
+    return fragebogen.getType() == Einheit.AUFGABE;
+  }
+
+  public static boolean isPraktikum(Fragebogen fragebogen) {
+    return fragebogen.getType() == Einheit.PRAKTIKUM;
+  }
+
+  public static boolean isGruppe(Fragebogen fragebogen) {
+    return fragebogen.getType() == Einheit.GRUPPE;
+  }
+
+  public static boolean isDozent(Fragebogen fragebogen) {
+    return fragebogen.getType() == Einheit.DOZENT;
+  }
+
+  public static boolean isBeratung(Fragebogen fragebogen) {
+    return fragebogen.getType() == Einheit.BERATUNG;
+  }
 }

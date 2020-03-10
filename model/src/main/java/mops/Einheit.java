@@ -4,7 +4,12 @@ import java.security.SecureRandom;
 
 public enum Einheit {
   VORLESUNG,
-  UEBUNG;
+  UEBUNG,
+  AUFGABE,
+  PRAKTIKUM,
+  DOZENT,
+  BERATUNG,
+  GRUPPE;
 
   private static final Einheit[] VALUES = values();
   private static final int SIZE = VALUES.length;
