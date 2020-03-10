@@ -27,10 +27,6 @@
                     <span>
                                 <table class="table table-striped">
                                 <thead>
-                                <tr>
-                                    <th scope="col">Frage</th>
-                                    <th scope="col">Delete</th>
-                                </tr>
                                 </thead>
                                     <tbody>
                                     <td th:text="${frage.getFragentext()}">frage text</td>
@@ -42,10 +38,6 @@
                 <div th:if="${typeChecker.isSkalarFrage(frage)}">
                             <table class="table table-striped">
                                 <thead>
-                                <tr>
-                                    <th scope="col">Frage</th>
-                                    <th scope="col">Delete</th>
-                                </tr>
                                 </thead>
                                 <tbody>
                                     <td th:text="${frage.getFragentext()}">frage text</td>
