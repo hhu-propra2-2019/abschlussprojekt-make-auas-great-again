@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import mops.Auswahl;
 import mops.Frage;
 import mops.Fragebogen;
+import mops.MultipleChoiceAntwort;
 import mops.MultipleChoiceFrage;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
@@ -65,7 +67,14 @@ public class FeedbackController {
     List<Frage> fragen = fragebogen.getFragen();
     for (Frage frage : fragen) {
       if (frage instanceof MultipleChoiceFrage) {
-        System.out.println(req.getParameter("answer-" + frage.getId()));
+        List<Auswahl> moeglicheantworten = ((MultipleChoiceFrage) frage).getChoices();
+        Auswahl auswahl = new Auswahl(req.getParameter("answer-" + frage.getId()));
+        if (moeglicheantworten.contains(auswahl)) {
+          ((MultipleChoiceFrage) frage).addAntwort(new MultipleChoiceAntwort(auswahl));
+          System.out.println("Antwort " + auswahl.toString() + " wurde zur Frage "
+              + frage.getFragentext() + " hinzugefügt"); // Debugging-Ausgabe, kann später gelöscht
+                                                         // werden
+        }
       }
     }
     return "redirect:/feedback/";
