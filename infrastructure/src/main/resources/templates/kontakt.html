@@ -40,7 +40,8 @@
                             class="fa fa-phone-square bigicon"></i></span>
                     <div class="col-md-8">
                         Dozent: <select name="dozent" th:remove="all-but-first">
-                        <option th:each="d : ${dozenten}" th:selected="${d.id==kontaktformular.dozent}" th:text="${d.nachname}"
+                        <option th:each="d : ${dozenten}" th:selected="${d.id==kontaktformular.dozent}"
+                                th:text="${d.nachname}"
                                 th:value="${d.id}" value="k1">Dozent
                         </option>
                     </select>
@@ -59,8 +60,9 @@
                             <span class="col-md-1 col-md-offset-2 text-center"><i
                                     class="fa fa-phone-square bigicon"></i></span>
                     <div class="col-md-8">
-                        <input class="form-control" id="text" name="text"
-                               placeholder="Ihr Anliegen..." th:field="${kontaktformular.text}" type="text">
+                        <textarea class="form-control" id="text" name="text"
+                                  placeholder="Ihr Anliegen..." th:field="${kontaktformular.text}"
+                                  type="text"></textarea>
                     </div>
                 </div>
             </fieldset>
