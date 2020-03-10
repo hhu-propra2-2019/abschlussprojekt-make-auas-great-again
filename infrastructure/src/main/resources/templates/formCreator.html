@@ -58,7 +58,6 @@
                                     </td>
                                     <td>
                                     <td>
-<!--                                        <input name="formId" th:value="${bogennr}" type="hidden">-->
                                         <a class="btn btn-primary"
                                            th:href="@{/feedback/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
                                     </td>
@@ -92,7 +91,7 @@
                         <div class="card-header">Text Frage hinzufügen</div>
                         <div class="card-body">
                             <form action="/feedback/addTextFrage" class="form-horizontal" is="mops-form" method="post">
-                            <input name="id" th:value="${bogennr}" type="hidden">
+                            <input name="formId" th:value="${bogennr}" type="hidden">
                                 <input class="form-control" id="textfrage" name="fragentext" placeholder="frage" required="true" type="text">
                                 <br>
                                 <button class="btn btn-light btn-sm" type="submit">hinzufügen</button>
@@ -107,7 +106,7 @@
             <div class="card-body">
                 <form action="/feedback/addSkalarFrage" class="form-horizontal" is="mops-form" method="post">
 
-                    <input name="id" th:value="${bogennr}" type="hidden">
+                    <input name="formId" th:value="${bogennr}" type="hidden">
                     <input class="form-control" id="skalarFrage" name="fragentext" placeholder="frage" required="true" type="text">
                     <br>
                     <button class="btn btn-light btn-sm" type="submit">hinzufügen</button>

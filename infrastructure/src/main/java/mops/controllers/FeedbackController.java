@@ -100,15 +100,15 @@ public class FeedbackController {
   }
 
   @PostMapping("/addTextFrage")
-  public String addTextFrage(Model model, Long id, TextFrage frage) {
-    frageboegen.addTextFrage(id,frage);
-    return creatForm(model, id);
+  public String addTextFrage(Model model, Long formId, TextFrage frage) {
+    frageboegen.addTextFrage(formId,frage);
+    return creatForm(model, formId);
   }
 
   @PostMapping("/addSkalarFrage")
-  public String addSkalarFrage(Model model, Long id, SkalarFrage frage) {
-    frageboegen.addSkalarFrage(id,frage);
-    return creatForm(model, id);
+  public String addSkalarFrage(Model model, Long formId, SkalarFrage frage) {
+    frageboegen.addSkalarFrage(formId,frage);
+    return creatForm(model, formId);
   }
 
   @GetMapping("/getFrageTyp")

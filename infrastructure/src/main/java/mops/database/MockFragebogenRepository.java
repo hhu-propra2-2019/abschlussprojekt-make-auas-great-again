@@ -34,6 +34,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
       + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
       + "Machine Learning"));
   private HashMap<Long, Fragebogen> fragebogen;
+  //simuliert Daten Bank Frage id
+  private Long frageId = 0L;
 
   public MockFragebogenRepository(){
     initial();
@@ -214,6 +216,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public void addTextFrage(Long id, TextFrage frage) {
+    frageId++;
+    frage.setId(frageId);
     Fragebogen fragebogen = getFragebogenById(id);
     List<Frage> fragen = fragebogen.getFragen();
     fragen.add(frage);
@@ -222,6 +226,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public void addSkalarFrage(Long id, SkalarFrage frage) {
+    frageId++;
+    frage.setId(frageId);
     Fragebogen fragebogen = getFragebogenById(id);
     List<Frage> fragen = fragebogen.getFragen();
     fragen.add(frage);
