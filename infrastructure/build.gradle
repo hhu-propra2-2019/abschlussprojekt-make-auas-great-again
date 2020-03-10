@@ -48,6 +48,8 @@ dependencies {
     }
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.keycloak:keycloak-spring-boot-starter:9.0.0'
+    implementation 'org.keycloak.bom:keycloak-adapter-bom:9.0.0'
 }
 
 test {
