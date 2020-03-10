@@ -1,10 +1,10 @@
 package mops;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Value;
 
+@Value
 @AllArgsConstructor
-@Getter
-public class MultipleChoiceAntwort {
+public class MultipleChoiceAntwort extends Antwort {
   private Auswahl antwort;
 }

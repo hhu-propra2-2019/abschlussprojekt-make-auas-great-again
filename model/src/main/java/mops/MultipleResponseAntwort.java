@@ -8,8 +8,7 @@ public class MultipleResponseAntwort extends Antwort {
   transient Set<Integer> gewaehlteAntworten;
 
   public MultipleResponseAntwort(Long id) {
-    super(id);
-    gewaehlteAntworten = new HashSet<Integer>();
+    gewaehlteAntworten = new HashSet<>();
   }
 
   public void addAntwort(Integer neueAntwort) {
