@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Qualifier("Faker")
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.LooseCoupling"})
 public class MockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> frage = new ArrayList<>(Arrays.asList("Was geht?",
       "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
@@ -33,30 +34,26 @@ public class MockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
       + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
       + "Machine Learning"));
-  private transient HashMap<Long, Fragebogen> fragebogen;
+  private transient HashMap<Long, Fragebogen> frageboegen;
   //simuliert Daten Bank Frage id
   private transient Long frageId = 0L;
 
   public MockFragebogenRepository() {
-    initial();
-  }
-
-  private void initial() {
-    fragebogen = new HashMap<>();
-    List<Fragebogen> fragebogens = generateTenFragebogen();
+    frageboegen = new HashMap<>();
+    List<Fragebogen> fragebogenList = generateTenFragebogen();
     Long index = 1L;
-    for (Fragebogen fragebogen1 : fragebogens) {
-      fragebogen.put(index, fragebogen1);
+    for (Fragebogen fragebogen : fragebogenList) {
+      frageboegen.put(index, fragebogen);
       index++;
     }
   }
 
   @Override
   public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
-    Fragebogen fragebogen1 = fragebogen.get(formId);
-    List<Frage> fragen = fragebogen1.getFragen();
+    Fragebogen fragebogen = frageboegen.get(formId);
+    List<Frage> fragen = fragebogen.getFragen();
     fragen.removeIf(frage1 -> frage1.getId().equals(frageId));
-    fragebogen1.setFragen(fragen);
+    fragebogen.setFragen(fragen);
   }
 
   private final transient List<String> aufgabe = new ArrayList<>(Arrays.asList(
@@ -77,7 +74,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
-    return fragebogen.get(id);
+    return frageboegen.get(id);
   }
 
   private Fragebogen getRandomFragebogen() {
@@ -184,7 +181,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public List<Fragebogen> getAll() {
-    return List.copyOf(fragebogen.values());
+    return List.copyOf(frageboegen.values());
   }
 
   private List<Fragebogen> generateTenFragebogen() {

@@ -22,7 +22,7 @@
         <div class="card-header">Fragen</div>
         <div class="card-body">
             <tr th:each="frage: ${fragebogen.getFragen()}">
-                <div th:if="${typeChecker.isTextFrage(frage)}">
+                <div th:if="${typechecker.isTextFrage(frage)}">
                         <!--    text Fragen laden-->
                     <span>
                         <table class="table table-striped">
@@ -38,7 +38,7 @@
                         </table>
                     </span>
                 </div>
-                <div th:if="${typeChecker.isSkalarFrage(frage)}">
+                <div th:if="${typechecker.isSkalarFrage(frage)}">
                             <table class="table table-striped">
                                 <thead>
                                 </thead>

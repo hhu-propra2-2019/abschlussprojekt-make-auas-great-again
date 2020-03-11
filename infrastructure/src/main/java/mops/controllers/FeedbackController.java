@@ -74,7 +74,7 @@ public class FeedbackController {
   public String creatForm(Model model, Long id) {
     Fragebogen fragebogen = frageboegen.getFragebogenById(id);
     model.addAttribute("fragebogen", fragebogen);
-    model.addAttribute("typeChecker", typeChecker);
+    model.addAttribute("typechecker", typeChecker);
     model.addAttribute("bogennr", id);
     return "formCreator";
   }
@@ -139,7 +139,6 @@ public class FeedbackController {
     String formatString = "redirect:/feedback/creatForm?id=%d";
     return String.format(formatString, formId);
   }
-
 
   /**
    * release Feedback form with success message.
