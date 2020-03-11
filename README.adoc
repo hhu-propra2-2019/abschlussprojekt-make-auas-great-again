@@ -17,24 +17,18 @@ Dieses Subsystem der "Modularen Online Plattform für Studierende" (Mops) implem
 
 Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
 
-== Ziele des Systems
+== Ziele und Features
 
-- Übersichtile Darstellung der verfügbaren Umfragen für Studierende
+- Zügiges erstellen neuer Umfragen für Organisatoren
+- Übersichtliche Darstellung der Umfragen für die Studenten
 - Anonymität der Abgaben
-- Zügiges Erstellen neuer Umfragen für Organisatorn
-
-== Features
-
-- Erstellung neuer Umfragen durch den Organisator
-- Uebersicht und anonymes Ausfüllen der Umfragen durch die Studenten
 - Selective Veröffentlichung der Umfragen durch den Organisator
 - Ticket System zur Behebung von Problemen
 
 == Hinweise zur Benutztung
 
-- Die Anwendung benutzt Java 13 mit Spring und Thymeleaf
-- Die Anwendung benutzt docker-compose zum Starten https://docs.docker.com/compose/install/
-- Nach dem Klonen des Repositories lässt sich das System dann starten mit
+- Die Anwendung benutzt docker-compose zur Auslieferung https://docs.docker.com/compose/install/
+- Nach dem klonen des Repositories lässt sich das System dann starten mit
 
 [source,bash]
 --
