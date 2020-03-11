@@ -30,9 +30,10 @@ public class FeedbackController {
   private transient TypeChecker typeChecker = new TypeChecker();
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
+
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
-    if (!emptySearchString.equals(search) && search != null) {
+    if (!emptySearchString.equals(search) && (search != null)) {
       model.addAttribute("typeChecker", typeChecker);
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
       return "index";
@@ -156,3 +157,5 @@ public class FeedbackController {
     return creatForm(model, formId);
   }
 }
+
+
