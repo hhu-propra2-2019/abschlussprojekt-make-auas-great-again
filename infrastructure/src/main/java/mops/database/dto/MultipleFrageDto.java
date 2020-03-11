@@ -15,7 +15,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class MultipleFrageDto {
   @Id
   Long id;
-  
+
   @Column("frage")
   Set<MultipleAntwortDto> antworten;
 }

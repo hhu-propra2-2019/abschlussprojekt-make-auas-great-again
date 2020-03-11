@@ -1,105 +1,21 @@
 <!DOCTYPE html>
-<html lang="en"
-      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{mopslayout :: html(name='Name des Subsystems', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}">
 <head>
-    <meta charset="utf-8">
-    <title>feedback</title>
-    <th:block th:fragment="headcontent">
-        <!-- Links, Skripts, Styles hier einfügen! -->
-    </th:block>
+  <meta charset="utf-8">
+  <title>Name des Subsystems</title>
+  <th:block th:fragment="headcontent">
+    <!-- Links, Skripts, Styles hier einfügen! -->
+  </th:block>
 </head>
 <body>
 <header>
-    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <ul>
-            <li class="active"><a th:href="@{/feedback/}">Startseite</a></li>
-            <li><a th:href="@{/feedback/kontakt}">Contact us</a></li>
-        </ul>
-    </nav>
+  <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+    <!-- Navigation als ungeordnete Liste mit einfachen Links hier einfügen! -->
+  </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1 class="display-1">Dein Feedback</h1>
-    <div class="row row-cols-1 row-cols-md-4">
-        <div class="col mb-4" th:each="fragebogen,iter :${frageboegen}">
-            <div class="card bg-light border-dark text-center">
-                <img alt="..." class="card-img-top" height="150" src="/uebung.jpg" th:if="${typeChecker.isUebung(fragebogen)}"
-                     width="225">
-                <img alt="..." class="card-img-top" height="150" src="/vorlesung.jpg " th:if="${typeChecker.isVorlesung(fragebogen)}"
-                     width="225">
-                <img alt="..." class="card-img-top" height="150" src="/aufgabe.jpg" th:if="${typeChecker.isAufgabe(fragebogen)}"
-                     width="225">
-                <img alt="..." class="card-img-top" height="150" src="/praktikum.jpg" th:if="${typeChecker.isPraktikum(fragebogen)}"
-                     width="225">
-                <img alt="..." class="card-img-top" height="150" src="/dozent.jpg" th:if="${typeChecker.isDozent(fragebogen)}"
-                     width="225">
-                <img alt="..." class="card-img-top" height="150" src="/gruppen.jpg" th:if="${typeChecker.isGruppe(fragebogen)}"
-                     width="225">
-                <img alt="..." class="card-img-top" height="150" src="/beratung.jpg" th:if="${typeChecker.isBeratung(fragebogen)}"
-                     width="225">
-                <div class="card-body">
-                    <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
-                    <p class="card-text">Verbleibende Zeit:</p>
-                    <table style="margin: auto">
-                        <tr class="clock_times" th:id="'clock' + ${iter.index}">
-                            <td class="clock_tage" th:text${Date.days}>--</td>
-                            <td class="clock_stunden" th:text${Date.hours}>--</td>
-                            <td class="clock_minuten" th:text${Date.minutes}>--</td>
-                            <td class="clock_sekunden" th:text${Date.seconds}>--</td>
-                            <div style=></div>
-                        </tr>
-                        <tr class="clock_names">
-                            <td>Days</td>
-                            <td>Hours</td>
-                            <td>Min.</td>
-                            <td>Sec.</td>
-                        </tr>
-                    </table>
-                    <a class="btn btn-primary" th:href="@{details(id=${fragebogen.bogennr})}">Feedback
-                        Geben!</a>
-                </div>
-                <p th:text=${date}></pth>
-            </div>
-        </div>
-    </div>
-    <script th:inline="javascript">
-    /*<![CDATA[*/
-    var EndDate = /*[[${enddate}]]*/ 'default';
-    var EndDateFormatted =  new Date(Date.parse(EndDate));
-    var StartDate = /*[[${startdate}]]*/ 'default';
-    /*]]>*/
-    function pad(num) {
-        var s = "00" + num;
-        return s.substr(s.length - 2);
-    }
-    var nowDate = new Date();
-
-    var x = setInterval(function()  {
-        var now = new Date().getTime();
-        var distance = EndDateFormatted.getTime() - now;
-        if (distance < 0) {
-            var distance = StartDate.getTime() - now;
-        }
-        if (distance < 0) {
-            clearInterval(x);
-
-        } else {
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-            var minutes = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-            var seconds = pad(Math.floor((distance % (1000 * 60)) / 1000));
-        for(let i =0; i<=8 ; i++){
-            var clockx = document.getElementById("clock"+i);
-            clockx.getElementsByClassName("clock_tage")[0].innerHTML = days;
-            clockx.getElementsByClassName("clock_stunden")[0].innerHTML = hours;
-            clockx.getElementsByClassName("clock_minuten")[0].innerHTML = minutes;
-            clockx.getElementsByClassName("clock_sekunden")[0].innerHTML = seconds;
-        }
-
-        }
-    }, 1000);
-
-    </script>
+  Hallo
 </main>
 </body>
 </html>

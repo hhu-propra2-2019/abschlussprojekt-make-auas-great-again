@@ -11,6 +11,7 @@ public class DateTimeService {
 
   /**
    * convert String input to LocalDateTime Object.
+   *
    * @param date String
    * @param time String
    * @return LocalDateTime Object
@@ -23,6 +24,7 @@ public class DateTimeService {
 
   /**
    * format a LocalDateTime Object to a German formatted String.
+   *
    * @param dateTime LocalDateTime
    * @return String
    */

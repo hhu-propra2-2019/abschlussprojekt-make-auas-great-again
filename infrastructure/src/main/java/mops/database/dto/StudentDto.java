@@ -14,8 +14,8 @@ import org.springframework.data.relational.core.mapping.Table;
 public class StudentDto {
   @Id
   Long id;
-  
+
   Set<StudentBeantwortetFragebogenDto> frageboegen;
-  
+
   Set<StudentBelegtEinheitDto> einheiten;
 }

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Qualifier("Org")
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.LooseCoupling"})
+@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis", "PMD.LooseCoupling"})
 public class OrgMockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> frage = new ArrayList<>(
       Arrays.asList("Was geht?", "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
@@ -35,9 +35,20 @@ public class OrgMockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
       + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
       + "Machine Learning"));
-
+  private final transient List<String> aufgabe =
+      new ArrayList<>(Arrays.asList("Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken",
+          "Aufgabe 13 Analysis", "Theoretische Informatik Blatt 15",
+          "Machine Learning Programmieraufgabe"));
+  private final transient List<String> gruppe =
+      new ArrayList<>(Arrays.asList("Gruppe 15", "Gruppe 4"));
+  private final transient List<String> dozent =
+      new ArrayList<>(Arrays.asList("Jens Bendisposto", "Christian Meter"));
+  private final transient List<String> beratung =
+      new ArrayList<>(Arrays.asList("Studienberatung", "Rückmeldungen"));
+  private final transient List<String> praktikum = new ArrayList<>(Arrays
+      .asList("Praktikum Hardwarenahe Programmierung", "Softwarentwicklung im Team Praktikum"));
+  private final transient Random idgenerator = new Random();
   private transient HashMap<Long, Fragebogen> frageboegen;
-
   //simuliert Daten Bank Frage id
   private transient Long frageId = 0L;
 
@@ -58,25 +69,6 @@ public class OrgMockFragebogenRepository implements FragebogenRepository {
     fragen.removeIf(frage1 -> frage1.getId().equals(frageId));
     fragebogen.setFragen(fragen);
   }
-
-  private final transient List<String> aufgabe =
-      new ArrayList<>(Arrays.asList("Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken",
-          "Aufgabe 13 Analysis", "Theoretische Informatik Blatt 15",
-          "Machine Learning Programmieraufgabe"));
-
-  private final transient List<String> gruppe =
-      new ArrayList<>(Arrays.asList("Gruppe 15", "Gruppe 4"));
-
-  private final transient List<String> dozent =
-      new ArrayList<>(Arrays.asList("Jens Bendisposto", "Christian Meter"));
-
-  private final transient List<String> beratung =
-      new ArrayList<>(Arrays.asList("Studienberatung", "Rückmeldungen"));
-
-  private final transient List<String> praktikum = new ArrayList<>(Arrays
-      .asList("Praktikum Hardwarenahe Programmierung", "Softwarentwicklung im Team Praktikum"));
-
-  private final transient Random idgenerator = new Random();
 
   @Override
   public Fragebogen getFragebogenById(Long id) {

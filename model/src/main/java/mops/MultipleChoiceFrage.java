@@ -31,7 +31,7 @@ public class MultipleChoiceFrage extends Frage {
   public int getNumberOfChoices() {
     return choices.size();
   }
-  
+
   @Override
   public void addAntwort(String antwort) {
     Auswahl auswahl = new Auswahl(antwort);

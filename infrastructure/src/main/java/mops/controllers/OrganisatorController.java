@@ -67,13 +67,13 @@ public class OrganisatorController {
 
   @PostMapping("/addTextFrage")
   public String addTextFrage(Model model, Long formId, TextFrage frage) {
-    frageboegen.addTextFrage(formId,frage);
+    frageboegen.addTextFrage(formId, frage);
     return creatForm(model, formId);
   }
 
   @PostMapping("/addSkalarFrage")
   public String addSkalarFrage(Model model, Long formId, SkalarFrage frage) {
-    frageboegen.addSkalarFrage(formId,frage);
+    frageboegen.addSkalarFrage(formId, frage);
     return creatForm(model, formId);
   }
 
@@ -85,15 +85,16 @@ public class OrganisatorController {
 
   /**
    * set the date and time of the feedback form.
-   * @param formId Long formularId
+   *
+   * @param formId    Long formularId
    * @param startdate String startdate
-   * @param enddate String enddate
-   * @param start String startzeit
-   * @param end String endzeit
+   * @param enddate   String enddate
+   * @param start     String startzeit
+   * @param end       String endzeit
    * @return
    */
   @GetMapping("/setDate")
-  public String setDate(Long formId,String startdate,String enddate,String start,String end) {
+  public String setDate(Long formId, String startdate, String enddate, String start, String end) {
 
     LocalDateTime startDate = dateTimeService.getLocalDateTimeFromString(startdate, start);
     LocalDateTime endDate = dateTimeService.getLocalDateTimeFromString(enddate, end);
@@ -106,7 +107,8 @@ public class OrganisatorController {
 
   /**
    * release Feedback form with success message.
-   * @param model Model
+   *
+   * @param model  Model
    * @param formId Long
    * @return
    */

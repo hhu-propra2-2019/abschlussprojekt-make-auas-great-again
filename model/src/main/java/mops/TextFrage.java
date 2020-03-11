@@ -17,7 +17,7 @@ public class TextFrage extends Frage {
     this.fragentext = fragentext;
     this.antworten = new HashSet<>();
   }
-  
+
   @Override
   public void addAntwort(String text) {
     TextAntwort antwort = new TextAntwort(text);

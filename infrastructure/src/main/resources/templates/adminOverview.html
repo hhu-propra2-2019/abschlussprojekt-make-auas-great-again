@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}">
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Übersicht</title>
@@ -32,12 +33,12 @@
             <td th:text="${veranstaltung}">name</td>
             <td>
                 <a th:href="@{/creatForm(id=${bogennr})}">
-                    <button type="submit" class="btn btn-danger" >Create</button>
+                    <button class="btn btn-danger" type="submit">Create</button>
                 </a>
             </td>
             <td>
                 <a th:href="@{'/details'}">
-                    <button type="submit" class="btn btn-danger" >view</button>
+                    <button class="btn btn-danger" type="submit">view</button>
                 </a>
             </td>
         </tr>
