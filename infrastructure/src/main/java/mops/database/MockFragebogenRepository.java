@@ -56,9 +56,15 @@ public class MockFragebogenRepository implements FragebogenRepository {
       Frage frage1 = generateMultipleChoice();
       Frage frage2 = generateMultipleChoice();
       Frage frage3 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
+      Frage frage4 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
+      frage3.addAntwort("Gut");
+      frage3.addAntwort("Schlecht");
+      frage4.addAntwort("Sehr Gut");
+      frage4.addAntwort("Sehr schlecht");
       fragenliste.add(frage1);
       fragenliste.add(frage2);
       fragenliste.add(frage3);
+      fragenliste.add(frage4);
       Einheit einheit = Einheit.getRandomEinheit();
       String name;
       if (einheit == Einheit.VORLESUNG) {

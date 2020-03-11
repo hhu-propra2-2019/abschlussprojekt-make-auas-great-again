@@ -1,6 +1,7 @@
 package mops;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import lombok.Builder;
@@ -78,6 +79,28 @@ public class Fragebogen {
       return veranstaltungsname.toLowerCase(Locale.GERMAN)
           .contains(search.toLowerCase(Locale.GERMAN));
     }
+  }
+
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+  public List<TextFrage> getTextfragen() {
+    List<TextFrage> textFragen = new ArrayList<>();
+    for (Frage frage : fragen) {
+      if (frage instanceof TextFrage) {
+        textFragen.add((TextFrage) frage);
+      }
+    }
+    return textFragen;
+  }
+
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+  public List<MultipleChoiceFrage> getMultipleChoiceFragen() {
+    List<MultipleChoiceFrage> mult = new ArrayList<>();
+    for (Frage frage : fragen) {
+      if (frage instanceof MultipleChoiceFrage) {
+        mult.add((MultipleChoiceFrage) frage);
+      }
+    }
+    return mult;
   }
 }
 
