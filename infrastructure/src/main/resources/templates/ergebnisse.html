@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='Fragebogen', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Fragebogen</title>
+    <th:block th:fragment="headcontent">
+        <!-- Links, Skripts, Styles hier einfügen! -->
+    </th:block>
+</head>
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <ul>
+            <li><a th:href="@{/feedback/}">Startseite</a></li>
+            <li><a th:href="@{/feedback/kontakt}">Contact us</a></li>
+        </ul>
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <div class="container">
+        <h1 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
+        <h2 th:text="${fragebogen.professorenname}">Professor</h2>
+        <div th:each="frage : ${fragebogen.fragen}">
+            <div class="form-group" th:if="${typechecker.isTextFrage(frage)}">
+                <label for="textfrage" th:text="${frage.fragentext}">Label</label>
+                <ul th:each="antwort : ${frage.antworten}">
+                    <li th:text="${antwort.antworttext}">Antworttext</li>
+                </ul>
+            </div>
+            <div class="form-group" th:if="${typechecker.isMultipleChoice(frage)}">
+                <h5 th:text="${frage.fragentext}">Fragetext</h5>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
