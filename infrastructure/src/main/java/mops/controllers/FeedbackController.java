@@ -18,14 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/feedback")
 @Controller
+@SuppressWarnings("checkstyle:MissingJavadocMethod")
 public class FeedbackController {
-
   private static final String emptySearchString = "";
+  private final transient String account = "account";
   private final transient FragebogenRepository frageboegen;
   private final transient TypeChecker typeChecker;
 
-  private final Counter authenticatedAccess;
-  private final Counter publicAccess;
+  private final transient Counter authenticatedAccess;
+  private final transient Counter publicAccess;
 
 
   public FeedbackController(MeterRegistry registry) {
@@ -35,12 +36,6 @@ public class FeedbackController {
     this.publicAccess = registry.counter("access.public");
   }
 
-  /**
-   * Nimmt das Authentifizierungstoken von Keycloak und erzeugt ein AccountDTO für die Views.
-   *
-   * @param token
-   * @return neuen Account der im Template verwendet wird
-   */
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     return new Account(
@@ -53,7 +48,7 @@ public class FeedbackController {
   @GetMapping("/")
   public String index(KeycloakAuthenticationToken token, Model model) {
     if (token != null) {
-      model.addAttribute("account", createAccountFromPrincipal(token));
+      model.addAttribute(account, createAccountFromPrincipal(token));
     }
     publicAccess.increment();
     return "index";
@@ -68,7 +63,7 @@ public class FeedbackController {
       model.addAttribute("frageboegen", frageboegen.getAll());
     }
     model.addAttribute("typeChecker", typeChecker);
-    model.addAttribute("account", createAccountFromPrincipal(token));
+    model.addAttribute(account, createAccountFromPrincipal(token));
     authenticatedAccess.increment();
     return "uebersicht";
   }
@@ -82,7 +77,7 @@ public class FeedbackController {
   public String fragebogen(KeycloakAuthenticationToken token, Model model, @RequestParam Long id) {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
     model.addAttribute("typeChecker", typeChecker);
-    model.addAttribute("account", createAccountFromPrincipal(token));
+    model.addAttribute(account, createAccountFromPrincipal(token));
     authenticatedAccess.increment();
     return "details";
   }
@@ -90,7 +85,7 @@ public class FeedbackController {
   @GetMapping("/kontakt")
   @RolesAllowed("ROLE_studentin")
   public String kontakt(KeycloakAuthenticationToken token, Model model) {
-    model.addAttribute("account", createAccountFromPrincipal(token));
+    model.addAttribute(account, createAccountFromPrincipal(token));
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     model.addAttribute("username", principal.getName());
     model.addAttribute("email", principal.getKeycloakSecurityContext().getIdToken().getEmail());

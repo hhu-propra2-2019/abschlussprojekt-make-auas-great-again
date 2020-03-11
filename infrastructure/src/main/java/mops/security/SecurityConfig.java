@@ -59,7 +59,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
-    forceHTTPS(http);
+    forceHttps(http);
     http.authorizeRequests()
         .antMatchers("/actuator/**")
         .hasRole("monitoring")
@@ -67,20 +67,14 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         .permitAll();
   }
 
-  /**
-   * Redirect all Requests to SSL if header in proxy are set.
-   *
-   * @param http
-   * @throws Exception
-   */
-  private void forceHTTPS(HttpSecurity http) throws Exception {
+  private void forceHttps(HttpSecurity http) throws Exception {
     http.requiresChannel()
         .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
         .requiresSecure();
   }
 
   /**
-   * Declaring this class enables us to use the Spring specific
+   * Declaring this class enables us to use the Spring specific.
    * {@link org.springframework.security.access.annotation.Secured} annotation
    * or the JSR-250 Java Standard
    * {@link javax.annotation.security.RolesAllowed} annotation
