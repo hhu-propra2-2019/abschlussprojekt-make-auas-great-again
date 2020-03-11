@@ -45,8 +45,15 @@ public class MultipleChoiceFrage extends Frage {
     result = new HashMap<>();
     for (Auswahl auswahl : choices) {
       long anzahl = antworten.stream().filter(x -> x.getAntwort().equals(auswahl)).count();
-      Double percent = Double.valueOf((((double) anzahl) / antworten.size()) * 100);
-      result.put(auswahl, percent);
+      result.put(auswahl, berechneProzent(anzahl));
+    }
+  }
+
+  private Double berechneProzent(long anzahl) {
+    if (antworten.size() != 0) {
+      return Double.valueOf((((double) anzahl) / antworten.size()) * 100);
+    } else {
+      return Double.valueOf(0);
     }
   }
   
