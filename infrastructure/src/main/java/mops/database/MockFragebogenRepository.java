@@ -3,7 +3,9 @@ package mops.database;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import mops.Auswahl;
 import mops.Einheit;
@@ -16,77 +18,84 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MockFragebogenRepository implements FragebogenRepository {
-  private final transient List<String> frage = new ArrayList<>(Arrays.asList("Was geht?",
-      "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
+  private final transient List<String> frage = new ArrayList<>(
+      Arrays.asList("Was geht?", "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
 
-  private final transient List<String> professor = new ArrayList<>(Arrays.asList("Jens Bendisposto",
-      "Christian Meter", "Jan Roßbach", "Luke Skywalker"));
+  private final transient List<String> professor = new ArrayList<>(
+      Arrays.asList("Jens Bendisposto", "Christian Meter", "Jan Roßbach", "Luke Skywalker"));
 
-  private final transient List<String> vorlesung = new ArrayList<>(Arrays.asList(
-      "Professioneller Softwareentwicklung im Team", "Lineare Algebra I", "Analysis II",
-      "Theoretische Informatik", "Machine Learning"));
+  private final transient List<String> vorlesung =
+      new ArrayList<>(Arrays.asList("Professioneller Softwareentwicklung im Team",
+          "Lineare Algebra I", "Analysis II", "Theoretische Informatik", "Machine Learning"));
 
-  private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
-      + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik",
-      "Uebung Machine Learning"));
+  private final transient List<String> uebung =
+      new ArrayList<>(Arrays.asList("Uebung zur Linearen" + " Algebra", "Uebung zur Analysis",
+          "Uebung zur Theoretischen Informatik", "Uebung Machine Learning"));
 
-  private final transient List<String> aufgabe = new ArrayList<>(Arrays.asList(
-      "Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken", "Aufgabe 13 Analysis",
-      "Theoretische Informatik Blatt 15", "Machine Learning Programmieraufgabe"));
+  private final transient List<String> aufgabe =
+      new ArrayList<>(Arrays.asList("Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken",
+          "Aufgabe 13 Analysis", "Theoretische Informatik Blatt 15",
+          "Machine Learning Programmieraufgabe"));
 
-  private final transient List<String> gruppe = new ArrayList<>(Arrays.asList(
-      "Gruppe 15", "Gruppe 4"));
+  private final transient List<String> gruppe =
+      new ArrayList<>(Arrays.asList("Gruppe 15", "Gruppe 4"));
 
-  private final transient List<String> dozent = new ArrayList<>(Arrays.asList(
-      "Jens Bendisposto", "Christian Meter"));
+  private final transient List<String> dozent =
+      new ArrayList<>(Arrays.asList("Jens Bendisposto", "Christian Meter"));
 
-  private final transient List<String> beratung = new ArrayList<>(Arrays.asList(
-      "Studienberatung", "Rückmeldungen"));
+  private final transient List<String> beratung =
+      new ArrayList<>(Arrays.asList("Studienberatung", "Rückmeldungen"));
 
-  private final transient List<String> praktikum = new ArrayList<>(Arrays.asList(
-      "Praktikum Hardwarenahe Programmierung", "Softwarentwicklung im Team Praktikum"));
+  private final transient List<String> praktikum = new ArrayList<>(Arrays
+      .asList("Praktikum Hardwarenahe Programmierung", "Softwarentwicklung im Team Praktikum"));
+
+  private final transient Random idgenerator = new Random();
+
+  // static, da beide Controller gleiche Datenbank brauchen
+  private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
-    List<Frage> fragenliste = new ArrayList<>();
-    Frage frage1 = generateMultipleChoice();
-    Frage frage2 = generateMultipleChoice();
-    Frage frage3 = new TextFrage(3L, getRandomFrage());
-    fragenliste.add(frage1);
-    fragenliste.add(frage2);
-    fragenliste.add(frage3);
-    Einheit einheit = Einheit.getRandomEinheit();
-    String name;
-    if (einheit == Einheit.VORLESUNG) {
-      name = getRandomVorlesung();
-    }else if(einheit == Einheit.UEBUNG) {
-      name = getRandomUebung();
-    }else if(einheit == Einheit.GRUPPE) {
-      name = getRandomGruppe();
-    }else if(einheit == Einheit.DOZENT) {
-      name = getRandomDozent();
-    }else if(einheit == Einheit.PRAKTIKUM) {
-      name = getRandomPraktikum();
-    }else if(einheit == Einheit.AUFGABE) {
-      name = getRandomAufgabe();
-    }else{
-      name = getRandomBeratung();
+    if (altefrageboegen.containsKey(id)) {
+      return altefrageboegen.get(id);
+    } else {
+      List<Frage> fragenliste = new ArrayList<>();
+      Frage frage1 = generateMultipleChoice();
+      Frage frage2 = generateMultipleChoice();
+      Frage frage3 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
+      fragenliste.add(frage1);
+      fragenliste.add(frage2);
+      fragenliste.add(frage3);
+      Einheit einheit = Einheit.getRandomEinheit();
+      String name;
+      if (einheit == Einheit.VORLESUNG) {
+        name = getRandomVorlesung();
+      } else if (einheit == Einheit.UEBUNG) {
+        name = getRandomUebung();
+      } else if (einheit == Einheit.GRUPPE) {
+        name = getRandomGruppe();
+      } else if (einheit == Einheit.DOZENT) {
+        name = getRandomDozent();
+      } else if (einheit == Einheit.PRAKTIKUM) {
+        name = getRandomPraktikum();
+      } else if (einheit == Einheit.AUFGABE) {
+        name = getRandomAufgabe();
+      } else {
+        name = getRandomBeratung();
+      }
+      Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
+      fragebogen = fragebogen.startdatum(LocalDateTime.now())
+          .enddatum(LocalDateTime.now().plusHours(24)).fragen(fragenliste)
+          .professorenname(getRandomProfessor()).veranstaltungsname(name).type(einheit).bogennr(id);
+      Fragebogen result = fragebogen.build();
+      altefrageboegen.put(id, result);
+      return result;
     }
-
-    Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
-    fragebogen = fragebogen
-        .startdatum(LocalDateTime.now())
-        .enddatum(LocalDateTime.now().plusHours(24))
-        .fragen(fragenliste)
-        .professorenname(getRandomProfessor())
-        .veranstaltungsname(name)
-        .type(einheit)
-        .bogennr(id);
-    return fragebogen.build();
   }
 
   private Frage generateMultipleChoice() {
-    MultipleChoiceFrage frage = new MultipleChoiceFrage(Long.valueOf(1), getRandomFrage(),false);
+    MultipleChoiceFrage frage =
+        new MultipleChoiceFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage(), false);
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));
