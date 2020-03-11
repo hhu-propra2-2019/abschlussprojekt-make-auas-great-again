@@ -9,6 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
 public class MultipleChoiceFrage extends Frage {
   private transient String fragentext;
   private transient List<Auswahl> choices;
