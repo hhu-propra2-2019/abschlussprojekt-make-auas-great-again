@@ -15,12 +15,13 @@ Dieses Subsystem der "Modularen Online Plattform für Studierende" (Mops) implem
 
 == Warum ein Feedback System?
 
-I Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
+Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
 
 == Ziele des Systems
 
-- Die Vereinfachung und Zentralisierung der Meinungserhebung an der HHU
-- Bestehen des Programmierpraktikums für die Grupper Make Auas Great Again
+- Übersichtile Darstellung der verfügbaren Umfragen für Studierende
+- Anonymität der Abgaben
+- Zügiges Erstellen neuer Umfragen für Organisatorn
 
 == Features
 
