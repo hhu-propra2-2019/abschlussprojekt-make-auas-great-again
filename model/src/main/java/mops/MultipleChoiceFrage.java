@@ -14,7 +14,7 @@ public class MultipleChoiceFrage extends Frage {
   private transient List<Auswahl> choices;
   private boolean hasMultipleResponse;
   private List<MultipleChoiceAntwort> antworten;
-  private Map<Auswahl, Double> result;
+  private Map<Auswahl, Double> result = new HashMap<>();
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
   public MultipleChoiceFrage(Long id, String fragentext, boolean hasMultipleResponse) {
@@ -27,6 +27,7 @@ public class MultipleChoiceFrage extends Frage {
 
   public void addChoice(Auswahl choice) {
     this.choices.add(choice);
+    result.put(choice, Double.valueOf(0));
   }
 
   public int getNumberOfChoices() {
@@ -39,10 +40,10 @@ public class MultipleChoiceFrage extends Frage {
     if (choices.contains(auswahl)) {
       this.antworten.add(new MultipleChoiceAntwort(auswahl));
     }
+    this.aktualisiereErgebnis();
   }
   
-  public void berechneErgebnis() {
-    result = new HashMap<>();
+  private void aktualisiereErgebnis() {
     for (Auswahl auswahl : choices) {
       long anzahl = antworten.stream().filter(x -> x.getAntwort().equals(auswahl)).count();
       result.put(auswahl, berechneProzent(anzahl));
@@ -50,11 +51,7 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   private Double berechneProzent(long anzahl) {
-    if (antworten.isEmpty()) {
-      return Double.valueOf((((double) anzahl) / antworten.size()) * 100);
-    } else {
-      return Double.valueOf(0);
-    }
+    return Double.valueOf((((double) anzahl) / antworten.size()) * 100);
   }
   
   public Double holeErgebnis(Auswahl auswahl) {
