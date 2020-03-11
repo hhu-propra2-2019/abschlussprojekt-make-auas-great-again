@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
@@ -19,7 +18,7 @@ public class TypeCheckerTest {
 
   @Test
   public void isMultipleChoiceTest() {
-    Frage frage = new MultipleChoiceFrage(Long.valueOf(1), "Wie geht's?",false);
+    Frage frage = new MultipleChoiceFrage(Long.valueOf(1), "Wie geht's?", false);
     assertTrue(TypeChecker.isMultipleChoice(frage));
   }
 
