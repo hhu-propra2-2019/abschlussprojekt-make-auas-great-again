@@ -1,16 +1,24 @@
 package mops;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.HashSet;
+import java.util.Set;
+import lombok.Value;
 
-@Getter
-@Setter
+@Value
 public class TextFrage extends Frage {
   private String fragentext;
+  private Set<TextAntwort> antworten;
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
   public TextFrage(Long id, String frage) {
     super(id);
     this.fragentext = frage;
+    this.antworten = new HashSet<>();
+  }
+  
+  @Override
+  public void addAntwort(String text) {
+    TextAntwort antwort = new TextAntwort(text);
+    this.antworten.add(antwort);
   }
 }
