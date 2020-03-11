@@ -156,7 +156,6 @@ public class MockFragebogenRepository implements FragebogenRepository {
       } else {
         name = getRandomBeratung();
       }
-
       Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
       fragebogen = fragebogen.startdatum(LocalDateTime.now())
           .enddatum(LocalDateTime.now().plusHours(24)).fragen(fragenliste)
