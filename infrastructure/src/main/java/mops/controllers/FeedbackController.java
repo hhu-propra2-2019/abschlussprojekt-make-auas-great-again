@@ -17,15 +17,14 @@ public class FeedbackController {
   private final transient FragebogenRepository frageboegen;
   private final transient TypeChecker typeChecker;
 
-
   public FeedbackController() {
-    this.frageboegen = new MockFragebogenRepository();
-    this.typeChecker = new TypeChecker();
+    frageboegen = new MockFragebogenRepository();
+    typeChecker = new TypeChecker();
   }
 
   @GetMapping("/")
   public String uebersicht(Model model, String search) {
-    if (!emptySearchString.equals(search) && search != null) {
+    if (!emptySearchString.equals(search) && (search != null)) {
       model.addAttribute("typeChecker", typeChecker);
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
       return "index";

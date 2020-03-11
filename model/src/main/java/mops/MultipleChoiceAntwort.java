@@ -5,6 +5,6 @@ import lombok.Value;
 
 @Value
 @AllArgsConstructor
-public class TextAntwort extends Antwort {
-  private String antworttext;
+public class MultipleChoiceAntwort extends Antwort {
+  private Auswahl antwort;
 }
