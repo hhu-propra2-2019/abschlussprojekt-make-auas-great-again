@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import mops.Auswahl;
 import mops.Einheit;
@@ -19,8 +18,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Qualifier("Faker")
-public class MockFragebogenRepository implements FragebogenRepository {
+@Qualifier("Org")
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.LooseCoupling"})
+public class OrgMockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> frage = new ArrayList<>(
       Arrays.asList("Was geht?", "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
 
@@ -31,9 +31,33 @@ public class MockFragebogenRepository implements FragebogenRepository {
       new ArrayList<>(Arrays.asList("Professioneller Softwareentwicklung im Team",
           "Lineare Algebra I", "Analysis II", "Theoretische Informatik", "Machine Learning"));
 
-  private final transient List<String> uebung =
-      new ArrayList<>(Arrays.asList("Uebung zur Linearen" + " Algebra", "Uebung zur Analysis",
-          "Uebung zur Theoretischen Informatik", "Uebung Machine Learning"));
+
+  private final transient List<String> uebung = new ArrayList<>(Arrays.asList("Uebung zur Linearen"
+      + " Algebra", "Uebung zur Analysis", "Uebung zur Theoretischen Informatik", "Uebung zu "
+      + "Machine Learning"));
+
+  private transient HashMap<Long, Fragebogen> frageboegen;
+
+  //simuliert Daten Bank Frage id
+  private transient Long frageId = 0L;
+
+  public OrgMockFragebogenRepository() {
+    frageboegen = new HashMap<>();
+    List<Fragebogen> fragebogenList = generateTenFragebogen();
+    Long index = 1L;
+    for (Fragebogen fragebogen : fragebogenList) {
+      frageboegen.put(index, fragebogen);
+      index++;
+    }
+  }
+
+  @Override
+  public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
+    Fragebogen fragebogen = frageboegen.get(formId);
+    List<Frage> fragen = fragebogen.getFragen();
+    fragen.removeIf(frage1 -> frage1.getId().equals(frageId));
+    fragebogen.setFragen(fragen);
+  }
 
   private final transient List<String> aufgabe =
       new ArrayList<>(Arrays.asList("Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken",
@@ -54,46 +78,47 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   private final transient Random idgenerator = new Random();
 
-  // static, da beide Controller gleiche Datenbank brauchen
-  private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
-
   @Override
   public Fragebogen getFragebogenById(Long id) {
-    if (altefrageboegen.containsKey(id)) {
-      return altefrageboegen.get(id);
+    return frageboegen.get(id);
+  }
+
+  private Fragebogen getRandomFragebogen() {
+    List<Frage> fragenliste = new ArrayList<>();
+    Frage frage1 = generateMultipleChoice();
+    Frage frage2 = generateMultipleChoice();
+    Frage frage3 = new TextFrage(3L, getRandomFrage());
+    fragenliste.add(frage1);
+    fragenliste.add(frage2);
+    fragenliste.add(frage3);
+    Einheit einheit = Einheit.getRandomEinheit();
+    String name;
+    if (einheit == Einheit.VORLESUNG) {
+      name = getRandomVorlesung();
+    } else if (einheit == Einheit.UEBUNG) {
+      name = getRandomUebung();
+    } else if (einheit == Einheit.GRUPPE) {
+      name = getRandomGruppe();
+    } else if (einheit == Einheit.DOZENT) {
+      name = getRandomDozent();
+    } else if (einheit == Einheit.PRAKTIKUM) {
+      name = getRandomPraktikum();
+    } else if (einheit == Einheit.AUFGABE) {
+      name = getRandomAufgabe();
     } else {
-      List<Frage> fragenliste = new ArrayList<>();
-      Frage frage1 = generateMultipleChoice();
-      Frage frage2 = generateMultipleChoice();
-      Frage frage3 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
-      fragenliste.add(frage1);
-      fragenliste.add(frage2);
-      fragenliste.add(frage3);
-      Einheit einheit = Einheit.getRandomEinheit();
-      String name;
-      if (einheit == Einheit.VORLESUNG) {
-        name = getRandomVorlesung();
-      } else if (einheit == Einheit.UEBUNG) {
-        name = getRandomUebung();
-      } else if (einheit == Einheit.GRUPPE) {
-        name = getRandomGruppe();
-      } else if (einheit == Einheit.DOZENT) {
-        name = getRandomDozent();
-      } else if (einheit == Einheit.PRAKTIKUM) {
-        name = getRandomPraktikum();
-      } else if (einheit == Einheit.AUFGABE) {
-        name = getRandomAufgabe();
-      } else {
-        name = getRandomBeratung();
-      }
-      Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
-      fragebogen = fragebogen.startdatum(LocalDateTime.now())
-          .enddatum(LocalDateTime.now().plusHours(24)).fragen(fragenliste)
-          .professorenname(getRandomProfessor()).veranstaltungsname(name).type(einheit).bogennr(id);
-      Fragebogen result = fragebogen.build();
-      altefrageboegen.put(id, result);
-      return result;
+      name = getRandomBeratung();
     }
+
+    Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
+    fragebogen = fragebogen
+        .startdatum(LocalDateTime.now())
+        .enddatum(LocalDateTime.now().plusHours(24))
+        .fragen(fragenliste)
+        .professorenname(getRandomProfessor())
+        .veranstaltungsname(name)
+        .type(einheit)
+        .bogennr(1L);
+    return fragebogen.build();
   }
 
   private Frage generateMultipleChoice() {
@@ -163,9 +188,13 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public List<Fragebogen> getAll() {
+    return List.copyOf(frageboegen.values());
+  }
+
+  private List<Fragebogen> generateTenFragebogen() {
     List<Fragebogen> fragenliste = new ArrayList<>();
     for (long i = 1L; i < 10L; i++) {
-      fragenliste.add(getFragebogenById(i));
+      fragenliste.add(getRandomFragebogen());
     }
     return fragenliste;
   }
@@ -184,21 +213,28 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public void changeDateById(Long formId, LocalDateTime startDate, LocalDateTime endDate) {
-
+    Fragebogen fragebogen = getFragebogenById(formId);
+    fragebogen.setStartdatum(startDate);
+    fragebogen.setEnddatum(endDate);
   }
 
   @Override
   public void addTextFrage(Long id, TextFrage frage) {
-
+    frageId++;
+    frage.setId(frageId);
+    Fragebogen fragebogen = getFragebogenById(id);
+    List<Frage> fragen = fragebogen.getFragen();
+    fragen.add(frage);
+    fragebogen.setFragen(fragen);
   }
 
   @Override
   public void addSkalarFrage(Long id, SkalarFrage frage) {
-
-  }
-
-  @Override
-  public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
-
+    frageId++;
+    frage.setId(frageId);
+    Fragebogen fragebogen = getFragebogenById(id);
+    List<Frage> fragen = fragebogen.getFragen();
+    fragen.add(frage);
+    fragebogen.setFragen(fragen);
   }
 }

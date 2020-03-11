@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Formular Creator</title>
+    <th:block th:fragment="headcontent">
+        <!-- Links, Skripts, Styles hier einfügen! -->
+    </th:block>
+</head>
+
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <!-- Navigation als ungeordnete Liste mit einfachen Links hier einfügen! -->
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <!-- Restlichen Inhalt hier einfügen! -->
+<!--    alle Fragen Laden -->
+    <div class="card">
+        <div class="card-header">Fragen</div>
+        <div class="card-body">
+            <tr th:each="frage: ${fragebogen.getFragen()}">
+                <div th:if="${typechecker.isTextFrage(frage)}">
+                        <!--    text Fragen laden-->
+                    <span>
+                        <table class="table table-striped">
+                                <thead>
+                                </thead>
+                                    <tbody>
+                                    <td th:text="${frage.getFragentext()}">frage text</td>
+                                    <td>
+                                        <a class="btn btn-primary"
+                                           th:href="@{/feedback/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
+                                    </td>
+                                    </tbody>
+                        </table>
+                    </span>
+                </div>
+                <div th:if="${typechecker.isSkalarFrage(frage)}">
+                            <table class="table table-striped">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                    <td th:text="${frage.getFragentext()}">frage text</td>
+                                    <td>
+                                        <input id="customRadio1" name="antwort" type="radio" value="1">
+                                        <label for="customRadio1">ein</label>
+                                        <input id="customRadio2" name="antwort" type="radio" value="2">
+                                        <label for="customRadio2">zwei</label>
+                                        <input id="customRadio3" name="antwort" type="radio" value="3">
+                                        <label for="customRadio3">drei</label>
+                                        <input id="customRadio4" name="antwort" type="radio" value="4">
+                                        <label for="customRadio4">vier</label>
+                                        <input id="customRadio5" name="antwort" type="radio" value="5">
+                                        <label for="customRadio5">fünf</label>
+                                    </td>
+                                    <td>
+                                    <td>
+                                        <a class="btn btn-primary"
+                                           th:href="@{/feedback/delete(frageId=${frage.getId()} ,formId=${bogennr})}">Löschen</a>
+                                    </td>
+                                    </td>
+                                </tbody>
+                            </table>
+                </div>
+            </tr>
+        </div>
+    </div>
+    <!--    alle arten von Fragen Frage hinzufügen -->
+    <div class="card">
+        <h5 class="card-header">Featured</h5>
+        <div class="card-body">
+            <form action="/feedback/getFrageTyp" method="get">
+                <label for="type">Frage Type</label>
+                <br>
+                <select id="type" name="type">
+                    <option th:text="text" th:value="'text'">m</option>
+                    <option th:text="skalar" th:value="'skalar'">w</option>
+                </select>
+                <input name="id" th:value="${bogennr}" type="hidden">
+                <button class="btn btn-light btn-sm" type="submit">neue Frage erstellen</button>
+            </form>
+            <br>
+            <span>
+            <div th:switch="${type}">
+                <span th:case="'text'">
+                <!-- if type == text then : Formular für neue text Frage hinzufügen-->
+                    <div class="card">
+                        <div class="card-header">Text Frage hinzufügen</div>
+                        <div class="card-body">
+                            <form action="/feedback/addTextFrage" class="form-horizontal" is="mops-form" method="post">
+                            <input name="formId" th:value="${bogennr}" type="hidden">
+                                <input class="form-control" id="textfrage" name="fragentext" placeholder="frage" required="true" type="text">
+                                <br>
+                                <button class="btn btn-light btn-sm" type="submit">hinzufügen</button>
+                            </form>
+                        </div>
+                    </div>
+                </span>
+        <span th:case="'skalar'">
+            <!-- if type == skalar then : Formular für neue skalar Frage hinzufügen-->
+            <div class="card">
+            <div class="card-header">Skalar Frage hinzufügen</div>
+            <div class="card-body">
+                <form action="/feedback/addSkalarFrage" class="form-horizontal" is="mops-form" method="post">
+
+                    <input name="formId" th:value="${bogennr}" type="hidden">
+                    <input class="form-control" id="skalarFrage" name="fragentext" placeholder="frage" required="true" type="text">
+                    <br>
+                    <button class="btn btn-light btn-sm" type="submit">hinzufügen</button>
+                </form>
+            </div>
+            </div>
+        </span>
+        <p th:case="'jaNein'">add jaNein Frage</p>
+        </div>
+        </span>
+        </div>
+    </div>
+
+    <!--    datum festlegen-->
+    <div class="card">
+        <div class="card-header">
+            Datum festlegen
+        </div>
+        <div class="card-body">
+            <form action="/feedback/setDate" is="mops-form" method="get">
+                <input name="formId" th:value="${bogennr}" type="hidden">
+                <label for="start">Startdate:</label>
+                <input id="start" name="startdate" type="date" value="2020-07-22" required>
+
+                <label for="end">Enddate:</label>
+                <input id="end" name="enddate" type="date" value="2020-07-22" required>
+
+
+                <label for="startzeit">Startzeit: </label>
+                <input id="startzeit" type="time" name="start" value="13:30" required>
+
+                <label for="endzeit">Endzeit: </label>
+                <input id="endzeit" type="time" name="end" value="15:30" required>
+
+                <button class="btn btn-light btn-sm" type="submit">festlegen</button>
+            </form>
+        </div>
+    </div>
+<!--    formular veröffentlichen-->
+    <div class="card">
+        <div class="card-header">
+            Formular veröffentlichen
+        </div>
+        <div class="card-body">
+            <span  class="text-info" style="width: 100%;" th:text="${message}" >0</span>
+            <span  class="text-info" style="width: 100%;" th:text="${date}" >0</span>
+            <form action="/feedback/releaseForm" is="mops-form" method="get">
+                <input name="formId" th:value="${bogennr}" type="hidden">
+                <button class="btn btn-success"  role="button">OK</button>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
