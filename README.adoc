@@ -11,7 +11,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-Dieses Subsystem der "Modularen Online Plattform für Studierende" (Mops) implementiert das Management und die Abgagbe der Studentenbefragungen an der HHU.
+Dieses Subsystem der "Modularen Online Plattform für Studierende" (Mops) implementiert das Management und die Abgabe der Studentenbefragungen an der HHU.
 
 == Warum ein Feedback System?
 
@@ -19,7 +19,7 @@ Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
 
 == Ziele und Features
 
-- Zügiges erstellen neuer Umfragen für Organisatoren
+- Zügiges Erstellen neuer Umfragen für Organisatoren
 - Übersichtliche Darstellung der Umfragen für die Studenten
 - Anonymität der Abgaben
 - Selektive Veröffentlichung der Umfragen durch den Organisator
@@ -28,7 +28,7 @@ Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
 == Hinweise zur Benutzung
 
 - Die Anwendung benutzt docker-compose zur Auslieferung https://docs.docker.com/compose/install/
-- Nach dem klonen des Repositories lässt sich das System dann starten mit
+- Nach dem Klonen des Repositories lässt sich das System dann starten mit
 
 [source,bash]
 --
