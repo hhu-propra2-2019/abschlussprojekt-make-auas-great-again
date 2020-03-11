@@ -18,41 +18,31 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MockFragebogenRepository implements FragebogenRepository {
+  // static, da beide Controller gleiche Datenbank brauchen
+  private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
   private final transient List<String> frage = new ArrayList<>(
       Arrays.asList("Was geht?", "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
-
   private final transient List<String> professor = new ArrayList<>(
       Arrays.asList("Jens Bendisposto", "Christian Meter", "Jan Roßbach", "Luke Skywalker"));
-
   private final transient List<String> vorlesung =
       new ArrayList<>(Arrays.asList("Professioneller Softwareentwicklung im Team",
           "Lineare Algebra I", "Analysis II", "Theoretische Informatik", "Machine Learning"));
-
   private final transient List<String> uebung =
       new ArrayList<>(Arrays.asList("Uebung zur Linearen" + " Algebra", "Uebung zur Analysis",
           "Uebung zur Theoretischen Informatik", "Uebung Machine Learning"));
-
   private final transient List<String> aufgabe =
       new ArrayList<>(Arrays.asList("Aufgabe zur Linearen Algebra", "Abschlussaufgabe Datenbanken",
           "Aufgabe 13 Analysis", "Theoretische Informatik Blatt 15",
           "Machine Learning Programmieraufgabe"));
-
   private final transient List<String> gruppe =
       new ArrayList<>(Arrays.asList("Gruppe 15", "Gruppe 4"));
-
   private final transient List<String> dozent =
       new ArrayList<>(Arrays.asList("Jens Bendisposto", "Christian Meter"));
-
   private final transient List<String> beratung =
       new ArrayList<>(Arrays.asList("Studienberatung", "Rückmeldungen"));
-
   private final transient List<String> praktikum = new ArrayList<>(Arrays
       .asList("Praktikum Hardwarenahe Programmierung", "Softwarentwicklung im Team Praktikum"));
-
   private final transient Random idgenerator = new Random();
-
-  // static, da beide Controller gleiche Datenbank brauchen
-  private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
@@ -63,9 +53,15 @@ public class MockFragebogenRepository implements FragebogenRepository {
       Frage frage1 = generateMultipleChoice();
       Frage frage2 = generateMultipleChoice();
       Frage frage3 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
+      Frage frage4 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
+      frage3.addAntwort("Gut");
+      frage3.addAntwort("Schlecht");
+      frage4.addAntwort("Sehr Gut");
+      frage4.addAntwort("Sehr schlecht");
       fragenliste.add(frage1);
       fragenliste.add(frage2);
       fragenliste.add(frage3);
+      fragenliste.add(frage4);
       Einheit einheit = Einheit.getRandomEinheit();
       String name;
       if (einheit == Einheit.VORLESUNG) {
