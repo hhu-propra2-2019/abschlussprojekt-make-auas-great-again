@@ -13,4 +13,9 @@ public class SkalarFrage extends Frage {
     super(id);
     this.fragentext = fragentext;
   }
+
+  @Override
+  public void addAntwort(String antwort) {
+
+  }
 }
