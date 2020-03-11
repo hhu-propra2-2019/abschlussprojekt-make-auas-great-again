@@ -50,7 +50,7 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   private Double berechneProzent(long anzahl) {
-    if (antworten.size() != 0) {
+    if (antworten.isEmpty()) {
       return Double.valueOf((((double) anzahl) / antworten.size()) * 100);
     } else {
       return Double.valueOf(0);
