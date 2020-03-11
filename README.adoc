@@ -22,10 +22,10 @@ Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
 - Zügiges erstellen neuer Umfragen für Organisatoren
 - Übersichtliche Darstellung der Umfragen für die Studenten
 - Anonymität der Abgaben
-- Selective Veröffentlichung der Umfragen durch den Organisator
-- Ticket System zur Behebung von Problemen
+- Selektive Veröffentlichung der Umfragen durch den Organisator
+- Ticket System zur Meldung von organisatorischen Problemen
 
-== Hinweise zur Benutztung
+== Hinweise zur Benutzung
 
 - Die Anwendung benutzt docker-compose zur Auslieferung https://docs.docker.com/compose/install/
 - Nach dem klonen des Repositories lässt sich das System dann starten mit
