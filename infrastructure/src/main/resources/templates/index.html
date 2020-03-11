@@ -21,32 +21,42 @@
 <main th:fragment="bodycontent">
     <h1 class="display-1">Dein Feedback</h1>
     <div class="row row-cols-1 row-cols-md-4">
-        <div class="col mb-4" th:each="fragebogen :${frageboegen}">
+        <div class="col mb-4" th:each="fragebogen,iter :${frageboegen}">
             <div class="card bg-light border-dark text-center">
-                <img alt="..." class="card-img-top" src="/uebung.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isUebung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/vorlesung.jpg " height="150" weidth="225"
-                     th:if="${typeChecker.isVorlesung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/aufgabe.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isAufgabe(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/praktikum.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isPraktikum(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/dozent.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isDozent(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/gruppen.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isGruppe(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/beratung.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isBeratung(fragebogen)}">
+                <img alt="..." class="card-img-top" height="150" src="/uebung.jpg"
+                     th:if="${typeChecker.isUebung(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/vorlesung.jpg "
+                     th:if="${typeChecker.isVorlesung(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/aufgabe.jpg"
+                     th:if="${typeChecker.isAufgabe(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/praktikum.jpg"
+                     th:if="${typeChecker.isPraktikum(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/dozent.jpg"
+                     th:if="${typeChecker.isDozent(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/gruppen.jpg"
+                     th:if="${typeChecker.isGruppe(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/beratung.jpg"
+                     th:if="${typeChecker.isBeratung(fragebogen)}"
+                     weidth="225">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
                     <p class="card-text">Verbleibende Zeit:</p>
                     <table style="margin: auto">
-                        <tr class="clock_times">
-                            <td th:text="${fragebogen.getRemainingHours()}">--</td>
-                            <td th:text="${fragebogen.getRemainingMinutes()}">--</td>
-                            <td th:text="${fragebogen.getRemainingSeconds()}">--</td>
+                        <tr class="clock_times" th:id="'clock' + ${iter.index}">
+                            <td class="clock_tage" th:text${Date.days}>--</td>
+                            <td class="clock_stunden" th:text${Date.hours}>--</td>
+                            <td class="clock_minuten" th:text${Date.minutes}>--</td>
+                            <td class="clock_sekunden" th:text${Date.seconds}>--</td>
+                            <div style=></div>
                         </tr>
                         <tr class="clock_names">
+                            <td>Days</td>
                             <td>Hours</td>
                             <td>Min.</td>
                             <td>Sec.</td>
@@ -55,9 +65,48 @@
                     <a class="btn btn-primary" th:href="@{details(id=${fragebogen.bogennr})}">Feedback
                         Geben!</a>
                 </div>
+                <p th:text=${date}></pth>
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    var EndDate = /*[[${enddate}]]*/ 'default';
+    var EndDateFormatted =  new Date(Date.parse(EndDate));
+    var StartDate = /*[[${startdate}]]*/ 'default';
+    /*]]>*/
+    function pad(num) {
+        var s = "00" + num;
+        return s.substr(s.length - 2);
+    }
+    var nowDate = new Date();
+
+    var x = setInterval(function()  {
+        var now = new Date().getTime();
+        var distance = EndDateFormatted.getTime() - now;
+        if (distance < 0) {
+            var distance = StartDate.getTime() - now;
+        }
+        if (distance < 0) {
+            clearInterval(x);
+
+        } else {
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            var minutes = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+            var seconds = pad(Math.floor((distance % (1000 * 60)) / 1000));
+        for(let i =0; i<=8 ; i++){
+            var clockx = document.getElementById("clock"+i);
+            clockx.getElementsByClassName("clock_tage")[0].innerHTML = days;
+            clockx.getElementsByClassName("clock_stunden")[0].innerHTML = hours;
+            clockx.getElementsByClassName("clock_minuten")[0].innerHTML = minutes;
+            clockx.getElementsByClassName("clock_sekunden")[0].innerHTML = seconds;
+        }
+
+        }
+    }, 1000);
+
+    </script>
 </main>
 </body>
 </html>
