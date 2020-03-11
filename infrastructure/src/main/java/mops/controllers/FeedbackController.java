@@ -41,8 +41,8 @@ public class FeedbackController {
       model.addAttribute("numberofentries", 5);
       return "index";
     }
-    //@TODO Law of Demeter FIX !!
-    //FOR LOOP TO ITERATE  LIST OF FRAGEBOGEN
+    // @TODO Law of Demeter FIX !!
+    // FOR LOOP TO ITERATE LIST OF FRAGEBOGEN
     long id = frageboegen.getFragebogenById(1L).getBogennr();
     LocalDateTime start = frageboegen.getFragebogenById(id).getStartdatum();
     LocalDateTime end = frageboegen.getFragebogenById(id).getEnddatum();
@@ -59,19 +59,6 @@ public class FeedbackController {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
     model.addAttribute("typeChecker", typeChecker);
     return "details";
-  }
-
-  @GetMapping("/kontakt")
-  public String kontakt(Model model) {
-    return "kontakt";
-  }
-
-  @SuppressWarnings("checkstyle:MissingJavadocMethod")
-  @PostMapping("/kontakt")
-  public String postMessage(Model model) {
-    model.addAttribute("post", "post");
-    model.addAttribute("submit", "submit");
-    return "kontakt";
   }
 
 }
