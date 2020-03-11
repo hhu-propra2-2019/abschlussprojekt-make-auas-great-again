@@ -63,8 +63,8 @@ public class FeedbackController {
     } else {
       model.addAttribute("frageboegen", frageboegen.getAll());
     }
-    //@TODO Law of Demeter FIX !!
-    //FOR LOOP TO ITERATE  LIST OF FRAGEBOGEN
+    // @TODO Law of Demeter FIX !!
+    // FOR LOOP TO ITERATE LIST OF FRAGEBOGEN
     long id = frageboegen.getFragebogenById(1L).getBogennr();
     LocalDateTime start = frageboegen.getFragebogenById(id).getStartdatum();
     LocalDateTime end = frageboegen.getFragebogenById(id).getEnddatum();
