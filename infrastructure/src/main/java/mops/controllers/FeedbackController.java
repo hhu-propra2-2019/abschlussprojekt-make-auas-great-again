@@ -3,11 +3,11 @@ package mops.controllers;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import mops.TypeChecker;
-import mops.database.MockFragebogenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class FeedbackController {
 
   private static final String emptySearchString = "";
-  private final transient FragebogenRepository frageboegen;
-  private final transient TypeChecker typeChecker;
+  @Autowired
+  @Qualifier("Faker")
+  private transient FragebogenRepository frageboegen;
 
-  public FeedbackController() {
-    frageboegen = new MockFragebogenRepository();
-    typeChecker = new TypeChecker();
-  }
+  private transient TypeChecker typeChecker = new TypeChecker();
+
+  @SuppressWarnings("checkstyle:MissingJavadocMethod")
 
   String formatDate(LocalDateTime date) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm:ss");
@@ -53,6 +53,7 @@ public class FeedbackController {
     return "index";
   }
 
+  @SuppressWarnings("checkstyle:MissingJavadocMethod")
   @GetMapping("/details")
   public String fragebogen(Model model, @RequestParam Long id) {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
@@ -65,10 +66,14 @@ public class FeedbackController {
     return "kontakt";
   }
 
+  @SuppressWarnings("checkstyle:MissingJavadocMethod")
   @PostMapping("/kontakt")
   public String postMessage(Model model) {
     model.addAttribute("post", "post");
     model.addAttribute("submit", "submit");
     return "kontakt";
   }
+
 }
+
+
