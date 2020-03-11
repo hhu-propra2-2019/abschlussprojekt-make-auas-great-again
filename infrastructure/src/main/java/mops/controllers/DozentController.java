@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import mops.Fragebogen;
 import mops.TypeChecker;
@@ -26,6 +27,13 @@ public class DozentController {
     model.addAttribute("frageboegen", fragebogenliste);
     model.addAttribute("typechecker", typechecker);
     return "dozent";
+  }
+
+  @GetMapping("/watch/{bogennr}")
+  public String getAntwortenEinesFragebogens(@PathVariable long bogennr, Model model) {
+    model.addAttribute("fragebogen", frageboegen.getFragebogenById(bogennr));
+    model.addAttribute("typechecker", typechecker);
+    return "ergebnisse";
   }
 
 }
