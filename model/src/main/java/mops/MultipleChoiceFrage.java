@@ -1,9 +1,9 @@
 package mops;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,8 @@ public class MultipleChoiceFrage extends Frage {
   private transient String fragentext;
   private transient List<Auswahl> choices;
   private boolean hasMultipleResponse;
-  private Set<MultipleChoiceAntwort> antworten;
+  private List<MultipleChoiceAntwort> antworten;
+  private Map<Auswahl, Double> result;
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
   public MultipleChoiceFrage(Long id, String fragentext, boolean hasMultipleResponse) {
@@ -21,7 +22,7 @@ public class MultipleChoiceFrage extends Frage {
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     this.hasMultipleResponse = hasMultipleResponse;
-    this.antworten = new HashSet<>();
+    this.antworten = new ArrayList<>();
   }
 
   public void addChoice(Auswahl choice) {
@@ -38,5 +39,18 @@ public class MultipleChoiceFrage extends Frage {
     if (choices.contains(auswahl)) {
       this.antworten.add(new MultipleChoiceAntwort(auswahl));
     }
+  }
+  
+  public void berechneErgebnis() {
+    result = new HashMap<>();
+    for (Auswahl auswahl : choices) {
+      long anzahl = antworten.stream().filter(x -> x.getAntwort().equals(auswahl)).count();
+      Double percent = Double.valueOf((((double) anzahl) / antworten.size()) * 100);
+      result.put(auswahl, percent);
+    }
+  }
+  
+  public Double holeErgebnis(Auswahl auswahl) {
+    return result.get(auswahl);
   }
 }

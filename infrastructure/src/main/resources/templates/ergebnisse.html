@@ -31,6 +31,9 @@
             </div>
             <div class="form-group" th:if="${typechecker.isMultipleChoice(frage)}">
                 <h5 th:text="${frage.fragentext}">Fragetext</h5>
+                <ul th:each="choice : ${frage.choices}">
+                    <li><span th:text="${choice.label}">Auswahlmöglichkeit</span>: <b><span th:text="${frage.holeErgebnis(choice)}">50</span>%</b></li>
+                </ul>
             </div>
         </div>
     </div>
