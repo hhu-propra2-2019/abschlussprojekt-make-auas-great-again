@@ -24,7 +24,6 @@ public class FeedbackController {
   private transient TypeChecker typeChecker = new TypeChecker();
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
-
   String formatDate(LocalDateTime date) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm:ss");
 
@@ -60,20 +59,6 @@ public class FeedbackController {
     model.addAttribute("typeChecker", typeChecker);
     return "details";
   }
-
-  @GetMapping("/kontakt")
-  public String kontakt(Model model) {
-    return "kontakt";
-  }
-
-  @SuppressWarnings("checkstyle:MissingJavadocMethod")
-  @PostMapping("/kontakt")
-  public String postMessage(Model model) {
-    model.addAttribute("post", "post");
-    model.addAttribute("submit", "submit");
-    return "kontakt";
-  }
-
 }
 
 
