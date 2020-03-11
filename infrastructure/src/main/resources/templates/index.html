@@ -15,6 +15,7 @@
         <ul>
             <li class="active"><a th:href="@{/feedback/}">Startseite</a></li>
             <li><a th:href="@{/feedback/kontakt}">Contact us</a></li>
+            <li><a th:href="@{/feedback/ergebnis}">Ergebnisse Evaluation</a></li>
         </ul>
     </nav>
 </header>
@@ -23,20 +24,20 @@
     <div class="row row-cols-1 row-cols-md-4">
         <div class="col mb-4" th:each="fragebogen :${frageboegen}">
             <div class="card bg-light border-dark text-center">
-                <img alt="..." class="card-img-top" src="/uebung.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isUebung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/vorlesung.jpg " height="150" weidth="225"
-                     th:if="${typeChecker.isVorlesung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/aufgabe.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isAufgabe(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/praktikum.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isPraktikum(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/dozent.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isDozent(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/gruppen.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isGruppe(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/beratung.jpg" height="150" weidth="225"
-                     th:if="${typeChecker.isBeratung(fragebogen)}">
+                <img alt="..." class="card-img-top" height="150" src="/uebung.jpg" th:if="${typeChecker.isUebung(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/vorlesung.jpg " th:if="${typeChecker.isVorlesung(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/aufgabe.jpg" th:if="${typeChecker.isAufgabe(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/praktikum.jpg" th:if="${typeChecker.isPraktikum(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/dozent.jpg" th:if="${typeChecker.isDozent(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/gruppen.jpg" th:if="${typeChecker.isGruppe(fragebogen)}"
+                     weidth="225">
+                <img alt="..." class="card-img-top" height="150" src="/beratung.jpg" th:if="${typeChecker.isBeratung(fragebogen)}"
+                     weidth="225">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
                     <p class="card-text">Verbleibende Zeit:</p>
