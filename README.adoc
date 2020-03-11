@@ -15,7 +15,7 @@ Dieses Subsystem der "Modularen Online Plattform für Studierende" (Mops) implem
 
 == Warum ein Feedback System?
 
-Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
+I Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
 
 == Ziele des Systems
 
@@ -32,6 +32,13 @@ Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
 == Hinweise zur Benutztung
 
 - Die Anwendung benutzt Java 13 mit Spring und Thymeleaf
+- Die Anwendung benutzt docker-compose zum Starten https://docs.docker.com/compose/install/
+- Nach dem Klonen des Repositories lässt sich das System dann starten mit
+
+[source,bash]
+--
+docker-compose up
+--
+
 - Die vollständige Dokumentation befindet sich im Ordner arc-42
-- Das System lässt sich mit starten mit docker-compose up (noch nicht implementiert)
-- Den Styleguide finden sie hier https://mops.style/
+
