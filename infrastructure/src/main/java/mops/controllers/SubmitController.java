@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("/feedback/details/submit")
 @Controller
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
+@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
 public class SubmitController {
   private final transient FragebogenRepository frageboegen;
   private final transient SubmitService service;

@@ -7,6 +7,10 @@ public class TypeChecker {
     return frage instanceof TextFrage;
   }
 
+  public static boolean isSkalarFrage(Frage frage) {
+    return frage instanceof SkalarFrage;
+  }
+
   public static boolean isMultipleChoice(Frage frage) {
     return frage instanceof MultipleChoiceFrage;
   }

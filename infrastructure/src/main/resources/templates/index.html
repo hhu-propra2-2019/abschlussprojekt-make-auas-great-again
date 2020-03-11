@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"
-      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+<html lang="en" th:replace="~{mopslayout :: html(name='Name des Subsystems', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>feedback</title>
+    <title>Name des Subsystems</title>
     <th:block th:fragment="headcontent">
         <!-- Links, Skripts, Styles hier einfügen! -->
     </th:block>
@@ -12,53 +11,11 @@
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <ul>
-            <li class="active"><a th:href="@{/feedback/}">Startseite</a></li>
-            <li><a th:href="@{/feedback/kontakt}">Contact us</a></li>
-            <li><a th:href="@{/feedback/ergebnis}">Ergebnisse Evaluation</a></li>
-        </ul>
+        <!-- Navigation als ungeordnete Liste mit einfachen Links hier einfügen! -->
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1 class="display-1">Dein Feedback</h1>
-    <div class="row row-cols-1 row-cols-md-4">
-        <div class="col mb-4" th:each="fragebogen :${frageboegen}">
-            <div class="card bg-light border-dark text-center">
-                <img alt="..." class="card-img-top" height="150" src="/uebung.jpg" th:if="${typeChecker.isUebung(fragebogen)}"
-                     weidth="225">
-                <img alt="..." class="card-img-top" height="150" src="/vorlesung.jpg " th:if="${typeChecker.isVorlesung(fragebogen)}"
-                     weidth="225">
-                <img alt="..." class="card-img-top" height="150" src="/aufgabe.jpg" th:if="${typeChecker.isAufgabe(fragebogen)}"
-                     weidth="225">
-                <img alt="..." class="card-img-top" height="150" src="/praktikum.jpg" th:if="${typeChecker.isPraktikum(fragebogen)}"
-                     weidth="225">
-                <img alt="..." class="card-img-top" height="150" src="/dozent.jpg" th:if="${typeChecker.isDozent(fragebogen)}"
-                     weidth="225">
-                <img alt="..." class="card-img-top" height="150" src="/gruppen.jpg" th:if="${typeChecker.isGruppe(fragebogen)}"
-                     weidth="225">
-                <img alt="..." class="card-img-top" height="150" src="/beratung.jpg" th:if="${typeChecker.isBeratung(fragebogen)}"
-                     weidth="225">
-                <div class="card-body">
-                    <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
-                    <p class="card-text">Verbleibende Zeit:</p>
-                    <table style="margin: auto">
-                        <tr class="clock_times">
-                            <td th:text="${fragebogen.getRemainingHours()}">--</td>
-                            <td th:text="${fragebogen.getRemainingMinutes()}">--</td>
-                            <td th:text="${fragebogen.getRemainingSeconds()}">--</td>
-                        </tr>
-                        <tr class="clock_names">
-                            <td>Hours</td>
-                            <td>Min.</td>
-                            <td>Sec.</td>
-                        </tr>
-                    </table>
-                    <a class="btn btn-primary" th:href="@{details(id=${fragebogen.bogennr})}">Feedback
-                        Geben!</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    Hallo
 </main>
 </body>
 </html>

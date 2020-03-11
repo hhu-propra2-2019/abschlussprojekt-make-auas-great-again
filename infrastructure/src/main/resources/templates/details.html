@@ -22,22 +22,24 @@
     <div class="container">
         <h1 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
         <h2 th:text="${fragebogen.professorenname}">Professor</h2>
-        <form th:action="'/feedback/details/submit/' + ${fragebogen.bogennr}" method="post">
+        <form method="post" th:action="'/feedback/details/submit/' + ${fragebogen.bogennr}">
             <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">
                 <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
                     <label for="textfrage" th:text="${frage.fragentext}">Label</label>
-                    <textarea class="form-control" th:id="'answer-' + ${frage.id}" th:name="'answer-' + ${frage.id}"></textarea>
+                    <textarea class="form-control" th:id="'answer-' + ${frage.id}"
+                              th:name="'answer-' + ${frage.id}"></textarea>
                 </div>
                 <div class="form-group" th:if="${typeChecker.isMultipleChoice(frage)}">
                     <h5 th:text="${frage.fragentext}">Fragetext</h5>
                     <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
-                        <input class="form-check-input" th:id="'answer-' + ${frage.id}" th:name="'answer-' + ${frage.id}"
+                        <input class="form-check-input" th:id="'answer-' + ${frage.id}"
+                               th:name="'answer-' + ${frage.id}"
                                th:value="${choice.label}" type="radio">
                         <label for="multiple-choice" th:text="${choice.label}">Label</label>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
         </form>
     </div>
 </main>

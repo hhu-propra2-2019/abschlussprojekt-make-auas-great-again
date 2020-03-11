@@ -16,10 +16,10 @@ public class DozentDto {
   @Id
   Long id;
   String name;
-  
+
   @Column("dozent")
   Set<EinheitDto> einheiten;
-  
+
   public DozentDto(String name, Set<EinheitDto> einheiten) {
     this.name = name;
     this.einheiten = einheiten;

@@ -81,6 +81,7 @@ public class Fragebogen {
     }
   }
 
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public List<TextFrage> getTextfragen() {
     List<TextFrage> textFragen = new ArrayList<>();
     for (Frage frage : fragen) {
@@ -91,6 +92,7 @@ public class Fragebogen {
     return textFragen;
   }
 
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public List<MultipleChoiceFrage> getMultipleChoiceFragen() {
     List<MultipleChoiceFrage> mult = new ArrayList<>();
     for (Frage frage : fragen) {
