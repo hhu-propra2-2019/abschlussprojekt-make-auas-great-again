@@ -32,8 +32,8 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) {
-    KeycloakAuthenticationProvider keycloakAuthenticationProvider
-        = keycloakAuthenticationProvider();
+    KeycloakAuthenticationProvider keycloakAuthenticationProvider =
+        keycloakAuthenticationProvider();
     keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
     auth.authenticationProvider(keycloakAuthenticationProvider);
   }
@@ -41,51 +41,37 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
   @Bean
   @Override
   protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-    return new RegisterSessionAuthenticationStrategy(
-        new SessionRegistryImpl());
+    return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
   }
 
   @Bean
-  @Scope(scopeName = WebApplicationContext.SCOPE_REQUEST,
-      proxyMode = ScopedProxyMode.TARGET_CLASS)
+  @Scope(scopeName = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
   public AccessToken getAccessToken() {
     HttpServletRequest request =
-        ((ServletRequestAttributes) RequestContextHolder
-            .currentRequestAttributes()).getRequest();
-    return ((KeycloakPrincipal) request.getUserPrincipal())
-        .getKeycloakSecurityContext().getToken();
+        ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+    return ((KeycloakPrincipal) request.getUserPrincipal()).getKeycloakSecurityContext().getToken();
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    super.configure(http);
-    forceHttps(http);
-    http.authorizeRequests()
-        .antMatchers("/actuator/**")
-        .hasRole("monitoring")
-        .anyRequest()
-        .permitAll();
+    http.csrf().disable();
+    http.authorizeRequests();
+    http.formLogin().permitAll();
+    http.logout().permitAll();
   }
 
   private void forceHttps(HttpSecurity http) throws Exception {
-    http.requiresChannel()
-        .requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
+    http.requiresChannel().requestMatchers(r -> r.getHeader("X-Forwarded-Proto") != null)
         .requiresSecure();
   }
 
   /**
    * Declaring this class enables us to use the Spring specific.
-   * {@link org.springframework.security.access.annotation.Secured} annotation
-   * or the JSR-250 Java Standard
-   * {@link javax.annotation.security.RolesAllowed} annotation
-   * for Role-based authorization
+   * {@link org.springframework.security.access.annotation.Secured} annotation or the JSR-250 Java
+   * Standard {@link javax.annotation.security.RolesAllowed} annotation for Role-based authorization
    */
   @Configuration
-  @EnableGlobalMethodSecurity(
-      prePostEnabled = true,
-      securedEnabled = true,
-      jsr250Enabled = true)
-  public static class MethodSecurityConfig
-      extends GlobalMethodSecurityConfiguration {
+  @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+  public static class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
   }
 }
