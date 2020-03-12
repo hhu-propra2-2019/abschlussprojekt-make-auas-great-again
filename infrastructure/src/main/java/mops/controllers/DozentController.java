@@ -13,6 +13,7 @@ import mops.Einheit;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
+import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
 
 
@@ -76,7 +77,8 @@ public class DozentController {
 
   @PostMapping("/new/questions/delete/{bogennr}/{fragennr}")
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr) {
-    frageboegen.loescheFrageAusFragebogen(bogennr, fragennr);
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    bogen.loescheFrage(fragennr);
     return "redirect:/feedback/dozenten/new/questions/" + bogennr;
   }
 
@@ -84,7 +86,15 @@ public class DozentController {
   public String addTextfrage(@PathVariable Long bogennr, String fragetext) {
     TextFrage neuefrage = new TextFrage(fragetext);
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
-    bogen.addTextFrage(neuefrage);
+    bogen.addFrage(neuefrage);
+    return "redirect:/feedback/dozenten/new/questions/" + bogennr;
+  }
+
+  @PostMapping("/new/questions/add/mcfrage/{bogennr}")
+  public String addMultipleChoiceFrage(@PathVariable Long bogennr, String fragemc) {
+    MultipleChoiceFrage neuefrage = new MultipleChoiceFrage(fragemc);
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    bogen.addFrage(neuefrage);
     return "redirect:/feedback/dozenten/new/questions/" + bogennr;
   }
 }

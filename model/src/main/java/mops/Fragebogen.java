@@ -122,13 +122,13 @@ public class Fragebogen {
   }
   
   public void loescheFrage(Long id) {
-    Optional<Frage> frage = fragen.stream().filter(x -> x.getId() == id).findFirst();
+    Optional<Frage> frage = fragen.stream().filter(x -> x.getId() == id).findAny();
     if (frage.isPresent()) {
       fragen.remove(frage.get());
     }
   }
   
-  public void addTextFrage(TextFrage frage) {
+  public void addFrage(Frage frage) {
     fragen.add(frage);
   }
 }

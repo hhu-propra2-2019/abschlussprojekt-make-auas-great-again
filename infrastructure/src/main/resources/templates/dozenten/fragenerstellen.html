@@ -53,20 +53,34 @@
             </div>
         </div>
     </div>
+    <hr class="m-5">
     <div class="row">
-      <div class="col-sm">
-          <div class="card">
-              <div class="card-body">
-                  <h3 class="card-title">Freitextfrage hinzufügen</h3>
-                  <form class="form-horizontal" th:action="'/feedback/dozenten/new/questions/add/textfrage/' + ${neuerbogen.bogennr}" method="post">
-                      <div class="input-group mb-3 col-sm-6">
-                          <input class="form-control" id="fragetext" name="fragetext" placeholder="Hier den Fragetext eingeben" required type="text">
-                      </div>
-                      <button type="submit" name="addtextbutton" class="btn btn-primary">Freitextfrage hinzufügen</button>
-                  </form>
-              </div>
-          </div>
-      </div>
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Freitextfrage hinzufügen</h3>
+                    <form class="form-horizontal" th:action="'/feedback/dozenten/new/questions/add/textfrage/' + ${neuerbogen.bogennr}" method="post">
+                        <div class="input-group mb-3 col-sm-6">
+                            <input class="form-control" id="fragetext" name="fragetext" placeholder="Hier den Fragetext eingeben" required type="text">
+                        </div>
+                        <button type="submit" name="addtextbutton" class="btn btn-primary">Freitextfrage hinzufügen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Multiple-Choice-Frage hinzufügen</h3>
+                    <form class="form-horizontal" th:action="'/feedback/dozenten/new/questions/add/mcfrage/' + ${neuerbogen.bogennr}" method="post">
+                        <div class="input-group mb-3 col-sm-6">
+                            <input class="form-control" id="fragemc" name="fragemc" placeholder="Hier den Fragetext eingeben" required type="text">
+                        </div>
+                        <button type="submit" name="addtextbutton" class="btn btn-primary">Multiple-Choice-Frage hinzufügen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 </body>

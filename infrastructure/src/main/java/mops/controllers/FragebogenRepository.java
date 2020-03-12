@@ -12,6 +12,4 @@ public interface FragebogenRepository {
   List<Fragebogen> getAllContaining(String search);
 
   void newFragebogen(Fragebogen fragebogen);
-
-  void loescheFrageAusFragebogen(Long fragebogen, Long frage);
 }

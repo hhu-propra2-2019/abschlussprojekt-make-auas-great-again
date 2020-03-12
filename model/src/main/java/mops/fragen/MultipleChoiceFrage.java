@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
 import mops.antworten.MultipleChoiceAntwort;
@@ -24,6 +25,14 @@ public class MultipleChoiceFrage extends Frage {
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     this.hasMultipleResponse = hasMultipleResponse;
+    this.antworten = new ArrayList<>();
+  }
+  
+  public MultipleChoiceFrage(String fragentext) {
+    super(new Random().nextLong());
+    this.fragentext = fragentext;
+    this.choices = new ArrayList<>();
+    this.hasMultipleResponse = false;
     this.antworten = new ArrayList<>();
   }
 
