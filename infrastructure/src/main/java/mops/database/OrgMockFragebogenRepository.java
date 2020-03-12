@@ -6,20 +6,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import mops.fragen.Auswahl;
 import mops.Einheit;
 import mops.Frage;
 import mops.Fragebogen;
+import mops.controllers.FragebogenRepository;
+import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.SkalarFrage;
 import mops.fragen.TextFrage;
-import mops.controllers.FragebogenRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Qualifier("Org")
-@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis", "PMD.LooseCoupling"})
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.LooseCoupling"})
 public class OrgMockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> frage = new ArrayList<>(
       Arrays.asList("Was geht?", "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));

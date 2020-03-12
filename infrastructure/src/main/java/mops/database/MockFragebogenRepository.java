@@ -7,14 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import mops.fragen.Auswahl;
 import mops.Einheit;
 import mops.Frage;
 import mops.Fragebogen;
+import mops.controllers.FragebogenRepository;
+import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.SkalarFrage;
 import mops.fragen.TextFrage;
-import mops.controllers.FragebogenRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
@@ -55,14 +55,15 @@ public class MockFragebogenRepository implements FragebogenRepository {
       List<Frage> fragenliste = new ArrayList<>();
       Frage frage1 = generateMultipleChoice();
       Frage frage2 = generateMultipleChoice();
+      fragenliste.add(frage1);
+      fragenliste.add(frage2);
       Frage frage3 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
       Frage frage4 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
       frage3.addAntwort("Gut");
       frage3.addAntwort("Schlecht");
       frage4.addAntwort("Sehr Gut");
       frage4.addAntwort("Sehr schlecht");
-      fragenliste.add(frage1);
-      fragenliste.add(frage2);
+
       fragenliste.add(frage3);
       fragenliste.add(frage4);
       Einheit einheit = Einheit.getRandomEinheit();
