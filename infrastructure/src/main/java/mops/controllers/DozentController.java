@@ -1,19 +1,19 @@
 package mops.controllers;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import mops.DateTimeService;
-import mops.Einheit;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import mops.DateTimeService;
+import mops.Einheit;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.database.MockFragebogenRepository;
+import mops.fragen.TextFrage;
 
 
 @Controller
@@ -77,6 +77,14 @@ public class DozentController {
   @PostMapping("/new/questions/delete/{bogennr}/{fragennr}")
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr) {
     frageboegen.loescheFrageAusFragebogen(bogennr, fragennr);
+    return "redirect:/feedback/dozenten/new/questions/" + bogennr;
+  }
+
+  @PostMapping("/new/questions/add/textfrage/{bogennr}")
+  public String addTextfrage(@PathVariable Long bogennr, String fragetext) {
+    TextFrage neuefrage = new TextFrage(fragetext);
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    bogen.addTextFrage(neuefrage);
     return "redirect:/feedback/dozenten/new/questions/" + bogennr;
   }
 }

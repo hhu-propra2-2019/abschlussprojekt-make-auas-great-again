@@ -127,5 +127,9 @@ public class Fragebogen {
       fragen.remove(frage.get());
     }
   }
+  
+  public void addTextFrage(TextFrage frage) {
+    fragen.add(frage);
+  }
 }
 

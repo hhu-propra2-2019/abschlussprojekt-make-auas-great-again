@@ -160,8 +160,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
   @Override
   public List<Fragebogen> getAll() {
     List<Fragebogen> fragenliste = new ArrayList<>();
-    for (long i = 1L; i < 10L; i++) {
-      fragenliste.add(getFragebogenById(i));
+    for (Long id : altefrageboegen.keySet()) {
+      fragenliste.add(getFragebogenById(id));
     }
     return fragenliste;
   }

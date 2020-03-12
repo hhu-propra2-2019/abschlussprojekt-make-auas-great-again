@@ -43,7 +43,7 @@
                                 <td>Textfrage</td>
                                 <td>
                                     <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
-                                      <button type="submit" name="deletebutton" class="btn btn-primary">Löschen</button>
+                                        <button type="submit" name="deletebutton" class="btn btn-primary">Löschen</button>
                                     </form>
                                 </td>
                             </tr>
@@ -52,6 +52,21 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+          <div class="card">
+              <div class="card-body">
+                  <h3 class="card-title">Freitextfrage hinzufügen</h3>
+                  <form class="form-horizontal" th:action="'/feedback/dozenten/new/questions/add/textfrage/' + ${neuerbogen.bogennr}" method="post">
+                      <div class="input-group mb-3 col-sm-6">
+                          <input class="form-control" id="fragetext" name="fragetext" placeholder="Hier den Fragetext eingeben" required type="text">
+                      </div>
+                      <button type="submit" name="addtextbutton" class="btn btn-primary">Freitextfrage hinzufügen</button>
+                  </form>
+              </div>
+          </div>
+      </div>
     </div>
 </main>
 </body>
