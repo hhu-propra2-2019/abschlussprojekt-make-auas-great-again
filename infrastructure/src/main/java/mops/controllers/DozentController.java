@@ -22,7 +22,7 @@ public class DozentController {
   }
 
   @GetMapping("/")
-  public String getOrganisatorMainPage(Model model) {
+  public String getOrganisatorMainPage() {
     return "dozenten/dozent";
   }
 
@@ -42,4 +42,8 @@ public class DozentController {
     return "dozenten/ergebnisse";
   }
 
+  @GetMapping("/new")
+  public String getNeueFormularSeite() {
+    return "dozenten/ersteller";
+  }
 }
