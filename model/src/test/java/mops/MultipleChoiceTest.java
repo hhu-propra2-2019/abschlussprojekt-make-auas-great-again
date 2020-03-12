@@ -2,6 +2,7 @@ package mops;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 import mops.fragen.Auswahl;
 import mops.fragen.MultipleResponseFrage;
 import mops.fragen.SingleResponseFrage;
@@ -44,15 +45,15 @@ public class MultipleChoiceTest {
   public void eineAntwortBringtHundertProzent() {
     singleResponseFrage.addAntwort(MOEGLICHKEIT_1);
 
-    Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
-    Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
-    Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
-    Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
+    final Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
+    final Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
+    final Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
+    final Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
 
-    assertEquals(antwort1.doubleValue(), 100, 0.03);
-    assertEquals(antwort2.doubleValue(), 0, 0.03);
-    assertEquals(antwort3.doubleValue(), 0, 0.03);
-    assertEquals(antwort4.doubleValue(), 0, 0.03);
+    assertEquals(antwort1, 100, 0.03);
+    assertEquals(antwort2, 0, 0.03);
+    assertEquals(antwort3, 0, 0.03);
+    assertEquals(antwort4, 0, 0.03);
   }
 
   @Test
@@ -61,15 +62,15 @@ public class MultipleChoiceTest {
     singleResponseFrage.addAntwort(MOEGLICHKEIT_1);
     singleResponseFrage.addAntwort(MOEGLICHKEIT_1);
 
-    Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
-    Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
-    Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
-    Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
+    final Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
+    final Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
+    final Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
+    final Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
 
-    assertEquals(antwort1.doubleValue(), 100, 0.03);
-    assertEquals(antwort2.doubleValue(), 0, 0.03);
-    assertEquals(antwort3.doubleValue(), 0, 0.03);
-    assertEquals(antwort4.doubleValue(), 0, 0.03);
+    assertEquals(antwort1, 100, 0.03);
+    assertEquals(antwort2, 0, 0.03);
+    assertEquals(antwort3, 0, 0.03);
+    assertEquals(antwort4, 0, 0.03);
   }
 
   @Test
@@ -78,29 +79,29 @@ public class MultipleChoiceTest {
     singleResponseFrage.addAntwort(MOEGLICHKEIT_1);
     singleResponseFrage.addAntwort(MOEGLICHKEIT_2);
 
-    Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
-    Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
-    Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
-    Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
+    final Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
+    final Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
+    final Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
+    final Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
 
-    assertEquals(antwort1.doubleValue(), 50, 0.03);
-    assertEquals(antwort2.doubleValue(), 50, 0.03);
-    assertEquals(antwort3.doubleValue(), 0, 0.03);
-    assertEquals(antwort4.doubleValue(), 0, 0.03);
+    assertEquals(antwort1, 50, 0.03);
+    assertEquals(antwort2, 50, 0.03);
+    assertEquals(antwort3, 0, 0.03);
+    assertEquals(antwort4, 0, 0.03);
   }
 
   @Test
   @DisplayName("Wenn es keine Antworten gibt, sind die Prozente alle auf 0?")
   public void keineAntwortenBringenUeberallNullProzent() {
-    Double antwort1 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_1));
-    Double antwort2 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_2));
-    Double antwort3 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_3));
-    Double antwort4 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_4));
+    final Double antwort1 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_1));
+    final Double antwort2 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_2));
+    final Double antwort3 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_3));
+    final Double antwort4 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_4));
 
-    assertEquals(antwort1.doubleValue(), 0, 0.03);
-    assertEquals(antwort2.doubleValue(), 0, 0.03);
-    assertEquals(antwort3.doubleValue(), 0, 0.03);
-    assertEquals(antwort4.doubleValue(), 0, 0.03);
+    assertEquals(antwort1, 0, 0.03);
+    assertEquals(antwort2, 0, 0.03);
+    assertEquals(antwort3, 0, 0.03);
+    assertEquals(antwort4, 0, 0.03);
   }
 
   @Test
@@ -111,15 +112,15 @@ public class MultipleChoiceTest {
     singleResponseFrage.addAntwort(MOEGLICHKEIT_3);
     singleResponseFrage.addAntwort(MOEGLICHKEIT_3);
 
-    Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
-    Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
-    Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
-    Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
+    final Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
+    final Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
+    final Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
+    final Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
 
-    assertEquals(antwort1.doubleValue(), 25, 0.03);
-    assertEquals(antwort2.doubleValue(), 0, 0.03);
-    assertEquals(antwort3.doubleValue(), 75, 0.03);
-    assertEquals(antwort4.doubleValue(), 0, 0.03);
+    assertEquals(antwort1, 25, 0.03);
+    assertEquals(antwort2, 0, 0.03);
+    assertEquals(antwort3, 75, 0.03);
+    assertEquals(antwort4, 0, 0.03);
   }
 
   @Test
@@ -140,6 +141,5 @@ public class MultipleChoiceTest {
   @DisplayName("Werden die Antworten einer MR-Frage korrekt gespeichert?")
   public void multipleResponseAntwortTest() {
     multipleResponseFrage.addAntwort(MR_ANTWORT_1);
-
   }
 }
