@@ -16,6 +16,12 @@ public class MultipleChoiceTest {
   private static final String MOEGLICHKEIT_2 = "Trifft zu";
   private static final String MOEGLICHKEIT_1 = "Trifft voll und ganz zu";
   private transient SingleResponseFrage singleResponseFrage;
+  private static final String MR_ANTWORT_1 = "Java";
+  private static final String MR_ANTWORT_2 = "Python";
+  private static final String MR_ANTWORT_3 = "C";
+  private static final String MR_ANTWORT_4 = "PHP";
+  private transient MultipleResponseFrage multipleResponseFrage;
+
 
   @BeforeEach
   public void setUp() {
@@ -24,6 +30,12 @@ public class MultipleChoiceTest {
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_2));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_3));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_4));
+
+    multipleResponseFrage = new MultipleResponseFrage(Long.valueOf(2), "Welche Programmiersprachen beherrscht du bereits?");
+    multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_1));
+    multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_2));
+    multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_3));
+    multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_4));
   }
 
   @Test
@@ -79,10 +91,10 @@ public class MultipleChoiceTest {
   @Test
   @DisplayName("Wenn es keine Antworten gibt, sind die Prozente alle auf 0?")
   public void keineAntwortenBringenUeberallNullProzent() {
-    Double antwort1 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_1));
-    Double antwort2 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_2));
-    Double antwort3 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_3));
-    Double antwort4 = singleResponseFrage.holeErgebnis(new Auswahl(MOEGLICHKEIT_4));
+    Double antwort1 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_1));
+    Double antwort2 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_2));
+    Double antwort3 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_3));
+    Double antwort4 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_4));
 
     assertEquals(antwort1.doubleValue(), 0, 0.03);
     assertEquals(antwort2.doubleValue(), 0, 0.03);
@@ -121,5 +133,12 @@ public class MultipleChoiceTest {
     singleResponseFrage.addChoice(new Auswahl("Trifft überhaupt nicht zu"));
 
     assertEquals(5, singleResponseFrage.getNumberOfChoices());
+  }
+
+  @Test
+  @DisplayName("Werden die Antworten einer MR-Frage korrekt gespeichert?")
+  public void multipleResponseAntwortTest() {
+    multipleResponseFrage.addAntwort(MR_ANTWORT_1);
+
   }
 }
