@@ -7,16 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import mops.Einheit;
-import mops.Frage;
 import mops.Fragebogen;
 import mops.controllers.FragebogenRepository;
 import mops.fragen.Auswahl;
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.SkalarFrage;
 import mops.fragen.TextFrage;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 
 @Repository
 @Qualifier("Faker")

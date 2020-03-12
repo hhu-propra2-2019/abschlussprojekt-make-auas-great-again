@@ -3,18 +3,18 @@ package mops.controllers;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
-import mops.Frage;
-import mops.Fragebogen;
-import mops.SubmitService;
-import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import mops.Fragebogen;
+import mops.SubmitService;
+import mops.database.MockFragebogenRepository;
+import mops.fragen.Frage;
 
 @RequestMapping("/feedback/details/submit")
 @Controller
-@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
 public class SubmitController {
   private final transient FragebogenRepository frageboegen;
   private final transient SubmitService service;

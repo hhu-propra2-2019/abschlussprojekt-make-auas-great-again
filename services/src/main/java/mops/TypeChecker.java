@@ -1,8 +1,7 @@
 package mops;
 
-
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.SkalarFrage;
 import mops.fragen.TextFrage;
 
 public class TypeChecker {

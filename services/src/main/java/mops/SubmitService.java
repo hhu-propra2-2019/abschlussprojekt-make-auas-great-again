@@ -1,6 +1,7 @@
 package mops;
 
 import java.util.Map;
+import mops.fragen.Frage;
 
 @SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
 public class SubmitService {
