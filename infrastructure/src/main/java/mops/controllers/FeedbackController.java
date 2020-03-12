@@ -56,7 +56,7 @@ public class FeedbackController {
   }
 
   @GetMapping("/uebersicht")
-  @RolesAllowed( {"ROLE_studentin", "ROLE_orga"})
+  @RolesAllowed({"ROLE_studentin", "ROLE_orga"})
   public String uebersicht(KeycloakAuthenticationToken token, Model model, String search) {
     if (searchNotEmpty(search)) {
       model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
@@ -90,7 +90,7 @@ public class FeedbackController {
 
   @SuppressWarnings("checkstyle:MissingJavadocMethod")
   @GetMapping("/details")
-  @RolesAllowed( {"ROLE_studentin", "ROLE_orga"})
+  @RolesAllowed({"ROLE_studentin", "ROLE_orga"})
   public String fragebogen(KeycloakAuthenticationToken token, Model model, @RequestParam Long
       id) {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));

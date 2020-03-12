@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.TextFrage;
 
 
 @Builder
@@ -19,7 +21,7 @@ public class Fragebogen {
   private final Long bogennr;
   private String veranstaltungsname;
   private String professorenname;
-  private List<Frage> fragen;
+  private List<mops.Frage> fragen;
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
