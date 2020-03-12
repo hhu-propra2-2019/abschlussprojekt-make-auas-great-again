@@ -1,6 +1,8 @@
 package mops.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +51,13 @@ public class DozentController {
   }
 
   @PostMapping("/new")
-  public String addNeuesFormular() {
+  public String addNeuesFormular(HttpServletRequest req) {
+    String veranstaltung = req.getParameter("veranstaltung");
+    String dozentname = req.getParameter("dozentname");
+    String veranstaltungstyp = req.getParameter("veranstaltungstyp");
+    String startdatum = req.getParameter("startdatum");
+    String startzeit = req.getParameter("startzeit");
+    String enddatum = req.getParameter("enddatum");
     return "redirect:/feedback/dozenten/new";
   }
 }
