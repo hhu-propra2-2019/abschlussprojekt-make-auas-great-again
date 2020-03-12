@@ -1,4 +1,4 @@
-package mops;
+package mops.antworten;
 
 
 import java.util.HashSet;

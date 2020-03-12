@@ -2,7 +2,7 @@ package mops;
 
 import java.util.Map;
 
-@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
 public class SubmitService {
   public void saveAntworten(Fragebogen fragebogen, Map<Long, String> antworten) {
     for (Frage frage : fragebogen.getFragen()) {

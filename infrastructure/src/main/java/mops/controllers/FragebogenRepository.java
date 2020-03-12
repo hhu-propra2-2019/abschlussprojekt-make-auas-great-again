@@ -3,8 +3,8 @@ package mops.controllers;
 import java.time.LocalDateTime;
 import java.util.List;
 import mops.Fragebogen;
-import mops.SkalarFrage;
-import mops.TextFrage;
+import mops.fragen.SkalarFrage;
+import mops.fragen.TextFrage;
 
 
 public interface FragebogenRepository {

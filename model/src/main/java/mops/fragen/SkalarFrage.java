@@ -1,7 +1,8 @@
-package mops;
+package mops.fragen;
 
 import lombok.Getter;
 import lombok.Setter;
+import mops.Frage;
 
 @Getter
 @Setter
