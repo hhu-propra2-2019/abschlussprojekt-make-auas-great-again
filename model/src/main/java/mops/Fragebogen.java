@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,6 +17,7 @@ import mops.fragen.TextFrage;
 
 @Builder
 @EqualsAndHashCode(of = "bogennr")
+@AllArgsConstructor
 @Getter
 @Setter
 public class Fragebogen {
@@ -26,6 +29,17 @@ public class Fragebogen {
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
+  
+  public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende, Einheit einheit) {
+    Random idgenerator = new Random();
+    this.bogennr = idgenerator.nextLong();
+    this.veranstaltungsname = veranstaltung;
+    this.professorenname = dozent;
+    this.startdatum = start;
+    this.enddatum = ende;
+    this.fragen = new ArrayList<>();
+    this.type = einheit;
+  }
 
   /**
    * Gibt den Formularstatus zurück.

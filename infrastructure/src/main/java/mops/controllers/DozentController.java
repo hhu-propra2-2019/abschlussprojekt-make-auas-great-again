@@ -3,6 +3,8 @@ package mops.controllers;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import mops.DateTimeService;
+import mops.Einheit;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
@@ -19,10 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DozentController {
   private final transient FragebogenRepository frageboegen;
   private final transient TypeChecker typechecker;
+  private final transient DateTimeService datetime;
 
   public DozentController() {
     frageboegen = new MockFragebogenRepository();
     typechecker = new TypeChecker();
+    datetime = new DateTimeService();
   }
 
   @GetMapping("/")
@@ -52,13 +56,16 @@ public class DozentController {
   }
 
   @PostMapping("/new")
-  public String addNeuesFormular(HttpServletRequest req) {
-    String veranstaltung = req.getParameter("veranstaltung");
-    String dozentname = req.getParameter("dozentname");
-    String veranstaltungstyp = req.getParameter("veranstaltungstyp");
-    String startdatum = req.getParameter("startdatum");
-    String startzeit = req.getParameter("startzeit");
-    String enddatum = req.getParameter("enddatum");
+  public String addNeuesFormular(HttpServletRequest req, Model model) {
+    Fragebogen neu = new Fragebogen(req.getParameter("veranstaltung"),
+        req.getParameter("dozentname"),
+        datetime.getLocalDateTimeFromString(req.getParameter("startdatum"),
+            req.getParameter("startzeit")),
+        datetime.getLocalDateTimeFromString(req.getParameter("enddatum"),
+            req.getParameter("endzeit")),
+        Einheit.valueOf(req.getParameter("veranstaltungstyp")));
+    frageboegen.newFragebogen(neu);
+    model.addAttribute("neuerbogen", neu);
     return "redirect:/feedback/dozenten/new";
   }
 }
