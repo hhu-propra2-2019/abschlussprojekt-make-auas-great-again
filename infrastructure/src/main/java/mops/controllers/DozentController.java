@@ -20,6 +20,7 @@ import mops.fragen.TextFrage;
 @Controller
 @RequestMapping("/feedback/dozenten")
 public class DozentController {
+  private static final String REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS = "redirect:/feedback/dozenten/new/questions/";
   private final transient FragebogenRepository frageboegen;
   private final transient TypeChecker typechecker;
   private final transient DateTimeService datetime;
@@ -66,7 +67,7 @@ public class DozentController {
             req.getParameter("endzeit")),
         Einheit.valueOf(req.getParameter("veranstaltungstyp")));
     frageboegen.newFragebogen(neu);
-    return "redirect:/feedback/dozenten/new/questions/" + neu.getBogennr();
+    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
   }
 
   @GetMapping("/new/questions/{bogennr}")
@@ -79,7 +80,7 @@ public class DozentController {
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr) {
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     bogen.loescheFrage(fragennr);
-    return "redirect:/feedback/dozenten/new/questions/" + bogennr;
+    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
   @PostMapping("/new/questions/add/textfrage/{bogennr}")
@@ -87,7 +88,7 @@ public class DozentController {
     TextFrage neuefrage = new TextFrage(fragetext);
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     bogen.addFrage(neuefrage);
-    return "redirect:/feedback/dozenten/new/questions/" + bogennr;
+    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
   @PostMapping("/new/questions/add/mcfrage/{bogennr}")
@@ -95,6 +96,6 @@ public class DozentController {
     MultipleChoiceFrage neuefrage = new MultipleChoiceFrage(fragemc);
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     bogen.addFrage(neuefrage);
-    return "redirect:/feedback/dozenten/new/questions/" + bogennr;
+    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 }

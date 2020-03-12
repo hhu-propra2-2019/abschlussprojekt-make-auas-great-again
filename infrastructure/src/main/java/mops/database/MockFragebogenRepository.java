@@ -19,6 +19,7 @@ import mops.fragen.TextFrage;
 
 @Repository
 @Qualifier("Faker")
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
 public class MockFragebogenRepository implements FragebogenRepository {
   // static, da beide Controller gleiche Datenbank brauchen
   private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
