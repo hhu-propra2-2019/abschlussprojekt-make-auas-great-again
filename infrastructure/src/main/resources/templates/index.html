@@ -7,6 +7,29 @@
     <title>Name des Subsystems</title>
     <th:block th:fragment="headcontent">
         <!-- Links, Skripts, Styles hier einfügen! -->
+        <style>
+            .container {
+                position: relative;
+                text-align: left;
+                color: white;
+            }
+
+            .bottom-center {
+                position: absolute;
+                bottom: 8px;
+                left: 16px;
+                color: white;
+                text-shadow: 0 0 5px black;
+            }
+
+            .top-center {
+                position: absolute;
+                top: 8px;
+                left: 16px;
+                color: white;
+                text-shadow: 0 0 5px black;
+            }
+        </style>
     </th:block>
 </head>
 <body>
@@ -16,10 +39,10 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <div id="welcome">
-        <h2 class="font-weight-bold">Willkommen!</h2>
-        <img alt="Mops Elvis" class="img-fluid" src="/elvis_young.jpg">
-        <h2 class="font-weight-bold">Bitte melde dich an um das System zu nutzen!</h2>
+    <div class="container" id="welcome">
+        <img alt="Mops Elvis" src="/elvis_young.jpg" style="width:100%;">
+        <h1 class="top-center">Willkommen!</h1>
+        <h1 class="bottom-center">Bitte melde dich an um das System zu nutzen!</h1>
     </div>
 </main>
 </body>
