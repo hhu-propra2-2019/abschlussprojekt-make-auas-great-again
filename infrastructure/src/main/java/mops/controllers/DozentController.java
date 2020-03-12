@@ -65,7 +65,12 @@ public class DozentController {
             req.getParameter("endzeit")),
         Einheit.valueOf(req.getParameter("veranstaltungstyp")));
     frageboegen.newFragebogen(neu);
-    model.addAttribute("neuerbogen", neu);
-    return "redirect:/feedback/dozenten/new";
+    return "redirect:/feedback/dozenten/new/questions/" + neu.getBogennr();
+  }
+
+  @GetMapping("/new/questions/{bogennr}")
+  public String seiteUmFragenHinzuzufuegen(@PathVariable Long bogennr, Model model) {
+    model.addAttribute("neuerbogen", frageboegen.getFragebogenById(bogennr));
+    return "dozenten/fragenerstellen";
   }
 }
