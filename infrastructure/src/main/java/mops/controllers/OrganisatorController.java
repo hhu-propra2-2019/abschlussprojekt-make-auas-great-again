@@ -6,7 +6,7 @@ import java.util.List;
 import mops.DateTimeService;
 import mops.Fragebogen;
 import mops.SkalarFrage;
-import mops.TextFrage;
+import mops.fragen.TextFrage;
 import mops.TypeChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.TextFrage;
 
 
 @Builder

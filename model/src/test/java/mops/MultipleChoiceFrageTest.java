@@ -2,6 +2,7 @@ package mops;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import mops.fragen.MultipleChoiceFrage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

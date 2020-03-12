@@ -1,6 +1,9 @@
 package mops;
 
 
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.TextFrage;
+
 public class TypeChecker {
 
   public static boolean isTextFrage(Frage frage) {
