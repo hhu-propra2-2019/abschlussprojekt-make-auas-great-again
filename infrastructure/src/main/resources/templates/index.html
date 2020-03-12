@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{mopslayout :: html(name='Name des Subsystems', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='Name des Subsystems', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -15,7 +16,11 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    Hallo
+    <div id="welcome">
+        <h2 class="font-weight-bold">Willkommen!</h2>
+        <img alt="Mops Elvis" class="img-fluid" src="/elvis_young.jpg">
+        <h2 class="font-weight-bold">Bitte melde dich an um das System zu nutzen!</h2>
+    </div>
 </main>
 </body>
 </html>
