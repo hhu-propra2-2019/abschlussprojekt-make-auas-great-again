@@ -23,10 +23,15 @@ public class DozentController {
 
   @GetMapping("/")
   public String getOrganisatorMainPage(Model model) {
+    return "dozenten/dozent";
+  }
+
+  @GetMapping("/watch")
+  public String getFragebogenUebersicht(Model model) {
     List<Fragebogen> fragebogenliste = frageboegen.getAll();
     model.addAttribute("frageboegen", fragebogenliste);
     model.addAttribute("typechecker", typechecker);
-    return "dozent";
+    return "dozenten/frageboegen";
   }
 
   @GetMapping("/watch/{bogennr}")
@@ -34,7 +39,7 @@ public class DozentController {
     Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
     model.addAttribute("fragebogen", fragebogen);
     model.addAttribute("typechecker", typechecker);
-    return "ergebnisse";
+    return "dozenten/ergebnisse";
   }
 
 }

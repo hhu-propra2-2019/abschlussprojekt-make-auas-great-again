@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>feedback</title>
+    <th:block th:fragment="headcontent">
+        <!-- Links, Skripts, Styles hier einfügen! -->
+    </th:block>
+</head>
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <ul>
+            <li class="active"><a href="/feedback/dozenten/">Startseite</a></li>
+            <li><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
+            <li><a href="/feedback/kontakt">Contact us</a></li>
+        </ul>
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <h1 class="display-1">Dozenten-Übersicht</h1>
+    <h3>Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS.</h3>
+</main>
+</body>
+</html>
