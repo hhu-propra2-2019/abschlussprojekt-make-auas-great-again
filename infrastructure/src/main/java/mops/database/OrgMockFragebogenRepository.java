@@ -6,14 +6,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import mops.Auswahl;
 import mops.Einheit;
 import mops.Frage;
 import mops.Fragebogen;
-import mops.MultipleChoiceFrage;
-import mops.SkalarFrage;
-import mops.TextFrage;
 import mops.controllers.FragebogenRepository;
+import mops.fragen.Auswahl;
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.SkalarFrage;
+import mops.fragen.TextFrage;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 

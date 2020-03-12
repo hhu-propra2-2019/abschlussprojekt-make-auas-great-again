@@ -1,4 +1,5 @@
-package mops;
+package mops.fragen;
+
 
 public class SingleResponseFrage extends MultipleChoiceFrage {
   final transient boolean isScala;

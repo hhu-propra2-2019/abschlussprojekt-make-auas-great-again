@@ -1,4 +1,5 @@
-package mops;
+package mops.fragen;
+
 
 public class MultipleResponseFrage extends MultipleChoiceFrage {
 

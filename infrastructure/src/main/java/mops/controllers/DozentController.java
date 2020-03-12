@@ -1,14 +1,15 @@
 package mops.controllers;
 
 import java.util.List;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.database.MockFragebogenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.database.MockFragebogenRepository;
+
 
 @Controller
 @RequestMapping("/feedback/dozenten")
