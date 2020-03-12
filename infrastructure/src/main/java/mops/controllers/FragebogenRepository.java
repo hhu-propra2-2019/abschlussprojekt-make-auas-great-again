@@ -13,9 +13,5 @@ public interface FragebogenRepository {
 
   List<Fragebogen> getAllContaining(String search);
 
-  void changeDateById(Long formId, LocalDateTime startDate, LocalDateTime endDate);
-
-  void addTextFrage(Long id, TextFrage frage);
-
-  void deleteFrageByIdAndFrageId(Long formId, Long frageId);
+  void newFragebogen(Fragebogen fragebogen);
 }

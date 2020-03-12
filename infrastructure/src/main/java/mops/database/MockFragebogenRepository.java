@@ -178,17 +178,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
   }
 
   @Override
-  public void changeDateById(Long formId, LocalDateTime startDate, LocalDateTime endDate) {
-
-  }
-
-  @Override
-  public void addTextFrage(Long id, TextFrage frage) {
-
-  }
-
-  @Override
-  public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
-
+  public void newFragebogen(Fragebogen fragebogen) {
+    Long id = fragebogen.getBogennr();
+    altefrageboegen.put(id, fragebogen);
   }
 }

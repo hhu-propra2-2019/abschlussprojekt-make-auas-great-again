@@ -22,7 +22,76 @@
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-1">Dozenten-Übersicht</h1>
-    <h3>Hier werden neue Fragebögen erstellt werden können.</h3>
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-horizontal" action="/feedback/dozenten/new" method="post">
+                    <div class="form-group row">
+                        <label for="veranstaltung">Name der Veranstaltung:</label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <input class="form-control" id="veranstaltung" name="veranstaltung" placeholder="Name der Veranstaltung" required type="text">
+                        </div>
+                    </div>
+                    <hr class="m-5">
+                    <div class="form-group row">
+                        <label for="dozentname">Name des Dozenten:</label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <input class="form-control" id="dozentname" name="dozentname" placeholder="Name des Dozenten" required type="text">
+                        </div>
+                    </div>
+                    <hr class="m-5">
+                    <div class="form-group row">
+                        <label for="veranstaltungstyp">Veranstaltungstyp:</label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <select id="veranstaltungstyp" required name="veranstaltungstyp">
+                                <option>Vorlesung</option>
+                                <option>Übung</option>
+                                <option>Aufgabe</option>
+                                <option>Praktikum</option>
+                                <option>Dozent</option>
+                                <option>Beratung</option>
+                                <option>Gruppe</option>
+                            </select>
+                        </div>
+                    </div>
+                    <hr class="m-5">
+                    <div class="form-group row">
+                        <label for="startdatum">Startdatum:</label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <input id="startdatum" name="startdatum" required type="date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="startzeit">Startzeit:</label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <input id="startzeit" name="startzeit" required type="time">
+                        </div>
+                    </div>
+                    <hr class="m-5">
+                    <div class="form-group row">
+                        <label for="end">Enddatum:</label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <input id="enddatum" name="enddatum" required type="date">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="endzeit">Endzeit: </label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <input id="endzeit" name="endzeit" required type="time">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit" name="button">Fragebogen erstellen</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>

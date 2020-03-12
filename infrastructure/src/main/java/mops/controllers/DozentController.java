@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import mops.Fragebogen;
 import mops.TypeChecker;
@@ -45,5 +46,10 @@ public class DozentController {
   @GetMapping("/new")
   public String getNeueFormularSeite() {
     return "dozenten/ersteller";
+  }
+
+  @PostMapping("/new")
+  public String addNeuesFormular() {
+    return "redirect:/feedback/dozenten/new";
   }
 }
