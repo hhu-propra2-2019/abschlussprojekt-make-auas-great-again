@@ -23,6 +23,36 @@
 <main th:fragment="bodycontent">
     <h1 class="display-1">Dozenten-Übersicht</h1>
     <h4>Fragebogen zur Einheit <span th:text="${neuerbogen.type.toString()}">Vorlesung</span> '<span th:text="${neuerbogen.veranstaltungsname}">Programmierung</span>'; verantwortlich: <span th:text="${neuerbogen.professorenname}">Prof. Dr. Max Mustermann</span></h4>
+    <hr class="m-5">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Bereits vorhandene Fragen</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Fragetext</th>
+                                <th>Fragetyp</th>
+                                <th>Löschen</th>
+                            </tr>
+                        </thead>
+                        <tbody th:remove="all-but-first">
+                            <tr th:each="frage : ${neuerbogen.fragen}">
+                                <td th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</td>
+                                <td>Textfrage</td>
+                                <td>
+                                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
+                                      <button type="submit" name="deletebutton" class="btn btn-primary">Löschen</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>

@@ -73,4 +73,10 @@ public class DozentController {
     model.addAttribute("neuerbogen", frageboegen.getFragebogenById(bogennr));
     return "dozenten/fragenerstellen";
   }
+
+  @PostMapping("/new/questions/delete/{bogennr}/{fragennr}")
+  public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr) {
+    frageboegen.loescheFrageAusFragebogen(bogennr, fragennr);
+    return "redirect:/feedback/dozenten/new/questions/" + bogennr;
+  }
 }

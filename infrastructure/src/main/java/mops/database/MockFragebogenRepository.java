@@ -183,4 +183,10 @@ public class MockFragebogenRepository implements FragebogenRepository {
     Long id = fragebogen.getBogennr();
     altefrageboegen.put(id, fragebogen);
   }
+
+  @Override
+  public void loescheFrageAusFragebogen(Long fragebogen, Long frage) {
+    Fragebogen bogen = altefrageboegen.get(fragebogen);
+    bogen.loescheFrage(frage);
+  }
 }

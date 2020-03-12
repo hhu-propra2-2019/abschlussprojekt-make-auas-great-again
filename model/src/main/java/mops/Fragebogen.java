@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -118,6 +119,13 @@ public class Fragebogen {
       }
     }
     return mult;
+  }
+  
+  public void loescheFrage(Long id) {
+    Optional<Frage> frage = fragen.stream().filter(x -> x.getId() == id).findFirst();
+    if (frage.isPresent()) {
+      fragen.remove(frage.get());
+    }
   }
 }
 
