@@ -7,16 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import mops.Auswahl;
 import mops.Einheit;
 import mops.Frage;
 import mops.Fragebogen;
 import mops.MultipleChoiceFrage;
-import mops.SkalarFrage;
 import mops.TextFrage;
 import mops.controllers.FragebogenRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 
 @Repository
 @Qualifier("Faker")
@@ -185,11 +184,6 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public void addTextFrage(Long id, TextFrage frage) {
-
-  }
-
-  @Override
-  public void addSkalarFrage(Long id, SkalarFrage frage) {
 
   }
 
