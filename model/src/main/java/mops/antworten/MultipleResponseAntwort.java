@@ -3,7 +3,6 @@ package mops.antworten;
 
 import java.util.HashSet;
 import java.util.Set;
-import mops.antworten.Antwort;
 
 public class MultipleResponseAntwort extends Antwort {
   transient Set<Integer> gewaehlteAntworten;

@@ -3,7 +3,7 @@ package mops.database;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import mops.Dozent;
+import mops.rollen.Dozent;
 import mops.controllers.DozentenRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;

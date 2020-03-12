@@ -10,6 +10,8 @@ import mops.antworten.TextAntwort;
 @Value
 @EqualsAndHashCode(callSuper = true)
 public class TextFrage extends Frage {
+
+
   private String fragentext;
   private Set<TextAntwort> antworten;
 

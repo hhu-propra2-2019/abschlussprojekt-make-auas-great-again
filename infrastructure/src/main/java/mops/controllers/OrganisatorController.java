@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import mops.DateTimeService;
 import mops.Fragebogen;
-import mops.SkalarFrage;
+import mops.fragen.SkalarFrage;
 import mops.fragen.TextFrage;
 import mops.TypeChecker;
 import org.springframework.beans.factory.annotation.Autowired;

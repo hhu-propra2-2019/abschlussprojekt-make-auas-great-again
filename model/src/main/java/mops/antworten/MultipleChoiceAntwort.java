@@ -2,7 +2,7 @@ package mops.antworten;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
-import mops.Auswahl;
+import mops.fragen.Auswahl;
 
 @Value
 @AllArgsConstructor

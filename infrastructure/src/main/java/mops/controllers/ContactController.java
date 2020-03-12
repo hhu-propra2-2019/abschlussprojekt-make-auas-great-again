@@ -2,7 +2,7 @@ package mops.controllers;
 
 import java.time.LocalDateTime;
 import mops.Kontaktformular;
-import mops.Student;
+import mops.rollen.Student;
 import mops.database.MockDozentenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
