@@ -23,21 +23,21 @@
     <h2 class="display-2" th:text="${studentName}">NAME</h2>
     <div class="row row-cols-1 row-cols-md-3">
         <div class="col mb-3" th:each="fragebogen,iter :${frageboegen}">
-            <div class="card  text-center h-100">
-                <img alt="..." class="card-img-top" src="/uebung.jpg"
-                     th:if="${typeChecker.isUebung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/vorlesung.jpg "
-                     th:if="${typeChecker.isVorlesung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/aufgabe.jpg"
-                     th:if="${typeChecker.isAufgabe(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/praktikum.jpg"
-                     th:if="${typeChecker.isPraktikum(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/dozent.jpg"
-                     th:if="${typeChecker.isDozent(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/gruppen.jpg"
-                     th:if="${typeChecker.isGruppe(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/beratung.jpg"
-                     th:if="${typeChecker.isBeratung(fragebogen)}">
+            <div class="card text-center h-100">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isUebung(fragebogen)}"
+                     th:src="@{/uebung.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isVorlesung(fragebogen)}"
+                     th:src="@{/vorlesung.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isAufgabe(fragebogen)}"
+                     th:src="@{/aufgabe.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isPraktikum(fragebogen)}"
+                     th:src="@{/praktikum.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isDozent(fragebogen)}"
+                     th:src="@{/dozent.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isGruppe(fragebogen)}"
+                     th:src="@{/gruppen.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isBeratung(fragebogen)}"
+                     th:src="@{/beratung.jpg}">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
                     <a class=" btn btn-primary" id="button" style="margin: 16px"
@@ -52,7 +52,7 @@
                         <span scope="col">Days: </span>
                         <span class="clock_tage">--</span>
                         <span scope="col">Hours: </span>
-                        <span class="clock_stunden">--</td></span>
+                        <span class="clock_stunden">--</span>
                         <span scope="col">Min: </span>
                         <span class="clock_minuten">--</span>
                         <span scope="col">Sec: </span>
