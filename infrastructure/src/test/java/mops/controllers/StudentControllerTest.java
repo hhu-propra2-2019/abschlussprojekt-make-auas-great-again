@@ -1,6 +1,7 @@
 package mops.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -8,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.c4_soft.springaddons.test.security.context.support.WithIDToken;
 import com.c4_soft.springaddons.test.security.context.support.WithMockKeycloackAuth;
+import mops.Kontaktformular;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,5 +84,25 @@ class StudentControllerTest {
     mvc.perform(get("/feedback/student/ergebnisUebersicht").param("id", "1"))
         .andExpect(status().is2xxSuccessful())
         .andExpect(view().name("/studenten/ergebnisUebersicht"));
+  }
+
+  @Test
+  @Disabled
+  @DisplayName("Student sollte auf die 'kontakt'-Seite weitergeleitet werden.")
+  @WithMockKeycloackAuth(roles = "studentin", idToken = @WithIDToken(email = "user@mail.de"))
+  public void correctRedirectForKontaktPost() throws Exception {
+    mvc.perform(post("/feedback/student/kontakt").flashAttr("kontakt", new Kontaktformular()))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("/feedback/student/"));
+  }
+
+  @Test
+  @Disabled
+  @DisplayName("Student soll Feedback abgeben können.")
+  @WithMockKeycloackAuth(roles = "studentin", idToken = @WithIDToken(email = "user@mail.de"))
+  public void correctRedirectForFeedbackPost() throws Exception {
+    mvc.perform(post("/feedback/student/details/submit/1"))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/feedback/student/"));
   }
 }
