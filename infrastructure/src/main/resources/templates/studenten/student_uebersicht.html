@@ -6,6 +6,24 @@
     <meta charset="utf-8">
     <title>feedback</title>
     <th:block th:fragment="headcontent">
+        <style>
+            .card {
+                width: auto;
+                height: 550px;
+            }
+
+            .card-body {
+                position: relative;
+                text-align: center;
+            }
+
+            .w-90 {
+                position: absolute;
+                text-align: center;
+                bottom: 8px;
+            }
+
+        </style>
         <!-- Links, Skripts, Stylehttps://keycloak.cs.hhu.de/auth/realms/MOPS/account/s hier einfügen! -->
     </th:block>
 </head>
@@ -22,9 +40,9 @@
 <main th:fragment="bodycontent">
     <h1 class="display-1">Dein Feedback</h1>
     <h2 class="display-2" th:text="${studentName}">NAME</h2>
-    <div class="row row-cols-1 row-cols-md-4">
-        <div class="col mb-4" th:each="fragebogen,iter :${frageboegen}">
-            <div class="card bg-light border-dark text-center">
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-3" th:each="fragebogen,iter :${frageboegen}">
+            <div class="card">
                 <img alt="..." class="card-img-top" src="/uebung.jpg"
                      th:if="${typeChecker.isUebung(fragebogen)}">
                 <img alt="..." class="card-img-top" src="/vorlesung.jpg "
@@ -41,33 +59,28 @@
                      th:if="${typeChecker.isBeratung(fragebogen)}">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
-                    <p class="card-text">Verbleibende Zeit:</p>
-                    <div class="w-100">
-                        <table class="table-responsive-sm">
-                            <thead>
-                            <tr class="clock_names">
-                                <th scope="col">Days</th>
-                                <th scope="col">Hours</th>
-                                <th scope="col">Min.</th>
-                                <th scope="col">Sec.</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="clock_times" th:id="'clock' + ${iter.index}">
-                                <td class="clock_tage">--</td>
-                                <td class="clock_stunden">--</td>
-                                <td class="clock_minuten">--</td>
-                                <td class="clock_sekunden">--</td>
-                                <td class="startdatum" hidden th:text="${fragebogen.startdatum}">--</td>
-                                <td class="enddatum" hidden th:text="${fragebogen.enddatum}">--</td>
-                            </tr>
-                            </tbody>
-
-                        </table>
+                    <div class="w-90">
+                        <a class=" btn btn-primary" id="button" style="margin: 16px"
+                           th:href="@{/feedback/student/details(id=${fragebogen.bogennr})}">
+                            Feedback Geben!
+                        </a>
+                        <h3 class="card-text">Verfügbar bis:</h3>
+                        <div th:text="${fragebogen.enddatum}">Programmierung>Datum</div>
+                        <br>
+                        <h3 class="card-text">Verbleibende Zeit:</h3>
+                        <div class="clock_times" th:id="'clock' + ${iter.index}">
+                            <span scope="col">Days: </span>
+                            <span class="clock_tage">--</span>
+                            <span scope="col">Hours: </span>
+                            <span class="clock_stunden">--</td></span>
+                            <span scope="col">Min: </span>
+                            <span class="clock_minuten">--</span>
+                            <span scope="col">Sec: </span>
+                            <span class="clock_sekunden">--</span>
+                            <span class="startdatum" hidden th:text="${fragebogen.startdatum}">--</span>
+                            <span class="enddatum" hidden th:text="${fragebogen.enddatum}">--</span>
+                        </div>
                     </div>
-
-                    <a class="btn btn-primary" th:href="@{/feedback/student/details(id=${fragebogen.bogennr})}">Feedback
-                        Geben!</a>
                 </div>
             </div>
         </div>
@@ -106,7 +119,6 @@
         var clocks = [...document.getElementsByClassName("clock_times")
         ]
         ;
-
         var x = setInterval(function () {
             clocks.forEach(clocktick);
         }, 1000);
