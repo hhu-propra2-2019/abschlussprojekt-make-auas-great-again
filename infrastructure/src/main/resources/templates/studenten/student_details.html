@@ -13,9 +13,9 @@
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
-            <li class="active"><a th:href="@{/feedback/}">Startseite</a></li>
+            <li><a th:href="@{/feedback/student/}">Übersicht</a></li>
             <li><a th:href="@{/feedback/student/ergebnis}">Evaluationsergebnisse</a></li>
-            <li><a th:href="@{/feedback/kontakt}">Kontakt</a></li>
+            <li><a th:href="@{/feedback/student/kontakt}">Kontakt</a></li>
         </ul>
     </nav>
 </header>
@@ -28,19 +28,19 @@
                 <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
 
                     <div th:replace="fragments/fragen :: textfrage">...</div>
-           </div>
+                </div>
                 <div class="form-group" th:if="${typeChecker.isMultipleChoice(frage)}">
-                        <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
+                    <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
 
-                            <div th:replace="fragments/fragen :: singleResponse">...</div>
+                        <div th:replace="fragments/fragen :: singleResponse">...</div>
 
-                        </div>
+                    </div>
 
-                        <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
+                    <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
 
-                            <div th:replace="fragments/fragen :: multipleResponse">...</div>
+                        <div th:replace="fragments/fragen :: multipleResponse">...</div>
 
-                        </div>
+                    </div>
                 </div>
             </div>
             <button class="btn btn-primary" type="submit">Submit</button>
