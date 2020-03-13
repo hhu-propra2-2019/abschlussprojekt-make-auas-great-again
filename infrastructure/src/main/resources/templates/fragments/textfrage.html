@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    ...
+</head>
+<body>
+<div th:fragment="textfrage">
+
+    <label for="textfrage" th:text="${frage.fragentext}">Label</label>
+    <textarea class="form-control" th:id="'answer-' + ${frage.id}"
+              th:name="'answer-' + ${frage.id}"></textarea>
+</div>
+</body>
+</html>
