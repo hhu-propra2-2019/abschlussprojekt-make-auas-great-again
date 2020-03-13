@@ -14,6 +14,7 @@ import lombok.Setter;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
+import mops.fragen.Frage;
 
 
 @Builder
