@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import mops.Einheit;
-import mops.Frage;
+import mops.fragen.Frage;
 import mops.Fragebogen;
 import mops.controllers.FragebogenRepository;
 import mops.fragen.Auswahl;

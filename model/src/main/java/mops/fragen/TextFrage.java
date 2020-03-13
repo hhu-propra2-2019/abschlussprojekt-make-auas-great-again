@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-import mops.Frage;
+import mops.fragen.Frage;
 import mops.antworten.TextAntwort;
 
 @Value

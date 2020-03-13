@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
-import mops.Frage;
+import mops.fragen.Frage;
 import mops.antworten.MultipleChoiceAntwort;
 
 @Getter

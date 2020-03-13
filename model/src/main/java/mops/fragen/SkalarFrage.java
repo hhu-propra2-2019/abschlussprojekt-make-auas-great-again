@@ -2,7 +2,7 @@ package mops.fragen;
 
 import lombok.Getter;
 import lombok.Setter;
-import mops.Frage;
+import mops.fragen.Frage;
 
 @Getter
 @Setter

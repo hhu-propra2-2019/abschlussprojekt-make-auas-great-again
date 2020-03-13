@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import mops.Frage;
+import mops.fragen.Frage;
 import mops.Fragebogen;
 import mops.Kontaktformular;
 import mops.SubmitService;

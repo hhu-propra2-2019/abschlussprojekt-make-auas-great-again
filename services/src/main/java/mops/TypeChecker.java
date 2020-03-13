@@ -1,9 +1,7 @@
 package mops;
 
 
-import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.SkalarFrage;
-import mops.fragen.TextFrage;
+import mops.fragen.*;
 
 public class TypeChecker {
 
@@ -18,6 +16,11 @@ public class TypeChecker {
   public static boolean isMultipleChoice(Frage frage) {
     return frage instanceof MultipleChoiceFrage;
   }
+
+  public static boolean isMultipleResponse(Frage frage) { return frage instanceof MultipleResponseFrage;
+  }
+
+  public static boolean isSingleResponse(Frage frage) { return frage instanceof SingleResponseFrage;}
 
   public static boolean isVorlesung(Fragebogen fragebogen) {
     return fragebogen.getType() == Einheit.VORLESUNG;

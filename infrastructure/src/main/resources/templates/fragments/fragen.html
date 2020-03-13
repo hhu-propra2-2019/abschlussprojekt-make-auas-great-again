@@ -24,7 +24,14 @@
 
 </div>
 
-<div th:fragment="">
+<div th:fragment="multipleResponse">
+    <h5 th:text="${frage.fragentext}">Fragetext</h5>
+    <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
+        <input class="form-check-input" th:id="'answer-' + ${frage.id}"
+               th:name="'answer-' + ${frage.id}"
+               th:value="${choice.label}" type="checkbox" id="multipleResponse">
+        <label for="multipleResponse" th:text="${choice.label}">Label</label>
+    </div>
 
 </div>
 
