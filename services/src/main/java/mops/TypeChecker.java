@@ -17,10 +17,13 @@ public class TypeChecker {
     return frage instanceof MultipleChoiceFrage;
   }
 
-  public static boolean isMultipleResponse(Frage frage) { return frage instanceof MultipleResponseFrage;
+  public static boolean isMultipleResponse(Frage frage) {
+    return frage instanceof MultipleResponseFrage;
   }
 
-  public static boolean isSingleResponse(Frage frage) { return frage instanceof SingleResponseFrage;}
+  public static boolean isSingleResponse(Frage frage) {
+    return frage instanceof SingleResponseFrage;
+  }
 
   public static boolean isVorlesung(Fragebogen fragebogen) {
     return fragebogen.getType() == Einheit.VORLESUNG;

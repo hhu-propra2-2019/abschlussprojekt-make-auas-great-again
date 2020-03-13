@@ -13,6 +13,8 @@ import mops.Fragebogen;
 import mops.controllers.FragebogenRepository;
 import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.MultipleResponseFrage;
+import mops.fragen.SingleResponseFrage;
 import mops.fragen.SkalarFrage;
 import mops.fragen.TextFrage;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,8 +55,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
       return altefrageboegen.get(id);
     } else {
       List<Frage> fragenliste = new ArrayList<>();
-      Frage frage1 = generateMultipleChoice();
-      Frage frage2 = generateMultipleChoice();
+      Frage frage1 = generateSingleResponse();
+      Frage frage2 = generateMultipleResponse();
       fragenliste.add(frage1);
       fragenliste.add(frage2);
       Frage frage3 = new TextFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
@@ -93,9 +95,20 @@ public class MockFragebogenRepository implements FragebogenRepository {
     }
   }
 
-  private Frage generateMultipleChoice() {
+  private Frage generateMultipleResponse() {
     MultipleChoiceFrage frage =
-        new MultipleChoiceFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage(), false);
+        new MultipleResponseFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
+    frage.addChoice(new Auswahl("1"));
+    frage.addChoice(new Auswahl("2"));
+    frage.addChoice(new Auswahl("3"));
+    frage.addChoice(new Auswahl("4"));
+    frage.addChoice(new Auswahl("5"));
+    return frage;
+  }
+
+  private Frage generateSingleResponse() {
+    MultipleChoiceFrage frage =
+        new SingleResponseFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage(), true);
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));
