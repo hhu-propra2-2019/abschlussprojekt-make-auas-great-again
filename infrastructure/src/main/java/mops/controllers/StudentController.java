@@ -56,6 +56,9 @@ public class StudentController {
     }
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
+    KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+    String name = principal.getKeycloakSecurityContext().getIdToken().getGivenName();
+    model.addAttribute("studentName", name);
     authenticatedAccess.increment();
     return "studenten/student_uebersicht";
   }
