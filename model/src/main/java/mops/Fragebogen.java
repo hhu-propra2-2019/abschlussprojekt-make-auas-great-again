@@ -30,7 +30,7 @@ public class Fragebogen {
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
-  
+
   public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende, Einheit einheit) {
     Random idgenerator = new Random();
     this.bogennr = idgenerator.nextLong();
@@ -53,35 +53,6 @@ public class Fragebogen {
       return Status.VERFUEGBAR;
     }
     return Status.NICHTVERFUEGBAR;
-  }
-
-  /**
-   * Gibt die verbleibenden Studen bis zum auslaufen des Fragebogens zurück.
-   *
-   * @return String
-   */
-  public String getRemainingHours() {
-    return "24";
-  }
-
-  /**
-   * Gibt die verbleibenden Minuten bis zum auslaufen des Fragebogens zurück.
-   * Rückgabe ist immer zwischen 0 und 59
-   *
-   * @return String
-   */
-  public String getRemainingMinutes() {
-    return "59";
-  }
-
-  /**
-   * Gibt die verbleibenden Studen bis zum auslaufen des Fragebogens zurück.
-   * Rückgabe ist immer zwischen 0 und 59
-   *
-   * @return String
-   */
-  public String getRemainingSeconds() {
-    return "59";
   }
 
   /**
@@ -120,14 +91,12 @@ public class Fragebogen {
     }
     return mult;
   }
-  
+
   public void loescheFrage(Long id) {
-    Optional<Frage> frage = fragen.stream().filter(x -> x.getId() == id).findAny();
-    if (frage.isPresent()) {
-      fragen.remove(frage.get());
-    }
+    Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findAny();
+    frage.ifPresent(value -> fragen.remove(value));
   }
-  
+
   public void addFrage(Frage frage) {
     fragen.add(frage);
   }

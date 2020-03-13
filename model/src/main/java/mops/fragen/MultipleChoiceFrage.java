@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
 import mops.antworten.MultipleChoiceAntwort;
 
 @Getter
 @Setter
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
+@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
 public class MultipleChoiceFrage extends Frage {
   private transient String fragentext;
   private transient List<Auswahl> choices;
@@ -27,9 +26,9 @@ public class MultipleChoiceFrage extends Frage {
     this.hasMultipleResponse = hasMultipleResponse;
     this.antworten = new ArrayList<>();
   }
-  
+
   public MultipleChoiceFrage(String fragentext) {
-    super(new Random().nextLong());
+    super(1L);
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     fillDummyChoices();
@@ -46,7 +45,7 @@ public class MultipleChoiceFrage extends Frage {
 
   public void addChoice(Auswahl choice) {
     this.choices.add(choice);
-    auswertung.put(choice, Double.valueOf(0));
+    auswertung.put(choice, (double) 0);
   }
 
   public int getNumberOfChoices() {
@@ -61,7 +60,7 @@ public class MultipleChoiceFrage extends Frage {
     }
     this.aktualisiereErgebnis();
   }
-  
+
   private void aktualisiereErgebnis() {
     for (Auswahl auswahl : choices) {
       long anzahl = antworten.stream().filter(x -> x.getAntwort().equals(auswahl)).count();
@@ -70,9 +69,9 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   private Double berechneProzentualenAnteil(long anzahl) {
-    return Double.valueOf((((double) anzahl) / antworten.size()) * 100);
+    return (((double) anzahl) / antworten.size()) * 100;
   }
-  
+
   public Double holeErgebnis(Auswahl auswahl) {
     return auswertung.get(auswahl);
   }

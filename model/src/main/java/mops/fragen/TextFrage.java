@@ -1,7 +1,6 @@
 package mops.fragen;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -19,9 +18,9 @@ public class TextFrage extends Frage {
     this.fragentext = fragentext;
     this.antworten = new HashSet<>();
   }
-  
+
   public TextFrage(String fragentext) {
-    super(new Random().nextLong());
+    super(1L);
     this.fragentext = fragentext;
     this.antworten = new HashSet<>();
   }
