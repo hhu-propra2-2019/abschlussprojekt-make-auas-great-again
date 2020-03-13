@@ -4,16 +4,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.Random;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
 
 
 @Builder
 @EqualsAndHashCode(of = "bogennr")
+@AllArgsConstructor
 @Getter
 @Setter
 public class Fragebogen {
@@ -21,10 +26,21 @@ public class Fragebogen {
   private final Long bogennr;
   private String veranstaltungsname;
   private String professorenname;
-  private List<mops.Frage> fragen;
+  private List<Frage> fragen;
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
+
+  public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende, Einheit einheit) {
+    Random idgenerator = new Random();
+    this.bogennr = idgenerator.nextLong();
+    this.veranstaltungsname = veranstaltung;
+    this.professorenname = dozent;
+    this.startdatum = start;
+    this.enddatum = ende;
+    this.fragen = new ArrayList<>();
+    this.type = einheit;
+  }
 
   /**
    * Gibt den Formularstatus zurück.
@@ -37,35 +53,6 @@ public class Fragebogen {
       return Status.VERFUEGBAR;
     }
     return Status.NICHTVERFUEGBAR;
-  }
-
-  /**
-   * Gibt die verbleibenden Studen bis zum auslaufen des Fragebogens zurück.
-   *
-   * @return String
-   */
-  public String getRemainingHours() {
-    return "24";
-  }
-
-  /**
-   * Gibt die verbleibenden Minuten bis zum auslaufen des Fragebogens zurück.
-   * Rückgabe ist immer zwischen 0 und 59
-   *
-   * @return String
-   */
-  public String getRemainingMinutes() {
-    return "59";
-  }
-
-  /**
-   * Gibt die verbleibenden Studen bis zum auslaufen des Fragebogens zurück.
-   * Rückgabe ist immer zwischen 0 und 59
-   *
-   * @return String
-   */
-  public String getRemainingSeconds() {
-    return "59";
   }
 
   /**
@@ -103,6 +90,15 @@ public class Fragebogen {
       }
     }
     return mult;
+  }
+
+  public void loescheFrage(Long id) {
+    Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findAny();
+    frage.ifPresent(value -> fragen.remove(value));
+  }
+
+  public void addFrage(Frage frage) {
+    fragen.add(frage);
   }
 }
 

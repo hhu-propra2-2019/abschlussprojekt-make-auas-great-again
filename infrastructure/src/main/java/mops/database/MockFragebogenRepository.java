@@ -7,19 +7,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import mops.Einheit;
-import mops.Frage;
 import mops.Fragebogen;
 import mops.controllers.FragebogenRepository;
 import mops.fragen.Auswahl;
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.SkalarFrage;
 import mops.fragen.TextFrage;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 
 @Repository
 @Qualifier("Faker")
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
 public class MockFragebogenRepository implements FragebogenRepository {
   // static, da beide Controller gleiche Datenbank brauchen
   private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
@@ -161,10 +161,17 @@ public class MockFragebogenRepository implements FragebogenRepository {
   @Override
   public List<Fragebogen> getAll() {
     List<Fragebogen> fragenliste = new ArrayList<>();
-    for (long i = 1L; i < 10L; i++) {
-      fragenliste.add(getFragebogenById(i));
+    generateDummyFrageboegen();
+    for (Long id : altefrageboegen.keySet()) {
+      fragenliste.add(getFragebogenById(id));
     }
     return fragenliste;
+  }
+
+  private void generateDummyFrageboegen() {
+    for (long i = 1L; i < 10L; i++) {
+      getFragebogenById(i);
+    }
   }
 
   @Override
@@ -180,22 +187,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
   }
 
   @Override
-  public void changeDateById(Long formId, LocalDateTime startDate, LocalDateTime endDate) {
-
-  }
-
-  @Override
-  public void addTextFrage(Long id, TextFrage frage) {
-
-  }
-
-  @Override
-  public void addSkalarFrage(Long id, SkalarFrage frage) {
-
-  }
-
-  @Override
-  public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
-
+  public void newFragebogen(Fragebogen fragebogen) {
+    Long id = fragebogen.getBogennr();
+    altefrageboegen.put(id, fragebogen);
   }
 }
