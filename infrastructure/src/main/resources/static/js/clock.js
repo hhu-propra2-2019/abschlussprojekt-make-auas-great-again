@@ -28,9 +28,7 @@ function clocktick(clock) {
     }
 }
 
-var clocks = [...document.getElementsByClassName("clock_times")
-    ]
-;
+var clocks = [...document.getElementsByClassName("clock_times")];
 var x = setInterval(function () {
     clocks.forEach(clocktick);
 }, 1000);
