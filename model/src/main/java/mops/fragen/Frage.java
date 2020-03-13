@@ -1,4 +1,4 @@
-package mops;
+package mops.fragen;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

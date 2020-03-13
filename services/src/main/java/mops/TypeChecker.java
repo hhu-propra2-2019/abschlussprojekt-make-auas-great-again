@@ -1,8 +1,9 @@
 package mops;
 
-
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.SkalarFrage;
+import mops.fragen.MultipleResponseFrage;
+import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
 
 public class TypeChecker {
@@ -11,12 +12,16 @@ public class TypeChecker {
     return frage instanceof TextFrage;
   }
 
-  public static boolean isSkalarFrage(Frage frage) {
-    return frage instanceof SkalarFrage;
-  }
-
   public static boolean isMultipleChoice(Frage frage) {
     return frage instanceof MultipleChoiceFrage;
+  }
+
+  public static boolean isMultipleResponse(Frage frage) {
+    return frage instanceof MultipleResponseFrage;
+  }
+
+  public static boolean isSingleResponse(Frage frage) {
+    return frage instanceof SingleResponseFrage;
   }
 
   public static boolean isVorlesung(Fragebogen fragebogen) {

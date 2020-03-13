@@ -13,8 +13,9 @@
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
-            <li><a th:href="@{/feedback/student/}">Startseite</a></li>
-            <li><a th:href="@{/feedback/student/kontakt}">Contact us</a></li>
+            <li class="active"><a th:href="@{/feedback/}">Startseite</a></li>
+            <li><a th:href="@{/feedback/student/ergebnis}">Evaluationsergebnisse</a></li>
+            <li><a th:href="@{/feedback/kontakt}">Kontakt</a></li>
         </ul>
     </nav>
 </header>
@@ -25,18 +26,21 @@
         <form method="post" th:action="'/feedback/student/details/submit/' + ${fragebogen.bogennr}">
             <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">
                 <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
-                    <label for="textfrage" th:text="${frage.fragentext}">Label</label>
-                    <textarea class="form-control" th:id="'answer-' + ${frage.id}"
-                              th:name="'answer-' + ${frage.id}"></textarea>
-                </div>
+
+                    <div th:replace="fragments/fragen :: textfrage">...</div>
+           </div>
                 <div class="form-group" th:if="${typeChecker.isMultipleChoice(frage)}">
-                    <h5 th:text="${frage.fragentext}">Fragetext</h5>
-                    <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
-                        <input class="form-check-input" th:id="'answer-' + ${frage.id}"
-                               th:name="'answer-' + ${frage.id}"
-                               th:value="${choice.label}" type="radio">
-                        <label for="multiple-choice" th:text="${choice.label}">Label</label>
-                    </div>
+                        <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
+
+                            <div th:replace="fragments/fragen :: singleResponse">...</div>
+
+                        </div>
+
+                        <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
+
+                            <div th:replace="fragments/fragen :: multipleResponse">...</div>
+
+                        </div>
                 </div>
             </div>
             <button class="btn btn-primary" type="submit">Submit</button>

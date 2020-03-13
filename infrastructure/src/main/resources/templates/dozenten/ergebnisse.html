@@ -13,8 +13,10 @@
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
-            <li><a th:href="@{/feedback/}">Startseite</a></li>
-            <li><a th:href="@{/feedback/kontakt}">Contact us</a></li>
+            <li><a href="/feedback/dozenten/">Startseite</a></li>
+            <li class="active"><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
+            <li><a href="/feedback/dozenten/new">Neuen Fragebogen erstellen</a></li>
+            <li><a href="/feedback/kontakt">Contact us</a></li>
         </ul>
     </nav>
 </header>
