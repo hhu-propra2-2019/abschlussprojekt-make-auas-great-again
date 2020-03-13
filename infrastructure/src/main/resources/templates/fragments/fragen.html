@@ -9,19 +9,24 @@
 
     <label for="textfrage" th:text="${frage.fragentext}">Label</label>
     <textarea class="form-control" th:id="'answer-' + ${frage.id}"
-              th:name="'answer-' + ${frage.id}"></textarea>
+              th:name="'answer-' + ${frage.id}" id="textfrage"></textarea>
 </div>
 
-<div th:fragment="multipleChoice">
+<div th:fragment="singleResponse">
 
     <h5 th:text="${frage.fragentext}">Fragetext</h5>
     <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
         <input class="form-check-input" th:id="'answer-' + ${frage.id}"
                th:name="'answer-' + ${frage.id}"
-               th:value="${choice.label}" type="radio">
-        <label for="multiple-choice" th:text="${choice.label}">Label</label>
+               th:value="${choice.label}" type="radio" id="singleResponse">
+        <label for="singleResponse" th:text="${choice.label}">Label</label>
     </div>
 
 </div>
+
+<div th:fragment="">
+
+</div>
+
 </body>
 </html>
