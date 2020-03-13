@@ -13,8 +13,8 @@
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
-            <li><a th:href="@{/feedback/}">Startseite</a></li>
-            <li><a th:href="@{/feedback/kontakt}">Contact us</a></li>
+            <li><a th:href="@{/feedback/student/}">Startseite</a></li>
+            <li><a th:href="@{/feedback/student/kontakt}">Contact us</a></li>
         </ul>
     </nav>
 </header>
@@ -22,7 +22,7 @@
     <div class="container">
         <h1 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
         <h2 th:text="${fragebogen.professorenname}">Professor</h2>
-        <form method="post" th:action="'/feedback/details/submit/' + ${fragebogen.bogennr}">
+        <form method="post" th:action="'/feedback/student/details/submit/' + ${fragebogen.bogennr}">
             <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">
                 <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
                     <label for="textfrage" th:text="${frage.fragentext}">Label</label>

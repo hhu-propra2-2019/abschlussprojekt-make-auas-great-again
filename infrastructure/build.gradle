@@ -39,7 +39,7 @@ dependencies {
     implementation 'mops:styleguide:2.1.0'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.4.1'
     compileOnly 'org.projectlombok:lombok'
-    //developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -53,6 +53,7 @@ dependencies {
     implementation 'org.keycloak:keycloak-spring-boot-starter:9.0.0'
     implementation 'org.keycloak.bom:keycloak-adapter-bom:9.0.0'
     implementation 'io.micrometer:micrometer-registry-prometheus'
+    testImplementation 'com.c4-soft.springaddons:spring-security-test-keycloack-addons:1.2.0'
 }
 
 test {

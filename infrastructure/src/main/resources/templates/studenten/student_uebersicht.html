@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>feedback</title>
+    <th:block th:fragment="headcontent">
+        <!-- Links, Skripts, Stylehttps://keycloak.cs.hhu.de/auth/realms/MOPS/account/s hier einfügen! -->
+    </th:block>
+</head>
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <ul>
+            <li class="active"><a th:href="@{/feedback/student/}">Startseite</a></li>
+            <li><a th:href="@{/feedback/student/kontakt/}">Contact us</a></li>
+        </ul>
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <h1 class="display-1">Dein Feedback</h1>
+    <h2 class="display-2" th:text="${account.getName()}">NAME</h2>
+    <div class="row row-cols-1 row-cols-md-4">
+        <div class="col mb-4" th:each="fragebogen,iter :${frageboegen}">
+            <div class="card bg-light border-dark text-center">
+                <img alt="..." class="card-img-top" src="/uebung.jpg"
+                     th:if="${typeChecker.isUebung(fragebogen)}">
+                <img alt="..." class="card-img-top" src="/vorlesung.jpg "
+                     th:if="${typeChecker.isVorlesung(fragebogen)}">
+                <img alt="..." class="card-img-top" src="/aufgabe.jpg"
+                     th:if="${typeChecker.isAufgabe(fragebogen)}">
+                <img alt="..." class="card-img-top" src="/praktikum.jpg"
+                     th:if="${typeChecker.isPraktikum(fragebogen)}">
+                <img alt="..." class="card-img-top" src="/dozent.jpg"
+                     th:if="${typeChecker.isDozent(fragebogen)}">
+                <img alt="..." class="card-img-top" src="/gruppen.jpg"
+                     th:if="${typeChecker.isGruppe(fragebogen)}">
+                <img alt="..." class="card-img-top" src="/beratung.jpg"
+                     th:if="${typeChecker.isBeratung(fragebogen)}">
+                <div class="card-body">
+                    <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
+                    <p class="card-text">Verbleibende Zeit:</p>
+                    <div class="w-100">
+                        <table class="table-responsive-sm">
+                            <thead>
+                            <tr class="clock_names">
+                                <th scope="col">Days</th>
+                                <th scope="col">Hours</th>
+                                <th scope="col">Min.</th>
+                                <th scope="col">Sec.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="clock_times" th:id="'clock' + ${iter.index}">
+                                <td class="clock_tage">--</td>
+                                <td class="clock_stunden">--</td>
+                                <td class="clock_minuten">--</td>
+                                <td class="clock_sekunden">--</td>
+                                <td class="startdatum" hidden th:text="${fragebogen.startdatum}">--</td>
+                                <td class="enddatum" hidden th:text="${fragebogen.enddatum}">--</td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <a class="btn btn-primary" th:href="@{/feedback/student/details(id=${fragebogen.bogennr})}">Feedback
+                        Geben!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function pad(num) {
+            var s = "00" + num;
+            return s.substr(s.length - 2);
+        }
+
+        function clocktick(clock) {
+            var startdatum = clock.getElementsByClassName("startdatum")[0].innerHTML;
+            var enddatum = clock.getElementsByClassName("enddatum")[0].innerHTML;
+            startdatum = new Date(Date.parse(startdatum));
+            enddatum = new Date(Date.parse(enddatum));
+            var now = new Date();
+            now = now.getTime();
+            var distance = enddatum.getTime() - now;
+            if (distance < 0) {
+                distance = startdatum.getTime() - now;
+            }
+            if (distance < 0) {
+                console.log("Clear interval??");
+            } else {
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                var minutes = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                var seconds = pad(Math.floor((distance % (1000 * 60)) / 1000));
+                clock.getElementsByClassName("clock_tage")[0].innerHTML = days;
+                clock.getElementsByClassName("clock_stunden")[0].innerHTML = hours;
+                clock.getElementsByClassName("clock_minuten")[0].innerHTML = minutes;
+                clock.getElementsByClassName("clock_sekunden")[0].innerHTML = seconds;
+            }
+        }
+
+        var clocks = [...document.getElementsByClassName("clock_times")];
+        var x = setInterval(function () {
+            clocks.forEach(clocktick);
+        }, 1000);
+    </script>
+</main>
+</body>
+</html>

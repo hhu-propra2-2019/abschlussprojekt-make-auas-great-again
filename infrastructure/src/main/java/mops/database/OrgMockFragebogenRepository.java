@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Qualifier("Org")
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "PMD.LooseCoupling"})
+@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis", "PMD.LooseCoupling"})
 public class OrgMockFragebogenRepository implements FragebogenRepository {
   private final transient List<String> frage = new ArrayList<>(
       Arrays.asList("Was geht?", "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
