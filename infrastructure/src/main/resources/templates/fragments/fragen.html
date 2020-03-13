@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    ...
+</head>
+<body>
+
+<div th:fragment="textfrage">
+
+    <label for="textfrage" th:text="${frage.fragentext}">Label</label>
+    <textarea class="form-control" th:id="'answer-' + ${frage.id}"
+              th:name="'answer-' + ${frage.id}"></textarea>
+</div>
+
+<div th:fragment="multipleChoice">
+
+    <h5 th:text="${frage.fragentext}">Fragetext</h5>
+    <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
+        <input class="form-check-input" th:id="'answer-' + ${frage.id}"
+               th:name="'answer-' + ${frage.id}"
+               th:value="${choice.label}" type="radio">
+        <label for="multiple-choice" th:text="${choice.label}">Label</label>
+    </div>
+
+</div>
+</body>
+</html>
