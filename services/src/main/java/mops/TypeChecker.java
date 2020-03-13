@@ -1,16 +1,15 @@
 package mops;
 
-
-import mops.fragen.*;
+import mops.fragen.Frage;
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.MultipleResponseFrage;
+import mops.fragen.SingleResponseFrage;
+import mops.fragen.TextFrage;
 
 public class TypeChecker {
 
   public static boolean isTextFrage(Frage frage) {
     return frage instanceof TextFrage;
-  }
-
-  public static boolean isSkalarFrage(Frage frage) {
-    return frage instanceof SkalarFrage;
   }
 
   public static boolean isMultipleChoice(Frage frage) {
