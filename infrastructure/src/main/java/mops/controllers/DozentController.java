@@ -38,7 +38,7 @@ public class DozentController {
     datetime = new DateTimeService();
   }
 
-  @GetMapping("/")
+  @GetMapping("")
   @RolesAllowed(orgaRole)
   public String getOrganisatorMainPage() {
     return "dozenten/dozent";
@@ -127,6 +127,13 @@ public class DozentController {
     bogen.addFrage(neuefrage);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
+  }
+
+  @GetMapping("/kontakt")
+  @RolesAllowed(orgaRole)
+  public String tickets(Model model, KeycloakAuthenticationToken token) {
+    model.addAttribute(account, createAccountFromPrincipal(token));
+    return "dozenten/tickets";
   }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {

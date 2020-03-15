@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/feedback/student")
+@RequestMapping("/feedback/studenten")
 public class StudentController {
   public static final String studentRole = "ROLE_studentin";
   private static final String emptySearchString = "";
@@ -46,7 +46,7 @@ public class StudentController {
     submitService = new SubmitService();
   }
 
-  @GetMapping("/")
+  @GetMapping("")
   @RolesAllowed(studentRole)
   public String uebersicht(KeycloakAuthenticationToken token, Model model, String search) {
     if (searchNotEmpty(search)) {
@@ -87,7 +87,7 @@ public class StudentController {
     submitService.saveAntworten(fragebogen, antworten);
     model.addAttribute(account, createAccountFromPrincipal(token));
     authenticatedAccess.increment();
-    return "redirect:/feedback/student/";
+    return "redirect:/feedback/studenten";
   }
 
   @GetMapping("/kontakt")
@@ -108,7 +108,7 @@ public class StudentController {
     kontakt.setZeitpunkt(LocalDateTime.now());
     model.addAttribute(account, createAccountFromPrincipal(token));
     authenticatedAccess.increment();
-    return "redirect:/feedback/student/";
+    return "redirect:/feedback/studenten";
   }
 
   @GetMapping("/ergebnis")
