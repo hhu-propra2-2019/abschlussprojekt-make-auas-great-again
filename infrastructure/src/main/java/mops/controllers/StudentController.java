@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import mops.fragen.Frage;
 import mops.Fragebogen;
 import mops.Kontaktformular;
 import mops.SubmitService;
 import mops.TypeChecker;
 import mops.database.MockDozentenRepository;
 import mops.database.MockFragebogenRepository;
+import mops.fragen.Frage;
 import mops.rollen.Student;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("/feedback/student")
 @Controller
+@RequestMapping("/feedback/student")
 public class StudentController {
   public static final String studentRole = "ROLE_studentin";
   private static final String emptySearchString = "";
