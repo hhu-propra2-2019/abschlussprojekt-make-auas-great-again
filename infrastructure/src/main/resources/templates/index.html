@@ -36,7 +36,10 @@
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <!-- Navigation als ungeordnete Liste mit einfachen Links hier einfügen! -->
+        <ul>
+            <li><a th:href="@{/feedback/student/}">Studenten</a></li>
+            <li><a th:href="@{/feedback/dozenten/}">Dozenten</a></li>
+        </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">

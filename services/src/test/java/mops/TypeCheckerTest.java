@@ -4,10 +4,10 @@ package mops;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
+import org.junit.jupiter.api.Test;
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
-import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class TypeCheckerTest {

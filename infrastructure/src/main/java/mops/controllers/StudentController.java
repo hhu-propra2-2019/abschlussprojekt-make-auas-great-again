@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import mops.Frage;
+import mops.fragen.Frage;
 import mops.Fragebogen;
 import mops.Kontaktformular;
 import mops.SubmitService;
@@ -56,6 +56,9 @@ public class StudentController {
     }
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
+    KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+    String name = principal.getKeycloakSecurityContext().getIdToken().getGivenName();
+    model.addAttribute("studentName", name);
     authenticatedAccess.increment();
     return "studenten/student_uebersicht";
   }

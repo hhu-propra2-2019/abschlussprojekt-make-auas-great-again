@@ -6,71 +6,65 @@
     <meta charset="utf-8">
     <title>feedback</title>
     <th:block th:fragment="headcontent">
-        <!-- Links, Skripts, Stylehttps://keycloak.cs.hhu.de/auth/realms/MOPS/account/s hier einfügen! -->
     </th:block>
 </head>
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
-            <li class="active"><a th:href="@{/feedback/student/}">Startseite</a></li>
-            <li><a th:href="@{/feedback/student/kontakt/}">Contact us</a></li>
+            <li class="active"><a th:href="@{/feedback/student/}">Übersicht</a></li>
+            <li><a th:href="@{/feedback/student/ergebnis}">Evaluationsergebnisse</a></li>
+            <li><a th:href="@{/feedback/student/kontakt}">Kontakt</a></li>
         </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-1">Dein Feedback</h1>
-    <h2 class="display-2" th:text="${account.getName()}">NAME</h2>
-    <div class="row row-cols-1 row-cols-md-4">
-        <div class="col mb-4" th:each="fragebogen,iter :${frageboegen}">
-            <div class="card bg-light border-dark text-center">
-                <img alt="..." class="card-img-top" src="/uebung.jpg"
-                     th:if="${typeChecker.isUebung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/vorlesung.jpg "
-                     th:if="${typeChecker.isVorlesung(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/aufgabe.jpg"
-                     th:if="${typeChecker.isAufgabe(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/praktikum.jpg"
-                     th:if="${typeChecker.isPraktikum(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/dozent.jpg"
-                     th:if="${typeChecker.isDozent(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/gruppen.jpg"
-                     th:if="${typeChecker.isGruppe(fragebogen)}">
-                <img alt="..." class="card-img-top" src="/beratung.jpg"
-                     th:if="${typeChecker.isBeratung(fragebogen)}">
+    <h2 class="display-2" th:text="${studentName}">NAME</h2>
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-3" th:each="fragebogen,iter :${frageboegen}">
+            <div class="card text-center h-100">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isUebung(fragebogen)}"
+                     th:src="@{/uebung.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isVorlesung(fragebogen)}"
+                     th:src="@{/vorlesung.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isAufgabe(fragebogen)}"
+                     th:src="@{/aufgabe.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isPraktikum(fragebogen)}"
+                     th:src="@{/praktikum.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isDozent(fragebogen)}"
+                     th:src="@{/dozent.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isGruppe(fragebogen)}"
+                     th:src="@{/gruppen.jpg}">
+                <img alt="..." class="card-img-top" th:if="${typeChecker.isBeratung(fragebogen)}"
+                     th:src="@{/beratung.jpg}">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
-                    <p class="card-text">Verbleibende Zeit:</p>
-                    <div class="w-100">
-                        <table class="table-responsive-sm">
-                            <thead>
-                            <tr class="clock_names">
-                                <th scope="col">Days</th>
-                                <th scope="col">Hours</th>
-                                <th scope="col">Min.</th>
-                                <th scope="col">Sec.</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr class="clock_times" th:id="'clock' + ${iter.index}">
-                                <td class="clock_tage">--</td>
-                                <td class="clock_stunden">--</td>
-                                <td class="clock_minuten">--</td>
-                                <td class="clock_sekunden">--</td>
-                                <td class="startdatum" hidden th:text="${fragebogen.startdatum}">--</td>
-                                <td class="enddatum" hidden th:text="${fragebogen.enddatum}">--</td>
-                            </tr>
-                            </tbody>
-
-                        </table>
+                    <a class=" btn btn-primary" id="button" style="margin: 16px"
+                       th:href="@{/feedback/student/details(id=${fragebogen.bogennr})}">
+                        Feedback Geben!
+                    </a>
+                    <h3 class="card-text">Verfügbar bis:</h3>
+                    <div th:text="${fragebogen.enddatum}">Programmierung>Datum</div>
+                    <br>
+                    <h3 class="card-text">Verbleibende Zeit:</h3>
+                    <div class="clock_times" th:id="'clock' + ${iter.index}">
+                        <span scope="col">Days: </span>
+                        <span class="clock_tage">--</span>
+                        <span scope="col">Hours: </span>
+                        <span class="clock_stunden">--</span>
+                        <span scope="col">Min: </span>
+                        <span class="clock_minuten">--</span>
+                        <span scope="col">Sec: </span>
+                        <span class="clock_sekunden">--</span>
+                        <span class="startdatum" hidden th:text="${fragebogen.startdatum}">--</span>
+                        <span class="enddatum" hidden th:text="${fragebogen.enddatum}">--</span>
                     </div>
-
-                    <a class="btn btn-primary" th:href="@{/feedback/student/details(id=${fragebogen.bogennr})}">Feedback
-                        Geben!</a>
                 </div>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <script>
         function pad(num) {
             var s = "00" + num;
@@ -108,6 +102,9 @@
         }, 1000);
 
     </script>
+=======
+    <script th:src="@{/js/clock.js}" type="text/javascript"></script>
+>>>>>>> Integrationsbranch
 </main>
 </body>
 </html>
