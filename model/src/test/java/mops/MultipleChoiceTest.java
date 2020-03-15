@@ -2,7 +2,6 @@ package mops;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 import mops.fragen.Auswahl;
 import mops.fragen.MultipleResponseFrage;
 import mops.fragen.SingleResponseFrage;
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
+@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
     "PMD.JUnitTestContainsTooManyAsserts"})
 public class MultipleChoiceTest {
   private static final String MOEGLICHKEIT_4 = "Trifft gar nicht zu";
@@ -27,13 +26,16 @@ public class MultipleChoiceTest {
 
   @BeforeEach
   public void setUp() {
-    singleResponseFrage = new SingleResponseFrage(Long.valueOf(1), "Die Vorlesung ist strukturiert", false);
+    singleResponseFrage = new SingleResponseFrage(Long.valueOf(1),
+        "Die Vorlesung ist strukturiert",
+        false);
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_1));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_2));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_3));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_4));
 
-    multipleResponseFrage = new MultipleResponseFrage(Long.valueOf(2), "Welche Programmiersprachen beherrscht du bereits?");
+    multipleResponseFrage = new MultipleResponseFrage(Long.valueOf(2),
+        "Welche Programmiersprachen beherrscht du bereits?");
     multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_1));
     multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_2));
     multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_3));

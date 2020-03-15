@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 public class FeedbackControllerTest {
   @Autowired
   private transient MockMvc mvc;

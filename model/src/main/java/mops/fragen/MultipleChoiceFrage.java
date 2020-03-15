@@ -45,7 +45,7 @@ public class MultipleChoiceFrage extends Frage {
     }
     this.aktualisiereErgebnis();
   }
-  
+
   private void aktualisiereErgebnis() {
     for (Auswahl auswahl : choices) {
       long anzahl = antworten.stream().filter(x -> x.getAntwort().equals(auswahl)).count();
@@ -56,7 +56,7 @@ public class MultipleChoiceFrage extends Frage {
   private Double berechneProzentualenAnteil(long anzahl) {
     return Double.valueOf((((double) anzahl) / antworten.size()) * 100);
   }
-  
+
   public Double holeErgebnis(Auswahl auswahl) {
     return auswertung.get(auswahl);
   }
