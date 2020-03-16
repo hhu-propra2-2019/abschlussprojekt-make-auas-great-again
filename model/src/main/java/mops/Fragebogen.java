@@ -97,6 +97,11 @@ public class Fragebogen {
     Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findAny();
     frage.ifPresent(value -> fragen.remove(value));
   }
+  
+  public Frage getFrage(Long id) {
+    Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findFirst();
+    return frage.get();
+  }
 
   public void addFrage(Frage frage) {
     fragen.add(frage);

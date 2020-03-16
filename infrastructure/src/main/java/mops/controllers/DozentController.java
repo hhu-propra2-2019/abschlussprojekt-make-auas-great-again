@@ -125,6 +125,16 @@ public class DozentController {
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
+  @GetMapping("/new/questions/edit/{bogennr}/{fragennr}")
+  @RolesAllowed(orgaRole)
+  public String seiteUmAntwortmoeglichkeitenHinzuzufuegen(Model model,
+      KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr) {
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    model.addAttribute("frage", frage);
+    return "dozenten/multiplechoiceedit";
+  }
+
   @GetMapping("/kontakt")
   @RolesAllowed(orgaRole)
   public String tickets(Model model, KeycloakAuthenticationToken token) {
