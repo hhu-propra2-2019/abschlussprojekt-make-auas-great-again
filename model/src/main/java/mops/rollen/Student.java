@@ -1,8 +1,12 @@
 package mops.rollen;
 
-import lombok.Value;
+import java.util.Set;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import mops.Fragebogen;
 
-@Value
+@Builder
+@EqualsAndHashCode(of = "id")
 public class Student {
 
   private Long id;
@@ -10,4 +14,10 @@ public class Student {
   private String nachname;
   private String email;
   private Integer matnr;
+
+  private Set<Fragebogen> frageboegen;
+
+  public void addFragebogen(Fragebogen fragebogen) {
+    frageboegen.add(fragebogen);
+  }
 }
