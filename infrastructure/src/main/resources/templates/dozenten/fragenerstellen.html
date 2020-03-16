@@ -34,6 +34,7 @@
                             <tr>
                                 <th>Fragetext</th>
                                 <th>Fragetyp</th>
+                                <th>Optionen</th>
                                 <th>Löschen</th>
                             </tr>
                         </thead>
@@ -41,6 +42,11 @@
                             <tr th:each="frage : ${neuerbogen.fragen}">
                                 <td th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</td>
                                 <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span th:if="${typechecker.isMultipleChoice(frage)}">Multiple Choice-Frage</span></td>
+                                <td>
+                                    <form th:if="${typechecker.isMultipleChoice(frage)}" class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/edit/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
+                                        <button type="submit" name="editbutton" class="btn btn-primary">Antwortmöglichkeiten bearbeiten</button>
+                                    </form>
+                                </td>
                                 <td>
                                     <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
                                         <button type="submit" name="deletebutton" class="btn btn-primary">Löschen</button>
