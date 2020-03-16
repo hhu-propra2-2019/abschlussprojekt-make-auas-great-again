@@ -138,7 +138,7 @@ public class DozentController {
     return "dozenten/multiplechoiceedit";
   }
 
-  @PostMapping("/new/questions/add/mc/{bogennr}/{fragennr}")
+  @PostMapping("/new/questions/mc/add/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
       String antworttext) {

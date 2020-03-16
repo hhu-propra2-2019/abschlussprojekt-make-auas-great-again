@@ -57,11 +57,11 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Antwortmöglichkeit hinzufügen</h3>
-                    <form class="form-horizontal" method="post">
+                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/mc/add/' + ${fragebogen} + '/' + ${frage.id}">
                         <div class="input-group mb-3 col-sm-6">
                             <input class="form-control" id="antworttext" name="antworttext" placeholder="Hier den Auswahltext eingeben" required type="text">
                         </div>
-                        <button class="btn btn-primary" name="addbutton" type="submit" th:action="'/feedback/dozenten/new/questions/mc/add/' + ${fragebogen} + '/' + ${frage.id}">Antwortmöglichkeit hinzufügen</button>
+                        <button class="btn btn-primary" name="addbutton" type="submit">Antwortmöglichkeit hinzufügen</button>
                     </form>
                 </div>
             </div>
