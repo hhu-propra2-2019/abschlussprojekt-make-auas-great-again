@@ -148,6 +148,16 @@ public class DozentController {
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
 
+  @PostMapping("/new/questions/mc/delete/{bogennr}/{fragennr}/{antwortnr}")
+  @RolesAllowed(orgaRole)
+  public String loescheMultipleChoiceAntwort(@PathVariable Long bogennr,
+      @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext) {
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    frage.deleteChoice(antwortnr);
+    return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
+  }
+
   @GetMapping("/kontakt")
   @RolesAllowed(orgaRole)
   public String tickets(Model model, KeycloakAuthenticationToken token) {

@@ -40,7 +40,7 @@
                             <tr th:each="choice : ${frage.choices}">
                                 <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
                                 <td>
-                                    <form class="form-horizontal" method="post">
+                                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
                                         <button type="submit" name="deletebutton" class="btn btn-primary">Löschen</button>
                                     </form>
                                 </td>
