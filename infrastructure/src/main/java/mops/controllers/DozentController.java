@@ -16,6 +16,7 @@ import mops.Einheit;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
+import mops.fragen.Auswahl;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
@@ -132,7 +133,19 @@ public class DozentController {
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
     model.addAttribute("frage", frage);
+    model.addAttribute("fragebogen", bogennr);
+    model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/multiplechoiceedit";
+  }
+
+  @PostMapping("/new/questions/add/mc/{bogennr}/{fragennr}")
+  @RolesAllowed(orgaRole)
+  public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
+      String antworttext) {
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    frage.addChoice(new Auswahl(antworttext));
+    return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
 
   @GetMapping("/kontakt")
