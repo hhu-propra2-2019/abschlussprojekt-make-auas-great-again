@@ -14,7 +14,6 @@ import lombok.Setter;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
-import mops.fragen.Frage;
 
 
 @Builder
@@ -32,7 +31,8 @@ public class Fragebogen {
   private LocalDateTime enddatum;
   private Einheit type;
 
-  public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende, Einheit einheit) {
+  public Fragebogen(String veranstaltung, String dozent,
+                    LocalDateTime start, LocalDateTime ende, Einheit einheit) {
     Random idgenerator = new Random();
     this.bogennr = idgenerator.nextLong();
     this.veranstaltungsname = veranstaltung;

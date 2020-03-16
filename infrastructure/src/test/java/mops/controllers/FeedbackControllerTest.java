@@ -21,11 +21,11 @@ public class FeedbackControllerTest {
   private transient MockMvc mvc;
 
   @Test
-  @DisplayName("StudentIn sollte auf feedback/student/ weitergeleitet werden.")
+  @DisplayName("StudentIn sollte auf feedback/studenten weitergeleitet werden.")
   @WithMockKeycloackAuth(roles = "studentin", idToken = @WithIDToken(email = "user@mail.de"))
   public void redirectStudentinAufRichtigeSeite() throws Exception {
     mvc.perform(get("/feedback/")).andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/feedback/student/"));
+        .andExpect(view().name("redirect:/feedback/studenten"));
   }
 
   @Test

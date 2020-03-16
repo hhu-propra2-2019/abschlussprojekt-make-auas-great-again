@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import mops.Einheit;
-import mops.Frage;
 import mops.Fragebogen;
 import mops.controllers.FragebogenRepository;
 import mops.fragen.Auswahl;
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.SkalarFrage;
+import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -62,7 +62,6 @@ public class OrgMockFragebogenRepository implements FragebogenRepository {
     }
   }
 
-  @Override
   public void deleteFrageByIdAndFrageId(Long formId, Long frageId) {
     Fragebogen fragebogen = frageboegen.get(formId);
     List<Frage> fragen = fragebogen.getFragen();
@@ -204,13 +203,16 @@ public class OrgMockFragebogenRepository implements FragebogenRepository {
   }
 
   @Override
+  public void newFragebogen(Fragebogen fragebogen) {
+
+  }
+
   public void changeDateById(Long formId, LocalDateTime startDate, LocalDateTime endDate) {
     Fragebogen fragebogen = getFragebogenById(formId);
     fragebogen.setStartdatum(startDate);
     fragebogen.setEnddatum(endDate);
   }
 
-  @Override
   public void addTextFrage(Long id, TextFrage frage) {
     frageId++;
     frage.setId(frageId);
@@ -220,8 +222,7 @@ public class OrgMockFragebogenRepository implements FragebogenRepository {
     fragebogen.setFragen(fragen);
   }
 
-  @Override
-  public void addSkalarFrage(Long id, SkalarFrage frage) {
+  public void addSkalarFrage(Long id, SingleResponseFrage frage) {
     frageId++;
     frage.setId(frageId);
     Fragebogen fragebogen = getFragebogenById(id);
