@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/feedback/")
+@RequestMapping("/feedback")
 public class FeedbackController {
   private final transient Counter publicAccess;
 
@@ -29,13 +29,13 @@ public class FeedbackController {
         token.getAccount().getRoles());
   }
 
-  @GetMapping("/")
+  @GetMapping("")
   public String index(KeycloakAuthenticationToken token, Model model) {
     if (token != null) {
       model.addAttribute("account", createAccountFromPrincipal(token));
       Set<String> tokenRoles = token.getAccount().getRoles();
       if (tokenRoles.contains("studentin")) {
-        return "redirect:/feedback/student/";
+        return "redirect:/feedback/studenten";
       } else if (tokenRoles.contains("orga")) {
         return "redirect:/feedback/dozenten";
       }

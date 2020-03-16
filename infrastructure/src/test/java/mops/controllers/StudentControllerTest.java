@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+
 import com.c4_soft.springaddons.test.security.context.support.WithIDToken;
 import com.c4_soft.springaddons.test.security.context.support.WithMockKeycloackAuth;
 import mops.Kontaktformular;
@@ -30,17 +31,15 @@ class StudentControllerTest {
   @DisplayName("Student sollte auf die student_uebersicht Seite weitergeleitet werden")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void correctRedirectFromIndex() throws Exception {
-    mvc.perform(get("/feedback/"))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/feedback/student/"));
+    mvc.perform(get("/feedback")).andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/feedback/studenten"));
   }
 
   @Test
   @DisplayName("Studenten kommen auf die Uebersicht Seite")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void uebersichtSucess() throws Exception {
-    mvc.perform(get("/feedback/student/"))
-        .andExpect(status().is2xxSuccessful())
+    mvc.perform(get("/feedback/studenten")).andExpect(status().is2xxSuccessful())
         .andExpect(view().name("studenten/student_uebersicht"));
   }
 
@@ -48,7 +47,7 @@ class StudentControllerTest {
   @DisplayName("Orga sollte nicht auf die student Uebersicht Seite kommen")
   @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = usermail))
   public void uebersichtFail() throws Exception {
-    mvc.perform(get("/feedback/student/")).andExpect(status().is4xxClientError());
+    mvc.perform(get("/feedback/studenten")).andExpect(status().is4xxClientError());
   }
 
   @Test
