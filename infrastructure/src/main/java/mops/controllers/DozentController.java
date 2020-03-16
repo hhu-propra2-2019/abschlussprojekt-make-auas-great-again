@@ -20,7 +20,8 @@ import mops.fragen.TextFrage;
 @Controller
 @RequestMapping("/feedback/dozenten")
 public class DozentController {
-  private static final String REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS = "redirect:/feedback/dozenten/new/questions/";
+  private static final String REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS =
+      "redirect:/feedback/dozenten/new/questions/";
   private final transient FragebogenRepository frageboegen;
   private final transient TypeChecker typechecker;
   private final transient DateTimeService datetime;
@@ -72,6 +73,7 @@ public class DozentController {
 
   @GetMapping("/new/questions/{bogennr}")
   public String seiteUmFragenHinzuzufuegen(@PathVariable Long bogennr, Model model) {
+    model.addAttribute("typechecker", typechecker);
     model.addAttribute("neuerbogen", frageboegen.getFragebogenById(bogennr));
     return "dozenten/fragenerstellen";
   }

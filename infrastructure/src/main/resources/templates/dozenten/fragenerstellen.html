@@ -40,7 +40,7 @@
                         <tbody th:remove="all-but-first">
                             <tr th:each="frage : ${neuerbogen.fragen}">
                                 <td th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</td>
-                                <td>Textfrage</td>
+                                <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><spanth:if="${typechecker.isMultipleChoice(frage)}">Multiple Choice-Frage</span></td>
                                 <td>
                                     <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
                                         <button type="submit" name="deletebutton" class="btn btn-primary">Löschen</button>
