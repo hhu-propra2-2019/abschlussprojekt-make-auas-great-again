@@ -3,14 +3,6 @@ package mops.controllers;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import mops.DateTimeService;
-import mops.Einheit;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.database.MockFragebogenRepository;
-import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.TextFrage;
-import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -19,6 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import mops.DateTimeService;
+import mops.Einheit;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.database.MockFragebogenRepository;
+import mops.fragen.Frage;
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.TextFrage;
+import mops.security.Account;
 
 
 @Controller
@@ -108,11 +109,16 @@ public class DozentController {
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
-  @PostMapping("/new/questions/add/textfrage/{bogennr}")
+  @PostMapping("/new/questions/add/{bogennr}")
   @RolesAllowed(orgaRole)
   public String addTextfrage(Model model, KeycloakAuthenticationToken token,
-      @PathVariable Long bogennr, String fragetext) {
-    TextFrage neuefrage = new TextFrage(fragetext);
+      @PathVariable Long bogennr, String fragetext, String fragetyp) {
+    Frage neuefrage;
+    if (fragetyp.equals("multiplechoice")) {
+      neuefrage = new MultipleChoiceFrage(fragetext);
+    } else {
+      neuefrage = new TextFrage(fragetext);
+    }
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     bogen.addFrage(neuefrage);
     model.addAttribute(account, createAccountFromPrincipal(token));
