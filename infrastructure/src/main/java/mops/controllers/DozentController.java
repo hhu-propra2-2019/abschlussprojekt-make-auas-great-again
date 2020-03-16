@@ -125,17 +125,6 @@ public class DozentController {
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
-  @PostMapping("/new/questions/add/mcfrage/{bogennr}")
-  @RolesAllowed(orgaRole)
-  public String addMultipleChoiceFrage(Model model, KeycloakAuthenticationToken token,
-      @PathVariable Long bogennr, String fragemc) {
-    MultipleChoiceFrage neuefrage = new MultipleChoiceFrage(fragemc);
-    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
-    bogen.addFrage(neuefrage);
-    model.addAttribute(account, createAccountFromPrincipal(token));
-    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
-  }
-
   @GetMapping("/kontakt")
   @RolesAllowed(orgaRole)
   public String tickets(Model model, KeycloakAuthenticationToken token) {
