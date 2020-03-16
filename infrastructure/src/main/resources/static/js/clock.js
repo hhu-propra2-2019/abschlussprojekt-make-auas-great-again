@@ -15,7 +15,10 @@ function clocktick(clock) {
         distance = startdatum.getTime() - now;
     }
     if (distance < 0) {
-        console.log("Clear interval??");
+        var button = clock.getElementsByClassName('feedback-button')[0];
+        button.classList.add('disabled');
+        button.setAttribute('aria-disabled', true);
+
     } else {
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
@@ -28,7 +31,7 @@ function clocktick(clock) {
     }
 }
 
-var clocks = [...document.getElementsByClassName("clock_times")];
+var clocks = [...document.getElementsByClassName('card')];
 var x = setInterval(function () {
     clocks.forEach(clocktick);
 }, 1000);
