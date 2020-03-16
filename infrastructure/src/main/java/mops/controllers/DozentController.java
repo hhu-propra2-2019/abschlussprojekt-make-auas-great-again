@@ -115,7 +115,7 @@ public class DozentController {
   public String addTextfrage(Model model, KeycloakAuthenticationToken token,
       @PathVariable Long bogennr, String fragetext, String fragetyp) {
     Frage neuefrage;
-    if (fragetyp.equals("multiplechoice")) {
+    if ("multiplechoice".equals(fragetyp)) {
       neuefrage = new MultipleChoiceFrage(fragetext);
     } else {
       neuefrage = new TextFrage(fragetext);
