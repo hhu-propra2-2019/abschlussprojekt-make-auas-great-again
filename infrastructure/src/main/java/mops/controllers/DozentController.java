@@ -8,6 +8,8 @@ import mops.Einheit;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
+import mops.fragen.Auswahl;
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
 import mops.security.Account;
@@ -57,7 +59,7 @@ public class DozentController {
   @GetMapping("/watch/{bogennr}")
   @RolesAllowed(orgaRole)
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
-                                             @PathVariable long bogennr, Model model) {
+      @PathVariable long bogennr, Model model) {
     Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
     model.addAttribute("fragebogen", fragebogen);
     model.addAttribute("typechecker", typechecker);
@@ -74,8 +76,8 @@ public class DozentController {
 
   @PostMapping("/new")
   @RolesAllowed(orgaRole)
-  public String addNeuesFormular(KeycloakAuthenticationToken token,
-                                 HttpServletRequest req, Model model) {
+  public String addNeuesFormular(KeycloakAuthenticationToken token, HttpServletRequest req,
+      Model model) {
     Fragebogen neu = new Fragebogen(req.getParameter("veranstaltung"),
         req.getParameter("dozentname"),
         datetime.getLocalDateTimeFromString(req.getParameter("startdatum"),
@@ -91,7 +93,8 @@ public class DozentController {
   @GetMapping("/new/questions/{bogennr}")
   @RolesAllowed(orgaRole)
   public String seiteUmFragenHinzuzufuegen(KeycloakAuthenticationToken token,
-                                           @PathVariable Long bogennr, Model model) {
+      @PathVariable Long bogennr, Model model) {
+    model.addAttribute("typechecker", typechecker);
     model.addAttribute("neuerbogen", frageboegen.getFragebogenById(bogennr));
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/fragenerstellen";
@@ -100,33 +103,59 @@ public class DozentController {
   @PostMapping("/new/questions/delete/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String loescheFrageAusFragebogen(Model model, KeycloakAuthenticationToken token,
-                                          @PathVariable Long bogennr, @PathVariable Long fragennr) {
+      @PathVariable Long bogennr, @PathVariable Long fragennr) {
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     bogen.loescheFrage(fragennr);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
-  @PostMapping("/new/questions/add/textfrage/{bogennr}")
+  @PostMapping("/new/questions/add/{bogennr}")
   @RolesAllowed(orgaRole)
   public String addTextfrage(Model model, KeycloakAuthenticationToken token,
-                             @PathVariable Long bogennr, String fragetext) {
-    TextFrage neuefrage = new TextFrage(fragetext);
+      @PathVariable Long bogennr, String fragetext, String fragetyp) {
+    Frage neuefrage;
+    if ("multiplechoice".equals(fragetyp)) {
+      neuefrage = new MultipleChoiceFrage(fragetext);
+    } else {
+      neuefrage = new TextFrage(fragetext);
+    }
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     bogen.addFrage(neuefrage);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
-  @PostMapping("/new/questions/add/mcfrage/{bogennr}")
+  @GetMapping("/new/questions/edit/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
-  public String addMultipleChoiceFrage(Model model, KeycloakAuthenticationToken token,
-                                       @PathVariable Long bogennr, String fragemc) {
-    MultipleChoiceFrage neuefrage = new MultipleChoiceFrage(fragemc);
+  public String seiteUmAntwortmoeglichkeitenHinzuzufuegen(Model model,
+      KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr) {
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
-    bogen.addFrage(neuefrage);
+    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    model.addAttribute("frage", frage);
+    model.addAttribute("fragebogen", bogennr);
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
+    return "dozenten/multiplechoiceedit";
+  }
+
+  @PostMapping("/new/questions/mc/add/{bogennr}/{fragennr}")
+  @RolesAllowed(orgaRole)
+  public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
+      String antworttext) {
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    frage.addChoice(new Auswahl(antworttext));
+    return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
+  }
+
+  @PostMapping("/new/questions/mc/delete/{bogennr}/{fragennr}/{antwortnr}")
+  @RolesAllowed(orgaRole)
+  public String loescheMultipleChoiceAntwort(@PathVariable Long bogennr,
+      @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext) {
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    frage.deleteChoice(antwortnr);
+    return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
 
   @GetMapping("/kontakt")
@@ -138,10 +167,8 @@ public class DozentController {
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return new Account(
-        principal.getName(),
-        principal.getKeycloakSecurityContext().getIdToken().getEmail(),
-        null,
+    return new Account(principal.getName(),
+        principal.getKeycloakSecurityContext().getIdToken().getEmail(), null,
         token.getAccount().getRoles());
   }
 }

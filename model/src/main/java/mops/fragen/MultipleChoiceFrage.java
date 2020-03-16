@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.Setter;
 import mops.antworten.MultipleChoiceAntwort;
@@ -46,6 +47,11 @@ public class MultipleChoiceFrage extends Frage {
   public void addChoice(Auswahl choice) {
     this.choices.add(choice);
     auswertung.put(choice, (double) 0);
+  }
+
+  public void deleteChoice(Long id) {
+    Optional<Auswahl> antwort = choices.stream().filter(x -> x.getId().equals(id)).findAny();
+    antwort.ifPresent(x -> choices.remove(x));
   }
 
   public int getNumberOfChoices() {
