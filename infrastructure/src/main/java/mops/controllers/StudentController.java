@@ -2,7 +2,6 @@ package mops.controllers;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.security.RolesAllowed;
@@ -13,6 +12,7 @@ import mops.SubmitService;
 import mops.TypeChecker;
 import mops.database.MockDozentenRepository;
 import mops.database.MockFragebogenRepository;
+import mops.database.MockStudentenRepository;
 import mops.fragen.Frage;
 import mops.rollen.Student;
 import mops.security.Account;
@@ -37,29 +37,31 @@ public class StudentController {
   private final transient SubmitService submitService;
   private transient FragebogenRepository frageboegen;
   private transient DozentenRepository dozenten;
+  private transient StudentenRepository studenten;
   private transient TypeChecker typeChecker = new TypeChecker();
 
   public StudentController(MeterRegistry registry) {
     frageboegen = new MockFragebogenRepository();
     authenticatedAccess = registry.counter("access.authenticated");
     dozenten = new MockDozentenRepository();
+    studenten = new MockStudentenRepository();
     submitService = new SubmitService();
   }
 
   @GetMapping("")
   @RolesAllowed(studentRole)
   public String uebersicht(KeycloakAuthenticationToken token, Model model, String search) {
+    //KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+    //Long id = Long.parseLong(principal.getKeycloakSecurityContext().getIdToken().getId());
+    Student student = studenten.getStudentById(0L);
     if (searchNotEmpty(search)) {
-      model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
+      model.addAttribute("frageboegen", student.getAllContaining(search));
     } else {
-      model.addAttribute("frageboegen", frageboegen.getAll());
+      model.addAttribute("frageboegen", student.getFrageboegen());
     }
+    model.addAttribute("student", student);
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
-    KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    String name = principal.getKeycloakSecurityContext().getIdToken().getGivenName();
-    model.addAttribute("studentName", name);
-    authenticatedAccess.increment();
     return "studenten/student_uebersicht";
   }
 
@@ -104,8 +106,6 @@ public class StudentController {
   @RolesAllowed(studentRole)
   public String postMessage(KeycloakAuthenticationToken token,
                             @ModelAttribute Kontaktformular kontakt, Model model) {
-    kontakt.setStudent(new Student(678L, "a", "b", "a@b.de", 2278));
-    kontakt.setZeitpunkt(LocalDateTime.now());
     model.addAttribute(account, createAccountFromPrincipal(token));
     authenticatedAccess.increment();
     return "redirect:/feedback/studenten";
