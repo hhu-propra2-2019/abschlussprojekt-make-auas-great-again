@@ -27,9 +27,24 @@
         <div th:each="frage : ${fragebogen.fragen}">
             <h5 th:text="${frage.fragentext}">Fragetext</h5>
             <div class="form-group" th:if="${typechecker.isTextFrage(frage)}">
-                <ul th:each="antwort : ${frage.antworten}">
-                    <li th:text="${antwort.antworttext}">Antworttext</li>
-                </ul>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Antwort</th>
+                            <th>Optionen</th>
+                        </tr>
+                    </thead>
+                    <tbody th:remove="all-but-first">
+                        <tr th:each="antwort : ${frage.antworten}">
+                            <td th:text="${antwort.antworttext}">Der Dozent ist sehr motiviert und erklärt alles gut.</td>
+                            <td>
+                                <form class="form-horizontal" method="get">
+                                    <button type="submit" name="editbutton" class="btn btn-primary">Antwort zensieren</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="form-group" th:if="${typechecker.isMultipleChoice(frage)}">
                 <ul th:each="choice : ${frage.choices}">
