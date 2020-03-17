@@ -12,8 +12,9 @@ import mops.rollen.Student;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@SuppressWarnings({"PMD.LooseCoupling"})
 public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
-  private HashMap<Long, Veranstaltung> veranstaltungen;
+  private transient HashMap<Long, Veranstaltung> veranstaltungen;
 
   public MockVeranstaltungsRepository() {
     veranstaltungen = new HashMap<>();
