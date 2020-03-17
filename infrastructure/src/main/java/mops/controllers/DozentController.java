@@ -3,14 +3,6 @@ package mops.controllers;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import mops.DateTimeService;
 import mops.Einheit;
 import mops.Fragebogen;
@@ -22,6 +14,14 @@ import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
 import mops.security.Account;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -72,9 +72,7 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String bearbeiteTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
       @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model) {
-    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
-    TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
-    TextAntwort antwort = frage.getAntwortById(antwortnr);
+    TextAntwort antwort = getTextAntwort(bogennr, fragennr, antwortnr);
     model.addAttribute("antwort", antwort);
     model.addAttribute("bogennr", bogennr);
     model.addAttribute("fragennr", fragennr);
@@ -83,13 +81,18 @@ public class DozentController {
     return "dozenten/zensieren";
   }
 
+  private TextAntwort getTextAntwort(Long bogennr, Long fragennr, Long antwortnr) {
+    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+    TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
+    TextAntwort antwort = frage.getAntwortById(antwortnr);
+    return antwort;
+  }
+
   @PostMapping("/watch/edit/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String speichereTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
       @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model, String textfeld) {
-    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
-    TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
-    TextAntwort antwort = frage.getAntwortById(antwortnr);
+    TextAntwort antwort = getTextAntwort(bogennr, fragennr, antwortnr);
     antwort.setAntworttext(textfeld);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "redirect:/feedback/dozenten/watch/" + bogennr;
@@ -99,11 +102,16 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String veroeffentlicheErgebnisseEinerFrage(@PathVariable Long bogennr,
       @PathVariable Long fragennr, Model model, KeycloakAuthenticationToken token) {
-    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
-    Frage frage = fragebogen.getFrage(fragennr);
+    Frage frage = getFrage(bogennr, fragennr);
     frage.aendereOeffentlichkeitsStatus();
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "redirect:/feedback/dozenten/watch/" + bogennr;
+  }
+
+  private Frage getFrage(Long bogennr, Long fragennr) {
+    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+    Frage frage = fragebogen.getFrage(fragennr);
+    return frage;
   }
 
   @GetMapping("/new")
@@ -169,20 +177,24 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String seiteUmAntwortmoeglichkeitenHinzuzufuegen(Model model,
       KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr) {
-    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
-    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    MultipleChoiceFrage frage = getMultipleChoiceFrage(bogennr, fragennr);
     model.addAttribute("frage", frage);
     model.addAttribute("fragebogen", bogennr);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/multiplechoiceedit";
   }
 
+  private MultipleChoiceFrage getMultipleChoiceFrage(Long bogennr, Long fragennr) {
+    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    return frage;
+  }
+
   @PostMapping("/new/questions/mc/add/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
       String antworttext) {
-    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
-    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    MultipleChoiceFrage frage = getMultipleChoiceFrage(bogennr, fragennr);
     frage.addChoice(new Auswahl(antworttext));
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
@@ -191,8 +203,7 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String loescheMultipleChoiceAntwort(@PathVariable Long bogennr,
       @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext) {
-    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
-    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    MultipleChoiceFrage frage = getMultipleChoiceFrage(bogennr, fragennr);
     frage.deleteChoice(antwortnr);
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
