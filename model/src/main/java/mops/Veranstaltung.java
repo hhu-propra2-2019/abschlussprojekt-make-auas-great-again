@@ -11,7 +11,6 @@ import mops.rollen.Student;
 @Getter
 @Setter
 public class Veranstaltung {
-  private final Long id;
   private String name;
   private String semester;
   private Dozent dozent;
