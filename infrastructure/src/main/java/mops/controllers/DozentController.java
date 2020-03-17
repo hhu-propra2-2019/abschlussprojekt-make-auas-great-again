@@ -3,16 +3,6 @@ package mops.controllers;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import mops.DateTimeService;
-import mops.Einheit;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.database.MockFragebogenRepository;
-import mops.fragen.Auswahl;
-import mops.fragen.Frage;
-import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.TextFrage;
-import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -21,6 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import mops.DateTimeService;
+import mops.Einheit;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.antworten.TextAntwort;
+import mops.database.MockFragebogenRepository;
+import mops.fragen.Auswahl;
+import mops.fragen.Frage;
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.TextFrage;
+import mops.security.Account;
 
 
 @Controller
@@ -65,6 +66,33 @@ public class DozentController {
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/ergebnisse";
+  }
+
+  @GetMapping("/watch/edit/{bogennr}/{fragennr}/{antwortnr}")
+  @RolesAllowed(orgaRole)
+  public String bearbeiteTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
+      @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model) {
+    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+    TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
+    TextAntwort antwort = frage.getAntwortById(antwortnr);
+    model.addAttribute("antwort", antwort);
+    model.addAttribute("bogennr", bogennr);
+    model.addAttribute("fragennr", fragennr);
+    model.addAttribute("antwortnr", antwortnr);
+    model.addAttribute(account, createAccountFromPrincipal(token));
+    return "dozenten/zensieren";
+  }
+
+  @PostMapping("/watch/edit/{bogennr}/{fragennr}/{antwortnr}")
+  @RolesAllowed(orgaRole)
+  public String speichereTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
+      @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model, String textfeld) {
+    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+    TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
+    TextAntwort antwort = frage.getAntwortById(antwortnr);
+    antwort.setAntworttext(textfeld);
+    model.addAttribute(account, createAccountFromPrincipal(token));
+    return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
   @GetMapping("/new")
