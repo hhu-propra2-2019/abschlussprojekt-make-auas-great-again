@@ -2,7 +2,6 @@ package mops.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import mops.Fragebogen;
@@ -43,11 +42,11 @@ public class StudentController {
   public String uebersicht(KeycloakAuthenticationToken token, Model model, String search) {
     //KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     //UUID studentId = UUID.fromString(principal.getKeycloakSecurityContext().getIdToken().getId());
-    UUID studentId = UUID.fromString("aa351f5c-b7fa-4bd9-ae76-8e5995b29889");
+    //UUID studentId = UUID.fromString("aa351f5c-b7fa-4bd9-ae76-8e5995b29889");
     if (searchNotEmpty(search)) {
-      model.addAttribute("frageboegen", frageboegen.getAllFromStudentContaining(studentId, search));
+      model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
     } else {
-      model.addAttribute("frageboegen", frageboegen.getFromStudent(studentId));
+      model.addAttribute("frageboegen", frageboegen.getAll());
     }
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));

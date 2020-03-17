@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import mops.Einheit;
 import mops.Fragebogen;
@@ -77,10 +76,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
           .professorenname(getRandomProfessor())
           .veranstaltungsname(name)
           .type(einheit)
-          .bogennr(id)
-          .studenten(new ArrayList<>(Arrays.asList(UUID.fromString("aa351f5c-b7fa-4bd9-ae76-8e5995b29889"),
-              UUID.fromString("9de596a9-4077-4a4e-84ef-13d25450a15f"))))
-          .dozent(UUID.fromString("aa351f5c-b7fa-4bd9-ae76-8e5995b29889"));
+          .bogennr(id);
       Fragebogen result = fragebogen.build();
       frageboegen.put(id, result);
       return result;
@@ -210,20 +206,5 @@ public class MockFragebogenRepository implements FragebogenRepository {
   public void newFragebogen(Fragebogen fragebogen) {
     Long id = fragebogen.getBogennr();
     frageboegen.put(id, fragebogen);
-  }
-
-  @Override
-  public List<Fragebogen> getAllFromStudentContaining(UUID id, String search) {
-    return getAll().stream()
-        .filter(bogen -> bogen.contains(search))
-        .filter(bogen -> bogen.getStudenten().contains(id))
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public List<Fragebogen> getFromStudent(UUID id) {
-    return getAll().stream()
-        .filter(bogen -> bogen.getStudenten().contains(id))
-        .collect(Collectors.toList());
   }
 }
