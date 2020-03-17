@@ -76,8 +76,23 @@ public class DozentController {
     TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
     TextAntwort antwort = frage.getAntwortById(antwortnr);
     model.addAttribute("antwort", antwort);
+    model.addAttribute("bogennr", bogennr);
+    model.addAttribute("fragennr", fragennr);
+    model.addAttribute("antwortnr", antwortnr);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/zensieren";
+  }
+
+  @PostMapping("/watch/edit/{bogennr}/{fragennr}/{antwortnr}")
+  @RolesAllowed(orgaRole)
+  public String speichereTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
+      @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model, String textfeld) {
+    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+    TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
+    TextAntwort antwort = frage.getAntwortById(antwortnr);
+    antwort.setAntworttext(textfeld);
+    model.addAttribute(account, createAccountFromPrincipal(token));
+    return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
   @GetMapping("/new")
