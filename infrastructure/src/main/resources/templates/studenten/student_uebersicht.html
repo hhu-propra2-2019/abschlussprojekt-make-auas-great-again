@@ -23,7 +23,7 @@
     <h2 class="display-2" th:text="${student.getVorname()+student.getNachname()}">NAME</h2>
     <div class="row row-cols-1 row-cols-md-3">
         <div class="col mb-3" th:each="fragebogen,iter :${frageboegen}">
-            <div id="cardID" class="card text-center h-100">
+            <div class="card text-center h-100">
                 <img alt="..." class="card-img-top" th:if="${typeChecker.isUebung(fragebogen)}"
                      th:src="@{/uebung.jpg}">
                 <img alt="..." class="card-img-top" th:if="${typeChecker.isVorlesung(fragebogen)}"

@@ -37,9 +37,6 @@ function clocktick(clock) {
         clock.getElementsByClassName("clock_minuten")[0].innerHTML = minutes;
         clock.getElementsByClassName("clock_sekunden")[0].innerHTML = seconds;
 
-        if (days == 0 && hours == 0) {
-            alarm();
-        }
 
         if(days == 0){
              var dayspan = clock.getElementsByClassName('dayspan')[0];
@@ -64,10 +61,6 @@ var enddates = [... document.getElementsByClassName('enddate')];
 enddates.forEach(formatDate);
 
 
-
-function alarm() {
-    document.getElementById("cardID").style.backgroundColor = "tomato";
-}
 
 
 
