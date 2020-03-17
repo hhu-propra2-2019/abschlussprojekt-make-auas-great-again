@@ -135,6 +135,13 @@ public class StudentController {
     return "/studenten/ergebnisUebersicht";
   }
 
+  @GetMapping("/veranstaltungen")
+  @RolesAllowed(studentRole)
+  public String veranstaltungUebersicht(KeycloakAuthenticationToken token, Model model) {
+    model.addAttribute(account, createAccountFromPrincipal(token));
+    return "veranstaltung";
+  }
+
   private boolean searchNotEmpty(String search) {
     return !emptySearchString.equals(search) && search != null;
   }
