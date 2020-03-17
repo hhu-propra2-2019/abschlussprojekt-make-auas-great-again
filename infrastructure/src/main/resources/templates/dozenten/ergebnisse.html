@@ -50,6 +50,11 @@
                     <li><span th:text="${choice.label}">Auswahlmöglichkeit</span>: <b><span th:text="${frage.holeErgebnis(choice)}">50</span>%</b></li>
                 </ul>
             </div>
+            <div class="form-group">
+                <form class="form-horizontal" th:action="'/feedback/dozenten/watch/publish/' + ${fragebogen.bogennr} + '/' + ${frage.id}" method="post">
+                    <button type="submit" name="publishbutton" class="btn btn-primary"><span th:if="${frage.getErgebnissesindoeffentlich() == false}">Ergebnisse veröffentlichen</span><span th:if="${frage.getErgebnissesindoeffentlich()}">Ergebnisse nicht mehr öffentlich anzeigen</span></button>
+                </form>
+            </div>
         </div>
     </div>
 </main>

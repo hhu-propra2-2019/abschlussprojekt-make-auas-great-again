@@ -2,11 +2,15 @@ package mops.antworten;
 
 import java.util.Random;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@EqualsAndHashCode(of = "id")
+@Getter
 @AllArgsConstructor
 public class TextAntwort extends Antwort {
   private final Long id = Long.valueOf(new Random().nextInt(1000));
+  @Setter
   private String antworttext;
 }
