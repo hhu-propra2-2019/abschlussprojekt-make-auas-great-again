@@ -8,6 +8,7 @@ import mops.Fragebogen;
 import mops.SubmitService;
 import mops.TypeChecker;
 import mops.database.MockFragebogenRepository;
+import mops.database.MockVeranstaltungsRepository;
 import mops.fragen.Frage;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -26,12 +27,13 @@ public class StudentController {
   public static final String studentRole = "ROLE_studentin";
   private static final String emptySearchString = "";
   private final transient String account = "account";
-
+  private final transient VeranstaltungsRepository veranstaltungen;
   private final transient SubmitService submitService;
   private transient FragebogenRepository frageboegen;
   private transient TypeChecker typeChecker;
 
-  public StudentController(MockFragebogenRepository frageboegen) {
+  public StudentController(MockFragebogenRepository frageboegen, MockVeranstaltungsRepository veranstaltungen) {
+    this.veranstaltungen = veranstaltungen;
     this.submitService = new SubmitService();
     this.frageboegen = frageboegen;
     this.typeChecker = new TypeChecker();
@@ -97,6 +99,26 @@ public class StudentController {
     model.addAttribute("multipleChoiceFragen", fragebogen.getMultipleChoiceFragen());
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "/studenten/ergebnisUebersicht";
+  }
+
+  @GetMapping("/veranstaltungen")
+  @RolesAllowed(studentRole)
+  public String veranstaltungUebersicht(KeycloakAuthenticationToken token, Model model,String search) {
+    model.addAttribute(account, createAccountFromPrincipal(token));
+    if (searchNotEmpty(search)) {
+      model.addAttribute("veranstaltungen", veranstaltungen.getAllContaining(search));
+    } else {
+      model.addAttribute("veranstaltungen", veranstaltungen.getAll());
+    }
+    return "/studenten/veranstaltung";
+  }
+
+  @PostMapping("/veranstaltungen/join")
+  @RolesAllowed(studentRole)
+  public String veranstaltungsBeitreten(KeycloakAuthenticationToken token, Model model) {
+    String massage = "Anfrage geschickt";
+    model.addAttribute("successMassage", massage);
+    return "/studenten/veranstaltung";
   }
 
   private boolean searchNotEmpty(String search) {
