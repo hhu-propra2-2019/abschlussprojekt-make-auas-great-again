@@ -25,4 +25,8 @@ public class Veranstaltung {
           .contains(search.toLowerCase(Locale.GERMAN));
     }
   }
+
+  public void addStudent(Student student) {
+    studenten.add(student);
+  }
 }

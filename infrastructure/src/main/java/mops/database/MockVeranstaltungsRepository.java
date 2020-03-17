@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import mops.Veranstaltung;
 import mops.controllers.VeranstaltungsRepository;
 import mops.rollen.Dozent;
+import mops.rollen.Student;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -33,6 +34,12 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   @Override
   public Veranstaltung getVeranstaltungById(Long id) {
     return veranstaltungen.get(id);
+  }
+
+  @Override
+  public void addStudentToVeranstaltungById(Student student, Long verId) {
+    Veranstaltung veranstaltung = getVeranstaltungById(verId);
+    veranstaltung.addStudent(student);
   }
 
   private Veranstaltung getRandomVeranstaltung() {
