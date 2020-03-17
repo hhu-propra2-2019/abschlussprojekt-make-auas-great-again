@@ -16,7 +16,12 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   private HashMap<Long, Veranstaltung> veranstaltungen = new HashMap<>();
 
   public MockVeranstaltungsRepository() {
-    veranstaltungen.put(1L, getRandomVeranstaltung());
+    List<Veranstaltung> veranstaltungList = getRandomVeranstaltungen();
+    Long index = 1L;
+    for (Veranstaltung veranstaltung : veranstaltungList) {
+      veranstaltungen.put(index, veranstaltung);
+      index++;
+    }
   }
 
   @Override
@@ -50,5 +55,18 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
         .semester("SOSE2019")
         .studenten(null);
     return veranstaltung.build();
+  }
+
+  private List<Veranstaltung> getRandomVeranstaltungen() {
+    List<Veranstaltung> veranstaltungList = new ArrayList<>();
+    Veranstaltung veranstaltung1 = getRandomVeranstaltung();
+    Veranstaltung veranstaltung2 = getRandomVeranstaltung();
+    Veranstaltung veranstaltung3 = getRandomVeranstaltung();
+    veranstaltung2.setName("Theoretische  Informatik");
+    veranstaltung3.setName("Analysis");
+    veranstaltungList.add(veranstaltung1);
+    veranstaltungList.add(veranstaltung2);
+    veranstaltungList.add(veranstaltung3);
+    return veranstaltungList;
   }
 }
