@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{mopslayout :: html(name='feedback', title='Optional: Tabtitel', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}">
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', title='Optional: Tabtitel', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Name des Subsystems</title>
@@ -15,8 +16,7 @@
         <ul>
             <li><a th:href="@{/feedback/studenten}">Übersicht</a></li>
             <li><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
-            <li><a th:href="@{/feedback/studenten/kontakt}">Kontakt</a></li>
-            <li><a th:href="@{/feedback/studenten/veranstaltungen}">Veranstaltungen</a></li>
+            <li class="active"><a th:href="@{/feedback/studenten/veranstaltungen}">Veranstaltungen</a></li>
         </ul>
     </nav>
 </header>
