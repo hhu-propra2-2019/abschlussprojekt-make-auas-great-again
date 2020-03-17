@@ -8,19 +8,20 @@ import java.util.stream.Collectors;
 import mops.Fragebogen;
 import mops.FragebogenService;
 import mops.controllers.FragebogenRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Qualifier("Faker")
-@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
 public class MockFragebogenRepository implements FragebogenRepository {
   // static, da beide Controller gleiche Datenbank brauchen
-  private static final Map<Long, Fragebogen> frageboegen = new HashMap<>();
-  private FragebogenService fragebogenService;
+  private static transient Map<Long, Fragebogen> frageboegen = new HashMap<>();
+  private static transient FragebogenService fragebogenService = new FragebogenService();
 
   public MockFragebogenRepository() {
-    this.fragebogenService = new FragebogenService();
+    List<Fragebogen> fragebogenList = fragebogenService.randomFrageboegen(10);
+    Long id = 0L;
+    for (Fragebogen fragebogen : fragebogenList) {
+      frageboegen.put(id++, fragebogen);
+    }
   }
 
   @Override
@@ -33,23 +34,12 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public List<Fragebogen> getAll() {
-    List<Fragebogen> fragenliste = new ArrayList<>();
-    generateDummyFrageboegen();
-    for (Long id : frageboegen.keySet()) {
-      fragenliste.add(getFragebogenById(id));
-    }
-    return fragenliste;
-  }
-
-  private void generateDummyFrageboegen() {
-    for (long i = 1L; i < 10L; i++) {
-      frageboegen.put(i, fragebogenService.randomFragebogen(i));
-    }
+    return new ArrayList<>(frageboegen.values());
   }
 
   @Override
   public List<Fragebogen> getAllContaining(String search) {
-    return getAll().stream()
+    return frageboegen.values().stream()
         .filter(bogen -> bogen.contains(search))
         .collect(Collectors.toList());
   }

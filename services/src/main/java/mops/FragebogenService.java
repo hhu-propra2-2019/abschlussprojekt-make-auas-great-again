@@ -159,4 +159,12 @@ public class FragebogenService {
     int index = randomGenerator.nextInt(praktikum.size());
     return praktikum.get(index);
   }
+
+  public List<Fragebogen> randomFrageboegen(int anzahl) {
+    List<Fragebogen> fragebogenList = new ArrayList<>();
+    for (Long i = 0L; i < anzahl; i++) {
+      fragebogenList.add(randomFragebogen(i));
+    }
+    return fragebogenList;
+  }
 }
