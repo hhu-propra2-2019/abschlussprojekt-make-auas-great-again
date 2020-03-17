@@ -2,7 +2,12 @@ function pad(num) {
     var s = "00" + num;
     return s.substr(s.length - 2);
 }
+function formatDate(date){
+    var enddate = date.innerHTML;
+    enddate = new Date(Date.parse(enddate));
+    date.innerHTML= enddate;
 
+}
 function clocktick(clock) {
     var startdatum = clock.getElementsByClassName("startdatum")[0].innerHTML;
     var enddatum = clock.getElementsByClassName("enddatum")[0].innerHTML;
@@ -28,6 +33,14 @@ function clocktick(clock) {
         clock.getElementsByClassName("clock_stunden")[0].innerHTML = hours;
         clock.getElementsByClassName("clock_minuten")[0].innerHTML = minutes;
         clock.getElementsByClassName("clock_sekunden")[0].innerHTML = seconds;
+
+        if(days == 0){
+             var dayspan = clock.getElementsByClassName('dayspan')[0];
+             dayspan.style.visibility="hidden";
+             var daycount = clock.getElementsByClassName('clock_tage')[0];
+             daycount.style.visibility="hidden";
+        }
+
     }
 }
 
@@ -35,3 +48,9 @@ var clocks = [...document.getElementsByClassName('card')];
 var x = setInterval(function () {
     clocks.forEach(clocktick);
 }, 1000);
+
+var enddates = [... document.getElementsByClassName('enddate')];
+enddates.forEach(formatDate);
+
+
+

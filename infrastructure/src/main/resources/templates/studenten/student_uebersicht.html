@@ -46,13 +46,13 @@
                         Feedback Geben!
                     </a>
                     <h3 class="card-text">Verfügbar bis:</h3>
-                    <div th:text="${fragebogen.enddatum}">Programmierung>Datum</div>
+                    <div class="enddate" th:text="${fragebogen.enddatum}">Programmierung>Datum</div>
                     <br>
                     <h3 class="card-text">Verbleibende Zeit:</h3>
                     <div class="clock_times" th:id="'clock' + ${iter.index}">
-                        <span scope="col">Days: </span>
+                        <span class="dayspan" scope="col">Days: </span>
                         <span class="clock_tage">--</span>
-                        <span scope="col">Hours: </span>
+                        <span class="hourspan" scope="col">Hours: </span>
                         <span class="clock_stunden">--</span>
                         <span scope="col">Min: </span>
                         <span class="clock_minuten">--</span>

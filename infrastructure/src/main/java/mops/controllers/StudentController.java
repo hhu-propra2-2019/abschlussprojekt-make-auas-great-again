@@ -65,6 +65,7 @@ public class StudentController {
     return "studenten/student_uebersicht";
   }
 
+
   @GetMapping("/details")
   @RolesAllowed(studentRole)
   public String fragebogen(KeycloakAuthenticationToken token, Model model, @RequestParam Long

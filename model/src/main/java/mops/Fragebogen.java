@@ -32,7 +32,7 @@ public class Fragebogen {
   private Einheit type;
 
   public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende,
-      Einheit einheit) {
+                    Einheit einheit) {
     Random idgenerator = new Random();
     this.bogennr = idgenerator.nextLong();
     this.veranstaltungsname = veranstaltung;
@@ -97,7 +97,7 @@ public class Fragebogen {
     Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findAny();
     frage.ifPresent(value -> fragen.remove(value));
   }
-  
+
   public Frage getFrage(Long id) {
     Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findFirst();
     return frage.get();
@@ -107,4 +107,5 @@ public class Fragebogen {
     fragen.add(frage);
   }
 }
+
 
