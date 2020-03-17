@@ -5,9 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+
 import com.c4_soft.springaddons.test.security.context.support.WithIDToken;
 import com.c4_soft.springaddons.test.security.context.support.WithMockKeycloackAuth;
-import mops.Kontaktformular;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +20,10 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class StudentControllerTest {
-  @Autowired
-  private transient MockMvc mvc;
-
   private final transient String usermail = "user@mail.de";
   private final transient String userrole = "studentin";
+  @Autowired
+  private transient MockMvc mvc;
 
   @Test
   @DisplayName("Student sollte auf die student_uebersicht Seite weitergeleitet werden")
@@ -60,15 +59,6 @@ class StudentControllerTest {
   }
 
   @Test
-  @DisplayName("Student sollte auf die 'kontakt'-Seite weitergeleitet werden.")
-  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
-  public void correctRedirectForKontakt() throws Exception {
-    mvc.perform(get("/feedback/studenten/kontakt"))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(view().name("/studenten/kontakt"));
-  }
-
-  @Test
   @DisplayName("Student sollte auf die 'ergebnis'-Seite weitergeleitet werden.")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void correctRedirectForErgebnis() throws Exception {
@@ -86,15 +76,6 @@ class StudentControllerTest {
         .andExpect(view().name("/studenten/ergebnisUebersicht"));
   }
 
-  @Test
-  @Disabled
-  @DisplayName("Student sollte auf die 'kontakt'-Seite weitergeleitet werden.")
-  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
-  public void correctRedirectForKontaktPost() throws Exception {
-    mvc.perform(post("/feedback/studenten/kontakt").flashAttr("kontakt", new Kontaktformular()))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/feedback/student/"));
-  }
 
   @Test
   @Disabled

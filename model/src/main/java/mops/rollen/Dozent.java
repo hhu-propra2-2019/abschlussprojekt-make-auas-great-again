@@ -1,12 +1,21 @@
 package mops.rollen;
 
-import lombok.Value;
+import java.util.List;
+import java.util.UUID;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import mops.Veranstaltung;
 
-@Value
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode(of = "uuid")
 public class Dozent {
 
-  private Long id;
+  private UUID uuid;
   private String vorname;
   private String nachname;
-  private String email;
+  private List<Veranstaltung> veranstaltungen;
 }
