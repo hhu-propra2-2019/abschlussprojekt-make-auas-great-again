@@ -90,21 +90,19 @@ public class DozentController {
 
   @PostMapping("/watch/edit/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
-  public String speichereTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
-      @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model, String textfeld) {
+  public String speichereTextAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
+      @PathVariable Long antwortnr, String textfeld) {
     TextAntwort antwort = getTextAntwort(bogennr, fragennr, antwortnr);
     antwort.setAntworttext(textfeld);
-    model.addAttribute(account, createAccountFromPrincipal(token));
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
   @PostMapping("/watch/publish/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String veroeffentlicheErgebnisseEinerFrage(@PathVariable Long bogennr,
-      @PathVariable Long fragennr, Model model, KeycloakAuthenticationToken token) {
+      @PathVariable Long fragennr) {
     Frage frage = getFrage(bogennr, fragennr);
     frage.aendereOeffentlichkeitsStatus();
-    model.addAttribute(account, createAccountFromPrincipal(token));
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
@@ -123,8 +121,7 @@ public class DozentController {
 
   @PostMapping("/new")
   @RolesAllowed(orgaRole)
-  public String addNeuesFormular(KeycloakAuthenticationToken token, HttpServletRequest req,
-      Model model) {
+  public String addNeuesFormular(HttpServletRequest req) {
     Fragebogen neu = new Fragebogen(req.getParameter("veranstaltung"),
         req.getParameter("dozentname"),
         datetime.getLocalDateTimeFromString(req.getParameter("startdatum"),
@@ -133,7 +130,6 @@ public class DozentController {
             req.getParameter("endzeit")),
         Einheit.valueOf(req.getParameter("veranstaltungstyp")));
     frageboegen.newFragebogen(neu);
-    model.addAttribute(account, createAccountFromPrincipal(token));
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
   }
 
@@ -149,18 +145,15 @@ public class DozentController {
 
   @PostMapping("/new/questions/delete/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
-  public String loescheFrageAusFragebogen(Model model, KeycloakAuthenticationToken token,
-      @PathVariable Long bogennr, @PathVariable Long fragennr) {
+  public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr) {
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     bogen.loescheFrage(fragennr);
-    model.addAttribute(account, createAccountFromPrincipal(token));
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
   @PostMapping("/new/questions/add/{bogennr}")
   @RolesAllowed(orgaRole)
-  public String addTextfrage(Model model, KeycloakAuthenticationToken token,
-      @PathVariable Long bogennr, String fragetext, String fragetyp) {
+  public String addTextfrage(@PathVariable Long bogennr, String fragetext, String fragetyp) {
     Frage neuefrage;
     if ("multiplechoice".equals(fragetyp)) {
       neuefrage = new MultipleChoiceFrage(fragetext);
@@ -169,7 +162,6 @@ public class DozentController {
     }
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     bogen.addFrage(neuefrage);
-    model.addAttribute(account, createAccountFromPrincipal(token));
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
