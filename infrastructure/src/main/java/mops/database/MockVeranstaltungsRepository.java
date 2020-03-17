@@ -6,23 +6,25 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import mops.Veranstaltung;
+import mops.controllers.FragebogenRepository;
 import mops.controllers.VeranstaltungsRepository;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@SuppressWarnings({"PMD.LooseCoupling"})
+@SuppressWarnings( {"PMD.LooseCoupling"})
 public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   private transient HashMap<Long, Veranstaltung> veranstaltungen;
+  private transient FragebogenRepository frageboegen;
 
   public MockVeranstaltungsRepository() {
+    this.frageboegen = new MockFragebogenRepository();
     veranstaltungen = new HashMap<>();
     List<Veranstaltung> veranstaltungList = getRandomVeranstaltungen();
-    Long index = 1L;
+    Long index = 0L;
     for (Veranstaltung veranstaltung : veranstaltungList) {
-      veranstaltungen.put(index, veranstaltung);
-      index++;
+      veranstaltungen.put(index++, veranstaltung);
     }
   }
 
@@ -55,7 +57,8 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
     veranstaltung = veranstaltung.dozent(dozent)
         .name("Programmierung")
         .semester("SOSE2019")
-        .studenten(null);
+        .studenten(null)
+        .frageboegen(frageboegen.getAll());
     return veranstaltung.build();
   }
 

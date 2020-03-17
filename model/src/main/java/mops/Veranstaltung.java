@@ -16,6 +16,7 @@ public class Veranstaltung {
   private String semester;
   private Dozent dozent;
   private List<Student> studenten;
+  private List<Fragebogen> frageboegen;
 
   public boolean contains(String search) {
     if (dozent.getNachname().toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN))) {
@@ -28,5 +29,9 @@ public class Veranstaltung {
 
   public void addStudent(Student student) {
     studenten.add(student);
+  }
+
+  public void addFragebogen(Fragebogen fragebogen) {
+    frageboegen.add(fragebogen);
   }
 }
