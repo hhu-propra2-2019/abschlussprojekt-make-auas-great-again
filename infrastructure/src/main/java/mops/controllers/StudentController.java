@@ -139,7 +139,7 @@ public class StudentController {
   @RolesAllowed(studentRole)
   public String veranstaltungUebersicht(KeycloakAuthenticationToken token, Model model) {
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "veranstaltung";
+    return "/studenten/veranstaltung";
   }
 
   private boolean searchNotEmpty(String search) {
