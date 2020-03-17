@@ -9,6 +9,6 @@ public interface VeranstaltungsRepository {
 
   List<Veranstaltung> getAllContaining(String search);
 
-  List<Veranstaltung> getVeranstaltungById(Long id);
+  Veranstaltung getVeranstaltungById(Long id);
 
 }

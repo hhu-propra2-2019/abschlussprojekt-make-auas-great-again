@@ -14,6 +14,7 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   public MockVeranstaltungsRepository() {
     veranstaltungen.put(1L, getRandomVeranstaltung());
   }
+
   @Override
   public List<Veranstaltung> getAll() {
     return new ArrayList<>(veranstaltungen.values());
@@ -25,8 +26,8 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   }
 
   @Override
-  public List<Veranstaltung> getVeranstaltungById(Long id) {
-    return null;
+  public Veranstaltung getVeranstaltungById(Long id) {
+    return veranstaltungen.get(id);
   }
 
   private Veranstaltung getRandomVeranstaltung() {
