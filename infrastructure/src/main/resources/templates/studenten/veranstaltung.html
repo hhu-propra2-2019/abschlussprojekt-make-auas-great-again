@@ -22,8 +22,8 @@
 </header>
 <main th:fragment="bodycontent">
     <!-- Restlichen Inhalt hier einfügen! -->
-    <h1 class="display-1">Vernstaltungen</h1>
-    <h2 class="display-2" th:text="'Hallo ' + ${account.getEmail()}">NAME</h2>
+    <h1 class="display-3">Vernstaltungen</h1>
+    <h2 class="display-4" th:text="'Hallo ' + ${account.getEmail()}">NAME</h2>
 
     <div class="row row-cols-1 row-cols-md-3">
         <div class="col mb-3" th:each="veranstaltung,iter :${veranstaltungen}">
