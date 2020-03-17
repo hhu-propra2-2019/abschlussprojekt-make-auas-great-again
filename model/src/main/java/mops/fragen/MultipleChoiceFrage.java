@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
 import mops.antworten.MultipleChoiceAntwort;
@@ -29,7 +30,7 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   public MultipleChoiceFrage(String fragentext) {
-    super(1L);
+    super(Long.valueOf(new Random().nextInt(1000)));
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     fillDummyChoices();
