@@ -20,7 +20,7 @@
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-1">Dein Feedback</h1>
-    <h2 class="display-2" th:text="${student.getVorname()+student.getNachname()}">NAME</h2>
+    <h2 class="display-2" th:text="${account.getName()}">NAME</h2>
     <div class="row row-cols-1 row-cols-md-3">
         <div class="col mb-3" th:each="fragebogen,iter :${frageboegen}">
             <div class="card text-center h-100">
