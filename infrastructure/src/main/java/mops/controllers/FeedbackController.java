@@ -1,7 +1,5 @@
 package mops.controllers;
 
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.MeterRegistry;
 import java.util.Set;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -14,11 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/feedback")
 public class FeedbackController {
-  private final transient Counter publicAccess;
-
-  public FeedbackController(MeterRegistry registry) {
-    publicAccess = registry.counter("access.public");
-  }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
@@ -40,7 +33,6 @@ public class FeedbackController {
         return "redirect:/feedback/dozenten";
       }
     }
-    publicAccess.increment();
     return "index";
   }
 }

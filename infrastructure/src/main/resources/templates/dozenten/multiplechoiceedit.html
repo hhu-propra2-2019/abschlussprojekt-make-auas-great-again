@@ -16,7 +16,6 @@
             <li><a href="/feedback/dozenten">Übersicht</a></li>
             <li><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
             <li class="active"><a href="/feedback/dozenten/new">Neuen Fragebogen erstellen</a></li>
-            <li><a href="/feedback/dozenten/kontakt">Tickets</a></li>
         </ul>
     </nav>
 </header>
@@ -31,20 +30,21 @@
                     <h3 class="card-title">Bereits vorhandene Antwortmöglichkeiten</h3>
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th>Antwortmöglichkeit</th>
-                                <th>Löschen</th>
-                            </tr>
+                        <tr>
+                            <th>Antwortmöglichkeit</th>
+                            <th>Löschen</th>
+                        </tr>
                         </thead>
                         <tbody th:remove="all-but-first">
-                            <tr th:each="choice : ${frage.choices}">
-                                <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
-                                <td>
-                                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
-                                        <button type="submit" name="deletebutton" class="btn btn-primary">Löschen</button>
-                                    </form>
-                                </td>
-                            </tr>
+                        <tr th:each="choice : ${frage.choices}">
+                            <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
+                            <td>
+                                <form class="form-horizontal" method="post"
+                                      th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
+                                    <button class="btn btn-primary" name="deletebutton" type="submit">Löschen</button>
+                                </form>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -57,11 +57,14 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Antwortmöglichkeit hinzufügen</h3>
-                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/mc/add/' + ${fragebogen} + '/' + ${frage.id}">
+                    <form class="form-horizontal" method="post"
+                          th:action="'/feedback/dozenten/new/questions/mc/add/' + ${fragebogen} + '/' + ${frage.id}">
                         <div class="input-group mb-3 col-sm-6">
-                            <input class="form-control" id="antworttext" name="antworttext" placeholder="Hier den Auswahltext eingeben" required type="text">
+                            <input class="form-control" id="antworttext" name="antworttext"
+                                   placeholder="Hier den Auswahltext eingeben" required type="text">
                         </div>
-                        <button class="btn btn-primary" name="addbutton" type="submit">Antwortmöglichkeit hinzufügen</button>
+                        <button class="btn btn-primary" name="addbutton" type="submit">Antwortmöglichkeit hinzufügen
+                        </button>
                     </form>
                 </div>
             </div>
