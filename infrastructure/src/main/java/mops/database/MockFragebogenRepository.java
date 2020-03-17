@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 import mops.Einheit;
 import mops.Fragebogen;
 import mops.controllers.FragebogenRepository;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
 public class MockFragebogenRepository implements FragebogenRepository {
   // static, da beide Controller gleiche Datenbank brauchen
-  private static final Map<Long, Fragebogen> altefrageboegen = new HashMap<>();
+  private static final Map<Long, Fragebogen> frageboegen = new HashMap<>();
   private final transient List<String> frage = new ArrayList<>(
       Arrays.asList("Was geht?", "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
   private final transient List<String> professor = new ArrayList<>(
@@ -51,8 +52,8 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public Fragebogen getFragebogenById(Long id) {
-    if (altefrageboegen.containsKey(id)) {
-      return altefrageboegen.get(id);
+    if (frageboegen.containsKey(id)) {
+      return frageboegen.get(id);
     } else {
       List<Frage> fragenliste = new ArrayList<>();
       Frage frage1 = generateSingleResponse();
@@ -65,39 +66,46 @@ public class MockFragebogenRepository implements FragebogenRepository {
       frage3.addAntwort("Schlecht");
       frage4.addAntwort("Sehr Gut");
       frage4.addAntwort("Sehr schlecht");
-
       fragenliste.add(frage3);
       fragenliste.add(frage4);
       Einheit einheit = Einheit.getRandomEinheit();
-      String name;
-      if (einheit == Einheit.VORLESUNG) {
-        name = getRandomVorlesung();
-      } else if (einheit == Einheit.UEBUNG) {
-        name = getRandomUebung();
-      } else if (einheit == Einheit.GRUPPE) {
-        name = getRandomGruppe();
-      } else if (einheit == Einheit.DOZENT) {
-        name = getRandomDozent();
-      } else if (einheit == Einheit.PRAKTIKUM) {
-        name = getRandomPraktikum();
-      } else if (einheit == Einheit.AUFGABE) {
-        name = getRandomAufgabe();
-      } else {
-        name = getRandomBeratung();
-      }
+      String name = getRandomName(einheit);
       Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
       fragebogen = fragebogen.startdatum(LocalDateTime.now())
           .enddatum(LocalDateTime.now().plusSeconds(10)).fragen(fragenliste)
-          .professorenname(getRandomProfessor()).veranstaltungsname(name).type(einheit).bogennr(id);
+          .professorenname(getRandomProfessor())
+          .veranstaltungsname(name)
+          .type(einheit)
+          .bogennr(id);
       Fragebogen result = fragebogen.build();
-      altefrageboegen.put(id, result);
+      frageboegen.put(id, result);
       return result;
     }
   }
 
+  private String getRandomName(Einheit einheit) {
+    String name;
+    if (einheit == Einheit.VORLESUNG) {
+      name = getRandomVorlesung();
+    } else if (einheit == Einheit.UEBUNG) {
+      name = getRandomUebung();
+    } else if (einheit == Einheit.GRUPPE) {
+      name = getRandomGruppe();
+    } else if (einheit == Einheit.DOZENT) {
+      name = getRandomDozent();
+    } else if (einheit == Einheit.PRAKTIKUM) {
+      name = getRandomPraktikum();
+    } else if (einheit == Einheit.AUFGABE) {
+      name = getRandomAufgabe();
+    } else {
+      name = getRandomBeratung();
+    }
+    return name;
+  }
+
   private Frage generateMultipleResponse() {
     MultipleChoiceFrage frage =
-        new MultipleResponseFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage());
+        new MultipleResponseFrage((long) idgenerator.nextInt(100), getRandomFrage());
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));
@@ -175,7 +183,7 @@ public class MockFragebogenRepository implements FragebogenRepository {
   public List<Fragebogen> getAll() {
     List<Fragebogen> fragenliste = new ArrayList<>();
     generateDummyFrageboegen();
-    for (Long id : altefrageboegen.keySet()) {
+    for (Long id : frageboegen.keySet()) {
       fragenliste.add(getFragebogenById(id));
     }
     return fragenliste;
@@ -189,19 +197,14 @@ public class MockFragebogenRepository implements FragebogenRepository {
 
   @Override
   public List<Fragebogen> getAllContaining(String search) {
-    List<Fragebogen> fragenliste = new ArrayList<>();
-    for (long i = 1L; i < 10L; i++) {
-      Fragebogen fragebogen = getFragebogenById(i);
-      if (fragebogen.contains(search)) {
-        fragenliste.add(fragebogen);
-      }
-    }
-    return fragenliste;
+    return getAll().stream()
+        .filter(bogen -> bogen.contains(search))
+        .collect(Collectors.toList());
   }
 
   @Override
   public void newFragebogen(Fragebogen fragebogen) {
     Long id = fragebogen.getBogennr();
-    altefrageboegen.put(id, fragebogen);
+    frageboegen.put(id, fragebogen);
   }
 }
