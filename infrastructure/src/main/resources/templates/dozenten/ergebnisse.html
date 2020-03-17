@@ -25,7 +25,7 @@
         <h1 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
         <h2 th:text="${fragebogen.professorenname}">Professor</h2>
         <div th:each="frage : ${fragebogen.fragen}">
-            <h5 th:text="${frage.fragentext}">Fragetext</h5>
+            <h3 th:text="${frage.fragentext}">Fragetext</h3>
             <div class="form-group" th:if="${typechecker.isTextFrage(frage)}">
                 <table class="table">
                     <thead>
