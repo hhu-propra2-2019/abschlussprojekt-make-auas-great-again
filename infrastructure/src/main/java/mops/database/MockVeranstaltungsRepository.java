@@ -13,9 +13,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
-  private HashMap<Long, Veranstaltung> veranstaltungen = new HashMap<>();
+  private HashMap<Long, Veranstaltung> veranstaltungen;
 
   public MockVeranstaltungsRepository() {
+    veranstaltungen = new HashMap<>();
     List<Veranstaltung> veranstaltungList = getRandomVeranstaltungen();
     Long index = 1L;
     for (Veranstaltung veranstaltung : veranstaltungList) {

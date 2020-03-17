@@ -113,6 +113,14 @@ public class StudentController {
     return "/studenten/veranstaltung";
   }
 
+  @PostMapping("/veranstaltungen/join")
+  @RolesAllowed(studentRole)
+  public String veranstaltungsBeitreten(KeycloakAuthenticationToken token, Model model) {
+    String massage = "Anfrage geschickt";
+    model.addAttribute("successMassage", massage);
+    return "/studenten/veranstaltung";
+  }
+
   private boolean searchNotEmpty(String search) {
     return !emptySearchString.equals(search) && search != null;
   }
