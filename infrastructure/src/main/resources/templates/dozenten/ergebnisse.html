@@ -38,7 +38,7 @@
                         <tr th:each="antwort : ${frage.antworten}">
                             <td th:text="${antwort.antworttext}">Der Dozent ist sehr motiviert und erklärt alles gut.</td>
                             <td>
-                                <form class="form-horizontal" method="get">
+                                <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/edit/' + ${fragebogen.bogennr} + '/' + ${frage.id} + '/' + ${antwort.id}">
                                     <button type="submit" name="editbutton" class="btn btn-primary">Antwort zensieren</button>
                                 </form>
                             </td>
