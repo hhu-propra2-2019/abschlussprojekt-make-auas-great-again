@@ -103,8 +103,13 @@ public class StudentController {
 
   @GetMapping("/veranstaltungen")
   @RolesAllowed(studentRole)
-  public String veranstaltungUebersicht(KeycloakAuthenticationToken token, Model model) {
+  public String veranstaltungUebersicht(KeycloakAuthenticationToken token, Model model,String search) {
     model.addAttribute(account, createAccountFromPrincipal(token));
+    if (searchNotEmpty(search)) {
+      model.addAttribute("veranstaltungen", veranstaltungen.getAllContaining(search));
+    } else {
+      model.addAttribute("veranstaltungen", veranstaltungen.getAll());
+    }
     return "/studenten/veranstaltung";
   }
 

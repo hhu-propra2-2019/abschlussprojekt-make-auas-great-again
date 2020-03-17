@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 import mops.Veranstaltung;
 import mops.controllers.VeranstaltungsRepository;
 import mops.rollen.Dozent;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   private HashMap<Long, Veranstaltung> veranstaltungen = new HashMap<>();
 
