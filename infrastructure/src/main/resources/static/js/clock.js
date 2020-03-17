@@ -4,7 +4,13 @@ function pad(num) {
 }
 function formatDate(date){
     var enddate = date.innerHTML;
+    console.log("Before parsing "+enddate);
+    enddate = enddate.slice(0, 10);
+    console.log("After slice "+ enddate);
     enddate = new Date(Date.parse(enddate));
+    console.log(enddate);
+    enddate = enddate.toString().slice(0, 10);
+    console.log("After parsing "+ enddate);
     date.innerHTML= enddate;
 
 }
