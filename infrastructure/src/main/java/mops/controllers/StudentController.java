@@ -122,7 +122,7 @@ public class StudentController {
   }
 
 
-  @GetMapping("/ergebnisDetails")
+  @GetMapping("/ergebnisUebersicht")
   @RolesAllowed(studentRole)
   public String ergebnisUebersicht(KeycloakAuthenticationToken token,
                                    @RequestParam long id, Model model) {
@@ -132,7 +132,7 @@ public class StudentController {
     model.addAttribute("multChoiceFragen", fragebogen.getMultipleChoiceFragen());
     model.addAttribute(account, createAccountFromPrincipal(token));
     authenticatedAccess.increment();
-    return "/studenten/ergebnisDetails";
+    return "/studenten/ergebnisUebersicht";
   }
 
   private boolean searchNotEmpty(String search) {
