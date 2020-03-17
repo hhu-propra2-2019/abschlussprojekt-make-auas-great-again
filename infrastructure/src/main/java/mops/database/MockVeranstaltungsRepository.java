@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import mops.Veranstaltung;
 import mops.controllers.VeranstaltungsRepository;
 import mops.rollen.Dozent;
@@ -22,7 +23,9 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
 
   @Override
   public List<Veranstaltung> getAllContaining(String search) {
-    return null;
+    return getAll().stream()
+        .filter(veranstaltung -> veranstaltung.contains(search))
+        .collect(Collectors.toList());
   }
 
   @Override
