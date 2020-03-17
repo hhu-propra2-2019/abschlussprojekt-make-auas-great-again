@@ -15,18 +15,28 @@
         <ul>
             <li><a th:href="@{/feedback/studenten}">Übersicht</a></li>
             <li><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
-            <li><a th:href="@{/feedback/studenten/kontakt}">Kontakt</a></li>
         </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
     <!-- Restlichen Inhalt hier einfügen! -->
     <h2 th:text="${fragebogen.veranstaltungsname}">Feebackübersicht</h2>
-    <div class="col mb-4" th:each="textfrage :${textFragen}">
+    <div class="textfragen" style="padding: 8px" th:each="textfrage :${textFragen}">
         <h3 th:text="${textfrage.getFragentext()}"></h3>
         <div th:each="antwort :${textfrage.getAntworten()}">
             <h4 th:text="${antwort.antworttext}"></h4>
         </div>
+    </div>
+    <div class="mult-choice" style="padding: 8px" th:each="multChoice :${multChoiceFragen}">
+        <h3 th:text="${multChoice.getFragentext()}"></h3>
+        <span th:each="choice : ${multChoice.getChoices()}">
+            <table>
+                <tr>
+                <td th:text="${choice.label}"></td>
+                <td th:text="${multChoice.holeErgebnis(choice)}"></td>
+                </tr>
+            </table>
+        </span>
     </div>
 </main>
 </body>

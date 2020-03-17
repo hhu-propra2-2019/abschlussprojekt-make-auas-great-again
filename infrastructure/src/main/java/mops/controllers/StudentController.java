@@ -122,17 +122,17 @@ public class StudentController {
   }
 
 
-  @GetMapping("/ergebnisUebersicht")
+  @GetMapping("/ergebnisDetails")
   @RolesAllowed(studentRole)
   public String ergebnisUebersicht(KeycloakAuthenticationToken token,
                                    @RequestParam long id, Model model) {
     Fragebogen fragebogen = frageboegen.getFragebogenById(id);
     model.addAttribute("fragebogen", fragebogen);
     model.addAttribute("textFragen", fragebogen.getTextfragen());
-    model.addAttribute("multipleChoiceFragen", fragebogen.getMultipleChoiceFragen());
+    model.addAttribute("multChoiceFragen", fragebogen.getMultipleChoiceFragen());
     model.addAttribute(account, createAccountFromPrincipal(token));
     authenticatedAccess.increment();
-    return "/studenten/ergebnisUebersicht";
+    return "/studenten/ergebnisDetails";
   }
 
   private boolean searchNotEmpty(String search) {

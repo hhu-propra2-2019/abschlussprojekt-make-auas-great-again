@@ -26,7 +26,6 @@
         <ul>
             <li><a th:href="@{/feedback/studenten}">Übersicht</a></li>
             <li class="active"><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
-            <li><a th:href="@{/feedback/studenten/kontakt}">Kontakt</a></li>
         </ul>
     </nav>
 </header>
@@ -53,7 +52,7 @@
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">
                         Programmierung</h2>
                     <a class="btn btn-primary" style="position:absolute;bottom:8px;left: 25%;margin: 8px"
-                       th:href="@{ergebnisUebersicht(id=${fragebogen.bogennr})}">Ergebnis
+                       th:href="@{ergebnisDetails(id=${fragebogen.bogennr})}">Ergebnis
                         ansehen</a>
                 </div>
             </div>
