@@ -4,13 +4,9 @@ function pad(num) {
 }
 function formatDate(date){
     var enddate = date.innerHTML;
-    console.log("Before parsing "+enddate);
     enddate = enddate.slice(0, 10);
-    console.log("After slice "+ enddate);
     enddate = new Date(Date.parse(enddate));
-    console.log(enddate);
     enddate = enddate.toString().slice(0, 10);
-    console.log("After parsing "+ enddate);
     date.innerHTML= enddate;
 
 }
@@ -29,6 +25,7 @@ function clocktick(clock) {
         var button = clock.getElementsByClassName('feedback-button')[0];
         button.classList.add('disabled');
         button.setAttribute('aria-disabled', true);
+        button.innerText = 'Zeit abgelaufen!';
 
     } else {
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -46,6 +43,10 @@ function clocktick(clock) {
              var daycount = clock.getElementsByClassName('clock_tage')[0];
              daycount.style.visibility="hidden";
         }
+         if(hours < 1){
+             var cardspan = clock.getElementsByClassName('card-body')[0];
+             cardspan.style.backgroundColor = "#F08080";
+                }
 
     }
 }

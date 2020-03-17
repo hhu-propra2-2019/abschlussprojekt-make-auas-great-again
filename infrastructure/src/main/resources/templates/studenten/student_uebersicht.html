@@ -51,13 +51,13 @@
                     <h3 class="card-text">Verbleibende Zeit:</h3>
                     <div class="clock_times" th:id="'clock' + ${iter.index}">
                         <span class="dayspan" scope="col">Days: </span>
-                        <span class="clock_tage">--</span>
+                        <span class="clock_tage">00</span>
                         <span class="hourspan" scope="col">Hours: </span>
-                        <span class="clock_stunden">--</span>
+                        <span class="clock_stunden">00</span>
                         <span scope="col">Min: </span>
-                        <span class="clock_minuten">--</span>
+                        <span class="clock_minuten">00</span>
                         <span scope="col">Sec: </span>
-                        <span class="clock_sekunden">--</span>
+                        <span class="clock_sekunden">00</span>
                         <span class="startdatum" hidden th:text="${fragebogen.startdatum}">--</span>
                         <span class="enddatum" hidden th:text="${fragebogen.enddatum}">--</span>
                     </div>
