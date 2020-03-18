@@ -1,19 +1,9 @@
 package mops.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import mops.DateTimeService;
-import mops.Einheit;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.antworten.TextAntwort;
-import mops.database.MockFragebogenRepository;
-import mops.fragen.Auswahl;
-import mops.fragen.Frage;
-import mops.fragen.MultipleChoiceFrage;
-import mops.fragen.TextFrage;
-import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -22,6 +12,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import mops.DateTimeService;
+import mops.Einheit;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.Veranstaltung;
+import mops.antworten.TextAntwort;
+import mops.database.MockFragebogenRepository;
+import mops.database.MockVeranstaltungsRepository;
+import mops.fragen.Auswahl;
+import mops.fragen.Frage;
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.TextFrage;
+import mops.rollen.Dozent;
+import mops.security.Account;
 
 
 @Controller
@@ -32,11 +36,13 @@ public class DozentController {
   private static final String REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS =
       "redirect:/feedback/dozenten/new/questions/";
   private final transient FragebogenRepository frageboegen;
+  private final transient VeranstaltungsRepository veranstaltungen;
   private final transient TypeChecker typechecker;
   private final transient DateTimeService datetime;
 
   public DozentController() {
     frageboegen = new MockFragebogenRepository();
+    veranstaltungen = new MockVeranstaltungsRepository();
     typechecker = new TypeChecker();
     datetime = new DateTimeService();
   }
@@ -50,7 +56,8 @@ public class DozentController {
   @GetMapping("/watch")
   @RolesAllowed(orgaRole)
   public String getFragebogenUebersicht(KeycloakAuthenticationToken token, Model model) {
-    List<Fragebogen> fragebogenliste = frageboegen.getAll();
+    Dozent dozent = createDozentFromToken(token);
+    List<Fragebogen> fragebogenliste = holeFrageboegenVomDozent(dozent);
     model.addAttribute("frageboegen", fragebogenliste);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
@@ -177,6 +184,7 @@ public class DozentController {
   }
 
   private MultipleChoiceFrage getMultipleChoiceFrage(Long bogennr, Long fragennr) {
+    List<Veranstaltung> veranstaltung = veranstaltungen.getAllFromDozent(dozent);
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
     return frage;
@@ -205,5 +213,18 @@ public class DozentController {
     return new Account(principal.getName(),
         principal.getKeycloakSecurityContext().getIdToken().getEmail(), null,
         token.getAccount().getRoles());
+  }
+
+  private Dozent createDozentFromToken(KeycloakAuthenticationToken token) {
+    KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+    return new Dozent(principal.getName());
+  }
+
+  private List<Fragebogen> holeFrageboegenVomDozent(Dozent dozent) {
+    List<Fragebogen> result = new ArrayList<>();
+    for (Veranstaltung veranstaltung : veranstaltungen.getAllFromDozent(dozent)) {
+      result.addAll(veranstaltung.getFrageboegen());
+    }
+    return result;
   }
 }
