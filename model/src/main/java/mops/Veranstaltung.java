@@ -24,7 +24,8 @@ public class Veranstaltung {
   private List<Fragebogen> frageboegen;
 
   public boolean contains(String search) {
-    if (dozent.getNachname().toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN))) {
+    if (dozent.getNachname().toLowerCase(Locale.GERMAN)
+        .contains(search.toLowerCase(Locale.GERMAN))) {
       return true;
     } else {
       return name.toLowerCase(Locale.GERMAN)

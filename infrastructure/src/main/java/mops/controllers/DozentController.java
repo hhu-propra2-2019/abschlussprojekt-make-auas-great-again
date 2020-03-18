@@ -4,14 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import mops.DateTimeService;
 import mops.Einheit;
 import mops.Fragebogen;
@@ -25,11 +17,19 @@ import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
 import mops.rollen.Dozent;
 import mops.security.Account;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
 @RequestMapping("/feedback/dozenten")
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "Checkstyle.MissingJavadocMethod"})
 public class DozentController {
   public static final String orgaRole = "ROLE_orga";
   public static final String account = "account";
