@@ -19,7 +19,6 @@ import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.Veranstaltung;
 import mops.antworten.TextAntwort;
-import mops.database.MockFragebogenRepository;
 import mops.database.MockVeranstaltungsRepository;
 import mops.fragen.Auswahl;
 import mops.fragen.Frage;
