@@ -66,7 +66,7 @@ public class DozentController {
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
       @PathVariable long bogennr, Model model) {
     Dozent dozent = createDozentFromToken(token);
-    Fragebogen fragebogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
+    Fragebogen fragebogen = getFragebogenFromDozentById(bogennr, dozent);
     model.addAttribute("fragebogen", fragebogen);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
@@ -87,13 +87,6 @@ public class DozentController {
     return "dozenten/zensieren";
   }
 
-  private TextAntwort getTextAntwort(Dozent dozent, Long bogennr, Long fragennr, Long antwortnr) {
-    Fragebogen fragebogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
-    TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
-    TextAntwort antwort = frage.getAntwortById(antwortnr);
-    return antwort;
-  }
-
   @PostMapping("/watch/edit/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String speichereTextAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
@@ -112,12 +105,6 @@ public class DozentController {
     Frage frage = getFrage(dozent, bogennr, fragennr);
     frage.aendereOeffentlichkeitsStatus();
     return "redirect:/feedback/dozenten/watch/" + bogennr;
-  }
-
-  private Frage getFrage(Dozent dozent, Long bogennr, Long fragennr) {
-    Fragebogen fragebogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
-    Frage frage = fragebogen.getFrage(fragennr);
-    return frage;
   }
 
   @GetMapping("/new")
@@ -152,7 +139,7 @@ public class DozentController {
       @PathVariable Long bogennr, Model model) {
     Dozent dozent = createDozentFromToken(token);
     model.addAttribute("typechecker", typechecker);
-    model.addAttribute("neuerbogen", getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent)));
+    model.addAttribute("neuerbogen", getFragebogenFromDozentById(bogennr, dozent));
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/fragenerstellen";
   }
@@ -162,7 +149,7 @@ public class DozentController {
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
-    Fragebogen bogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
+    Fragebogen bogen = getFragebogenFromDozentById(bogennr, dozent);
     bogen.loescheFrage(fragennr);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -178,7 +165,7 @@ public class DozentController {
     } else {
       neuefrage = new TextFrage(fragetext);
     }
-    Fragebogen bogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
+    Fragebogen bogen = getFragebogenFromDozentById(bogennr, dozent);
     bogen.addFrage(neuefrage);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -193,12 +180,6 @@ public class DozentController {
     model.addAttribute("fragebogen", bogennr);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/multiplechoiceedit";
-  }
-
-  private MultipleChoiceFrage getMultipleChoiceFrage(Dozent dozent, Long bogennr, Long fragennr) {
-    Fragebogen bogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
-    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
-    return frage;
   }
 
   @PostMapping("/new/questions/mc/add/{bogennr}/{fragennr}")
@@ -234,6 +215,19 @@ public class DozentController {
     return new Dozent(principal.getKeycloakSecurityContext().getIdToken().getId());
   }
 
+  private TextAntwort getTextAntwort(Dozent dozent, Long bogennr, Long fragennr, Long antwortnr) {
+    Fragebogen fragebogen = getFragebogenFromDozentById(bogennr, dozent);
+    TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
+    TextAntwort antwort = frage.getAntwortById(antwortnr);
+    return antwort;
+  }
+
+  private Frage getFrage(Dozent dozent, Long bogennr, Long fragennr) {
+    Fragebogen fragebogen = getFragebogenFromDozentById(bogennr, dozent);
+    Frage frage = fragebogen.getFrage(fragennr);
+    return frage;
+  }
+
   private List<Fragebogen> holeFrageboegenVomDozent(Dozent dozent) {
     List<Fragebogen> result = new ArrayList<>();
     for (Veranstaltung veranstaltung : veranstaltungen.getAllFromDozent(dozent)) {
@@ -242,7 +236,14 @@ public class DozentController {
     return result;
   }
 
-  private Fragebogen getFragebogenById(Long id, List<Fragebogen> boegen) {
+  private MultipleChoiceFrage getMultipleChoiceFrage(Dozent dozent, Long bogennr, Long fragennr) {
+    Fragebogen bogen = getFragebogenFromDozentById(bogennr, dozent);
+    MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
+    return frage;
+  }
+
+  private Fragebogen getFragebogenFromDozentById(Long id, Dozent dozent) {
+    List<Fragebogen> boegen = holeFrageboegenVomDozent(dozent);
     Optional<Fragebogen> bogen = boegen.stream().filter(x -> x.getBogennr().equals(id)).findFirst();
     return bogen.get();
   }
