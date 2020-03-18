@@ -14,13 +14,12 @@
         <ul>
             <li class="active"><a th:href="@{/feedback/studenten}">Übersicht</a></li>
             <li><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
-            <li><a th:href="@{/feedback/studenten/kontakt}">Kontakt</a></li>
         </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-1">Dein Feedback</h1>
-    <h2 class="display-2" th:text="${student.getVorname()+student.getNachname()}">NAME</h2>
+    <h2 class="display-2" th:text="${account.getName()}">NAME</h2>
     <div class="row row-cols-1 row-cols-md-3">
         <div class="col mb-3" th:each="fragebogen,iter :${frageboegen}">
             <div class="card text-center h-100">
@@ -41,7 +40,7 @@
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
                     <a class=" btn btn-primary feedback-button" style="margin: 16px"
-                       th:href="@{/feedback/studenten/details(id=${fragebogen.bogennr})}"
+                       th:href="@{/feedback/studenten/frageboegen/details(id=${fragebogen.bogennr})}"
                        th:id="'button' + ${iter.index}">
                         Feedback Geben!
                     </a>

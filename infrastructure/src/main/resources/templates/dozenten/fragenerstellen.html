@@ -16,7 +16,6 @@
             <li><a href="/feedback/dozenten/">Übersicht</a></li>
             <li><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
             <li class="active"><a href="/feedback/dozenten/new">Neuen Fragebogen erstellen</a></li>
-            <li><a href="/feedback/dozenten/kontakt">Tickets</a></li>
         </ul>
     </nav>
 </header>
@@ -33,28 +32,34 @@
                     <h3 class="card-title">Bereits vorhandene Fragen</h3>
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th>Fragetext</th>
-                                <th>Fragetyp</th>
-                                <th>Optionen</th>
-                                <th>Löschen</th>
-                            </tr>
+                        <tr>
+                            <th>Fragetext</th>
+                            <th>Fragetyp</th>
+                            <th>Optionen</th>
+                            <th>Löschen</th>
+                        </tr>
                         </thead>
                         <tbody th:remove="all-but-first">
-                            <tr th:each="frage : ${neuerbogen.fragen}">
-                                <td th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</td>
-                                <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span th:if="${typechecker.isMultipleChoice(frage)}">Multiple Choice-Frage</span></td>
-                                <td>
-                                    <form th:if="${typechecker.isMultipleChoice(frage)}" class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/edit/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
-                                        <button type="submit" name="editbutton" class="btn btn-primary">Antwortmöglichkeiten bearbeiten</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
-                                        <button type="submit" name="deletebutton" class="btn btn-primary">Löschen</button>
-                                    </form>
-                                </td>
-                            </tr>
+                        <tr th:each="frage : ${neuerbogen.fragen}">
+                            <td th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</td>
+                            <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span
+                                    th:if="${typechecker.isMultipleChoice(frage)}">Multiple Choice-Frage</span></td>
+                            <td>
+                                <form class="form-horizontal" method="get"
+                                      th:action="'/feedback/dozenten/new/questions/edit/' + ${neuerbogen.bogennr} + '/' + ${frage.id}"
+                                      th:if="${typechecker.isMultipleChoice(frage)}">
+                                    <button class="btn btn-primary" name="editbutton" type="submit">Antwortmöglichkeiten
+                                        bearbeiten
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+                                <form class="form-horizontal" method="post"
+                                      th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
+                                    <button class="btn btn-primary" name="deletebutton" type="submit">Löschen</button>
+                                </form>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -67,9 +72,11 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Frage hinzufügen</h3>
-                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/add/' + ${neuerbogen.bogennr}">
+                    <form class="form-horizontal" method="post"
+                          th:action="'/feedback/dozenten/new/questions/add/' + ${neuerbogen.bogennr}">
                         <div class="input-group mb-3 col-sm-6">
-                            <input class="form-control" id="fragetext" name="fragetext" placeholder="Hier den Fragetext eingeben" required type="text">
+                            <input class="form-control" id="fragetext" name="fragetext"
+                                   placeholder="Hier den Fragetext eingeben" required type="text">
                         </div>
                         <div class="form-group row">
                             <label for="fragetyp">Fragetyp:</label>
