@@ -19,7 +19,6 @@ import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,6 +68,7 @@ public class StudentController {
     } else {
       model.addAttribute("frageboegen", veranstaltung.getFrageboegen());
     }
+    model.addAttribute("veranstaltung", veranstaltung);
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "studenten/fragebogen_uebersicht";
@@ -77,19 +77,21 @@ public class StudentController {
   @GetMapping("/frageboegen/details")
   @RolesAllowed(studentRole)
   public String fragebogenDetails(KeycloakAuthenticationToken token, Model model, @RequestParam Long
-      id) {
-    model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
+      fragebogen, @RequestParam Long veranstaltung) {
+    model.addAttribute("fragebogen",
+        veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung));
     model.addAttribute("typeChecker", typeChecker);
+    model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "studenten/fragebogen_details";
   }
 
-  @PostMapping("/details/submit/{bogennr}")
+  @PostMapping("/details/submit")
   @RolesAllowed(studentRole)
   @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
-  public String submitFeedback(KeycloakAuthenticationToken token, @PathVariable long bogennr,
-                               HttpServletRequest req, Model model) {
-    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+  public String submitFeedback(KeycloakAuthenticationToken token, @RequestParam Long bogennr,
+                               HttpServletRequest req, Model model, @RequestParam Long veranstaltung) {
+    Fragebogen fragebogen = veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltung);
     Map<Long, String> antworten = new HashMap<>();
     for (Frage frage : fragebogen.getFragen()) {
       antworten.put(frage.getId(), req.getParameter("answer-" + frage.getId()));

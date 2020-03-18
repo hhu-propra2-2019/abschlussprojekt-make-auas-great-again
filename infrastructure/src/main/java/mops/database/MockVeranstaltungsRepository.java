@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import mops.Fragebogen;
 import mops.Veranstaltung;
 import mops.VeranstaltungsService;
 import mops.controllers.VeranstaltungsRepository;
@@ -64,5 +65,13 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
         .filter(veranstaltung -> veranstaltung.hasStudent(student))
         .filter(veranstaltung -> veranstaltung.contains(search))
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung) {
+    return veranstaltungen.get(veranstaltung).getFrageboegen().stream()
+        .filter(bogen -> bogen.getBogennr().equals(fragebogen))
+        .findFirst()
+        .get();
   }
 }
