@@ -13,6 +13,17 @@ public abstract class Frage {
   @Setter
   private transient Long id;
 
+  @Getter
+  private Boolean ergebnissesindoeffentlich = Boolean.valueOf(false);
+
+  public void aendereOeffentlichkeitsStatus() {
+    if (ergebnissesindoeffentlich) {
+      ergebnissesindoeffentlich = Boolean.valueOf(false);
+    } else {
+      ergebnissesindoeffentlich = Boolean.valueOf(true);
+    }
+  }
+
   public abstract void addAntwort(String antwort);
 
   public Frage(Long id) {

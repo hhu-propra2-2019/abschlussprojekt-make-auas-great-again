@@ -15,7 +15,7 @@
         <ul>
             <li><a th:href="@{/feedback/studenten}">Übersicht</a></li>
             <li><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
-            <li><a th:href="@{/feedback/studenten/kontakt}">Kontakt</a></li>
+            <li><a th:href="@{/feedback/studenten/veranstaltungen}">Veranstaltungen</a></li>
         </ul>
     </nav>
 </header>
@@ -23,7 +23,7 @@
     <div class="container">
         <h1 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
         <h2 th:text="${fragebogen.professorenname}">Professor</h2>
-        <form method="post" th:action="'/feedback/student/details/submit/' + ${fragebogen.bogennr}">
+        <form method="post" th:action="'/feedback/studenten/details/submit/' + ${fragebogen.bogennr}">
             <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">
                 <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
 

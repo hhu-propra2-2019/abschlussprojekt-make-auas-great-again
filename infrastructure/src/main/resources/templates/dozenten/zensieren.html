@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
-      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      th:replace="~{mopslayout :: html(name='Fragebogen', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>feedback</title>
+    <title>Fragebogen</title>
     <th:block th:fragment="headcontent">
         <!-- Links, Skripts, Styles hier einfügen! -->
     </th:block>
@@ -20,7 +20,13 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1>TODO</h1>
+    <div class="container">
+        <h1>Antwort bearbeiten</h1>
+        <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/watch/edit/' + ${bogennr} + '/' + ${fragennr} + '/' + ${antwortnr}">
+            <textarea class="form-control" name="textfeld" th:text="${antwort.antworttext}">Antwort</textarea>
+            <button type="submit" name="savebutton" class="btn btn-primary">Änderungen speichern</button>
+        </form>
+    </div>
 </main>
 </body>
 </html>

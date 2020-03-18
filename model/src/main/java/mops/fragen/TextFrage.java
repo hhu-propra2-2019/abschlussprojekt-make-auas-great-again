@@ -1,6 +1,7 @@
 package mops.fragen;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -29,5 +30,10 @@ public class TextFrage extends Frage {
   public void addAntwort(String text) {
     TextAntwort antwort = new TextAntwort(text);
     this.antworten.add(antwort);
+  }
+  
+  public TextAntwort getAntwortById(Long id) {
+    Optional<TextAntwort> antwort = antworten.stream().filter(x -> x.getId().equals(id)).findFirst();
+    return antwort.get();
   }
 }
