@@ -31,7 +31,7 @@
                         <div class="input-group mb-3 col-sm-6">
                             <select id="veranstaltung" name="veranstaltung" required>
                                 <div class="foo" th:each="veranstaltung : ${veranstaltungen}">
-                                    <option th:value="${veranstaltung.name}" th:text="${veranstaltung.name}">Vorlesung</option>
+                                    <option th:value="${veranstaltung.veranstaltungsNr}" th:text="${veranstaltung.name}">Vorlesung</option>
                                 </div>
                             </select>
                         </div>
