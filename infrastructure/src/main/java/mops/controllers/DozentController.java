@@ -231,7 +231,7 @@ public class DozentController {
 
   private Dozent createDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return new Dozent(principal.getName());
+    return new Dozent(principal.getKeycloakSecurityContext().getIdToken().getId());
   }
 
   private List<Fragebogen> holeFrageboegenVomDozent(Dozent dozent) {
