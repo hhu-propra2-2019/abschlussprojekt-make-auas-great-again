@@ -83,4 +83,12 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
     getAllFromDozent(dozent).stream().forEach(x -> frageboegen.addAll(x.getFrageboegen()));
     return frageboegen.stream().filter(x -> x.getBogennr().equals(id)).findFirst().get();
   }
+  
+  @Override
+  public Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung) {
+    return veranstaltungen.get(veranstaltung).getFrageboegen().stream()
+        .filter(bogen -> bogen.getBogennr().equals(fragebogen))
+        .findFirst()
+        .get();
+  }
 }
