@@ -24,6 +24,5 @@ public class Dozent {
     this.uuid = UUID.fromString(uuid);
     vorname = "jens";
     nachname = "B";
-    veranstaltungen = null;
   }
 }
