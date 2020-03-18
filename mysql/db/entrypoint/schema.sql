@@ -1,50 +1,28 @@
 create table if not exists dozent
 (
-    id   bigint unsigned not null auto_increment,
-    name varchar(50)     not null,
+    id      bigint unsigned not null auto_increment,
+    vorname varchar(50)     not null,
+    name    varchar(50)     not null,
+    anrede  varchar(10)     not null,
     primary key (id)
 );
 
-create table if not exists einheit
+create table if not exists veranstaltung
 (
-    id     bigint unsigned not null auto_increment,
-    name   varchar(50)     not null,
-    dozent bigint unsigned not null,
+    id         bigint unsigned not null auto_increment,
+    name        varchar(50)     not null,
+    sememster   integer,
+    dozent      bigint unsigned not null,
     primary key (id),
     foreign key (dozent)
-        references dozent (id)
-);
-
-create table if not exists vorlesung
-(
-    id   bigint unsigned not null auto_increment,
-    name varchar(100)    not null,
-    primary key (id),
-    foreign key (id)
-        references einheit (id)
-);
-
-create table if not exists uebung
-(
-    id   bigint unsigned not null auto_increment,
-    name varchar(100)    not null,
-    primary key (id),
-    foreign key (id)
-        references einheit (id)
-);
-
-create table if not exists aufgabe
-(
-    id   bigint unsigned not null auto_increment,
-    name varchar(100)    not null,
-    primary key (id),
-    foreign key (id)
-        references einheit (id)
+    references  dozent (id)
 );
 
 create table if not exists student
 (
-    id bigint unsigned not null auto_increment,
+    id          bigint unsigned not null auto_increment,
+    vorname     varchar(50),
+    nachname    varchar(50),
     primary key (id)
 );
 
@@ -52,13 +30,14 @@ create table if not exists fragebogen
 (
     id           bigint unsigned not null auto_increment,
     name         varchar(100)    not null,
-    beschreibung text            not null,
+    status       integer not null,
     startzeit    datetime,
-    endzeit      datetime,
-    einheit      bigint unsigned not null,
+    endzeit      datetime not null,
+    dozent       bigint unsigned not null,
+    einheit      enum('VORLESUNG','UEBUNG','AUFGABE','PRAKTIKUM','DOZENT','BERATUNG','GRUPPE')
     primary key (id),
-    foreign key (einheit)
-        references einheit (id)
+    foreign key(dozent)
+    references dozent(id)
 );
 
 create table if not exists frage
@@ -71,7 +50,7 @@ create table if not exists frage
         references fragebogen (id)
 );
 
-create table if not exists langeFrage
+create table if not exists textFrage
 (
     id bigint unsigned not null auto_increment,
     primary key (id),
@@ -79,7 +58,7 @@ create table if not exists langeFrage
         references frage (id)
 );
 
-create table if not exists kurzeFrage
+create table if not exists multipleResponseFrage
 (
     id bigint unsigned not null auto_increment,
     primary key (id),
@@ -87,7 +66,7 @@ create table if not exists kurzeFrage
         references frage (id)
 );
 
-create table if not exists boolscheFrage
+create table if not exists singleResponseFrage
 (
     id bigint unsigned not null auto_increment,
     primary key (id),
@@ -95,50 +74,44 @@ create table if not exists boolscheFrage
         references frage (id)
 );
 
-create table if not exists multipleFrage
+create table if not exists antwort
 (
-    id bigint unsigned not null auto_increment,
-    primary key (id),
-    foreign key (id)
-        references frage (id)
+    id      bigint unsigned not null auto_increment,
+    primary key (id)
 );
 
-create table if not exists kurzeAntwort
+create table if not exists textAntwort
 (
     id      bigint unsigned not null auto_increment,
     antwort varchar(100),
     frage   bigint unsigned not null,
     primary key (id),
+    foreign key (id)
+    references antwort(id),
     foreign key (frage)
-        references kurzeFrage (id)
+    references textFrage (id)
 );
 
-create table if not exists langeAntwort
-(
-    id      bigint unsigned not null auto_increment,
-    antwort text,
-    frage   bigint unsigned not null,
-    primary key (id),
-    foreign key (frage)
-        references langeFrage (id)
-);
-
-create table if not exists boolscheAntwort
+create table if not exists singleResponseAntwort
 (
     id      bigint unsigned not null auto_increment,
     antwort bool,
     frage   bigint unsigned not null,
     primary key (id),
+    foreign key (id)
+    references antwort(id),
     foreign key (frage)
         references boolscheFrage (id)
 );
 
-create table if not exists multipleAntwort
+create table if not exists multipleResponseAntwort
 (
     id      bigint unsigned not null auto_increment,
     antwort integer,
     frage   bigint unsigned not null,
     primary key (id),
+    foreign key (id)
+    references antwort(id),
     foreign key (frage)
         references multipleFrage (id)
 );
@@ -154,13 +127,13 @@ create table if not exists studentBeantwortetFragebogen
         references fragebogen (id)
 );
 
-create table if not exists studentBelegtEinheit
+create table if not exists studentBelegtVeranstaltung
 (
     student bigint unsigned not null,
     einheit bigint unsigned not null,
-    primary key (student, einheit),
+    primary key (student, veranstaltung),
     foreign key (student)
         references student (id),
-    foreign key (einheit)
-        references einheit (id)
+    foreign key (veranstaltung)
+        references veranstaltung (id)
 );
