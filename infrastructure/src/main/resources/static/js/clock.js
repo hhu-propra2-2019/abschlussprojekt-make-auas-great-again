@@ -2,14 +2,16 @@ function pad(num) {
     var s = "00" + num;
     return s.substr(s.length - 2);
 }
-function formatDate(date){
+
+function formatDate(date) {
     var enddate = date.innerHTML;
     enddate = enddate.slice(0, 10);
     enddate = new Date(Date.parse(enddate));
     enddate = enddate.toString().slice(0, 10);
-    date.innerHTML= enddate;
+    date.innerHTML = enddate;
 
 }
+
 function clocktick(clock) {
     var startdatum = clock.getElementsByClassName("startdatum")[0].innerHTML;
     var enddatum = clock.getElementsByClassName("enddatum")[0].innerHTML;
@@ -38,16 +40,16 @@ function clocktick(clock) {
         clock.getElementsByClassName("clock_sekunden")[0].innerHTML = seconds;
 
 
-        if(days == 0){
-             var dayspan = clock.getElementsByClassName('dayspan')[0];
-             dayspan.style.visibility="hidden";
-             var daycount = clock.getElementsByClassName('clock_tage')[0];
-             daycount.style.visibility="hidden";
+        if (days == 0) {
+            var dayspan = clock.getElementsByClassName('dayspan')[0];
+            dayspan.style.visibility = "hidden";
+            var daycount = clock.getElementsByClassName('clock_tage')[0];
+            daycount.style.visibility = "hidden";
         }
-         if(hours < 1){
-             var cardspan = clock.getElementsByClassName('card-body')[0];
-             cardspan.style.backgroundColor = "#F08080";
-                }
+        if (hours < 1) {
+            var cardspan = clock.getElementsByClassName('card-body')[0];
+            cardspan.style.backgroundColor = "#F08080";
+        }
 
     }
 }
@@ -57,10 +59,5 @@ var x = setInterval(function () {
     clocks.forEach(clocktick);
 }, 1000);
 
-var enddates = [... document.getElementsByClassName('enddate')];
+var enddates = [...document.getElementsByClassName('enddate')];
 enddates.forEach(formatDate);
-
-
-
-
-

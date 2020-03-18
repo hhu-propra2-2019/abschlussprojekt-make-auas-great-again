@@ -100,9 +100,7 @@ public class StudentController {
   @GetMapping("/ergebnis")
   @RolesAllowed(studentRole)
   public String boegenUebersicht(KeycloakAuthenticationToken token, Model model) {
-    // display graph javascript;
     model.addAttribute("frageboegen", frageboegen.getAll());
-    //  display graph javascript;
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "/studenten/ergebnis";
