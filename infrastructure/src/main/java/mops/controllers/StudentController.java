@@ -127,7 +127,7 @@ public class StudentController {
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     return new Account(
-        principal.getKeycloakSecurityContext().getIdToken().getName(),
+        principal.getName(),
         principal.getKeycloakSecurityContext().getIdToken().getEmail(),
         null,
         token.getAccount().getRoles());
