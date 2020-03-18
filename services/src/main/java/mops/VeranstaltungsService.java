@@ -27,7 +27,7 @@ public class VeranstaltungsService {
 
   private List<Student> randomStudenten() {
     List<Student> studenten = new ArrayList<>();
-    studenten.add(new Student(UUID.fromString("9de596a9-4077-4a4e-84ef-13d25450a15f")));
+    studenten.add(new Student("studentin"));
     for (int i = 0; i < 100; i++) {
       studenten.add(randomStudent());
     }
@@ -35,7 +35,7 @@ public class VeranstaltungsService {
   }
 
   private Student randomStudent() {
-    return new Student(UUID.randomUUID());
+    return new Student("abldskajf");
   }
 
   public List<Veranstaltung> randomVeranstaltungen() {
