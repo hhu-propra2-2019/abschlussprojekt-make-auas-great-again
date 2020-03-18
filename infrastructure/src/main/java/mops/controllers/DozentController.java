@@ -80,7 +80,8 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String bearbeiteTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
       @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model) {
-    TextAntwort antwort = getTextAntwort(bogennr, fragennr, antwortnr);
+    Dozent dozent = createDozentFromToken(token);
+    TextAntwort antwort = getTextAntwort(dozent, bogennr, fragennr, antwortnr);
     model.addAttribute("antwort", antwort);
     model.addAttribute("bogennr", bogennr);
     model.addAttribute("fragennr", fragennr);
@@ -89,8 +90,8 @@ public class DozentController {
     return "dozenten/zensieren";
   }
 
-  private TextAntwort getTextAntwort(Long bogennr, Long fragennr, Long antwortnr) {
-    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+  private TextAntwort getTextAntwort(Dozent dozent, Long bogennr, Long fragennr, Long antwortnr) {
+    Fragebogen fragebogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
     TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
     TextAntwort antwort = frage.getAntwortById(antwortnr);
     return antwort;
