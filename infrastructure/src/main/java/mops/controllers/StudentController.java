@@ -2,7 +2,6 @@ package mops.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import mops.Fragebogen;
@@ -46,8 +45,7 @@ public class StudentController {
   @GetMapping("")
   @RolesAllowed(studentRole)
   public String uebersicht(KeycloakAuthenticationToken token, Model model, String search) {
-    KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    Student student = new Student(UUID.fromString(principal.getName()));
+    Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
     if (searchNotEmpty(search)) {
       model.addAttribute("veranstaltungen",
           veranstaltungen.getAllFromStudentContaining(student, search));
