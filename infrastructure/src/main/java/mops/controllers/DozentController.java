@@ -126,15 +126,18 @@ public class DozentController {
   @GetMapping("/new")
   @RolesAllowed(orgaRole)
   public String getNeueFormularSeite(KeycloakAuthenticationToken token, Model model) {
+    model.addAttribute("veranstaltungen",
+        veranstaltungen.getAllFromDozent(createDozentFromToken(token)));
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/ersteller";
   }
 
   @PostMapping("/new")
   @RolesAllowed(orgaRole)
-  public String addNeuesFormular(HttpServletRequest req) {
+  public String addNeuesFormular(HttpServletRequest req, KeycloakAuthenticationToken token) {
+    Dozent dozent = createDozentFromToken(token);
     Fragebogen neu = new Fragebogen(req.getParameter("veranstaltung"),
-        req.getParameter("dozentname"),
+        dozent.getVorname() + " " + dozent.getNachname(),
         datetime.getLocalDateTimeFromString(req.getParameter("startdatum"),
             req.getParameter("startzeit")),
         datetime.getLocalDateTimeFromString(req.getParameter("enddatum"),
