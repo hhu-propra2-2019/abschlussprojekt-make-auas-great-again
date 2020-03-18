@@ -36,13 +36,11 @@ public class DozentController {
   public static final String account = "account";
   private static final String REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS =
       "redirect:/feedback/dozenten/new/questions/";
-  private final transient FragebogenRepository frageboegen;
   private final transient VeranstaltungsRepository veranstaltungen;
   private final transient TypeChecker typechecker;
   private final transient DateTimeService datetime;
 
   public DozentController() {
-    frageboegen = new MockFragebogenRepository();
     veranstaltungen = new MockVeranstaltungsRepository();
     typechecker = new TypeChecker();
     datetime = new DateTimeService();
