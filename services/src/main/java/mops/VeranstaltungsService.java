@@ -14,13 +14,10 @@ public class VeranstaltungsService {
 
   private Veranstaltung randomVeranstaltung() {
     Veranstaltung.VeranstaltungBuilder veranstaltung = Veranstaltung.builder();
-    Dozent dozent = new Dozent(UUID.fromString("aa351f5c-b7fa-4bd9-ae76-8e5995b29889"),
-        "jens", "B", null);
-    veranstaltung = veranstaltung.dozent(dozent)
-        .name("Programmierung")
-        .semester("SOSE2019")
-        .studenten(randomStudenten())
-        .frageboegen(frageboegen.randomFrageboegen(10))
+    Dozent dozent =
+        new Dozent(UUID.fromString("c044515b-0f96-4171-bf89-7ac1fabe8852"), "jens", "B", null);
+    veranstaltung = veranstaltung.dozent(dozent).name("Programmierung").semester("SOSE2019")
+        .studenten(randomStudenten()).frageboegen(frageboegen.randomFrageboegen(10))
         .veranstaltungsNr((long) idGenerator.nextInt(1000));
     return veranstaltung.build();
   }
