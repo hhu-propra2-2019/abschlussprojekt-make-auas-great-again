@@ -2,14 +2,17 @@ package mops.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import mops.Fragebogen;
 import mops.SubmitService;
 import mops.TypeChecker;
+import mops.Veranstaltung;
 import mops.database.MockFragebogenRepository;
 import mops.database.MockVeranstaltungsRepository;
 import mops.fragen.Frage;
+import mops.rollen.Student;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -32,7 +35,8 @@ public class StudentController {
   private transient FragebogenRepository frageboegen;
   private transient TypeChecker typeChecker;
 
-  public StudentController(MockFragebogenRepository frageboegen, MockVeranstaltungsRepository veranstaltungen) {
+  public StudentController(MockFragebogenRepository frageboegen,
+                           MockVeranstaltungsRepository veranstaltungen) {
     this.veranstaltungen = veranstaltungen;
     this.submitService = new SubmitService();
     this.frageboegen = frageboegen;
@@ -42,27 +46,42 @@ public class StudentController {
   @GetMapping("")
   @RolesAllowed(studentRole)
   public String uebersicht(KeycloakAuthenticationToken token, Model model, String search) {
-    //KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    //UUID studentId = UUID.fromString(principal.getKeycloakSecurityContext().getIdToken().getId());
-    //UUID studentId = UUID.fromString("aa351f5c-b7fa-4bd9-ae76-8e5995b29889");
+    KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
+    Student student = new Student(UUID.fromString(principal.getName()));
     if (searchNotEmpty(search)) {
-      model.addAttribute("frageboegen", frageboegen.getAllContaining(search));
+      model.addAttribute("veranstaltungen",
+          veranstaltungen.getAllFromStudentContaining(student, search));
     } else {
-      model.addAttribute("frageboegen", frageboegen.getAll());
+      model.addAttribute("veranstaltungen",
+          veranstaltungen.getAllFromStudent(student));
+    }
+    model.addAttribute(account, createAccountFromPrincipal(token));
+    return "studenten/veranstaltungen";
+  }
+
+  @GetMapping("/frageboegen")
+  @RolesAllowed(studentRole)
+  public String fragebogen(KeycloakAuthenticationToken token,
+                           Model model, String search, Long veranstaltungId) {
+    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungId);
+    if (searchNotEmpty(search)) {
+      model.addAttribute("frageboegen", veranstaltung.getFrageboegenContaining(search));
+    } else {
+      model.addAttribute("frageboegen", veranstaltung.getFrageboegen());
     }
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "studenten/student_uebersicht";
+    return "studenten/fragebogen_uebersicht";
   }
 
-  @GetMapping("/details")
+  @GetMapping("/frageboegen/details")
   @RolesAllowed(studentRole)
-  public String fragebogen(KeycloakAuthenticationToken token, Model model, @RequestParam Long
+  public String fragebogenDetails(KeycloakAuthenticationToken token, Model model, @RequestParam Long
       id) {
     model.addAttribute("fragebogen", frageboegen.getFragebogenById(id));
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "studenten/student_details";
+    return "studenten/fragebogen_details";
   }
 
   @PostMapping("/details/submit/{bogennr}")
@@ -101,26 +120,6 @@ public class StudentController {
     return "/studenten/ergebnisUebersicht";
   }
 
-  @GetMapping("/veranstaltungen")
-  @RolesAllowed(studentRole)
-  public String veranstaltungUebersicht(KeycloakAuthenticationToken token, Model model,String search) {
-    model.addAttribute(account, createAccountFromPrincipal(token));
-    if (searchNotEmpty(search)) {
-      model.addAttribute("veranstaltungen", veranstaltungen.getAllContaining(search));
-    } else {
-      model.addAttribute("veranstaltungen", veranstaltungen.getAll());
-    }
-    return "/studenten/veranstaltung";
-  }
-
-  @PostMapping("/veranstaltungen/join")
-  @RolesAllowed(studentRole)
-  public String veranstaltungsBeitreten(KeycloakAuthenticationToken token, Model model) {
-    String massage = "Anfrage geschickt";
-    model.addAttribute("successMassage", massage);
-    return "/studenten/veranstaltung";
-  }
-
   private boolean searchNotEmpty(String search) {
     return !emptySearchString.equals(search) && search != null;
   }
@@ -128,7 +127,7 @@ public class StudentController {
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     return new Account(
-        principal.getName(),
+        principal.getKeycloakSecurityContext().getIdToken().getName(),
         principal.getKeycloakSecurityContext().getIdToken().getEmail(),
         null,
         token.getAccount().getRoles());

@@ -2,6 +2,7 @@ package mops.fragen;
 
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
@@ -13,7 +14,6 @@ public class TextFrage extends Frage {
   private String fragentext;
   private Set<TextAntwort> antworten;
 
-  @SuppressWarnings("checkstyle:MissingJavadocMethod")
   public TextFrage(Long id, String fragentext) {
     super(id);
     this.fragentext = fragentext;
@@ -21,7 +21,7 @@ public class TextFrage extends Frage {
   }
 
   public TextFrage(String fragentext) {
-    super(1L);
+    super((long) new Random().nextInt(1000));
     this.fragentext = fragentext;
     this.antworten = new HashSet<>();
   }
@@ -31,7 +31,7 @@ public class TextFrage extends Frage {
     TextAntwort antwort = new TextAntwort(text);
     this.antworten.add(antwort);
   }
-  
+
   public TextAntwort getAntwortById(Long id) {
     Optional<TextAntwort> antwort = antworten.stream().filter(x -> x.getId().equals(id)).findFirst();
     return antwort.get();
