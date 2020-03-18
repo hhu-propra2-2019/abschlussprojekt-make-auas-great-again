@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/feedback/dozenten")
-@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", "Checkstyle.MissingJavadocMethod"})
+@SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
 public class DozentController {
   public static final String orgaRole = "ROLE_orga";
   public static final String account = "account";
