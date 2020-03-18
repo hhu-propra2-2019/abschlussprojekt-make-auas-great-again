@@ -1,38 +1,36 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org">
 <head>
-    ...
 </head>
 <body>
 
 <div class="border-bottom" th:fragment="textfrage">
 
-    <label for="textfrage" th:text="${frage.fragentext}">Label</label>
+    <label class="col-md-12" for="textfrage" th:text="${frage.fragentext}">Label</label>
     <textarea class="form-control" th:id="'answer-' + ${frage.id}"
               th:name="'answer-' + ${frage.id}" id="textfrage"></textarea>
 </div>
 
 <div class="border-bottom" th:fragment="singleResponse">
 
-    <h5 th:text="${frage.fragentext}">Fragetext</h5>
+    <label class="col-md-12" for="singleResponse" th:text="${frage.fragentext}">Label</label>
     <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
         <input class="form-check-input" th:id="'answer-' + ${frage.id}"
                th:name="'answer-' + ${frage.id}"
                th:value="${choice.label}" type="radio" id="singleResponse">
-        <label for="singleResponse" th:text="${choice.label}">Label</label>
+        <label  for="singleResponse" th:text="${choice.label}">Label</label>
     </div>
 
 </div>
 
 <div class="border-bottom" th:fragment="multipleResponse">
-    <h5 th:text="${frage.fragentext}">Fragetext</h5>
+    <label class="col-md-12" for="multipleResponse" th:text="${frage.fragentext}">Label</label>
     <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
         <input class="form-check-input" th:id="'answer-' + ${frage.id}"
                th:name="'answer-' + ${frage.id}"
                th:value="${choice.label}" type="checkbox" id="multipleResponse">
         <label for="multipleResponse" th:text="${choice.label}">Label</label>
     </div>
-
 </div>
 
 </body>
