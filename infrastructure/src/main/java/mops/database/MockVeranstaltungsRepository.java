@@ -3,27 +3,29 @@ package mops.database;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 import java.util.stream.Collectors;
 import mops.Veranstaltung;
+import mops.VeranstaltungsService;
 import mops.controllers.VeranstaltungsRepository;
-import mops.rollen.Dozent;
 import mops.rollen.Student;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@SuppressWarnings({"PMD.LooseCoupling"})
 public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
-  private transient HashMap<Long, Veranstaltung> veranstaltungen;
+  private static transient Map<Long, Veranstaltung> veranstaltungen = new HashMap<>();
+  private static transient VeranstaltungsService veranstaltungsService
+      = new VeranstaltungsService();
 
   public MockVeranstaltungsRepository() {
-    veranstaltungen = new HashMap<>();
-    List<Veranstaltung> veranstaltungList = getRandomVeranstaltungen();
-    Long index = 1L;
+    List<Veranstaltung> veranstaltungList = veranstaltungsService.randomVeranstaltungen();
     for (Veranstaltung veranstaltung : veranstaltungList) {
-      veranstaltungen.put(index, veranstaltung);
-      index++;
+      save(veranstaltung);
     }
+  }
+
+  private void save(Veranstaltung veranstaltung) {
+    veranstaltungen.put(veranstaltung.getVeranstaltungsNr(), veranstaltung);
   }
 
   @Override
@@ -49,26 +51,18 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
     veranstaltung.addStudent(student);
   }
 
-  private Veranstaltung getRandomVeranstaltung() {
-    Veranstaltung.VeranstaltungBuilder veranstaltung = Veranstaltung.builder();
-    Dozent dozent = new Dozent(UUID.fromString("aa351f5c-b7fa-4bd9-ae76-8e5995b29889"), "jens", "B", null);
-    veranstaltung = veranstaltung.dozent(dozent)
-        .name("Programmierung")
-        .semester("SOSE2019")
-        .studenten(null);
-    return veranstaltung.build();
+  @Override
+  public List<Veranstaltung> getAllFromStudent(Student student) {
+    return veranstaltungen.values().stream()
+        .filter(veranstaltung -> veranstaltung.hasStudent(student))
+        .collect(Collectors.toList());
   }
 
-  private List<Veranstaltung> getRandomVeranstaltungen() {
-    List<Veranstaltung> veranstaltungList = new ArrayList<>();
-    Veranstaltung veranstaltung1 = getRandomVeranstaltung();
-    Veranstaltung veranstaltung2 = getRandomVeranstaltung();
-    Veranstaltung veranstaltung3 = getRandomVeranstaltung();
-    veranstaltung2.setName("Theoretische  Informatik");
-    veranstaltung3.setName("Analysis");
-    veranstaltungList.add(veranstaltung1);
-    veranstaltungList.add(veranstaltung2);
-    veranstaltungList.add(veranstaltung3);
-    return veranstaltungList;
+  @Override
+  public List<Veranstaltung> getAllFromStudentContaining(Student student, String search) {
+    return veranstaltungen.values().stream()
+        .filter(veranstaltung -> veranstaltung.hasStudent(student))
+        .filter(veranstaltung -> veranstaltung.contains(search))
+        .collect(Collectors.toList());
   }
 }

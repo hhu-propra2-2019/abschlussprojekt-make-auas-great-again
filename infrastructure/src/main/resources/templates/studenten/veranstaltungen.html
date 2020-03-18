@@ -14,16 +14,15 @@
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <!-- Navigation als ungeordnete Liste mit einfachen Links hier einfügen! -->
         <ul>
-            <li><a th:href="@{/feedback/studenten}">Übersicht</a></li>
+            <li class="active"><a th:href="@{/feedback/studenten}">Übersicht</a></li>
             <li><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
-            <li class="active"><a th:href="@{/feedback/studenten/veranstaltungen}">Veranstaltungen</a></li>
         </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
     <!-- Restlichen Inhalt hier einfügen! -->
     <h1 class="display-3">Vernstaltungen</h1>
-    <h2 class="display-4" th:text="'Hallo ' + ${account.getEmail()}">NAME</h2>
+    <h2 class="display-4" th:text="'Hallo ' + ${account.getName()}">NAME</h2>
 
     <div class="row row-cols-1 row-cols-md-3">
         <div class="col mb-3" th:each="veranstaltung,iter :${veranstaltungen}">
@@ -32,11 +31,10 @@
                 <div class="card-body">
                     <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
                     <a class=" btn btn-primary feedback-button" style="margin: 16px"
-                       th:href="@{/feedback/studenten/veranstaltungen/join}"
+                       th:href="@{/feedback/studenten/frageboegen(veranstaltungId=${veranstaltung.veranstaltungsNr})}"
                        th:id="'button' + ${iter.index}">
-                        belegen!
+                        Anzeigen!
                     </a>
-                    <span class="text-info" style="width: 100%;" th:text="${successMassage}">0</span>
                 </div>
             </div>
         </div>

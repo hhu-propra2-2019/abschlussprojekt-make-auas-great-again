@@ -14,4 +14,7 @@ public interface VeranstaltungsRepository {
 
   void addStudentToVeranstaltungById(Student student, Long verId);
 
+  List<Veranstaltung> getAllFromStudent(Student student);
+
+  List<Veranstaltung> getAllFromStudentContaining(Student student, String search);
 }
