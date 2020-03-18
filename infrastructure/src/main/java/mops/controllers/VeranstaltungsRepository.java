@@ -2,6 +2,7 @@ package mops.controllers;
 
 import java.util.List;
 import mops.Veranstaltung;
+import mops.rollen.Dozent;
 import mops.rollen.Student;
 
 public interface VeranstaltungsRepository {
@@ -17,4 +18,8 @@ public interface VeranstaltungsRepository {
   List<Veranstaltung> getAllFromStudent(Student student);
 
   List<Veranstaltung> getAllFromStudentContaining(Student student, String search);
+
+  List<Veranstaltung> getAllFromDozent(Dozent dozent);
+
+  List<Veranstaltung> getAllFromDozentContaining(Dozent dozent, String suche);
 }
