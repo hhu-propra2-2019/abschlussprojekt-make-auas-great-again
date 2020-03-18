@@ -21,7 +21,7 @@
 <main th:fragment="bodycontent">
     <div class="card bg-light">
         <div class="card-body text-center">
-            <h1 class="border border-info" th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
+            <h1 class="border-bottom" th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
             <h2 class="text-secondary" th:text="${fragebogen.professorenname}">Professor</h2>
             <form method="post" th:action="'/feedback/studenten/details/submit/' + ${fragebogen.bogennr}">
                 <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">
