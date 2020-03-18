@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/feedback/studenten")
 public class StudentController {
   public static final String studentRole = "ROLE_studentin";
-  private static final String emptySearchString = "";
   private final transient String account = "account";
   private final transient VeranstaltungsRepository veranstaltungen;
   private final transient SubmitService submitService;
@@ -121,7 +120,7 @@ public class StudentController {
   }
 
   private boolean searchNotEmpty(String search) {
-    return !emptySearchString.equals(search) && search != null;
+    return !"".equals(search) && search != null;
   }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
