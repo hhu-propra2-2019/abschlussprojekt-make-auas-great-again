@@ -2,7 +2,6 @@ package mops.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import org.keycloak.KeycloakPrincipal;
@@ -66,7 +65,7 @@ public class DozentController {
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
       @PathVariable long bogennr, Model model) {
     Dozent dozent = createDozentFromToken(token);
-    Fragebogen fragebogen = getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     model.addAttribute("fragebogen", fragebogen);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
@@ -139,7 +138,7 @@ public class DozentController {
       @PathVariable Long bogennr, Model model) {
     Dozent dozent = createDozentFromToken(token);
     model.addAttribute("typechecker", typechecker);
-    model.addAttribute("neuerbogen", getFragebogenFromDozentById(bogennr, dozent));
+    model.addAttribute("neuerbogen", veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/fragenerstellen";
   }
@@ -149,7 +148,7 @@ public class DozentController {
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
-    Fragebogen bogen = getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen bogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     bogen.loescheFrage(fragennr);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -165,7 +164,7 @@ public class DozentController {
     } else {
       neuefrage = new TextFrage(fragetext);
     }
-    Fragebogen bogen = getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen bogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     bogen.addFrage(neuefrage);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -216,14 +215,14 @@ public class DozentController {
   }
 
   private TextAntwort getTextAntwort(Dozent dozent, Long bogennr, Long fragennr, Long antwortnr) {
-    Fragebogen fragebogen = getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
     TextAntwort antwort = frage.getAntwortById(antwortnr);
     return antwort;
   }
 
   private Frage getFrage(Dozent dozent, Long bogennr, Long fragennr) {
-    Fragebogen fragebogen = getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     Frage frage = fragebogen.getFrage(fragennr);
     return frage;
   }
@@ -237,14 +236,8 @@ public class DozentController {
   }
 
   private MultipleChoiceFrage getMultipleChoiceFrage(Dozent dozent, Long bogennr, Long fragennr) {
-    Fragebogen bogen = getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen bogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
     return frage;
-  }
-
-  private Fragebogen getFragebogenFromDozentById(Long id, Dozent dozent) {
-    List<Fragebogen> boegen = holeFrageboegenVomDozent(dozent);
-    Optional<Fragebogen> bogen = boegen.stream().filter(x -> x.getBogennr().equals(id)).findFirst();
-    return bogen.get();
   }
 }

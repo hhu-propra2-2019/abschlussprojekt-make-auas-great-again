@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
+import mops.Fragebogen;
 import mops.Veranstaltung;
 import mops.VeranstaltungsService;
 import mops.controllers.VeranstaltungsRepository;
@@ -74,5 +75,12 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   public List<Veranstaltung> getAllFromDozentContaining(Dozent dozent, String suche) {
     return veranstaltungen.values().stream().filter(v -> v.getDozent().equals(dozent))
         .filter(v -> v.contains(suche)).collect(Collectors.toList());
+  }
+
+  @Override
+  public Fragebogen getFragebogenFromDozentById(Long id, Dozent dozent) {
+    List<Fragebogen> frageboegen = new ArrayList<>();
+    getAllFromDozent(dozent).stream().forEach(x -> frageboegen.addAll(x.getFrageboegen()));
+    return frageboegen.stream().filter(x -> x.getBogennr().equals(id)).findFirst().get();
   }
 }
