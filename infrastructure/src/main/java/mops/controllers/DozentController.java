@@ -97,9 +97,8 @@ public class DozentController {
   public String speichereTextAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
       @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
-    TextAntwort antwort = dozentservice.getTextAntwort(fragennr, antwortnr,
-        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
-    antwort.setAntworttext(textfeld);
+    dozentservice.getTextAntwort(fragennr, antwortnr,
+        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent)).setAntworttext(textfeld);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
@@ -108,9 +107,8 @@ public class DozentController {
   public String veroeffentlicheErgebnisseEinerFrage(@PathVariable Long bogennr,
       @PathVariable Long fragennr, KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
-    Frage frage = dozentservice.getFrage(fragennr,
-        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
-    frage.aendereOeffentlichkeitsStatus();
+    dozentservice.getFrage(fragennr, veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
+        .aendereOeffentlichkeitsStatus();
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
@@ -156,8 +154,7 @@ public class DozentController {
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
-    Fragebogen bogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
-    bogen.loescheFrage(fragennr);
+    veranstaltungen.getFragebogenFromDozentById(bogennr, dozent).loescheFrage(fragennr);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
@@ -189,9 +186,10 @@ public class DozentController {
   public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
       String antworttext, KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
-    MultipleChoiceFrage frage = dozentservice.getMultipleChoiceFrage(fragennr,
-        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
-    frage.addChoice(new Auswahl(antworttext));
+    dozentservice
+        .getMultipleChoiceFrage(fragennr,
+            veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
+        .addChoice(new Auswahl(antworttext));
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
 
@@ -201,9 +199,8 @@ public class DozentController {
       @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext,
       KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
-    MultipleChoiceFrage frage = dozentservice.getMultipleChoiceFrage(fragennr,
-        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
-    frage.deleteChoice(antwortnr);
+    dozentservice.getMultipleChoiceFrage(fragennr,
+        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent)).deleteChoice(antwortnr);
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
 
