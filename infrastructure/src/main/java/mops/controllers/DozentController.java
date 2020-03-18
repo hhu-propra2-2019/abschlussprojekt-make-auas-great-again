@@ -100,8 +100,9 @@ public class DozentController {
   @PostMapping("/watch/edit/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String speichereTextAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
-      @PathVariable Long antwortnr, String textfeld) {
-    TextAntwort antwort = getTextAntwort(bogennr, fragennr, antwortnr);
+      @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token) {
+    Dozent dozent = createDozentFromToken(token);
+    TextAntwort antwort = getTextAntwort(dozent, bogennr, fragennr, antwortnr);
     antwort.setAntworttext(textfeld);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
@@ -109,14 +110,15 @@ public class DozentController {
   @PostMapping("/watch/publish/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String veroeffentlicheErgebnisseEinerFrage(@PathVariable Long bogennr,
-      @PathVariable Long fragennr) {
-    Frage frage = getFrage(bogennr, fragennr);
+      @PathVariable Long fragennr, KeycloakAuthenticationToken token) {
+    Dozent dozent = createDozentFromToken(token);
+    Frage frage = getFrage(dozent, bogennr, fragennr);
     frage.aendereOeffentlichkeitsStatus();
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
-  private Frage getFrage(Long bogennr, Long fragennr) {
-    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+  private Frage getFrage(Dozent dozent, Long bogennr, Long fragennr) {
+    Fragebogen fragebogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
     Frage frage = fragebogen.getFrage(fragennr);
     return frage;
   }
