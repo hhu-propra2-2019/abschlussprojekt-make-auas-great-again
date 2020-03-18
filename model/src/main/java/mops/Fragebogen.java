@@ -107,5 +107,3 @@ public class Fragebogen {
     fragen.add(frage);
   }
 }
-
-

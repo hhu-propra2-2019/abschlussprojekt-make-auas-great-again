@@ -65,7 +65,6 @@ public class StudentController {
     return "studenten/student_uebersicht";
   }
 
-
   @GetMapping("/details")
   @RolesAllowed(studentRole)
   public String fragebogen(KeycloakAuthenticationToken token, Model model, @RequestParam Long
@@ -115,7 +114,9 @@ public class StudentController {
   @GetMapping("/ergebnis")
   @RolesAllowed(studentRole)
   public String boegenUebersicht(KeycloakAuthenticationToken token, Model model) {
+    // display graph javascript;
     model.addAttribute("frageboegen", frageboegen.getAll());
+    //  display graph javascript;
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
     authenticatedAccess.increment();
