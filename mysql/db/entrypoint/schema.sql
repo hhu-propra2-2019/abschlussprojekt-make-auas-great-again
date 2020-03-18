@@ -28,16 +28,19 @@ create table if not exists student
 
 create table if not exists fragebogen
 (
-    id           bigint unsigned not null auto_increment,
-    name         varchar(100)    not null,
-    status       integer not null,
-    startzeit    datetime,
-    endzeit      datetime not null,
-    dozent       bigint unsigned not null,
-    einheit      enum('VORLESUNG','UEBUNG','AUFGABE','PRAKTIKUM','DOZENT','BERATUNG','GRUPPE')
+    id              bigint unsigned not null auto_increment,
+    name            varchar(100)    not null,
+    status          integer not null,
+    startzeit       datetime,
+    endzeit         datetime not null,
+    dozent          bigint unsigned not null,
+    veranstaltung   bigint unsigned not null,
+    einheit         enum('VORLESUNG','UEBUNG','AUFGABE','PRAKTIKUM','DOZENT','BERATUNG','GRUPPE')
     primary key (id),
     foreign key(dozent)
-    references dozent(id)
+    references dozent(id),
+    foreign key (veranstaltung)
+    references veranstaltung(id)
 );
 
 create table if not exists frage
