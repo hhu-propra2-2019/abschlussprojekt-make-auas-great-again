@@ -19,13 +19,13 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <div class="page-wrapper">
+    <div class="page-wrapper ">
         <div class="card bg-light">
-            <div class="card-body text-center">
+            <div class="card-title text-center">
                 <h1 class="page-title" th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
-                <div class="card-title">
-                    <h2 class="text-secondary" th:text="${fragebogen.professorenname}">Professor</h2>
-                </div>
+                <h2 class="text-secondary" th:text="${fragebogen.professorenname}">Professor</h2>
+            </div>
+            <div class="card-body text-left">
                 <br>
                 <br>
                 <form method="post" th:action="'/feedback/studenten/details/submit/' + ${fragebogen.bogennr}">
