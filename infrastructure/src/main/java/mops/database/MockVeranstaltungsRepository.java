@@ -14,14 +14,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   private static transient Map<Long, Veranstaltung> veranstaltungen = new HashMap<>();
-  private static transient VeranstaltungsService veranstaltungsService = new VeranstaltungsService();
+  private static transient VeranstaltungsService veranstaltungsService
+      = new VeranstaltungsService();
 
   public MockVeranstaltungsRepository() {
     List<Veranstaltung> veranstaltungList = veranstaltungsService.randomVeranstaltungen();
-    Long index = 0L;
     for (Veranstaltung veranstaltung : veranstaltungList) {
-      veranstaltungen.put(index++, veranstaltung);
+      save(veranstaltung);
     }
+  }
+
+  private void save(Veranstaltung veranstaltung) {
+    veranstaltungen.put(veranstaltung.getVeranstaltungsNr(), veranstaltung);
   }
 
   @Override
@@ -45,5 +49,20 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   public void addStudentToVeranstaltungById(Student student, Long verId) {
     Veranstaltung veranstaltung = getVeranstaltungById(verId);
     veranstaltung.addStudent(student);
+  }
+
+  @Override
+  public List<Veranstaltung> getAllFromStudent(Student student) {
+    return veranstaltungen.values().stream()
+        .filter(veranstaltung -> veranstaltung.hasStudent(student))
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<Veranstaltung> getAllFromStudentContaining(Student student, String search) {
+    return veranstaltungen.values().stream()
+        .filter(veranstaltung -> veranstaltung.hasStudent(student))
+        .filter(veranstaltung -> veranstaltung.contains(search))
+        .collect(Collectors.toList());
   }
 }

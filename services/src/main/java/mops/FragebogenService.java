@@ -55,7 +55,7 @@ public class FragebogenService {
     String name = getRandomName(einheit);
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     fragebogen = fragebogen.startdatum(LocalDateTime.now())
-        .enddatum(LocalDateTime.now().plusSeconds(10)).fragen(fragenliste)
+        .enddatum(LocalDateTime.now().plusSeconds(100)).fragen(fragenliste)
         .professorenname(getRandomProfessor())
         .veranstaltungsname(name)
         .type(einheit)
@@ -97,7 +97,7 @@ public class FragebogenService {
 
   private Frage generateSingleResponse() {
     MultipleChoiceFrage frage =
-        new SingleResponseFrage(Long.valueOf(idgenerator.nextInt(100)), getRandomFrage(), true);
+        new SingleResponseFrage((long) idgenerator.nextInt(100), getRandomFrage(), true);
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));
