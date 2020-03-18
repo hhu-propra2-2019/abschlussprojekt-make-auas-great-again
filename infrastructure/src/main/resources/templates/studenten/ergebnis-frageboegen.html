@@ -14,7 +14,7 @@
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
             <li><a th:href="@{/feedback/studenten}">Übersicht</a></li>
-            <li class="active"><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
+            <li><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
         </ul>
     </nav>
 </header>
@@ -47,7 +47,7 @@
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
                     <a class="btn btn-primary"
-                       th:href="@{ergebnis/details(fragebogen=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
+                       th:href="@{details(fragebogen=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
                         Ergebnis ansehen</a>
                 </div>
             </div>
