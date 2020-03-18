@@ -1,17 +1,23 @@
 package mops.database.dto;
 
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
-@Table("Formular")
+@Table("fragebogen")
 public class FragebogenDto {
   @Id
   Long id;
+  String name;
+  Integer status;
+  Enum einheit;
   @DateTimeFormat
-  String erstelltAm;
+  String startzeit;
   @DateTimeFormat
-  String guerltigBis;
+  String endzeit;
+  Set<FrageDto> fragen = new HashSet<>();
 }
