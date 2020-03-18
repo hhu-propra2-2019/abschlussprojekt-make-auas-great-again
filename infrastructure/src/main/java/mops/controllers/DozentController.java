@@ -2,6 +2,7 @@ package mops.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import org.keycloak.KeycloakPrincipal;
@@ -57,8 +58,7 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String getFragebogenUebersicht(KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = createDozentFromToken(token);
-    List<Fragebogen> fragebogenliste = holeFrageboegenVomDozent(dozent);
-    model.addAttribute("frageboegen", fragebogenliste);
+    model.addAttribute("frageboegen", holeFrageboegenVomDozent(dozent));
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/frageboegen";
@@ -68,7 +68,8 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
       @PathVariable long bogennr, Model model) {
-    Fragebogen fragebogen = frageboegen.getFragebogenById(bogennr);
+    Dozent dozent = createDozentFromToken(token);
+    Fragebogen fragebogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
     model.addAttribute("fragebogen", fragebogen);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
@@ -184,7 +185,6 @@ public class DozentController {
   }
 
   private MultipleChoiceFrage getMultipleChoiceFrage(Long bogennr, Long fragennr) {
-    List<Veranstaltung> veranstaltung = veranstaltungen.getAllFromDozent(dozent);
     Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
     MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
     return frage;
@@ -226,5 +226,10 @@ public class DozentController {
       result.addAll(veranstaltung.getFrageboegen());
     }
     return result;
+  }
+
+  private Fragebogen getFragebogenById(Long id, List<Fragebogen> boegen) {
+    Optional<Fragebogen> bogen = boegen.stream().filter(x -> x.getBogennr().equals(id)).findFirst();
+    return bogen.get();
   }
 }
