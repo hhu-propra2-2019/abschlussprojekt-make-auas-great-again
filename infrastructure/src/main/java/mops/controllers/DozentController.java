@@ -148,30 +148,35 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String seiteUmFragenHinzuzufuegen(KeycloakAuthenticationToken token,
       @PathVariable Long bogennr, Model model) {
+    Dozent dozent = createDozentFromToken(token);
     model.addAttribute("typechecker", typechecker);
-    model.addAttribute("neuerbogen", frageboegen.getFragebogenById(bogennr));
+    model.addAttribute("neuerbogen", getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent)));
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/fragenerstellen";
   }
 
   @PostMapping("/new/questions/delete/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
-  public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr) {
-    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+  public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr,
+      KeycloakAuthenticationToken token) {
+    Dozent dozent = createDozentFromToken(token);
+    Fragebogen bogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
     bogen.loescheFrage(fragennr);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
   @PostMapping("/new/questions/add/{bogennr}")
   @RolesAllowed(orgaRole)
-  public String addTextfrage(@PathVariable Long bogennr, String fragetext, String fragetyp) {
+  public String addTextfrage(@PathVariable Long bogennr, String fragetext, String fragetyp,
+      KeycloakAuthenticationToken token) {
+    Dozent dozent = createDozentFromToken(token);
     Frage neuefrage;
     if ("multiplechoice".equals(fragetyp)) {
       neuefrage = new MultipleChoiceFrage(fragetext);
     } else {
       neuefrage = new TextFrage(fragetext);
     }
-    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+    Fragebogen bogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
     bogen.addFrage(neuefrage);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -180,15 +185,16 @@ public class DozentController {
   @RolesAllowed(orgaRole)
   public String seiteUmAntwortmoeglichkeitenHinzuzufuegen(Model model,
       KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr) {
-    MultipleChoiceFrage frage = getMultipleChoiceFrage(bogennr, fragennr);
+    Dozent dozent = createDozentFromToken(token);
+    MultipleChoiceFrage frage = getMultipleChoiceFrage(dozent, bogennr, fragennr);
     model.addAttribute("frage", frage);
     model.addAttribute("fragebogen", bogennr);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/multiplechoiceedit";
   }
 
-  private MultipleChoiceFrage getMultipleChoiceFrage(Long bogennr, Long fragennr) {
-    Fragebogen bogen = frageboegen.getFragebogenById(bogennr);
+  private MultipleChoiceFrage getMultipleChoiceFrage(Dozent dozent, Long bogennr, Long fragennr) {
+    Fragebogen bogen = getFragebogenById(bogennr, holeFrageboegenVomDozent(dozent));
     MultipleChoiceFrage frage = (MultipleChoiceFrage) bogen.getFrage(fragennr);
     return frage;
   }
@@ -196,8 +202,9 @@ public class DozentController {
   @PostMapping("/new/questions/mc/add/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
-      String antworttext) {
-    MultipleChoiceFrage frage = getMultipleChoiceFrage(bogennr, fragennr);
+      String antworttext, KeycloakAuthenticationToken token) {
+    Dozent dozent = createDozentFromToken(token);
+    MultipleChoiceFrage frage = getMultipleChoiceFrage(dozent, bogennr, fragennr);
     frage.addChoice(new Auswahl(antworttext));
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
@@ -205,8 +212,10 @@ public class DozentController {
   @PostMapping("/new/questions/mc/delete/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String loescheMultipleChoiceAntwort(@PathVariable Long bogennr,
-      @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext) {
-    MultipleChoiceFrage frage = getMultipleChoiceFrage(bogennr, fragennr);
+      @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext,
+      KeycloakAuthenticationToken token) {
+    Dozent dozent = createDozentFromToken(token);
+    MultipleChoiceFrage frage = getMultipleChoiceFrage(dozent, bogennr, fragennr);
     frage.deleteChoice(antwortnr);
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
