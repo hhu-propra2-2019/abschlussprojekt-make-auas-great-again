@@ -6,14 +6,15 @@
 
 <div class="border-bottom" th:fragment="textfrage">
 
-    <label class="col-md-12" for="textfrage" th:text="${frage.fragentext}">Label</label>
+    <label for="textfrage" th:text="${frage.fragentext}">Label</label>
     <textarea class="form-control" th:id="'answer-' + ${frage.id}"
               th:name="'answer-' + ${frage.id}" id="textfrage"></textarea>
 </div>
 
 <div class="border-bottom" th:fragment="singleResponse">
 
-    <label class="col-md-12" for="singleResponse" th:text="${frage.fragentext}">Label</label>
+    <label for="singleResponse" th:text="${frage.fragentext}">Label</label>
+    <br>
     <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
         <input class="form-check-input" th:id="'answer-' + ${frage.id}"
                th:name="'answer-' + ${frage.id}"
@@ -24,7 +25,8 @@
 </div>
 
 <div class="border-bottom" th:fragment="multipleResponse">
-    <label class="col-md-12" for="multipleResponse" th:text="${frage.fragentext}">Label</label>
+    <label for="multipleResponse" th:text="${frage.fragentext}">Label</label>
+    <br>
     <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
         <input class="form-check-input" th:id="'answer-' + ${frage.id}"
                th:name="'answer-' + ${frage.id}"
