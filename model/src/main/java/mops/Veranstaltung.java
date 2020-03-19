@@ -28,7 +28,8 @@ public class Veranstaltung {
   private List<Fragebogen> frageboegen;
   
   public Veranstaltung(String name, String semester, Dozent dozent) {
-    this.veranstaltungsNr = new Random().nextLong();
+    Random idgenerator = new Random();
+    this.veranstaltungsNr = idgenerator.nextLong();
     this.name = name;
     this.semester = semester;
     this.dozent = dozent;

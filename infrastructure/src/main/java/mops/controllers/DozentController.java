@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/feedback/dozenten")
 public class DozentController {
   private static final String ORGA_ROLE = "ROLE_orga";
-  private final VeranstaltungsRepository veranstaltungen;
+  private final transient VeranstaltungsRepository veranstaltungen;
 
   public DozentController() {
     veranstaltungen = new MockVeranstaltungsRepository();

@@ -22,7 +22,7 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   public MockVeranstaltungsRepository() {
     List<Veranstaltung> veranstaltungList = veranstaltungsService.randomVeranstaltungen();
     for (Veranstaltung veranstaltung : veranstaltungList) {
-      save(veranstaltung);
+      veranstaltungen.put(veranstaltung.getVeranstaltungsNr(), veranstaltung);
     }
   }
 
