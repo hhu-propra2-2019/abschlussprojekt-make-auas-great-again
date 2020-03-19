@@ -4,6 +4,10 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>feedback</title>
     <th:block th:fragment="headcontent">
         <!-- Links, Skripts, Styles hier einfügen! -->
@@ -21,7 +25,10 @@
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-4 text-center">Dozenten-Übersicht</h1>
-    <h3 class="text-center">Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS.</h3>
+    <h3 class="font-italic text-center">Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS.</h3>
+    <div class="container">
+        <img src="/hhu.jpg" class="rounded mx-auto d-block" alt="...">
+    </div>
 </main>
 </body>
 </html>

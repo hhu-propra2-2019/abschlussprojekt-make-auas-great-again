@@ -21,7 +21,7 @@
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-1">Dozenten-Übersicht</h1>
-    <h4>Fragebogen zur Einheit <span th:text="${neuerbogen.type.toString()}">Vorlesung</span> '<span
+    <h4 class="text-center">Fragebogen zur Einheit <span th:text="${neuerbogen.type.toString()}">Vorlesung</span> '<span
             th:text="${neuerbogen.veranstaltungsname}">Programmierung</span>'; verantwortlich: <span
             th:text="${neuerbogen.professorenname}">Prof. Dr. Max Mustermann</span></h4>
     <hr class="m-5">
@@ -48,7 +48,7 @@
                                 <form class="form-horizontal" method="get"
                                       th:action="'/feedback/dozenten/new/questions/edit/' + ${neuerbogen.bogennr} + '/' + ${frage.id}"
                                       th:if="${typechecker.isMultipleChoice(frage)}">
-                                    <button class="btn btn-primary" name="editbutton" type="submit">Antwortmöglichkeiten
+                                    <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">Antwortmöglichkeiten
                                         bearbeiten
                                     </button>
                                 </form>
@@ -56,7 +56,7 @@
                             <td>
                                 <form class="form-horizontal" method="post"
                                       th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
-                                    <button class="btn btn-primary" name="deletebutton" type="submit">Löschen</button>
+                                    <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
                                 </form>
                             </td>
                         </tr>
@@ -71,24 +71,22 @@
         <div class="col-sm">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">Frage hinzufügen</h3>
-                    <form class="form-horizontal" method="post"
-                          th:action="'/feedback/dozenten/new/questions/add/' + ${neuerbogen.bogennr}">
-                        <div class="input-group mb-3 col-sm-6">
-                            <input class="form-control" id="fragetext" name="fragetext"
-                                   placeholder="Hier den Fragetext eingeben" required type="text">
-                        </div>
-                        <div class="form-group row">
-                            <label for="fragetyp">Fragetyp:</label>
-                            <br>
-                            <div class="input-group mb-3 col-sm-6">
-                                <select id="fragetyp" name="fragetyp" required>
-                                    <option value="multiplechoice">Multiple Choice-Frage</option>
-                                    <option value="textfrage">Textfrage</option>
-                                </select>
+                    <h3 class="card-title">Fragen hinzufügen:</h3>
+                    <form class="was-validated" method="post" th:action="'/feedback/dozenten/new/questions/add/' + ${neuerbogen.bogennr}">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <input type="text" class="form-control" id="fragetext" name="fragetext" placeholder="Fragetext eingeben" required>
+                                <br>
+                                <div class="form-group">
+                                    <select class="custom-select" id="fragetyp" name="fragetyp" required>
+                                        <option value="">Fragetyp wählen:</option>
+                                        <option value="multiplechoice">Multiple Choice-Frage</option>
+                                        <option value="textfrage">Textfrage</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen</button>
                             </div>
                         </div>
-                        <button class="btn btn-primary" name="addbutton" type="submit">Frage hinzufügen</button>
                     </form>
                 </div>
             </div>
