@@ -21,11 +21,9 @@
 <main th:fragment="bodycontent">
     <!-- Restlichen Inhalt hier einfügen! -->
     <h2 th:text="${fragebogen.veranstaltungsname}">Feebackübersicht</h2>
-    <div class="col mb-4" th:each="textfrage :${textFragen}">
-        <h3 th:text="${textfrage.getFragentext()}"></h3>
-        <div th:each="antwort :${textfrage.getAntworten()}">
-            <h4 th:text="${antwort.antworttext}"></h4>
-        </div>
+    <div class="col mb-4" th:each="frage :${fragebogen.fragen}">
+        <h3 th:text="${frage.getFragentext()}"></h3>
+        <p>Eine Antwort</p>
     </div>
 </main>
 </body>

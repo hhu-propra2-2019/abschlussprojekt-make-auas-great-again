@@ -20,13 +20,13 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1 class="display-1">Dozenten-Übersicht</h1>
+    <h1 class="display-4 text-center">Dozenten-Übersicht</h1>
     <div class="col-sm">
         <div class="card">
             <div class="card-body">
-                <form th:action="'/feedback/dozenten/new'" class="form-horizontal" method="post">
+                <form class="form-horizontal was-validated" method="post" th:action="@{/feedback/dozenten/new}">
                     <div class="form-group row">
-                        <label for="veranstaltung">Name der Veranstaltung:</label>
+                        <label for="veranstaltung"></label>
                         <br>
                         <div class="input-group mb-3 col-sm-6">
                             <input class="form-control" id="veranstaltung" name="veranstaltung"
@@ -35,7 +35,7 @@
                     </div>
                     <hr class="m-5">
                     <div class="form-group row">
-                        <label for="dozentname">Name des Dozenten:</label>
+                        <label for="dozentname"></label>
                         <br>
                         <div class="input-group mb-3 col-sm-6">
                             <input class="form-control" id="dozentname" name="dozentname"
@@ -44,10 +44,10 @@
                     </div>
                     <hr class="m-5">
                     <div class="form-group row">
-                        <label for="veranstaltungstyp">Veranstaltungstyp:</label>
+                        <label for="veranstaltungstyp"></label>
                         <br>
                         <div class="input-group mb-3 col-sm-6">
-                            <select id="veranstaltungstyp" name="veranstaltungstyp" required>
+                            <select class="custom-select" id="veranstaltungstyp" name="veranstaltungstyp" required>
                                 <option value="VORLESUNG">Vorlesung</option>
                                 <option value="UEBUNG">Übung</option>
                                 <option value="AUFGABE">Aufgabe</option>
@@ -88,7 +88,7 @@
                             <input id="endzeit" name="endzeit" required type="time">
                         </div>
                     </div>
-                    <button class="btn btn-primary" name="button" type="submit">Fragebogen erstellen</button>
+                    <button class="btn btn-outline-success" name="button" type="submit">Fragebogen erstellen</button>
                 </form>
             </div>
         </div>
