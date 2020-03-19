@@ -14,6 +14,7 @@ import lombok.Setter;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
+import mops.rollen.Student;
 
 
 @Builder
@@ -30,7 +31,7 @@ public class Fragebogen {
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
-  private List<String> abgegebeneStudierende;
+  private List<Student> abgegebeneStudierende;
 
   public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende,
                     Einheit einheit) {
@@ -107,5 +108,9 @@ public class Fragebogen {
 
   public void addFrage(Frage frage) {
     fragen.add(frage);
+  }
+
+  public void addStudentAsSubmitted(Student student) {
+    abgegebeneStudierende.add(student);
   }
 }
