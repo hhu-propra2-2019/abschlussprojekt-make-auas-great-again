@@ -12,4 +12,14 @@ public class StudentDto {
   String username;
   String vorname;
   String nachname;
+
+  public StudentDto(String username) {
+    this.username = username;
+  }
+
+  public StudentDto(String username, String vorname, String nachname) {
+    this.username = username;
+    this.vorname = vorname;
+    this.nachname = nachname;
+  }
 }

@@ -12,7 +12,6 @@ create table if not exists veranstaltung
     id         bigint unsigned not null auto_increment,
     name        varchar(50)     not null,
     sememster   integer,
-    dozent      bigint unsigned not null,
     primary key (id),
     foreign key (dozent)
     references  dozent (id)
@@ -33,7 +32,6 @@ create table if not exists fragebogen
     status          integer not null,
     startzeit       datetime,
     endzeit         datetime not null,
-    dozent          bigint unsigned not null,
     veranstaltung   bigint unsigned not null,
     einheit         enum('VORLESUNG','UEBUNG','AUFGABE','PRAKTIKUM','DOZENT','BERATUNG','GRUPPE')
     primary key (id),
@@ -132,11 +130,22 @@ create table if not exists studentBeantwortetFragebogen
 
 create table if not exists studentBelegtVeranstaltung
 (
-    student bigint unsigned not null,
-    einheit bigint unsigned not null,
+    student       bigint unsigned not null,
+    veranstaltung bigint unsigned not null,
     primary key (student, veranstaltung),
     foreign key (student)
         references student (id),
+    foreign key (veranstaltung)
+        references veranstaltung (id)
+);
+
+create table if not exists dozentOrganisiertVeranstaltung
+(
+    dozent bigint unsigned not null,
+    veranstaltung bigint unsigned not null,
+    primary key (dozent, veranstaltung),
+    foreign key (dozent)
+        references dozent (id),
     foreign key (veranstaltung)
         references veranstaltung (id)
 );
