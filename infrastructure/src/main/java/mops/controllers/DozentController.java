@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/feedback/dozenten")
 public class DozentController {
+  private static final String ORGA_ROLE = "ROLE_orga";
   private final VeranstaltungsRepository veranstaltungen;
 
   public DozentController() {
@@ -21,12 +22,19 @@ public class DozentController {
   }
 
   @GetMapping("")
-  @RolesAllowed("ROLE_orga")
+  @RolesAllowed(ORGA_ROLE)
   public String getOrganisatorMainPage(KeycloakAuthenticationToken token, Model model) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     model.addAttribute("veranstaltungen",
         veranstaltungen.getAllFromDozent(createDozentFromToken(token)));
     return "dozenten/dozent";
+  }
+
+  @GetMapping("/event/new")
+  @RolesAllowed(ORGA_ROLE)
+  public String getVeranstaltungsErstellerSeite(KeycloakAuthenticationToken token, Model model) {
+    model.addAttribute("account", createAccountFromPrincipal(token));
+    return "dozenten/neueveranstaltung";
   }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
