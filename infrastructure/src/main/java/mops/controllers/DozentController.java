@@ -1,17 +1,18 @@
 package mops.controllers;
 
 import javax.annotation.security.RolesAllowed;
-import mops.Veranstaltung;
-import mops.database.MockVeranstaltungsRepository;
-import mops.rollen.Dozent;
-import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import mops.Veranstaltung;
+import mops.database.MockVeranstaltungsRepository;
+import mops.rollen.Dozent;
+import mops.security.Account;
 
 @Controller
 @RequestMapping("/feedback/dozenten")
@@ -37,6 +38,15 @@ public class DozentController {
   public String getVeranstaltungsErstellerSeite(KeycloakAuthenticationToken token, Model model) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     return "dozenten/neueveranstaltung";
+  }
+
+  @GetMapping("/event/{veranstaltung}")
+  @RolesAllowed(ORGA_ROLE)
+  public String getVeranstaltungsDetails(KeycloakAuthenticationToken token, Model model,
+      @PathVariable Long veranstaltung) {
+    model.addAttribute("account", createAccountFromPrincipal(token));
+    model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
+    return "dozenten/veranstaltung";
   }
 
   @PostMapping("/event/new")
