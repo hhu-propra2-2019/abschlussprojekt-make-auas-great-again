@@ -111,6 +111,9 @@ public class Fragebogen {
   }
 
   public void addStudentAsSubmitted(Student student) {
+    if (abgegebeneStudierende == null) {
+      abgegebeneStudierende = new ArrayList<>();
+    }
     abgegebeneStudierende.add(student);
   }
 }

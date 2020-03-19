@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import mops.Fragebogen;
+import mops.SingleSubmitService;
 import mops.SubmitService;
 import mops.TypeChecker;
 import mops.Veranstaltung;
@@ -29,6 +30,7 @@ public class StudentController {
   private final transient VeranstaltungsRepository veranstaltungen;
   private final transient SubmitService submitService = new SubmitService();
   private transient TypeChecker typeChecker = new TypeChecker();
+  private final transient SingleSubmitService singleSubmitService = new SingleSubmitService();
 
   public StudentController(MockVeranstaltungsRepository veranstaltungen) {
     this.veranstaltungen = veranstaltungen;
@@ -88,6 +90,8 @@ public class StudentController {
       antworten.put(frage.getId(), req.getParameter("answer-" + frage.getId()));
     }
     submitService.saveAntworten(fragebogen, antworten);
+    Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
+    singleSubmitService.addStudentAsSubmitted(fragebogen, student);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "redirect:/feedback/studenten";
   }
