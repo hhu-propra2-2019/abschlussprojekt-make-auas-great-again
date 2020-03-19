@@ -42,15 +42,6 @@ public class DozentErstellerController {
     dozentservice = new DozentService();
   }
 
-  @GetMapping("")
-  @RolesAllowed(orgaRole)
-  public String getNeueFormularSeite(KeycloakAuthenticationToken token, Model model) {
-    model.addAttribute("veranstaltungen",
-        veranstaltungen.getAllFromDozent(createDozentFromToken(token)));
-    model.addAttribute(account, createAccountFromPrincipal(token));
-    return "dozenten/ersteller";
-  }
-
   @PostMapping("")
   @RolesAllowed(orgaRole)
   public String addNeuesFormular(KeycloakAuthenticationToken token, Long veranstaltungid) {
