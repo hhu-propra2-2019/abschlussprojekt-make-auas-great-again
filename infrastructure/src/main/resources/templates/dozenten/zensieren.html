@@ -20,7 +20,7 @@
 </header>
 <main th:fragment="bodycontent">
     <div class="container">
-        <h1>Antwort bearbeiten</h1>
+        <h1 class="display-4 text-center">Antwort bearbeiten</h1>
         <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/watch/edit/' + ${bogennr} + '/' + ${fragennr} + '/' + ${antwortnr}">
             <textarea class="form-control" name="textfeld" th:text="${antwort.antworttext}">Antwort</textarea>
             <button type="submit" name="savebutton" class="btn btn-primary">Änderungen speichern</button>
