@@ -62,6 +62,20 @@ public class DozentErstellerController {
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
   }
 
+  @PostMapping("/meta/{bogennr}")
+  @RolesAllowed(orgaRole)
+  public String changeMetadaten(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
+      HttpServletRequest req) {
+    Fragebogen fragebogen =
+        veranstaltungen.getFragebogenFromDozentById(bogennr, createDozentFromToken(token));
+    fragebogen.setType(Einheit.valueOf(req.getParameter("veranstaltungstyp")));
+    fragebogen.setStartdatum(datetime.getLocalDateTimeFromString(req.getParameter("startdatum"),
+        req.getParameter("startzeit")));
+    fragebogen.setEnddatum(datetime.getLocalDateTimeFromString(req.getParameter("enddatum"),
+        req.getParameter("endzeit")));
+    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
+  }
+
   @GetMapping("/questions/{bogennr}")
   @RolesAllowed(orgaRole)
   public String seiteUmFragenHinzuzufuegen(KeycloakAuthenticationToken token,

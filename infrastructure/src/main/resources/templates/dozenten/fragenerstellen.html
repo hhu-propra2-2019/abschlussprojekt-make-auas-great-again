@@ -30,6 +30,68 @@
         <div class="col-sm">
             <div class="card">
                 <div class="card-body">
+                    <h3 class="card-title">Metadaten des Fragebogens</h3>
+                    <form class="was-validated" method="post" th:action="'/feedback/dozenten/new/meta/' + ${neuerbogen.bogennr}">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <div class="form-group row">
+                                    <label for="veranstaltungstyp"></label>
+                                    <br>
+                                    <div class="input-group mb-3 col-sm-6">
+                                        <select class="custom-select" id="veranstaltungstyp" name="veranstaltungstyp" required>
+                                            <option value="VORLESUNG">Vorlesung</option>
+                                            <option value="UEBUNG">Übung</option>
+                                            <option value="AUFGABE">Aufgabe</option>
+                                            <option value="PRAKTIKUM">Praktikum</option>
+                                            <option value="DOZENT">Dozent</option>
+                                            <option value="BERATUNG">Beratung</option>
+                                            <option value="GRUPPE">Gruppe</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr class="m-5">
+                                <div class="form-group row">
+                                    <label for="startdatum">Startdatum:</label>
+                                    <br>
+                                    <div class="input-group mb-3 col-sm-6">
+                                        <input id="startdatum" name="startdatum" required type="date">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="startzeit">Startzeit:</label>
+                                    <br>
+                                    <div class="input-group mb-3 col-sm-6">
+                                        <input id="startzeit" name="startzeit" required type="time">
+                                    </div>
+                                </div>
+                                <hr class="m-5">
+                                <div class="form-group row">
+                                    <label for="end">Enddatum:</label>
+                                    <br>
+                                    <div class="input-group mb-3 col-sm-6">
+                                        <input id="enddatum" name="enddatum" required type="date">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="endzeit">Endzeit: </label>
+                                    <br>
+                                    <div class="input-group mb-3 col-sm-6">
+                                        <input id="endzeit" name="endzeit" required type="time">
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary" name="metabutton" type="submit">Metadaten aktualisieren</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="m-5">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
                     <h3 class="card-title">Bereits vorhandene Fragen</h3>
                     <table class="table">
                         <thead>
