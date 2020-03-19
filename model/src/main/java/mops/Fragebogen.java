@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -81,27 +83,33 @@ public class Fragebogen {
     return textFragen;
   }
 
-  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public List<MultipleChoiceFrage> getMultipleChoiceFragen() {
-    List<MultipleChoiceFrage> mult = new ArrayList<>();
-    for (Frage frage : fragen) {
-      if (frage instanceof MultipleChoiceFrage) {
-        mult.add((MultipleChoiceFrage) frage);
-      }
-    }
-    return mult;
+    return fragen.stream()
+        .filter(frage -> frage instanceof MultipleChoiceFrage)
+        .map(frage -> (MultipleChoiceFrage) frage)
+        .collect(Collectors.toList());
   }
 
-  public void loescheFrage(Long id) {
-    //Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findAny();
-    //frage.ifPresent(value -> fragen.remove(value));
+  public List<TextFrage> getTextFragen() {
+    return fragen.stream()
+        .filter(frage -> frage instanceof TextFrage)
+        .map(frage -> (TextFrage) frage)
+        .collect(Collectors.toList());
+  }
+
+  public void loescheFrageById(Long id) {
+    fragen.remove(new TextFrage(id, ""));
+  }
+
+  public void loescheFrage(Frage frage) {
+    fragen.remove(frage);
   }
 
   public Frage getFrage(Long id) {
-    //TODO
-    //Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findFirst();
-    //return frage.get();
-    return new TextFrage("Hallo");
+    Optional<Frage> frage = fragen.stream()
+        .filter(x -> x.getId().equals(id))
+        .findFirst();
+    return frage.orElse(null);
   }
 
   public void addFrage(Frage frage) {

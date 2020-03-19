@@ -71,7 +71,7 @@ public class DozentErstellerController {
   @GetMapping("/questions/{bogennr}")
   @RolesAllowed(orgaRole)
   public String seiteUmFragenHinzuzufuegen(KeycloakAuthenticationToken token,
-      @PathVariable Long bogennr, Model model) {
+                                           @PathVariable Long bogennr, Model model) {
     Dozent dozent = createDozentFromToken(token);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute("neuerbogen", veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
@@ -82,16 +82,16 @@ public class DozentErstellerController {
   @PostMapping("/questions/delete/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr,
-      KeycloakAuthenticationToken token) {
+                                          KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
-    veranstaltungen.getFragebogenFromDozentById(bogennr, dozent).loescheFrage(fragennr);
+    veranstaltungen.getFragebogenFromDozentById(bogennr, dozent).loescheFrageById(fragennr);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
   @PostMapping("/questions/add/{bogennr}")
   @RolesAllowed(orgaRole)
   public String addTextfrage(@PathVariable Long bogennr, String fragetext, String fragetyp,
-      KeycloakAuthenticationToken token) {
+                             KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
     Fragebogen bogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     bogen.addFrage(dozentservice.createNeueFrageAnhandFragetyp(fragetyp, fragetext));
@@ -101,7 +101,7 @@ public class DozentErstellerController {
   @GetMapping("/questions/edit/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String seiteUmAntwortmoeglichkeitenHinzuzufuegen(Model model,
-      KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr) {
+                                                          KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr) {
     Dozent dozent = createDozentFromToken(token);
     MultipleChoiceFrage frage = dozentservice.getMultipleChoiceFrage(fragennr,
         veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
@@ -114,7 +114,7 @@ public class DozentErstellerController {
   @PostMapping("/questions/mc/add/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
-      String antworttext, KeycloakAuthenticationToken token) {
+                                          String antworttext, KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
     dozentservice
         .getMultipleChoiceFrage(fragennr,
@@ -126,8 +126,8 @@ public class DozentErstellerController {
   @PostMapping("/questions/mc/delete/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String loescheMultipleChoiceAntwort(@PathVariable Long bogennr,
-      @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext,
-      KeycloakAuthenticationToken token) {
+                                             @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext,
+                                             KeycloakAuthenticationToken token) {
     Dozent dozent = createDozentFromToken(token);
     dozentservice.getMultipleChoiceFrage(fragennr,
         veranstaltungen.getFragebogenFromDozentById(bogennr, dozent)).deleteChoice(antwortnr);

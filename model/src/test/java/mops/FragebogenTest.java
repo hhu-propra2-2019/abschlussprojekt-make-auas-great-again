@@ -1,6 +1,10 @@
 package mops;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.TextFrage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +21,7 @@ class FragebogenTest {
     LocalDateTime startdatum = LocalDateTime.of(2020, 3, 3, 6, 30);
     LocalDateTime enddatum = LocalDateTime.of(2020, 3, 20, 6, 30);
     fragebogen = new Fragebogen(1L, "Programing", "Sam",
-        null, startdatum, enddatum, Einheit.VORLESUNG);
+        new ArrayList<>(), startdatum, enddatum, Einheit.VORLESUNG);
   }
 
   @Test
@@ -60,4 +64,47 @@ class FragebogenTest {
 
     Assertions.assertEquals(status, Status.NICHTVERFUEGBAR);
   }
+
+  @Test
+  public void getMultipleChoiceFragenTest() {
+    MultipleChoiceFrage neueFrage = new MultipleChoiceFrage("Hi");
+    fragebogen.addFrage(neueFrage);
+
+    List<MultipleChoiceFrage> multipleChoiceFrageList = fragebogen.getMultipleChoiceFragen();
+
+    Assertions.assertTrue(multipleChoiceFrageList.contains(neueFrage));
+  }
+
+  @Test
+  public void getTextFragenTest() {
+    TextFrage neueFrage = new TextFrage("Hi");
+    fragebogen.addFrage(neueFrage);
+
+    List<TextFrage> textFragen = fragebogen.getTextFragen();
+
+    Assertions.assertTrue(textFragen.contains(neueFrage));
+  }
+
+  @Test
+  public void loescheFragenTest() {
+    TextFrage neueFrage = new TextFrage("Hi");
+    fragebogen.addFrage(neueFrage);
+    fragebogen.loescheFrage(neueFrage);
+
+    List<TextFrage> textFragen = fragebogen.getTextFragen();
+
+    Assertions.assertFalse(textFragen.contains(neueFrage));
+  }
+
+  @Test
+  public void loescheFrageByIdTest() {
+    TextFrage neueFrage = new TextFrage("Hi");
+    fragebogen.addFrage(neueFrage);
+    fragebogen.loescheFrageById(neueFrage.getId());
+
+    List<TextFrage> textFragen = fragebogen.getTextFragen();
+
+    Assertions.assertFalse(textFragen.contains(neueFrage));
+  }
+
 }
