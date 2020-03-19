@@ -14,6 +14,8 @@ public interface VeranstaltungsRepository {
 
   Veranstaltung getVeranstaltungById(Long id);
 
+  void save(Veranstaltung veranstaltung);
+
   void addStudentToVeranstaltungById(Student student, Long verId);
 
   List<Veranstaltung> getAllFromStudent(Student student);
@@ -25,6 +27,6 @@ public interface VeranstaltungsRepository {
   List<Veranstaltung> getAllFromDozentContaining(Dozent dozent, String suche);
 
   Fragebogen getFragebogenFromDozentById(Long fragebogen, Dozent dozent);
-  
+
   Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung);
 }

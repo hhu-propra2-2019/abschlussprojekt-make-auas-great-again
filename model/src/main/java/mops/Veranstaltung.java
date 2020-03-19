@@ -1,9 +1,12 @@
 package mops;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,6 +17,7 @@ import mops.rollen.Student;
 @Builder
 @Getter
 @Setter
+@AllArgsConstructor
 @EqualsAndHashCode(of = "veranstaltungsNr")
 public class Veranstaltung {
   private Long veranstaltungsNr;
@@ -22,6 +26,16 @@ public class Veranstaltung {
   private Dozent dozent;
   private List<Student> studenten;
   private List<Fragebogen> frageboegen;
+  
+  public Veranstaltung(String name, String semester, Dozent dozent) {
+    Random idgenerator = new Random();
+    this.veranstaltungsNr = idgenerator.nextLong();
+    this.name = name;
+    this.semester = semester;
+    this.dozent = dozent;
+    this.studenten = new ArrayList<>();
+    this.frageboegen = new ArrayList<>();
+  }
 
   public boolean contains(String search) {
     if (dozent.getNachname().toLowerCase(Locale.GERMAN)
