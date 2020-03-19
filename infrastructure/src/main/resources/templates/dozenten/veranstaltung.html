@@ -43,8 +43,8 @@
                         <tr th:each="fragebogen : ${veranstaltung.frageboegen}">
                             <td th:text="${fragebogen.veranstaltungsname}">Name</td>
                             <td th:text="${fragebogen.type}">Vorlesung</td>
-                            <td th:text="${fragebogen.startdatum}">25. September 2019</td>
-                            <td th:text="${fragebogen.enddatum}">30. September 2019</td>
+                            <td th:text="${datetime.getGermanFormat(fragebogen.startdatum)}">25. September 2019</td>
+                            <td th:text="${datetime.getGermanFormat(fragebogen.enddatum)}">30. September 2019</td>
                             <td>
                                 <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen.bogennr}">
                                     <button class="btn btn-primary" name="editbutton" type="submit">Bearbeiten</button>

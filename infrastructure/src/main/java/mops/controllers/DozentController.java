@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import mops.DateTimeService;
 import mops.Veranstaltung;
 import mops.database.MockVeranstaltungsRepository;
 import mops.rollen.Dozent;
@@ -19,6 +20,7 @@ import mops.security.Account;
 public class DozentController {
   private static final String ORGA_ROLE = "ROLE_orga";
   private final transient VeranstaltungsRepository veranstaltungen;
+  private final transient DateTimeService datetime = new DateTimeService();
 
   public DozentController() {
     veranstaltungen = new MockVeranstaltungsRepository();
@@ -45,6 +47,7 @@ public class DozentController {
   public String getVeranstaltungsDetails(KeycloakAuthenticationToken token, Model model,
       @PathVariable Long veranstaltung) {
     model.addAttribute("account", createAccountFromPrincipal(token));
+    model.addAttribute("datetime", datetime);
     model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
     return "dozenten/veranstaltung";
   }
