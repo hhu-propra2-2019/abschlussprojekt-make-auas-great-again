@@ -1,6 +1,7 @@
 package mops.controllers;
 
 import javax.annotation.security.RolesAllowed;
+import mops.Veranstaltung;
 import mops.database.MockVeranstaltungsRepository;
 import mops.rollen.Dozent;
 import mops.security.Account;
@@ -9,6 +10,7 @@ import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -35,6 +37,15 @@ public class DozentController {
   public String getVeranstaltungsErstellerSeite(KeycloakAuthenticationToken token, Model model) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     return "dozenten/neueveranstaltung";
+  }
+
+  @PostMapping("/event/new")
+  @RolesAllowed(ORGA_ROLE)
+  public String erstelleNeueVeranstaltung(KeycloakAuthenticationToken token, Model model,
+      String veranstaltungsname, String semester) {
+    veranstaltungen
+        .save(new Veranstaltung(veranstaltungsname, semester, createDozentFromToken(token)));
+    return "redirect:/feedback/dozenten";
   }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
