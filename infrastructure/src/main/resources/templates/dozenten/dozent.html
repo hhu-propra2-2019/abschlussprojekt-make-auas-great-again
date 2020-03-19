@@ -18,8 +18,6 @@
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
             <li class="active"><a href="/feedback/dozenten">Übersicht</a></li>
-            <li><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
-            <li><a href="/feedback/dozenten/new">Neuen Fragebogen erstellen</a></li>
             <li><a href="/feedback/dozenten/event/new">Neue Veranstaltung erstellen</a></li>
         </ul>
     </nav>
@@ -36,6 +34,9 @@
                 <img alt="..." class="card-img-top" th:src="@{/vorlesung.jpg}">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
+                    <form class="form-horizontal" th:action="'/feedback/dozenten/event/' + ${veranstaltung.veranstaltungsNr}" method="get">
+                        <button class="btn btn-primary" name="geteventbutton" type="submit">Details</button>
+                    </form>
                 </div>
             </div>
         </div>
