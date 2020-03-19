@@ -1,5 +1,6 @@
 package mops;
 
+import java.util.ArrayList;
 import java.util.List;
 import mops.rollen.Student;
 
@@ -17,5 +18,15 @@ public class SingleSubmitService {
       }
     }
     return false;
+  }
+
+  public List<Fragebogen> notSubmittedFrageboegen(List<Fragebogen> frageboegen, Student student) {
+    List<Fragebogen> notYetSubmitted = new ArrayList<>();
+    for (Fragebogen bogen : frageboegen) {
+      if (!hasSubmitted(bogen, student)) {
+        notYetSubmitted.add(bogen);
+      }
+    }
+    return notYetSubmitted;
   }
 }
