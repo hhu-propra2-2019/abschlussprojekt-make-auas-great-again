@@ -48,8 +48,12 @@ function clocktick(clock) {
         }
         if (hours < 1) {
             var cardspan = clock.getElementsByClassName('card-body')[0];
-            cardspan.style.backgroundColor = "#F08080";
+            cardspan.style.backgroundColor = "#F0AD4E";
         }
+        if (seconds < 60 ) {
+            var cardspan = clock.getElementsByClassName('card-body')[0];
+            cardspan.style.backgroundColor = "#F08080";
+         }
 
     }
 }

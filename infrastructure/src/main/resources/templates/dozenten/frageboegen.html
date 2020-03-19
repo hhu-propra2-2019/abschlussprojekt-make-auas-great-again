@@ -21,27 +21,32 @@
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-4 text-center">Dozenten-Übersicht</h1>
-    <div class="row row-cols-1 row-cols-md-4">
-        <div class="col mb-4" th:each="fragebogen :${frageboegen}">
-            <div class="card bg-light border-dark text-center">
-                <img alt="..." class="card-img-top" height="150" src="/uebung.jpg"
-                     th:if="${typechecker.isUebung(fragebogen)}" width="225">
-                <img alt="..." class="card-img-top" height="150" src="/vorlesung.jpg "
-                     th:if="${typechecker.isVorlesung(fragebogen)}" width="225">
-                <img alt="..." class="card-img-top" height="150" src="/aufgabe.jpg"
-                     th:if="${typechecker.isAufgabe(fragebogen)}" width="225">
-                <img alt="..." class="card-img-top" height="150" src="/praktikum.jpg"
-                     th:if="${typechecker.isPraktikum(fragebogen)}" width="225">
-                <img alt="..." class="card-img-top" height="150" src="/dozent.jpg"
-                     th:if="${typechecker.isDozent(fragebogen)}" width="225">
-                <img alt="..." class="card-img-top" height="150" src="/gruppen.jpg"
-                     th:if="${typechecker.isGruppe(fragebogen)}" width="225">
-                <img alt="..." class="card-img-top" height="150" src="/beratung.jpg"
-                     th:if="${typechecker.isBeratung(fragebogen)}" width="225">
-                <div class="card-body">
-                    <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
-                    <a class="btn btn-primary" th:href="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">Feedback
-                        ansehen</a>
+    <div class="card-group">
+        <div class="row row-cols-1 row-cols-md-4">
+            <div class="col mb-4" th:each="fragebogen :${frageboegen}">
+                <div class="card bg-light border-dark text-center">
+                    <img alt="..." class="card-img-top" height="150" src="/uebung.jpg"
+                         th:if="${typechecker.isUebung(fragebogen)}" width="225">
+                    <img alt="..." class="card-img-top" height="150" src="/vorlesung.jpg "
+                         th:if="${typechecker.isVorlesung(fragebogen)}" width="225">
+                    <img alt="..." class="card-img-top" height="150" src="/aufgabe.jpg"
+                         th:if="${typechecker.isAufgabe(fragebogen)}" width="225">
+                    <img alt="..." class="card-img-top" height="150" src="/praktikum.jpg"
+                         th:if="${typechecker.isPraktikum(fragebogen)}" width="225">
+                    <img alt="..." class="card-img-top" height="150" src="/dozent.jpg"
+                         th:if="${typechecker.isDozent(fragebogen)}" width="225">
+                    <img alt="..." class="card-img-top" height="150" src="/gruppen.jpg"
+                         th:if="${typechecker.isGruppe(fragebogen)}" width="225">
+                    <img alt="..." class="card-img-top" height="150" src="/beratung.jpg"
+                         th:if="${typechecker.isBeratung(fragebogen)}" width="225">
+                    <div class="card-body">
+                        <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
+                        <a class="btn btn-primary" th:href="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">Feedback
+                            ansehen</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
                 </div>
             </div>
         </div>
