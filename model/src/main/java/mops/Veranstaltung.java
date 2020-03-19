@@ -2,6 +2,7 @@ package mops;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -23,7 +24,8 @@ public class Veranstaltung {
   private List<Fragebogen> frageboegen;
 
   public boolean contains(String search) {
-    if (dozent.getNachname().toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN))) {
+    if (dozent.getNachname().toLowerCase(Locale.GERMAN)
+        .contains(search.toLowerCase(Locale.GERMAN))) {
       return true;
     } else {
       return name.toLowerCase(Locale.GERMAN)
@@ -47,5 +49,11 @@ public class Veranstaltung {
 
   public boolean hasStudent(Student student) {
     return studenten.contains(student);
+  }
+  
+  public Fragebogen getFragebogenById(Long id) {
+    Optional<Fragebogen> bogen = frageboegen.stream().filter(x -> x.getBogennr().equals(id))
+        .findFirst();
+    return bogen.get();
   }
 }

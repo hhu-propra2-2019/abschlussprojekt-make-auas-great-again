@@ -9,14 +9,15 @@ import mops.Fragebogen;
 import mops.Veranstaltung;
 import mops.VeranstaltungsService;
 import mops.controllers.VeranstaltungsRepository;
+import mops.rollen.Dozent;
 import mops.rollen.Student;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   private static transient Map<Long, Veranstaltung> veranstaltungen = new HashMap<>();
-  private static transient VeranstaltungsService veranstaltungsService
-      = new VeranstaltungsService();
+  private static transient VeranstaltungsService veranstaltungsService =
+      new VeranstaltungsService();
 
   public MockVeranstaltungsRepository() {
     List<Veranstaltung> veranstaltungList = veranstaltungsService.randomVeranstaltungen();
@@ -36,8 +37,7 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
 
   @Override
   public List<Veranstaltung> getAllContaining(String search) {
-    return getAll().stream()
-        .filter(veranstaltung -> veranstaltung.contains(search))
+    return getAll().stream().filter(veranstaltung -> veranstaltung.contains(search))
         .collect(Collectors.toList());
   }
 
@@ -55,18 +55,35 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   @Override
   public List<Veranstaltung> getAllFromStudent(Student student) {
     return veranstaltungen.values().stream()
-        .filter(veranstaltung -> veranstaltung.hasStudent(student))
-        .collect(Collectors.toList());
+        .filter(veranstaltung -> veranstaltung.hasStudent(student)).collect(Collectors.toList());
   }
 
   @Override
   public List<Veranstaltung> getAllFromStudentContaining(Student student, String search) {
     return veranstaltungen.values().stream()
         .filter(veranstaltung -> veranstaltung.hasStudent(student))
-        .filter(veranstaltung -> veranstaltung.contains(search))
+        .filter(veranstaltung -> veranstaltung.contains(search)).collect(Collectors.toList());
+  }
+
+  @Override
+  public List<Veranstaltung> getAllFromDozent(Dozent dozent) {
+    return veranstaltungen.values().stream().filter(v -> v.getDozent().equals(dozent))
         .collect(Collectors.toList());
   }
 
+  @Override
+  public List<Veranstaltung> getAllFromDozentContaining(Dozent dozent, String suche) {
+    return veranstaltungen.values().stream().filter(v -> v.getDozent().equals(dozent))
+        .filter(v -> v.contains(suche)).collect(Collectors.toList());
+  }
+
+  @Override
+  public Fragebogen getFragebogenFromDozentById(Long id, Dozent dozent) {
+    List<Fragebogen> frageboegen = new ArrayList<>();
+    getAllFromDozent(dozent).stream().forEach(x -> frageboegen.addAll(x.getFrageboegen()));
+    return frageboegen.stream().filter(x -> x.getBogennr().equals(id)).findFirst().get();
+  }
+  
   @Override
   public Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung) {
     return veranstaltungen.get(veranstaltung).getFrageboegen().stream()

@@ -26,20 +26,14 @@
             <div class="card-body">
                 <form class="form-horizontal was-validated" method="post" th:action="@{/feedback/dozenten/new}">
                     <div class="form-group row">
-                        <label for="veranstaltung"></label>
+                        <label for="veranstaltung">Veranstaltung:</label>
                         <br>
                         <div class="input-group mb-3 col-sm-6">
-                            <input class="form-control" id="veranstaltung" name="veranstaltung"
-                                   placeholder="Name der Veranstaltung" required type="text">
-                        </div>
-                    </div>
-                    <hr class="m-5">
-                    <div class="form-group row">
-                        <label for="dozentname"></label>
-                        <br>
-                        <div class="input-group mb-3 col-sm-6">
-                            <input class="form-control" id="dozentname" name="dozentname"
-                                   placeholder="Name des Dozenten" required type="text">
+                            <select id="veranstaltung" name="veranstaltung" required>
+                                <div class="foo" th:each="veranstaltung : ${veranstaltungen}">
+                                    <option th:value="${veranstaltung.veranstaltungsNr}" th:text="${veranstaltung.name}">Vorlesung</option>
+                                </div>
+                            </select>
                         </div>
                     </div>
                     <hr class="m-5">
