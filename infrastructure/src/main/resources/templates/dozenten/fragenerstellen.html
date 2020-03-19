@@ -77,6 +77,7 @@
                                         <input id="endzeit" name="endzeit" required type="time">
                                     </div>
                                 </div>
+                                <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
                                 <button class="btn btn-outline-primary" name="metabutton" type="submit">Metadaten aktualisieren</button>
                             </div>
                         </div>
@@ -115,8 +116,8 @@
                                 </form>
                             </td>
                             <td>
-                                <form class="form-horizontal" method="post"
-                                      th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
+                                <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/delete/' + ${neuerbogen.bogennr} + '/' + ${frage.id}">
+                                      <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
                                     <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
                                 </form>
                             </td>
@@ -145,6 +146,7 @@
                                         <option value="textfrage">Textfrage</option>
                                     </select>
                                 </div>
+                                <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
                                 <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen</button>
                             </div>
                         </div>

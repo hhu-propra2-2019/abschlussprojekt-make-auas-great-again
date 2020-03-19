@@ -2,6 +2,15 @@ package mops.controllers;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import mops.DateTimeService;
 import mops.DozentService;
 import mops.Einheit;
@@ -13,14 +22,6 @@ import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
 import mops.security.Account;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/feedback/dozenten/new")
@@ -56,7 +57,7 @@ public class DozentErstellerController {
   @PostMapping("/meta/{bogennr}")
   @RolesAllowed(orgaRole)
   public String changeMetadaten(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
-      HttpServletRequest req) {
+      HttpServletRequest req, RedirectAttributes ra, Long veranstaltungid) {
     Fragebogen fragebogen =
         veranstaltungen.getFragebogenFromDozentById(bogennr, createDozentFromToken(token));
     fragebogen.setType(Einheit.valueOf(req.getParameter("veranstaltungstyp")));
@@ -64,6 +65,7 @@ public class DozentErstellerController {
         req.getParameter("startzeit")));
     fragebogen.setEnddatum(datetime.getLocalDateTimeFromString(req.getParameter("enddatum"),
         req.getParameter("endzeit")));
+    ra.addAttribute("veranstaltungid", veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
@@ -82,19 +84,21 @@ public class DozentErstellerController {
   @PostMapping("/questions/delete/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr,
-      KeycloakAuthenticationToken token) {
+      KeycloakAuthenticationToken token, RedirectAttributes ra, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     veranstaltungen.getFragebogenFromDozentById(bogennr, dozent).loescheFrage(fragennr);
+    ra.addAttribute("veranstaltungid", veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
   @PostMapping("/questions/add/{bogennr}")
   @RolesAllowed(orgaRole)
   public String addTextfrage(@PathVariable Long bogennr, String fragetext, String fragetyp,
-      KeycloakAuthenticationToken token) {
+      KeycloakAuthenticationToken token, RedirectAttributes ra, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     Fragebogen bogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     bogen.addFrage(dozentservice.createNeueFrageAnhandFragetyp(fragetyp, fragetext));
+    ra.addAttribute("veranstaltungid", veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
