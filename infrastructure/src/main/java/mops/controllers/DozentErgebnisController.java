@@ -100,6 +100,6 @@ public class DozentErgebnisController {
 
   private Dozent createDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return new Dozent(principal.getKeycloakSecurityContext().getIdToken().getId());
+    return new Dozent(principal.getName());
   }
 }

@@ -12,15 +12,15 @@ import mops.Veranstaltung;
 @Builder
 @Getter
 @Setter
-@EqualsAndHashCode(of = "uuid")
+@EqualsAndHashCode(of = "username")
 @AllArgsConstructor
 public class Dozent {
-  private UUID uuid;
+  private String username;
   private String vorname;
   private String nachname;
   
-  public Dozent(String uuid) {
-    this.uuid = UUID.fromString(uuid);
+  public Dozent(String username) {
+    this.username = username;
     vorname = "jens";
     nachname = "B";
   }
