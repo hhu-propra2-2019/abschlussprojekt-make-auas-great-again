@@ -45,12 +45,14 @@ public class DozentErstellerController {
 
   @PostMapping("")
   @RolesAllowed(orgaRole)
-  public String addNeuesFormular(KeycloakAuthenticationToken token, Long veranstaltungid) {
+  public String addNeuesFormular(KeycloakAuthenticationToken token, Long veranstaltungid,
+      RedirectAttributes ra) {
     Dozent dozent = createDozentFromToken(token);
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
     Fragebogen neu =
         new Fragebogen(veranstaltung.getName(), dozent.getVorname() + " " + dozent.getNachname());
     veranstaltung.addFragebogen(neu);
+    ra.addAttribute("veranstaltungid", veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
   }
 
