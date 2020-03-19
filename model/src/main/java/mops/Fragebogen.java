@@ -30,6 +30,7 @@ public class Fragebogen {
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
+  private List<String> abgegebeneStudierende;
 
   public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende,
                     Einheit einheit) {
@@ -41,6 +42,7 @@ public class Fragebogen {
     this.enddatum = ende;
     this.fragen = new ArrayList<>();
     this.type = einheit;
+    this.abgegebeneStudierende = new ArrayList<>();
   }
 
   /**
