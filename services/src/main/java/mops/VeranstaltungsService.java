@@ -3,7 +3,6 @@ package mops;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
 
