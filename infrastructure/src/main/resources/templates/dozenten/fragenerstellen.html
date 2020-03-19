@@ -107,12 +107,9 @@
                             <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span
                                     th:if="${typechecker.isMultipleChoice(frage)}">Multiple Choice-Frage</span></td>
                             <td>
-                                <form class="form-horizontal" method="get"
-                                      th:action="'/feedback/dozenten/new/questions/edit/' + ${neuerbogen.bogennr} + '/' + ${frage.id}"
-                                      th:if="${typechecker.isMultipleChoice(frage)}">
-                                    <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">Antwortmöglichkeiten
-                                        bearbeiten
-                                    </button>
+                                <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/edit/' + ${neuerbogen.bogennr} + '/' + ${frage.id}" th:if="${typechecker.isMultipleChoice(frage)}">
+                                    <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
+                                    <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">Antwortmöglichkeiten bearbeiten</button>
                                 </form>
                             </td>
                             <td>

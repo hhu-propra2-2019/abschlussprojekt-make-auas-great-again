@@ -38,8 +38,9 @@
                         <tr th:each="choice : ${frage.choices}">
                             <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
                             <td>
-                                <form class="form-horizontal" method="post"
-                                      th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
+                                <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
+                                    <input type="hidden" name="fragebogenid" id="fragebogenid" th:value="${fragebogen}">
+                                    <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
                                     <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
                                 </form>
                             </td>
@@ -63,6 +64,8 @@
                                    placeholder="Antwort hinzufügen" required>
                             </div>
                         </div>
+                        <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
+                        <input type="hidden" name="fragebogenid" id="fragebogenid" th:value="${fragebogen}">
                         <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen
                         </button>
                     </form>
@@ -76,6 +79,7 @@
             <div class="card">
                 <div class="card-body">
                     <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen}">
+                        <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
                         <button class="btn btn-primary" name="showbutton" type="submit">Zurück zum Fragebogen</button>
                     </form>
                 </div>

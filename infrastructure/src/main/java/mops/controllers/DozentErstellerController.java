@@ -105,12 +105,14 @@ public class DozentErstellerController {
   @GetMapping("/questions/edit/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String seiteUmAntwortmoeglichkeitenHinzuzufuegen(Model model,
-      KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr) {
+      KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr,
+      Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     MultipleChoiceFrage frage = dozentservice.getMultipleChoiceFrage(fragennr,
         veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
     model.addAttribute("frage", frage);
     model.addAttribute("fragebogen", bogennr);
+    model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/multiplechoiceedit";
   }
@@ -118,12 +120,15 @@ public class DozentErstellerController {
   @PostMapping("/questions/mc/add/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
-      String antworttext, KeycloakAuthenticationToken token) {
+      String antworttext, KeycloakAuthenticationToken token, Long veranstaltungid,
+      RedirectAttributes ra, Long fragebogenid) {
     Dozent dozent = createDozentFromToken(token);
     dozentservice
         .getMultipleChoiceFrage(fragennr,
             veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
         .addChoice(new Auswahl(antworttext));
+    ra.addAttribute("veranstaltungid", veranstaltungid);
+    ra.addAttribute("fragebogenid", fragebogenid);
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
 
@@ -131,10 +136,13 @@ public class DozentErstellerController {
   @RolesAllowed(orgaRole)
   public String loescheMultipleChoiceAntwort(@PathVariable Long bogennr,
       @PathVariable Long fragennr, @PathVariable Long antwortnr, String antworttext,
-      KeycloakAuthenticationToken token) {
+      KeycloakAuthenticationToken token, Long veranstaltungid, RedirectAttributes ra,
+      Long fragebogenid) {
     Dozent dozent = createDozentFromToken(token);
     dozentservice.getMultipleChoiceFrage(fragennr,
         veranstaltungen.getFragebogenFromDozentById(bogennr, dozent)).deleteChoice(antwortnr);
+    ra.addAttribute("veranstaltungid", veranstaltungid);
+    ra.addAttribute("fragebogenid", fragebogenid);
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
   }
 
