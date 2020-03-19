@@ -27,12 +27,14 @@
             <div class="card-body">
                 <form class="form-horizontal was-validated" method="post" th:action="@{/feedback/dozenten/new}">
                     <div class="form-group row">
-                        <label for="veranstaltung">Veranstaltung:</label>
+                        <label for="veranstaltung"></label>
                         <br>
                         <div class="input-group mb-3 col-sm-6">
-                            <select id="veranstaltung" name="veranstaltung" required>
+                            <select class="custom-select" id="veranstaltung" name="veranstaltung" required>
                                 <div class="foo" th:each="veranstaltung : ${veranstaltungen}">
-                                    <option th:value="${veranstaltung.veranstaltungsNr}" th:text="${veranstaltung.name}">Vorlesung</option>
+                                    <option th:text="${veranstaltung.name}"
+                                            th:value="${veranstaltung.veranstaltungsNr}">Vorlesung
+                                    </option>
                                 </div>
                             </select>
                         </div>
