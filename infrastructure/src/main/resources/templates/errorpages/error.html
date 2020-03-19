@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Error</title>
+    <th:block th:fragment="headcontent">
+        <style>
+            .container {
+                position: relative;
+                text-align: left;
+                color: white;
+            }
+
+            .top-center {
+                position: absolute;
+                top: 8px;
+                left: 16px;
+                color: black;
+
+            }
+        </style>
+    </th:block>
 </head>
 <body>
-<h1>error</h1>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <ul>
+            <li><a th:href="@{/feedback/studenten}">Studenten</a></li>
+            <li><a th:href="@{/feedback/dozenten}">Dozenten</a></li>
+        </ul>
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <div class="container" id="welcome">
+
+
+        <h1 class="top-center">Error</h1>
+    </div>
+</main>
+
 </body>
 </html>
