@@ -33,17 +33,6 @@ public class DozentErgebnisController {
     dozentservice = new DozentService();
   }
 
-  @GetMapping("")
-  @RolesAllowed(orgaRole)
-  public String getFragebogenUebersicht(KeycloakAuthenticationToken token, Model model) {
-    Dozent dozent = createDozentFromToken(token);
-    model.addAttribute("frageboegen",
-        dozentservice.holeFrageboegenVomDozent(veranstaltungen.getAllFromDozent(dozent)));
-    model.addAttribute("typechecker", typechecker);
-    model.addAttribute(account, createAccountFromPrincipal(token));
-    return "dozenten/frageboegen";
-  }
-
   @GetMapping("/{bogennr}")
   @RolesAllowed(orgaRole)
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
