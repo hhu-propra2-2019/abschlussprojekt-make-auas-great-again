@@ -1,6 +1,7 @@
 package mops.controllers;
 
 import java.util.List;
+import mops.Fragebogen;
 import mops.Veranstaltung;
 import mops.rollen.Student;
 
@@ -17,4 +18,6 @@ public interface VeranstaltungsRepository {
   List<Veranstaltung> getAllFromStudent(Student student);
 
   List<Veranstaltung> getAllFromStudentContaining(Student student, String search);
+
+  Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung);
 }

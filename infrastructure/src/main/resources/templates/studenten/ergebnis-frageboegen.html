@@ -13,35 +13,42 @@
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
-            <li><a href="/feedback/dozenten">Übersicht</a></li>
-            <li class="active"><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
-            <li><a href="/feedback/dozenten/new">Neuen Fragebogen erstellen</a></li>
+            <li><a th:href="@{/feedback/studenten}">Übersicht</a></li>
+            <li><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
         </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1 class="display-4 text-center">Dozenten-Übersicht</h1>
+    <h2 class="display-1">Ergebnisse der Veranstaltunsevuluation</h2>
     <div class="row row-cols-1 row-cols-md-4">
         <div class="col mb-4" th:each="fragebogen :${frageboegen}">
             <div class="card bg-light border-dark text-center">
                 <img alt="..." class="card-img-top" height="150" src="/uebung.jpg"
-                     th:if="${typechecker.isUebung(fragebogen)}" width="225">
+                     th:if="${typeChecker.isUebung(fragebogen)}"
+                     width="225">
                 <img alt="..." class="card-img-top" height="150" src="/vorlesung.jpg "
-                     th:if="${typechecker.isVorlesung(fragebogen)}" width="225">
+                     th:if="${typeChecker.isVorlesung(fragebogen)}"
+                     width="225">
                 <img alt="..." class="card-img-top" height="150" src="/aufgabe.jpg"
-                     th:if="${typechecker.isAufgabe(fragebogen)}" width="225">
+                     th:if="${typeChecker.isAufgabe(fragebogen)}"
+                     width="225">
                 <img alt="..." class="card-img-top" height="150" src="/praktikum.jpg"
-                     th:if="${typechecker.isPraktikum(fragebogen)}" width="225">
+                     th:if="${typeChecker.isPraktikum(fragebogen)}"
+                     width="225">
                 <img alt="..." class="card-img-top" height="150" src="/dozent.jpg"
-                     th:if="${typechecker.isDozent(fragebogen)}" width="225">
+                     th:if="${typeChecker.isDozent(fragebogen)}"
+                     width="225">
                 <img alt="..." class="card-img-top" height="150" src="/gruppen.jpg"
-                     th:if="${typechecker.isGruppe(fragebogen)}" width="225">
+                     th:if="${typeChecker.isGruppe(fragebogen)}"
+                     width="225">
                 <img alt="..." class="card-img-top" height="150" src="/beratung.jpg"
-                     th:if="${typechecker.isBeratung(fragebogen)}" width="225">
+                     th:if="${typeChecker.isBeratung(fragebogen)}"
+                     width="225">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
-                    <a class="btn btn-primary" th:href="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">Feedback
-                        ansehen</a>
+                    <a class="btn btn-primary"
+                       th:href="@{details(fragebogen=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
+                        Ergebnis ansehen</a>
                 </div>
             </div>
         </div>
