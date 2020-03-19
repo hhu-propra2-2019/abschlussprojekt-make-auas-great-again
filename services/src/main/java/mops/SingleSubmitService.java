@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import mops.rollen.Student;
-
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class SingleSubmitService {
 
   public void addStudentAsSubmitted(Fragebogen fragebogen, Student student) {
