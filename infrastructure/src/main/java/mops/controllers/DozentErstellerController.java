@@ -70,10 +70,11 @@ public class DozentErstellerController {
   @GetMapping("/questions/{bogennr}")
   @RolesAllowed(orgaRole)
   public String seiteUmFragenHinzuzufuegen(KeycloakAuthenticationToken token,
-      @PathVariable Long bogennr, Model model) {
+      @PathVariable Long bogennr, Model model, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute("neuerbogen", veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
+    model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/fragenerstellen";
   }

@@ -153,6 +153,18 @@
             </div>
         </div>
     </div>
+    <hr class="m-5">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/event/' + ${veranstaltung}">
+                        <button class="btn btn-primary" name="showbutton" type="submit">Zurück zur Veranstaltung</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
