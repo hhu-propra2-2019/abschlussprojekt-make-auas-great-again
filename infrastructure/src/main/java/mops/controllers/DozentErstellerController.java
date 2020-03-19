@@ -77,6 +77,7 @@ public class DozentErstellerController {
       @PathVariable Long bogennr, Model model, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     model.addAttribute("typechecker", typechecker);
+    model.addAttribute("datetime", datetime);
     model.addAttribute("neuerbogen", veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
     model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute(account, createAccountFromPrincipal(token));
