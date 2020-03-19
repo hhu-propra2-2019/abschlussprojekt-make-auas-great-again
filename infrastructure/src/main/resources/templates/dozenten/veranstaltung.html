@@ -21,8 +21,43 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1 class="display-4 text-center">Veranstaltung</h1>
-    <h4>Hier kommt noch Content rein</h4>
+    <h1 class="display-4 text-center">Veranstaltungsdetails</h1>
+    <h3>Details</h3>
+    <p>Name der Veranstaltung: <span th:text="${veranstaltung.name}">Programmierung</span></p>
+    <p>Semester: <span th:text="${veranstaltung.semester}">Programmierung</span></p>
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Bereits vorhandene Fragebögen</h3>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name des Fragebogens</th>
+                            <th>Art</th>
+                            <th>Startzeit</th>
+                            <th>Endzeit</th>
+                            <th>Optionen</th>
+                        </tr>
+                        </thead>
+                        <tbody th:remove="all-but-first">
+                        <tr th:each="fragebogen : ${veranstaltung.frageboegen}">
+                            <td th:text="${fragebogen.veranstaltungsname}">Name</td>
+                            <td th:text="${fragebogen.type}">Vorlesung</td>
+                            <td th:text="${fragebogen.startdatum}">25. September 2019</td>
+                            <td th:text="${fragebogen.enddatum}">30. September 2019</td>
+                            <td>
+                                <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen.bogennr}">
+                                    <button class="btn btn-primary" name="editbutton" type="submit">Bearbeiten</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
