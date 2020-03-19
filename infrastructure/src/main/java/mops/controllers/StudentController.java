@@ -1,6 +1,7 @@
 package mops.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -56,10 +57,13 @@ public class StudentController {
   public String fragebogen(KeycloakAuthenticationToken token,
                            Model model, String search, Long veranstaltungId) {
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungId);
+    Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
+    List<Fragebogen> notSubmittedFrageboegen = singleSubmitService
+        .notSubmittedFrageboegen(veranstaltung.getFrageboegen(), student);
     if (searchNotEmpty(search)) {
       model.addAttribute("frageboegen", veranstaltung.getFrageboegenContaining(search));
     } else {
-      model.addAttribute("frageboegen", veranstaltung.getFrageboegen());
+      model.addAttribute("frageboegen", notSubmittedFrageboegen);
     }
     model.addAttribute("veranstaltung", veranstaltung);
     model.addAttribute("typeChecker", typeChecker);

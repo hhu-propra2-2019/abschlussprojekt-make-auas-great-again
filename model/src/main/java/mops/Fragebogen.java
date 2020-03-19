@@ -116,4 +116,11 @@ public class Fragebogen {
     }
     abgegebeneStudierende.add(student);
   }
+
+  public List<Student> getAbgegebeneStudierende() {
+    if (abgegebeneStudierende == null) {
+      abgegebeneStudierende = new ArrayList<>();
+    }
+    return abgegebeneStudierende;
+  }
 }
