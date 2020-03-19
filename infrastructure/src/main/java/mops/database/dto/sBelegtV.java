@@ -4,9 +4,9 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Table("studentBelegtVeranstaltung")
 public class sBelegtV {
-  private long student;
+  private String student;
 
-  public sBelegtV(Long student) {
+  public sBelegtV(String student) {
     this.student = student;
   }
 }

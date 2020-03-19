@@ -20,7 +20,7 @@ create table if not exists veranstaltung
 
 create table if not exists student
 (
-    id          bigint unsigned not null auto_increment,
+    username    varchar(50) not null auto_increment,
     vorname     varchar(50),
     nachname    varchar(50),
     primary key (id)

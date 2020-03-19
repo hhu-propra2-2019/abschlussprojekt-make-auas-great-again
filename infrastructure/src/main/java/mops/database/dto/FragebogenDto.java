@@ -20,4 +20,9 @@ public class FragebogenDto {
   @DateTimeFormat
   String endzeit;
   Set<FrageDto> fragen = new HashSet<>();
+  Set<sBeantwortetF> beantworteteBoegen = new HashSet<>();
+
+  void addBeantwortetVonStudent(StudentDto student) {
+    beantworteteBoegen.add(new sBeantwortetF(student.getUsername()));
+  }
 }

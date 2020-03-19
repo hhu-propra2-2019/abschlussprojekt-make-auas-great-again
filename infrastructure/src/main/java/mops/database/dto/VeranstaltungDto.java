@@ -18,6 +18,6 @@ public class VeranstaltungDto {
   Set<sBelegtV> studenten = new HashSet<>();
 
   void addStudent(StudentDto student) {
-    studenten.add(new sBelegtV(student.getId()));
+    studenten.add(new sBelegtV(student.getUsername()));
   }
 }
