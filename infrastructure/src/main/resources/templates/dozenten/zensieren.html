@@ -26,6 +26,18 @@
             <button type="submit" name="savebutton" class="btn btn-primary">Änderungen speichern</button>
         </form>
     </div>
+    <hr class="m-5">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${bogennr}">
+                        <button class="btn btn-primary" name="showbutton" type="submit">Zurück zu den Ergebnissen</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
