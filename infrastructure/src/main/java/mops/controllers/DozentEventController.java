@@ -17,12 +17,12 @@ import mops.security.Account;
 
 @Controller
 @RequestMapping("/feedback/dozenten")
-public class DozentController {
+public class DozentEventController {
   private static final String ORGA_ROLE = "ROLE_orga";
   private final transient VeranstaltungsRepository veranstaltungen;
   private final transient DateTimeService datetime = new DateTimeService();
 
-  public DozentController() {
+  public DozentEventController() {
     veranstaltungen = new MockVeranstaltungsRepository();
   }
 
