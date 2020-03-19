@@ -53,6 +53,7 @@
                             </td>
                             <td>
                                 <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">
+                                    <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
                                     <button class="btn btn-primary" name="showbutton" type="submit">Ansehen</button>
                                 </form>
                             </td>

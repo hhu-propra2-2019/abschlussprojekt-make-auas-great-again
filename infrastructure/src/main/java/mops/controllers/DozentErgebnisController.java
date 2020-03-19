@@ -36,10 +36,11 @@ public class DozentErgebnisController {
   @GetMapping("/{bogennr}")
   @RolesAllowed(orgaRole)
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
-      @PathVariable long bogennr, Model model) {
+      @PathVariable long bogennr, Model model, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     model.addAttribute("fragebogen", fragebogen);
+    model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/ergebnisse";
