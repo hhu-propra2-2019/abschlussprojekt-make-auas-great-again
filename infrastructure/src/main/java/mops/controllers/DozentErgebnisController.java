@@ -1,6 +1,13 @@
 package mops.controllers;
 
 import javax.annotation.security.RolesAllowed;
+import mops.DozentService;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.antworten.TextAntwort;
+import mops.database.MockVeranstaltungsRepository;
+import mops.rollen.Dozent;
+import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -10,13 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import mops.DozentService;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.antworten.TextAntwort;
-import mops.database.MockVeranstaltungsRepository;
-import mops.rollen.Dozent;
-import mops.security.Account;
 
 @Controller
 @RequestMapping("/feedback/dozenten/watch")
