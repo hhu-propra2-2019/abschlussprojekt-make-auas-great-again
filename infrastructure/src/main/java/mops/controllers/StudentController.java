@@ -61,7 +61,9 @@ public class StudentController {
     List<Fragebogen> notSubmittedFrageboegen = singleSubmitService
         .notSubmittedFrageboegen(veranstaltung.getFrageboegen(), student);
     if (searchNotEmpty(search)) {
-      model.addAttribute("frageboegen", veranstaltung.getFrageboegenContaining(search));
+      List<Fragebogen> searchedAndNotSubmitted = singleSubmitService
+          .frageboegenContaining(notSubmittedFrageboegen, search);
+      model.addAttribute("frageboegen", searchedAndNotSubmitted);
     } else {
       model.addAttribute("frageboegen", notSubmittedFrageboegen);
     }

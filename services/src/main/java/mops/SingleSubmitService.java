@@ -2,6 +2,7 @@ package mops;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import mops.rollen.Student;
 
 public class SingleSubmitService {
@@ -28,5 +29,11 @@ public class SingleSubmitService {
       }
     }
     return notYetSubmitted;
+  }
+
+  public List<Fragebogen> frageboegenContaining(List<Fragebogen> frageboegen, String search) {
+    return frageboegen.stream()
+        .filter(fragebogen -> fragebogen.contains(search))
+        .collect(Collectors.toList());
   }
 }
