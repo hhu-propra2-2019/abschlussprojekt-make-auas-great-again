@@ -22,7 +22,30 @@
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-4 text-center">Neue Veranstaltung erstellen</h1>
-    <h4>Hier kommt noch was hin.</h4>
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-horizontal was-validated" method="post" th:action="'/feedback/dozenten/event/new'">
+                    <div class="form-group row">
+                        <label for="veranstaltungsname">Name der Veranstaltung:</label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <input class="form-control" id="veranstaltungsname" name="veranstaltungsname" placeholder="Hier den Veranstaltungsnamen eingeben" required type="text">
+                        </div>
+                    </div>
+                    <hr class="m-5">
+                    <div class="form-group row">
+                        <label for="semester">Semester:</label>
+                        <br>
+                        <div class="input-group mb-3 col-sm-6">
+                            <input class="form-control" id="semester" name="semester" placeholder="Hier das entsprechende Semester eingeben" required type="text">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" name="createbutton" type="submit">Veranstaltung erstellen</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
