@@ -18,7 +18,6 @@ public class Dozent {
   private UUID uuid;
   private String vorname;
   private String nachname;
-  private List<Veranstaltung> veranstaltungen;
   
   public Dozent(String uuid) {
     this.uuid = UUID.fromString(uuid);
