@@ -33,7 +33,8 @@ public class TextFrage extends Frage {
   }
 
   public TextAntwort getAntwortById(Long id) {
-    Optional<TextAntwort> antwort = antworten.stream().filter(x -> x.getId().equals(id)).findFirst();
+    Optional<TextAntwort> antwort = antworten.stream().filter(x -> x.getId().equals(id))
+        .findFirst();
     return antwort.get();
   }
 }
