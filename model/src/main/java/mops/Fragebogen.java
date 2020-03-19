@@ -36,6 +36,8 @@ public class Fragebogen {
     this.bogennr = idgenerator.nextLong();
     this.veranstaltungsname = veranstaltung;
     this.professorenname = dozent;
+    this.startdatum = LocalDateTime.now().plusDays(1);
+    this.enddatum = LocalDateTime.now().plusDays(8);
     this.fragen = new ArrayList<>();
     this.type = Einheit.VORLESUNG;
   }
