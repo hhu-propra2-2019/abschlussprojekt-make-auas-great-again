@@ -4,13 +4,12 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>feedback</title>
     <th:block th:fragment="headcontent">
-        <!-- Links, Skripts, Styles hier einfügen! -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </th:block>
 </head>
 <body>
@@ -25,17 +24,26 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1 class="display-4 text-center">Dozenten-Übersicht</h1>
-    <h3 class="font-italic text-center">Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS.</h3>
+<!--    <h1 class="display-4 text-center">Dozenten-Übersicht</h1>-->
+    <h2 class="selektor1 text-center">Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS!
+        <style>
+            .selektor1 {
+                font-family: cursive;
+            }
+        </style>
+    </h2>
     <div class="container">
         <img src="/hhu.jpg" class="rounded mx-auto d-block" alt="...">
-    <h4>Veranstaltungsübersicht</h4>
-    <div class="row row-cols-1 row-cols-md-3">
-        <div class="col mb-3" th:each="veranstaltung : ${veranstaltungen}">
-            <div class="card text-center h-100">
-                <img alt="..." class="card-img-top" th:src="@{/vorlesung.jpg}">
-                <div class="card-body">
-                    <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
+        <hr class="m-5">
+        <h2 class="text-center"><u>Veranstaltungsübersicht:</u></h2>
+        <br>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-3" th:each="veranstaltung : ${veranstaltungen}">
+                <div class="card text-center h-100">
+                    <img alt="..." class="card-img-top" th:src="@{/vorlesung.jpg}">
+                    <div class="card-body">
+                        <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
+                    </div>
                 </div>
             </div>
         </div>

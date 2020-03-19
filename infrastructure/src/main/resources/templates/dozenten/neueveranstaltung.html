@@ -25,23 +25,17 @@
     <div class="col-sm">
         <div class="card">
             <div class="card-body">
-                <form class="form-horizontal was-validated" method="post" th:action="'/feedback/dozenten/event/new'">
-                    <div class="form-group row">
-                        <label for="veranstaltungsname">Name der Veranstaltung:</label>
-                        <br>
-                        <div class="input-group mb-3 col-sm-6">
-                            <input class="form-control" id="veranstaltungsname" name="veranstaltungsname" placeholder="Hier den Veranstaltungsnamen eingeben" required type="text">
-                        </div>
-                    </div>
-                    <hr class="m-5">
-                    <div class="form-group row">
-                        <label for="semester">Semester:</label>
-                        <br>
-                        <div class="input-group mb-3 col-sm-6">
+                <form class="was-validated" method="post" th:action="'/feedback/dozenten/event/new'">
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <input class="form-control" id="veranstaltungsname" name="veranstaltungsname" placeholder="Name der Veranstaltung" required type="text">
+                            <br>
+                            <div class="form-group">
                             <input class="form-control" id="semester" name="semester" placeholder="Hier das entsprechende Semester eingeben" required type="text">
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" name="createbutton" type="submit">Veranstaltung erstellen</button>
+                    <button class="btn btn-outline-success" name="createbutton" type="submit">Veranstaltung erstellen</button>
                 </form>
             </div>
         </div>
