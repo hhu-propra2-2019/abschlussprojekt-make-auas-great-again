@@ -53,17 +53,11 @@ public class DozentErstellerController {
 
   @PostMapping("")
   @RolesAllowed(orgaRole)
-  public String addNeuesFormular(HttpServletRequest req, KeycloakAuthenticationToken token) {
+  public String addNeuesFormular(KeycloakAuthenticationToken token, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
-    Veranstaltung veranstaltung =
-        veranstaltungen.getVeranstaltungById(Long.parseLong(req.getParameter("veranstaltung")));
-    Fragebogen neu = new Fragebogen(veranstaltung.getName(),
-        dozent.getVorname() + " " + dozent.getNachname(),
-        datetime.getLocalDateTimeFromString(req.getParameter("startdatum"),
-            req.getParameter("startzeit")),
-        datetime.getLocalDateTimeFromString(req.getParameter("enddatum"),
-            req.getParameter("endzeit")),
-        Einheit.valueOf(req.getParameter("veranstaltungstyp")));
+    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
+    Fragebogen neu =
+        new Fragebogen(veranstaltung.getName(), dozent.getVorname() + " " + dozent.getNachname());
     veranstaltung.addFragebogen(neu);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
   }

@@ -58,6 +58,10 @@
             </div>
         </div>
     </div>
+    <form class="form-horizontal" th:action="'/feedback/dozenten/new'" method="post">
+        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+        <button class="btn btn-primary" name="newsheetbutton" type="submit">Neuen Fragebogen erstellen</button>
+    </form>
 </main>
 </body>
 </html>
