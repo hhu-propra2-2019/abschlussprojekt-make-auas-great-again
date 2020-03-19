@@ -28,31 +28,39 @@
             <div class="form-group" th:if="${typechecker.isTextFrage(frage)}">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th>Antwort</th>
-                            <th>Optionen</th>
-                        </tr>
+                    <tr>
+                        <th>Antwort</th>
+                        <th>Optionen</th>
+                    </tr>
                     </thead>
                     <tbody th:remove="all-but-first">
-                        <tr th:each="antwort : ${frage.antworten}">
-                            <td th:text="${antwort.antworttext}">Der Dozent ist sehr motiviert und erklärt alles gut.</td>
-                            <td>
-                                <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/edit/' + ${fragebogen.bogennr} + '/' + ${frage.id} + '/' + ${antwort.id}">
-                                    <button type="submit" name="editbutton" class="btn btn-primary">Antwort zensieren</button>
-                                </form>
-                            </td>
-                        </tr>
+                    <tr th:each="antwort : ${frage.antworten}">
+                        <td th:text="${antwort.toString()}">Der Dozent ist sehr motiviert und erklärt alles gut.</td>
+                        <td>
+                            <form class="form-horizontal" method="get"
+                                  th:action="'/feedback/dozenten/watch/edit/' + ${fragebogen.bogennr} + '/' + ${frage.id} + '/' + ${antwort.id}">
+                                <button class="btn btn-primary" name="editbutton" type="submit">Antwort zensieren
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
             <div class="form-group" th:if="${typechecker.isMultipleChoice(frage)}">
                 <ul th:each="choice : ${frage.choices}">
-                    <li><span th:text="${choice.label}">Auswahlmöglichkeit</span>: <b><span th:text="${frage.holeErgebnis(choice)}">50</span>%</b></li>
+                    <li><span th:text="${choice.label}">Auswahlmöglichkeit</span>: <b><span
+                            th:text="${frage.holeErgebnis(choice)}">50</span>%</b></li>
                 </ul>
             </div>
             <div class="form-group">
-                <form class="form-horizontal" th:action="'/feedback/dozenten/watch/publish/' + ${fragebogen.bogennr} + '/' + ${frage.id}" method="post">
-                    <button type="submit" name="publishbutton" class="btn btn-primary"><span th:if="${frage.getErgebnissesindoeffentlich() == false}">Ergebnisse veröffentlichen</span><span th:if="${frage.getErgebnissesindoeffentlich()}">Ergebnisse nicht mehr öffentlich anzeigen</span></button>
+                <form class="form-horizontal"
+                      method="post"
+                      th:action="'/feedback/dozenten/watch/publish/' + ${fragebogen.bogennr} + '/' + ${frage.id}">
+                    <button class="btn btn-primary" name="publishbutton" type="submit"><span
+                            th:if="${frage.isOeffentlich() == false}">Ergebnisse veröffentlichen</span><span
+                            th:if="${frage.isOeffentlich()}">Ergebnisse nicht mehr öffentlich anzeigen</span>
+                    </button>
                 </form>
             </div>
         </div>

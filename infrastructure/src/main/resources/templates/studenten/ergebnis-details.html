@@ -23,7 +23,9 @@
     <h2 th:text="${fragebogen.veranstaltungsname}">Feebackübersicht</h2>
     <div class="col mb-4" th:each="frage :${fragebogen.fragen}">
         <h3 th:text="${frage.getFragentext()}"></h3>
-        <p>Eine Antwort</p>
+        <div th:each="antwort: ${frage.getAntworten()}">
+            <p th:text="${antwort.toString()}"></p>
+        </div>
     </div>
 </main>
 </body>

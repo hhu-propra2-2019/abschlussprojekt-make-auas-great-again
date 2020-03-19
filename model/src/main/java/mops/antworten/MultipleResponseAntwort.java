@@ -7,7 +7,8 @@ import java.util.Set;
 public class MultipleResponseAntwort extends Antwort {
   transient Set<Integer> gewaehlteAntworten;
 
-  public MultipleResponseAntwort() {
+  public MultipleResponseAntwort(Long id) {
+    super(id);
     gewaehlteAntworten = new HashSet<>();
   }
 
@@ -15,4 +16,15 @@ public class MultipleResponseAntwort extends Antwort {
     gewaehlteAntworten.add(neueAntwort);
   }
 
+  @Override
+  public String toString() {
+    if (gewaehlteAntworten.isEmpty()) {
+      return "";
+    }
+    StringBuilder result = new StringBuilder();
+    for (Integer antwort : gewaehlteAntworten) {
+      result.append(antwort).append(",");
+    }
+    return result.substring(0, result.length() - 1);
+  }
 }

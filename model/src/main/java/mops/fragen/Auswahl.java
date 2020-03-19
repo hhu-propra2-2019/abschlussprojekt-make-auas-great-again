@@ -4,11 +4,18 @@ import java.util.Random;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
-@AllArgsConstructor
 @Getter
-@EqualsAndHashCode(of = "label")
+@EqualsAndHashCode(of = "id")
+@AllArgsConstructor
 public class Auswahl {
-  private final Long id = Long.valueOf(new Random().nextInt(1000));
+  private final Long id;
+  @Setter
   private String label;
+
+  public Auswahl(String label) {
+    this.id = (long) new Random().nextInt(1000);
+    this.label = label;
+  }
 }

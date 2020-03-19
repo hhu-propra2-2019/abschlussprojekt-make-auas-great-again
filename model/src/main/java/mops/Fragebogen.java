@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Random;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -94,13 +93,15 @@ public class Fragebogen {
   }
 
   public void loescheFrage(Long id) {
-    Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findAny();
-    frage.ifPresent(value -> fragen.remove(value));
+    //Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findAny();
+    //frage.ifPresent(value -> fragen.remove(value));
   }
 
   public Frage getFrage(Long id) {
-    Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findFirst();
-    return frage.get();
+    //TODO
+    //Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findFirst();
+    //return frage.get();
+    return new TextFrage("Hallo");
   }
 
   public void addFrage(Frage frage) {
