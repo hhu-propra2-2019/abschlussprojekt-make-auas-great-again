@@ -15,6 +15,7 @@ import lombok.Setter;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
+import mops.rollen.Student;
 
 
 @Builder
@@ -31,6 +32,7 @@ public class Fragebogen {
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
+  private List<Student> abgegebeneStudierende;
 
   public Fragebogen(String veranstaltung, String dozent) {
     Random idgenerator = new Random();
@@ -40,6 +42,7 @@ public class Fragebogen {
     this.startdatum = LocalDateTime.now().plusDays(1);
     this.enddatum = LocalDateTime.now().plusDays(8);
     this.fragen = new ArrayList<>();
+    this.abgegebeneStudierende = new ArrayList<>();
     this.type = Einheit.VORLESUNG;
   }
 
@@ -102,5 +105,13 @@ public class Fragebogen {
 
   public void addFrage(Frage frage) {
     fragen.add(frage);
+  }
+
+  public void addStudentAsSubmitted(Student student) {
+    abgegebeneStudierende.add(student);
+  }
+
+  public List<Student> getAbgegebeneStudierende() {
+    return abgegebeneStudierende;
   }
 }
