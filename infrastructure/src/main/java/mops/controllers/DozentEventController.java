@@ -1,5 +1,6 @@
 package mops.controllers;
 
+import java.time.LocalDateTime;
 import javax.annotation.security.RolesAllowed;
 import mops.DateTimeService;
 import mops.Veranstaltung;
@@ -48,6 +49,7 @@ public class DozentEventController {
       @PathVariable Long veranstaltung) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     model.addAttribute("datetime", datetime);
+    model.addAttribute("currenttime", LocalDateTime.now());
     model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
     return "dozenten/veranstaltung";
   }

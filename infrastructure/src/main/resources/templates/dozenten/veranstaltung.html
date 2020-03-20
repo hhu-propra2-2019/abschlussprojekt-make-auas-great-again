@@ -36,7 +36,6 @@
                             <th>Startzeit</th>
                             <th>Endzeit</th>
                             <th>Optionen</th>
-                            <th>Feedback</th>
                         </tr>
                         </thead>
                         <tbody th:remove="all-but-first">
@@ -46,16 +45,18 @@
                             <td th:text="${datetime.getGermanFormat(fragebogen.startdatum)}">25. September 2019</td>
                             <td th:text="${datetime.getGermanFormat(fragebogen.enddatum)}">30. September 2019</td>
                             <td>
-                                <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen.bogennr}">
-                                    <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
-                                    <button class="btn btn-primary" name="editbutton" type="submit">Bearbeiten</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">
-                                    <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
-                                    <button class="btn btn-primary" name="showbutton" type="submit">Ansehen</button>
-                                </form>
+                                <div class="foo" th:if="${fragebogen.startdatum.isAfter(currenttime)}">
+                                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen.bogennr}">
+                                        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+                                        <button class="btn btn-primary" name="editbutton" type="submit">Fragebogen bearbeiten</button>
+                                    </form>
+                                </div>
+                                <div class="foo" th:if="${fragebogen.startdatum.isBefore(currenttime)}">
+                                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">
+                                        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+                                        <button class="btn btn-primary" name="showbutton" type="submit">Feedback ansehen</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
