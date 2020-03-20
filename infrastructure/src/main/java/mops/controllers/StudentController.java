@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import mops.Fragebogen;
-import mops.SingleSubmitService;
 import mops.SubmitService;
 import mops.TypeChecker;
 import mops.Veranstaltung;
@@ -31,7 +30,6 @@ public class StudentController {
   private final transient VeranstaltungsRepository veranstaltungen;
   private final transient SubmitService submitService = new SubmitService();
   private transient TypeChecker typeChecker = new TypeChecker();
-  private final transient SingleSubmitService singleSubmitService = new SingleSubmitService();
 
   public StudentController(MockVeranstaltungsRepository veranstaltungen) {
     this.veranstaltungen = veranstaltungen;
@@ -58,10 +56,10 @@ public class StudentController {
                            Model model, String search, Long veranstaltungId) {
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungId);
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
-    List<Fragebogen> notSubmittedFrageboegen = singleSubmitService
+    List<Fragebogen> notSubmittedFrageboegen = submitService
         .notSubmittedFrageboegen(veranstaltung.getFrageboegen(), student);
     if (searchNotEmpty(search)) {
-      List<Fragebogen> searchedAndNotSubmitted = singleSubmitService
+      List<Fragebogen> searchedAndNotSubmitted = submitService
           .frageboegenContaining(notSubmittedFrageboegen, search);
       model.addAttribute("frageboegen", searchedAndNotSubmitted);
     } else {
@@ -97,7 +95,7 @@ public class StudentController {
     }
     submitService.saveAntworten(fragebogen, antworten);
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
-    singleSubmitService.addStudentAsSubmitted(fragebogen, student);
+    submitService.addStudentAsSubmitted(fragebogen, student);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "redirect:/feedback/studenten";
   }
