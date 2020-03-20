@@ -2,31 +2,30 @@ package mops.fragen;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
+import mops.antworten.Antwort;
 
-@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 @EqualsAndHashCode(of = "id")
 public abstract class Frage {
   @Getter
-  private String fragentext;
-  @Getter
-  @Setter
   private transient Long id;
-
-  @Getter
-  private Boolean ergebnissesindoeffentlich = Boolean.valueOf(false);
-
-  public void aendereOeffentlichkeitsStatus() {
-    if (ergebnissesindoeffentlich) {
-      ergebnissesindoeffentlich = Boolean.valueOf(false);
-    } else {
-      ergebnissesindoeffentlich = Boolean.valueOf(true);
-    }
-  }
-
-  public abstract void addAntwort(String antwort);
+  private transient boolean oeffentlich;
 
   public Frage(Long id) {
     this.id = id;
   }
+
+  public void aendereOeffentlichkeitsStatus() {
+    oeffentlich = !oeffentlich;
+  }
+
+  public boolean isOeffentlich() {
+    return oeffentlich;
+  }
+
+  public abstract void addAntwort(String antwort);
+
+  public abstract Iterable<Antwort> getAntworten();
+
+  @Override
+  public abstract String toString();
 }

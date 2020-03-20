@@ -3,7 +3,6 @@ package mops;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -26,7 +25,7 @@ public class Veranstaltung {
   private Dozent dozent;
   private List<Student> studenten;
   private List<Fragebogen> frageboegen;
-  
+
   public Veranstaltung(String name, String semester, Dozent dozent) {
     Random idgenerator = new Random();
     this.veranstaltungsNr = idgenerator.nextLong();
@@ -63,11 +62,5 @@ public class Veranstaltung {
 
   public boolean hasStudent(Student student) {
     return studenten.contains(student);
-  }
-  
-  public Fragebogen getFragebogenById(Long id) {
-    Optional<Fragebogen> bogen = frageboegen.stream().filter(x -> x.getBogennr().equals(id))
-        .findFirst();
-    return bogen.get();
   }
 }

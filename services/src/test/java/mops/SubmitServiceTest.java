@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import mops.antworten.TextAntwort;
+import mops.antworten.Antwort;
 import mops.fragen.TextFrage;
 import mops.rollen.Student;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +32,7 @@ public class SubmitServiceTest {
     textfrage = new TextFrage(Long.valueOf(1), "Beispielfrage");
     when(mockFragebogen.getFragen()).thenReturn(List.of(textfrage));
     student = new Student("studentin");
-    fragebogen  = new Fragebogen("Programmierung", "Jens");
+    fragebogen = new Fragebogen("Programmierung", "Jens");
 
   }
 
@@ -41,7 +43,7 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<TextAntwort> antworten = textfrage.getAntworten();
+    Set<Antwort> antworten = textfrage.getAntworten();
     assertFalse(antworten.isEmpty());
   }
 
@@ -52,7 +54,7 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<TextAntwort> antworten = textfrage.getAntworten();
+    Set<Antwort> antworten = textfrage.getAntworten();
     assertTrue(antworten.isEmpty());
   }
 
@@ -63,13 +65,13 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<TextAntwort> antworten = textfrage.getAntworten();
+    Set<Antwort> antworten = textfrage.getAntworten();
     assertTrue(antworten.isEmpty());
   }
 
   @Test
   @DisplayName("Student als abgegebener in dem entsprechenden Fragebogen speichern ")
-  public void addStudentAsSubmitted(){
+  public void addStudentAsSubmitted() {
 
     service.addStudentAsSubmitted(fragebogen, student);
 
@@ -78,13 +80,13 @@ public class SubmitServiceTest {
 
   @Test
   @DisplayName("beantwortete Frageboegen Werden für den Student nicht mehr gezeigt")
-  public void getNotSubmittedFrageboegen(){
+  public void getNotSubmittedFrageboegen() {
     List<Fragebogen> fragebogenList = new ArrayList<>();
     List<Fragebogen> notSubmittedFrageboegen;
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
 
-    service.addStudentAsSubmitted(fragebogen , student);
+    service.addStudentAsSubmitted(fragebogen, student);
     notSubmittedFrageboegen = service.notSubmittedFrageboegen(fragebogenList, student);
 
     assertFalse(notSubmittedFrageboegen.contains(fragebogen));
@@ -93,13 +95,13 @@ public class SubmitServiceTest {
 
   @Test
   @DisplayName("nicht beantwortete Frageboegen Werden für den Student gezeigt")
-  public void getNotYetSubmittedFrageboegen(){
+  public void getNotYetSubmittedFrageboegen() {
     List<Fragebogen> fragebogenList = new ArrayList<>();
     List<Fragebogen> notSubmittedFrageboegen;
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
 
-    service.addStudentAsSubmitted(fragebogen , student);
+    service.addStudentAsSubmitted(fragebogen, student);
     notSubmittedFrageboegen = service.notSubmittedFrageboegen(fragebogenList, student);
 
     assertTrue(notSubmittedFrageboegen.contains(mockFragebogen));
@@ -107,7 +109,7 @@ public class SubmitServiceTest {
 
   @Test
   @DisplayName("finde den richtigen Fragebogen beim suchen")
-  public void frageboegenContaining(){
+  public void frageboegenContaining() {
     List<Fragebogen> fragebogenList = new ArrayList<>();
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
@@ -119,7 +121,7 @@ public class SubmitServiceTest {
 
   @Test
   @DisplayName("Fragebogen, die das Suchwort nicht haben, werden nicht gefunden")
-  public void frageboegenContainingNurSearched(){
+  public void frageboegenContainingNurSearched() {
     List<Fragebogen> fragebogenList = new ArrayList<>();
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
