@@ -43,14 +43,14 @@ public class CsvReader {
     return verifictationStatus;
   }
 
+  @SuppressWarnings("PMD")
   private void readFromFile() {
     try {
       reader = new InputStreamReader(file.getInputStream());
       parser = new CSVParser(reader, CSVFormat.DEFAULT);
-
-      for (final CSVRecord record : parser) {
-        for (int i = 0; i < record.size(); i++) {
-          final String username = record.get(i);
+      for (CSVRecord record : parser) {
+        for (int j = 0; j < record.size(); j++) {
+          final String username = record.get(j);
 
           Student student = new Student(username);
           veranstaltung.addStudent(student);
