@@ -3,6 +3,7 @@ package mops;
 import java.util.ArrayList;
 import java.util.List;
 import mops.antworten.TextAntwort;
+import mops.fragen.Auswahl;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
@@ -31,6 +32,23 @@ public class DozentService {
 
   public Frage getFrage(Long fragennr, Fragebogen fragebogen) {
     return fragebogen.getFrage(fragennr);
+  }
+
+  @SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
+  public List<Frage> getFragenlisteOhneAntworten(List<Frage> altefragen) {
+    List<Frage> result = new ArrayList<>();
+    for (Frage frage : altefragen) {
+      if (frage instanceof TextFrage) {
+        result.add(new TextFrage(frage.getFragentext()));
+      } else {
+        MultipleChoiceFrage neuefrage = new MultipleChoiceFrage(frage.getFragentext());
+        for (Auswahl auswahl : ((MultipleChoiceFrage) frage).getChoices()) {
+          neuefrage.addChoice(auswahl);
+        }
+        result.add(neuefrage);
+      }
+    }
+    return result;
   }
 
   /**

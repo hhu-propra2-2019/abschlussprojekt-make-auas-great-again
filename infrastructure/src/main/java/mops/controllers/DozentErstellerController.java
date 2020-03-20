@@ -65,10 +65,8 @@ public class DozentErstellerController {
       RedirectAttributes ra, @PathVariable Long bogennr) {
     Dozent dozent = createDozentFromToken(token);
     Fragebogen alt = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
-    List<Frage> neuefragenliste = alt.getFragen();
-    neuefragenliste.stream().forEach(x -> x.deleteAllAntworten());
     Fragebogen neu = new Fragebogen(alt.getVeranstaltungsname(), alt.getProfessorenname(),
-        neuefragenliste, alt.getType());
+        dozentservice.getFragenlisteOhneAntworten(alt.getFragen()), alt.getType());
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
     veranstaltung.addFragebogen(neu);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
