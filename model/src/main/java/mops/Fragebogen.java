@@ -31,16 +31,15 @@ public class Fragebogen {
   private LocalDateTime enddatum;
   private Einheit type;
 
-  public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende,
-                    Einheit einheit) {
+  public Fragebogen(String veranstaltung, String dozent) {
     Random idgenerator = new Random();
     this.bogennr = idgenerator.nextLong();
     this.veranstaltungsname = veranstaltung;
     this.professorenname = dozent;
-    this.startdatum = start;
-    this.enddatum = ende;
+    this.startdatum = LocalDateTime.now().plusDays(1);
+    this.enddatum = LocalDateTime.now().plusDays(8);
     this.fragen = new ArrayList<>();
-    this.type = einheit;
+    this.type = Einheit.VORLESUNG;
   }
 
   /**
