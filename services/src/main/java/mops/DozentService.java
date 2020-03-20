@@ -41,10 +41,8 @@ public class DozentService {
       if (frage instanceof TextFrage) {
         result.add(new TextFrage(frage.getFragentext()));
       } else {
-        MultipleChoiceFrage neuefrage = new MultipleChoiceFrage(frage.getFragentext());
-        for (Auswahl auswahl : ((MultipleChoiceFrage) frage).getChoices()) {
-          neuefrage.addChoice(auswahl);
-        }
+        MultipleChoiceFrage neuefrage = new MultipleChoiceFrage(frage.getFragentext(),
+            ((MultipleChoiceFrage) frage).getChoices());
         result.add(neuefrage);
       }
     }

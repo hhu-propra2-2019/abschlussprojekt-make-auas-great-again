@@ -36,6 +36,15 @@ public class MultipleChoiceFrage extends Frage {
     this.hasMultipleResponse = false;
     this.antworten = new ArrayList<>();
   }
+  
+  public MultipleChoiceFrage(String fragentext, List<Auswahl> choices) {
+    super((long) new Random().nextInt(1000));
+    this.fragentext = fragentext;
+    this.choices = new ArrayList<>();
+    choices.stream().forEach(x -> this.addChoice(x));
+    this.hasMultipleResponse = false;
+    this.antworten = new ArrayList<>();
+  }
 
   private void fillDummyChoices() {
     this.addChoice(new Auswahl("Trifft voll und ganz zu"));
