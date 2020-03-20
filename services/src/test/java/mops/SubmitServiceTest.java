@@ -106,7 +106,7 @@ public class SubmitServiceTest {
   }
 
   @Test
-  @DisplayName("finde den richtigen Fragebogen beim suchen ")
+  @DisplayName("finde den richtigen Fragebogen beim suchen")
   public void frageboegenContaining(){
     List<Fragebogen> fragebogenList = new ArrayList<>();
     fragebogenList.add(mockFragebogen);
@@ -115,6 +115,17 @@ public class SubmitServiceTest {
     fragebogen.setProfessorenname("Conrad");
 
     assertTrue(service.frageboegenContaining(fragebogenList, "Conrad").contains(fragebogen));
+  }
+
+  @Test
+  @DisplayName("Fragebogen, die das Suchwort nicht haben, werden nicht gefunden")
+  public void frageboegenContainingNurSearched(){
+    List<Fragebogen> fragebogenList = new ArrayList<>();
+    fragebogenList.add(mockFragebogen);
+    fragebogenList.add(fragebogen);
+
+    fragebogen.setProfessorenname("Conrad");
+
     assertFalse(service.frageboegenContaining(fragebogenList, "Conrad").contains(mockFragebogen));
   }
 }
