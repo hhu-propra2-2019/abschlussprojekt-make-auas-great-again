@@ -19,69 +19,79 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1 class="display-4 text-center">Antwortmöglichkeiten bearbeiten</h1>
-    <h4 class="text-center">Frage: <span th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</span></h4>
-    <hr class="m-5">
-    <div class="row">
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Bereits vorhandene Antwortmöglichkeiten</h3>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Antwortmöglichkeit</th>
-                            <th>Löschen</th>
-                        </tr>
-                        </thead>
-                        <tbody th:remove="all-but-first">
-                        <tr th:each="choice : ${frage.choices}">
-                            <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
-                            <td>
-                                <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
-                                    <input type="hidden" name="fragebogenid" id="fragebogenid" th:value="${fragebogen}">
-                                    <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
-                                    <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
-                                </form>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+    <div class="container">
+        <h2 class="text-center">
+            Antwortmöglichkeiten bearbeiten
+        </h2>
+        <h4 class="text-center">
+            Frage: <span th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</span>
+        </h4>
+        <div class="row">
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Bereits vorhandene Antwortmöglichkeiten</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Antwortmöglichkeit</th>
+                                <th>Löschen</th>
+                            </tr>
+                            </thead>
+                            <tbody th:remove="all-but-first">
+                            <tr th:each="choice : ${frage.choices}">
+                                <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
+                                <td>
+                                    <form class="form-horizontal" method="post"
+                                          th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
+                                        <input name="fragebogenid" th:value="${fragebogen}" type="hidden">
+                                        <input name="veranstaltungid" th:value="${veranstaltung}"
+                                               type="hidden">
+                                        <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">
+                                            Löschen
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <hr class="m-5">
-    <div class="row">
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <form class="was-validated" method="post"
-                          th:action="'/feedback/dozenten/new/questions/mc/add/' + ${fragebogen} + '/' + ${frage.id}">
-                        <div class="form-row">
-                            <div class="col-md-4 mb-3">
-                            <input type="text" class="form-control" id="antworttext" name="antworttext"
-                                   placeholder="Antwort hinzufügen" required>
+        <div class="row">
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="was-validated" method="post"
+                              th:action="'/feedback/dozenten/new/questions/mc/add/' + ${fragebogen} + '/' + ${frage.id}">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <input class="form-control" id="antworttext" name="antworttext"
+                                           placeholder="Antwort hinzufügen"
+                                           required type="text">
+                                </div>
                             </div>
-                        </div>
-                        <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
-                        <input type="hidden" name="fragebogenid" id="fragebogenid" th:value="${fragebogen}">
-                        <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen
-                        </button>
-                    </form>
+                            <input name="veranstaltungid" th:value="${veranstaltung}" type="hidden">
+                            <input name="fragebogenid" th:value="${fragebogen}" type="hidden">
+                            <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <hr class="m-5">
-    <div class="row">
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen}">
-                        <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
-                        <button class="btn btn-primary" name="showbutton" type="submit">Zurück zum Fragebogen</button>
-                    </form>
+        <div class="row">
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="form-horizontal" method="get"
+                              th:action="'/feedback/dozenten/new/questions/' + ${fragebogen}">
+                            <input name="veranstaltungid" th:value="${veranstaltung}" type="hidden">
+                            <button class="btn btn-primary" name="showbutton" type="submit">Zurück zum Fragebogen
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

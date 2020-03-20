@@ -52,7 +52,7 @@ public class DozentEventController {
   @GetMapping("/event/{veranstaltung}")
   @RolesAllowed(ORGA_ROLE)
   public String getVeranstaltungsDetails(KeycloakAuthenticationToken token, Model model,
-      @PathVariable Long veranstaltung) {
+                                         @PathVariable Long veranstaltung) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     model.addAttribute("datetime", datetime);
     model.addAttribute("currenttime", LocalDateTime.now());
@@ -62,10 +62,10 @@ public class DozentEventController {
 
   @PostMapping("/event/new")
   @RolesAllowed(ORGA_ROLE)
-  public String erstelleNeueVeranstaltung(KeycloakAuthenticationToken token, Model model,
-      String veranstaltungsname, String semester) {
-    veranstaltungen
-        .save(new Veranstaltung(veranstaltungsname, semester, createDozentFromToken(token)));
+  public String erstelleNeueVeranstaltung(KeycloakAuthenticationToken token,
+                                          String veranstaltungsname, String semester) {
+    Veranstaltung neu = new Veranstaltung(veranstaltungsname, semester, createDozentFromToken(token));
+    veranstaltungen.save(neu);
     return "redirect:/feedback/dozenten";
   }
 
