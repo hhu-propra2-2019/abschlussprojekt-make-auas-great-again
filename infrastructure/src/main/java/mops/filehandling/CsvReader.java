@@ -3,6 +3,7 @@ package mops.filehandling;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import lombok.Getter;
 import mops.Veranstaltung;
 import mops.rollen.Student;
@@ -46,7 +47,7 @@ public class CsvReader {
   @SuppressWarnings("PMD")
   private void readFromFile() {
     try {
-      reader = new InputStreamReader(file.getInputStream());
+      reader = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8);
       parser = new CSVParser(reader, CSVFormat.DEFAULT);
       for (CSVRecord record : parser) {
         for (int j = 0; j < record.size(); j++) {
