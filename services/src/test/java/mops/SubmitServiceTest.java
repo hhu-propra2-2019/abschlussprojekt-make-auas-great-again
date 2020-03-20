@@ -91,4 +91,19 @@ public class SubmitServiceTest {
     assertFalse(notSubmittedFrageboegen.contains(fragebogen));
 
   }
+
+  @Test
+  @DisplayName("nicht beantwortete Frageboegen Werden für den Student gezeigt")
+  public void getNotYetSubmittedFrageboegen(){
+    List<Fragebogen> fragebogenList = new ArrayList<>();
+    List<Fragebogen> notSubmittedFrageboegen;
+    fragebogenList.add(mockFragebogen);
+    fragebogenList.add(fragebogen);
+
+    service.addStudentAsSubmitted(fragebogen , student);
+    notSubmittedFrageboegen = service.notSubmittedFrageboegen(fragebogenList, student);
+
+    assertTrue(notSubmittedFrageboegen.contains(mockFragebogen));
+
+  }
 }
