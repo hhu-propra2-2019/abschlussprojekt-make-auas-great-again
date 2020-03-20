@@ -16,7 +16,9 @@ class FragebogenTest {
   public void setUp() {
     LocalDateTime startdatum = LocalDateTime.of(2020, 3, 3, 6, 30);
     LocalDateTime enddatum = LocalDateTime.of(2020, 3, 20, 6, 30);
-    fragebogen = new Fragebogen("Programing", "Sam", startdatum, enddatum, Einheit.VORLESUNG);
+    fragebogen = new Fragebogen("Programing", "Sam");
+    fragebogen.setStartdatum(startdatum);
+    fragebogen.setEnddatum(enddatum);
   }
 
   @Test
