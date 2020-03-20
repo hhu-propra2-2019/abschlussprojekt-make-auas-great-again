@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/feedback/dozenten/watch")
@@ -33,24 +34,14 @@ public class DozentErgebnisController {
     dozentservice = new DozentService();
   }
 
-  @GetMapping("")
-  @RolesAllowed(orgaRole)
-  public String getFragebogenUebersicht(KeycloakAuthenticationToken token, Model model) {
-    Dozent dozent = createDozentFromToken(token);
-    model.addAttribute("frageboegen",
-        dozentservice.holeFrageboegenVomDozent(veranstaltungen.getAllFromDozent(dozent)));
-    model.addAttribute("typechecker", typechecker);
-    model.addAttribute(account, createAccountFromPrincipal(token));
-    return "dozenten/frageboegen";
-  }
-
   @GetMapping("/{bogennr}")
   @RolesAllowed(orgaRole)
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
-      @PathVariable long bogennr, Model model) {
+      @PathVariable long bogennr, Model model, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     model.addAttribute("fragebogen", fragebogen);
+    model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/ergebnisse";
@@ -59,7 +50,8 @@ public class DozentErgebnisController {
   @GetMapping("/edit/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String bearbeiteTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
-      @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model) {
+      @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model,
+      Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     TextAntwort antwort = dozentservice.getTextAntwort(fragennr, antwortnr,
         veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
@@ -67,6 +59,7 @@ public class DozentErgebnisController {
     model.addAttribute("bogennr", bogennr);
     model.addAttribute("fragennr", fragennr);
     model.addAttribute("antwortnr", antwortnr);
+    model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/zensieren";
   }
@@ -74,8 +67,10 @@ public class DozentErgebnisController {
   @PostMapping("/edit/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String speichereTextAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
-      @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token) {
+      @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token,
+      RedirectAttributes ra, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
+    ra.addAttribute("veranstaltungid", veranstaltungid);
     dozentservice.getTextAntwort(fragennr, antwortnr,
         veranstaltungen.getFragebogenFromDozentById(bogennr, dozent)).setAntworttext(textfeld);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
@@ -84,8 +79,10 @@ public class DozentErgebnisController {
   @PostMapping("/publish/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String veroeffentlicheErgebnisseEinerFrage(@PathVariable Long bogennr,
-      @PathVariable Long fragennr, KeycloakAuthenticationToken token) {
+      @PathVariable Long fragennr, KeycloakAuthenticationToken token, Long veranstaltungid,
+      RedirectAttributes ra) {
     Dozent dozent = createDozentFromToken(token);
+    ra.addAttribute("veranstaltungid", veranstaltungid);
     dozentservice.getFrage(fragennr, veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
         .aendereOeffentlichkeitsStatus();
     return "redirect:/feedback/dozenten/watch/" + bogennr;

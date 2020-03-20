@@ -14,15 +14,13 @@
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
             <li><a href="/feedback/dozenten">Übersicht</a></li>
-            <li><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
-            <li class="active"><a href="/feedback/dozenten/new">Neuen Fragebogen erstellen</a></li>
             <li><a href="/feedback/dozenten/event/new">Neue Veranstaltung erstellen</a></li>
         </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h1 class="display-1">Dozenten-Übersicht</h1>
-    <h4>Frage: <span th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</span></h4>
+    <h1 class="display-4 text-center">Antwortmöglichkeiten bearbeiten</h1>
+    <h4 class="text-center">Frage: <span th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</span></h4>
     <hr class="m-5">
     <div class="row">
         <div class="col-sm">
@@ -40,9 +38,10 @@
                         <tr th:each="choice : ${frage.choices}">
                             <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
                             <td>
-                                <form class="form-horizontal" method="post"
-                                      th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
-                                    <button class="btn btn-primary" name="deletebutton" type="submit">Löschen</button>
+                                <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/questions/mc/delete/' + ${fragebogen} + '/' + ${frage.id} + '/' + ${choice.id}">
+                                    <input type="hidden" name="fragebogenid" id="fragebogenid" th:value="${fragebogen}">
+                                    <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
+                                    <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
                                 </form>
                             </td>
                         </tr>
@@ -57,15 +56,31 @@
         <div class="col-sm">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">Antwortmöglichkeit hinzufügen</h3>
-                    <form class="form-horizontal" method="post"
+                    <form class="was-validated" method="post"
                           th:action="'/feedback/dozenten/new/questions/mc/add/' + ${fragebogen} + '/' + ${frage.id}">
-                        <div class="input-group mb-3 col-sm-6">
-                            <input class="form-control" id="antworttext" name="antworttext"
-                                   placeholder="Hier den Auswahltext eingeben" required type="text">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                            <input type="text" class="form-control" id="antworttext" name="antworttext"
+                                   placeholder="Antwort hinzufügen" required>
+                            </div>
                         </div>
-                        <button class="btn btn-primary" name="addbutton" type="submit">Antwortmöglichkeit hinzufügen
+                        <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
+                        <input type="hidden" name="fragebogenid" id="fragebogenid" th:value="${fragebogen}">
+                        <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen
                         </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="m-5">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen}">
+                        <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
+                        <button class="btn btn-primary" name="showbutton" type="submit">Zurück zum Fragebogen</button>
                     </form>
                 </div>
             </div>

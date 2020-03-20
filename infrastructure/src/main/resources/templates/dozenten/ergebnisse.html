@@ -14,21 +14,20 @@
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
             <li><a href="/feedback/dozenten">Übersicht</a></li>
-            <li class="active"><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
-            <li><a href="/feedback/dozenten/new">Neuen Fragebogen erstellen</a></li>
             <li><a href="/feedback/dozenten/event/new">Neue Veranstaltung erstellen</a></li>
         </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
     <div class="container">
-        <h1 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
-        <h2 th:text="${fragebogen.professorenname}">Professor</h2>
+        <h1 class="display-4 text-center">Umfrageergebnisse</h1>
+        <h2 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
+        <h3 th:text="${fragebogen.professorenname}">Professor</h2>
         <div th:each="frage : ${fragebogen.fragen}">
             <h3 th:text="${frage.fragentext}">Fragetext</h3>
             <div class="form-group" th:if="${typechecker.isTextFrage(frage)}">
                 <table class="table">
-                    <thead>
+                    <thead class="table table-sm">
                     <tr>
                         <th>Antwort</th>
                         <th>Optionen</th>
@@ -36,12 +35,11 @@
                     </thead>
                     <tbody th:remove="all-but-first">
                     <tr th:each="antwort : ${frage.antworten}">
-                        <td th:text="${antwort.toString()}">Der Dozent ist sehr motiviert und erklärt alles gut.</td>
+                        <td th:text="${antwort.antworttext}">Der Dozent ist sehr motiviert und erklärt alles gut.</td>
                         <td>
-                            <form class="form-horizontal" method="get"
-                                  th:action="'/feedback/dozenten/watch/edit/' + ${fragebogen.bogennr} + '/' + ${frage.id} + '/' + ${antwort.id}">
-                                <button class="btn btn-primary" name="editbutton" type="submit">Antwort zensieren
-                                </button>
+                            <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/edit/' + ${fragebogen.bogennr} + '/' + ${frage.id} + '/' + ${antwort.id}">
+                                <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
+                                <button class="btn btn-outline-secondary" name="editbutton" type="submit">Antwort zensieren</button>
                             </form>
                         </td>
                     </tr>
@@ -55,14 +53,22 @@
                 </ul>
             </div>
             <div class="form-group">
-                <form class="form-horizontal"
-                      method="post"
-                      th:action="'/feedback/dozenten/watch/publish/' + ${fragebogen.bogennr} + '/' + ${frage.id}">
-                    <button class="btn btn-primary" name="publishbutton" type="submit"><span
-                            th:if="${frage.isOeffentlich() == false}">Ergebnisse veröffentlichen</span><span
-                            th:if="${frage.isOeffentlich()}">Ergebnisse nicht mehr öffentlich anzeigen</span>
-                    </button>
+                <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/watch/publish/' + ${fragebogen.bogennr} + '/' + ${frage.id}">
+                    <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
+                    <button class="btn btn-outline-primary" name="publishbutton" type="submit"><span th:if="${frage.getErgebnissesindoeffentlich() == false}">Ergebnisse veröffentlichen</span><span th:if="${frage.getErgebnissesindoeffentlich()}">Ergebnisse nicht mehr öffentlich anzeigen</span></button>
                 </form>
+            </div>
+        </div>
+    </div>
+    <hr class="m-5">
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/event/' + ${veranstaltung}">
+                        <button class="btn btn-primary" name="showbutton" type="submit">Zurück zur Veranstaltung</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
