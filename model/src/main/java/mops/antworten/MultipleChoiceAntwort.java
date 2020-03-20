@@ -3,7 +3,7 @@ package mops.antworten;
 import mops.fragen.Auswahl;
 
 public class MultipleChoiceAntwort extends Antwort {
-  private Auswahl antwort;
+  private transient Auswahl antwort;
 
   public MultipleChoiceAntwort(Long id, Auswahl auswahl) {
     super(id);
