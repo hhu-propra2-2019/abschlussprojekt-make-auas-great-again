@@ -1,6 +1,5 @@
 package mops;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import mops.rollen.Student;
@@ -11,24 +10,10 @@ public class SingleSubmitService {
     fragebogen.addStudentAsSubmitted(student);
   }
 
-  public boolean hasSubmitted(Fragebogen fragebogen, Student student) {
-    List<Student> abgegebeneStudierende = fragebogen.getAbgegebeneStudierende();
-    for (Student studentin : abgegebeneStudierende) {
-      if (studentin.equals(student)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   public List<Fragebogen> notSubmittedFrageboegen(List<Fragebogen> frageboegen, Student student) {
-    List<Fragebogen> notYetSubmitted = new ArrayList<>();
-    for (Fragebogen bogen : frageboegen) {
-      if (!hasSubmitted(bogen, student)) {
-        notYetSubmitted.add(bogen);
-      }
-    }
-    return notYetSubmitted;
+    return frageboegen.stream()
+        .filter(fragebogen -> !fragebogen.getAbgegebeneStudierende().contains(student))
+        .collect(Collectors.toList());
   }
 
   public List<Fragebogen> frageboegenContaining(List<Fragebogen> frageboegen, String search) {
