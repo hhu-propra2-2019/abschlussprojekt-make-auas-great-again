@@ -1,7 +1,6 @@
 package mops;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
@@ -20,8 +19,9 @@ class FragebogenTest {
   public void setUp() {
     LocalDateTime startdatum = LocalDateTime.of(2020, 3, 3, 6, 30);
     LocalDateTime enddatum = LocalDateTime.of(2020, 3, 20, 6, 30);
-    fragebogen = new Fragebogen(1L, "Programing", "Sam",
-        new ArrayList<>(), startdatum, enddatum, Einheit.VORLESUNG);
+    fragebogen = new Fragebogen("Programming", "Sam");
+    fragebogen.setStartdatum(startdatum);
+    fragebogen.setEnddatum(enddatum);
   }
 
   @Test
