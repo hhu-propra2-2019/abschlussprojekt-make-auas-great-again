@@ -54,12 +54,9 @@ public class FragebogenService {
     Einheit einheit = Einheit.getRandomEinheit();
     String name = getRandomName(einheit);
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
-    fragebogen = fragebogen.startdatum(LocalDateTime.now())
+    fragebogen = fragebogen.startdatum(LocalDateTime.now().plusSeconds(30))
         .enddatum(LocalDateTime.now().plusSeconds(100)).fragen(fragenliste)
-        .professorenname(getRandomProfessor())
-        .veranstaltungsname(name)
-        .type(einheit)
-        .bogennr(id);
+        .professorenname(getRandomProfessor()).veranstaltungsname(name).type(einheit).bogennr(id);
     Fragebogen result = fragebogen.build();
     return result;
   }
