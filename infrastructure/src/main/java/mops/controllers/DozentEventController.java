@@ -1,5 +1,6 @@
 package mops.controllers;
 
+import java.time.LocalDateTime;
 import javax.annotation.security.RolesAllowed;
 import mops.DateTimeService;
 import mops.Veranstaltung;
@@ -34,10 +35,16 @@ public class DozentEventController {
 
   @GetMapping("")
   @RolesAllowed(ORGA_ROLE)
-  public String getOrganisatorMainPage(KeycloakAuthenticationToken token, Model model) {
+  public String getOrganisatorMainPage(KeycloakAuthenticationToken token, Model model,
+      String search) {
     model.addAttribute("account", createAccountFromPrincipal(token));
-    model.addAttribute("veranstaltungen",
-        veranstaltungen.getAllFromDozent(createDozentFromToken(token)));
+    if (searchNotEmpty(search)) {
+      model.addAttribute("veranstaltungen",
+          veranstaltungen.getAllFromDozentContaining(createDozentFromToken(token), search));
+    } else {
+      model.addAttribute("veranstaltungen",
+          veranstaltungen.getAllFromDozent(createDozentFromToken(token)));
+    }
     return "dozenten/dozent";
   }
 
@@ -51,19 +58,20 @@ public class DozentEventController {
   @GetMapping("/event/{veranstaltung}")
   @RolesAllowed(ORGA_ROLE)
   public String getVeranstaltungsDetails(KeycloakAuthenticationToken token, Model model,
-      @PathVariable Long veranstaltung) {
+                                         @PathVariable Long veranstaltung) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     model.addAttribute("datetime", datetime);
+    model.addAttribute("currenttime", LocalDateTime.now());
     model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
     return "dozenten/veranstaltung";
   }
 
   @PostMapping("/event/new")
   @RolesAllowed(ORGA_ROLE)
-  public String erstelleNeueVeranstaltung(KeycloakAuthenticationToken token, Model model,
-      String veranstaltungsname, String semester) {
-    veranstaltungen
-        .save(new Veranstaltung(veranstaltungsname, semester, createDozentFromToken(token)));
+  public String erstelleNeueVeranstaltung(KeycloakAuthenticationToken token,
+                                          String veranstaltungsname, String semester) {
+    Veranstaltung neu = new Veranstaltung(veranstaltungsname, semester, createDozentFromToken(token));
+    veranstaltungen.save(neu);
     return "redirect:/feedback/dozenten";
   }
 
@@ -89,5 +97,9 @@ public class DozentEventController {
   private Dozent createDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     return new Dozent(principal.getName());
+  }
+
+  private boolean searchNotEmpty(String search) {
+    return !"".equals(search) && (search != null);
   }
 }

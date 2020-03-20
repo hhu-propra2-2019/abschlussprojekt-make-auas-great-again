@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>403</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+</head>
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <ul>
+            <li><a th:href="@{/feedback/studenten}">Studenten</a></li>
+            <li><a th:href="@{/feedback/dozenten}">Dozenten</a></li>
+        </ul>
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <h1>Was auch immer du gerade machen wolltest, du solltest es nicht tun.</h1>
+    <a href="/" class="btn btn-info" role="button">Zurück</a>
+
+</main>
+
+</body>
+</html>
