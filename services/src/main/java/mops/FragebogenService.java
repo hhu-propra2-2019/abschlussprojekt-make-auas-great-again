@@ -59,6 +59,7 @@ public class FragebogenService {
         .professorenname(getRandomProfessor())
         .veranstaltungsname(name)
         .type(einheit)
+        .abgegebeneStudierende(new ArrayList<>())
         .bogennr(id);
     Fragebogen result = fragebogen.build();
     return result;
