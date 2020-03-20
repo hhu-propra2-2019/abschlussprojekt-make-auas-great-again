@@ -72,8 +72,9 @@ public class DozentEventController {
                                  @PathVariable Long veranstaltungsNr,
                                  RedirectAttributes redirectAttributes) {
     fileHandler = new FileHandler();
-    String message = (fileHandler.verifyFile(file)) ? "Success!" : "Error";
-    redirectAttributes.addFlashAttribute("message", message);
+    String status = (fileHandler.verifyFile(file)) ? "success" : "error";
+    redirectAttributes.addFlashAttribute("message", fileHandler.getMessage());
+    redirectAttributes.addFlashAttribute("status", status);
     return "redirect:/feedback/dozenten/event/" + veranstaltungsNr.toString();
   }
 
