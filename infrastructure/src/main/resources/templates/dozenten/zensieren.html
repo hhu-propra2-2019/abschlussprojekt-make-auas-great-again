@@ -21,24 +21,18 @@
 <main th:fragment="bodycontent">
     <div class="container">
         <h1 class="display-4 text-center">Antwort bearbeiten</h1>
-        <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/watch/edit/' + ${bogennr} + '/' + ${fragennr} + '/' + ${antwortnr}">
-            <textarea class="form-control" name="textfeld" th:text="${antwort.antworttext}">Antwort</textarea>
-            <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
-            <button type="submit" name="savebutton" class="btn btn-primary">Änderungen speichern</button>
+        <form class="form-horizontal" method="post"
+              th:action="'/feedback/dozenten/watch/edit/' + ${bogennr} + '/' + ${fragennr} + '/' + ${antwortnr}">
+            <textarea class="form-control" name="textfeld" th:text="${antwort.toString()}">Antwort</textarea>
+            <input name="veranstaltungid" th:value="${veranstaltung}" type="hidden">
+            <button class="btn btn-secondary" name="savebutton" type="submit">Änderungen speichern</button>
         </form>
-    </div>
-    <hr class="m-5">
-    <div class="row">
-        <div class="col-sm">
-            <div class="card">
-                <div class="card-body">
-                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${bogennr}">
-                        <input type="hidden" name="veranstaltungid" id="veranstaltungid" th:value="${veranstaltung}">
-                        <button class="btn btn-primary" name="showbutton" type="submit">Zurück zu den Ergebnissen</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <hr>
+        <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${bogennr}">
+            <input name="veranstaltungid" th:value="${veranstaltung}" type="hidden">
+            <button class="btn btn-secondary" name="showbutton" type="submit">Zurück zu den Ergebnissen
+            </button>
+        </form>
     </div>
 </main>
 </body>

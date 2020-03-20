@@ -26,7 +26,7 @@ public class DozentService {
 
   public TextAntwort getTextAntwort(Long fragennr, Long antwortnr, Fragebogen fragebogen) {
     TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
-    return frage.getAntwortById(antwortnr);
+    return (TextAntwort) frage.getAntwortById(antwortnr);
   }
 
   public Frage getFrage(Long fragennr, Fragebogen fragebogen) {
@@ -36,7 +36,7 @@ public class DozentService {
   /**
    * Erzeugt ein passendes Fragenobjekt anhand des übergebenen Fragtyps.
    *
-   * @param fragetyp Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
+   * @param fragetyp  Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
    * @param fragetext Der Text der Frage
    * @return das neue Fragenobjekt
    */
