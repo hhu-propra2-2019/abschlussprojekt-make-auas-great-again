@@ -124,8 +124,8 @@ public class SubmitServiceTest {
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
 
-    fragebogen.setProfessorenname("Conrad");
+    fragebogen.setProfessorenname("jack");
 
-    assertFalse(service.frageboegenContaining(fragebogenList, "Conrad").contains(mockFragebogen));
+    assertFalse(service.frageboegenContaining(fragebogenList, "jack").contains(mockFragebogen));
   }
 }
