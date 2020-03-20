@@ -30,7 +30,7 @@ public class SubmitServiceTest {
     textfrage = new TextFrage(Long.valueOf(1), "Beispielfrage");
     when(mockFragebogen.getFragen()).thenReturn(List.of(textfrage));
     student = new Student("studentin");
-    fragebogen  = new Fragebogen("Programmierung", "Jens", null, null, Einheit.VORLESUNG);
+    fragebogen  = new Fragebogen("Programmierung", "Jens");
 
   }
 
