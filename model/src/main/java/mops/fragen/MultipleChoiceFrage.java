@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mops.antworten.Antwort;
 import mops.antworten.MultipleChoiceAntwort;
+import mops.antworten.MultipleResponseAntwort;
 
 @Getter
 @Setter
@@ -80,15 +81,18 @@ public class MultipleChoiceFrage extends Frage {
     return null;
   }
 
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   private void aktualisiereErgebnis() {
     for (Auswahl auswahl : choices) {
-      //Long anzahl = antworten.stream().filter(x -> x.getAntwort().equals(auswahl)).count();
-      Long anzahl = 0L;
+      int anzahl = (int) antworten.stream()
+          .map(x -> (MultipleResponseAntwort) x)
+          .filter(x -> x.contains(auswahl))
+          .count();
       auswertung.put(auswahl, berechneProzentualenAnteil(anzahl));
     }
   }
 
-  private Double berechneProzentualenAnteil(long anzahl) {
+  private Double berechneProzentualenAnteil(int anzahl) {
     return (((double) anzahl) / antworten.size()) * 100;
   }
 

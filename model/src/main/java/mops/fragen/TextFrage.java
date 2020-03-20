@@ -8,8 +8,8 @@ import mops.antworten.Antwort;
 import mops.antworten.TextAntwort;
 
 public class TextFrage extends Frage {
-  private String fragentext;
-  private Set<Antwort> antworten;
+  private transient String fragentext;
+  private transient Set<Antwort> antworten;
 
   public TextFrage(Long id, String fragentext) {
     super(id);

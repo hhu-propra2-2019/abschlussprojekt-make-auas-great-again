@@ -4,7 +4,7 @@ import lombok.Setter;
 
 public class TextAntwort extends Antwort {
   @Setter
-  private String antworttext;
+  private transient String antworttext;
 
   public TextAntwort(Long id) {
     super(id);

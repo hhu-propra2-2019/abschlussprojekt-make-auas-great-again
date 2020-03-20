@@ -12,6 +12,7 @@ public abstract class Antwort {
     this.id = id;
   }
 
+  @Override
   public abstract String toString();
 }
 

@@ -8,24 +8,25 @@ import mops.antworten.Antwort;
 public abstract class Frage {
   @Getter
   private transient Long id;
-  private boolean isOeffentlich;
+  private transient boolean oeffentlich;
 
   public Frage(Long id) {
     this.id = id;
   }
 
   public void aendereOeffentlichkeitsStatus() {
-    isOeffentlich = !isOeffentlich;
+    oeffentlich = !oeffentlich;
   }
 
   public boolean isOeffentlich() {
-    return isOeffentlich;
+    return oeffentlich;
   }
 
   public abstract void addAntwort(String antwort);
 
   public abstract Iterable<Antwort> getAntworten();
 
+  @Override
   public abstract String toString();
 
 }

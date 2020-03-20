@@ -1,7 +1,7 @@
 package mops.antworten;
 
 public class SingleResponseAntwort extends Antwort {
-  private Integer antwort;
+  private transient Integer antwort;
 
   public SingleResponseAntwort(Long id) {
     super(id);
