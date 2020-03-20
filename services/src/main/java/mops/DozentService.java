@@ -39,10 +39,10 @@ public class DozentService {
     List<Frage> result = new ArrayList<>();
     for (Frage frage : altefragen) {
       if (frage instanceof TextFrage) {
-        result.add(new TextFrage(frage.getFragentext()));
+        result.add(new TextFrage(frage.toString()));
       } else {
-        MultipleChoiceFrage neuefrage = new MultipleChoiceFrage(frage.getFragentext(),
-            ((MultipleChoiceFrage) frage).getChoices());
+        MultipleChoiceFrage neuefrage =
+            new MultipleChoiceFrage(frage.toString(), ((MultipleChoiceFrage) frage).getChoices());
         result.add(neuefrage);
       }
     }
@@ -52,7 +52,7 @@ public class DozentService {
   /**
    * Erzeugt ein passendes Fragenobjekt anhand des übergebenen Fragtyps.
    *
-   * @param fragetyp  Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
+   * @param fragetyp Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
    * @param fragetext Der Text der Frage
    * @return das neue Fragenobjekt
    */
