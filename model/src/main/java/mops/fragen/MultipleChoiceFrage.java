@@ -79,7 +79,7 @@ public class MultipleChoiceFrage extends Frage {
 
   @Override
   public String toString() {
-    return null;
+    return fragentext;
   }
 
   @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
