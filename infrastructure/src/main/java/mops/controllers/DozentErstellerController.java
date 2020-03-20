@@ -1,18 +1,8 @@
 package mops.controllers;
 
+import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import mops.DateTimeService;
-import mops.DozentService;
-import mops.Einheit;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.Veranstaltung;
-import mops.database.MockVeranstaltungsRepository;
-import mops.fragen.Auswahl;
-import mops.fragen.MultipleChoiceFrage;
-import mops.rollen.Dozent;
-import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -22,6 +12,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import mops.DateTimeService;
+import mops.DozentService;
+import mops.Einheit;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.Veranstaltung;
+import mops.database.MockVeranstaltungsRepository;
+import mops.fragen.Auswahl;
+import mops.fragen.Frage;
+import mops.fragen.MultipleChoiceFrage;
+import mops.rollen.Dozent;
+import mops.security.Account;
 
 @Controller
 @RequestMapping("/feedback/dozenten/new")
@@ -52,6 +54,22 @@ public class DozentErstellerController {
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
     Fragebogen neu =
         new Fragebogen(veranstaltung.getName(), dozent.getVorname() + " " + dozent.getNachname());
+    veranstaltung.addFragebogen(neu);
+    ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
+    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
+  }
+
+  @PostMapping("/recycle/{bogennr}")
+  @RolesAllowed(orgaRole)
+  public String fragebogenWiederverwenden(KeycloakAuthenticationToken token, Long veranstaltungid,
+      RedirectAttributes ra, @PathVariable Long bogennr) {
+    Dozent dozent = createDozentFromToken(token);
+    Fragebogen alt = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
+    List<Frage> neuefragenliste = alt.getFragen();
+    neuefragenliste.stream().forEach(x -> x.deleteAllAntworten());
+    Fragebogen neu = new Fragebogen(alt.getVeranstaltungsname(), alt.getProfessorenname(),
+        neuefragenliste, alt.getType());
+    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
     veranstaltung.addFragebogen(neu);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();

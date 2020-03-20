@@ -25,6 +25,11 @@ public class TextFrage extends Frage {
     this.fragentext = fragentext;
     this.antworten = new HashSet<>();
   }
+  
+  @Override
+  public void deleteAllAntworten() {
+    antworten.clear();
+  }
 
   @Override
   public void addAntwort(String text) {
