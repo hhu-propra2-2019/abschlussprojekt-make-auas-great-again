@@ -67,15 +67,16 @@ public class DozentEventController {
     return "redirect:/feedback/dozenten";
   }
 
-  @PostMapping("event/addStudenten/{veranstaltungsNr}")
+  @PostMapping("/event/addStudenten/{veranstaltungsNr}")
   @RolesAllowed(ORGA_ROLE)
   public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                  @PathVariable Long veranstaltungsNr,
                                  RedirectAttributes redirectAttributes) {
-    csvReader = new CsvReader(file);
+    csvReader = new CsvReader(file, veranstaltungen.getVeranstaltungById(veranstaltungsNr));
+    veranstaltungen.save(csvReader.getVeranstaltung());
     redirectAttributes.addFlashAttribute("message", csvReader.getMessage());
     redirectAttributes.addFlashAttribute("status", csvReader.getMessageStatus());
-    return "redirect:/feedback/dozenten/event/" + veranstaltungsNr.toString();
+    return "redirect:/feedback/dozenten/event/{veranstaltungsNr}";
   }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {

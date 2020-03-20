@@ -3,9 +3,10 @@ package mops.fileHandling;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
+@Getter
 public class FileHandler {
-  @Getter
   private String message;
+  private String messageStatus;
 
   public boolean verifyFile(MultipartFile file) {
     if (file != null) {
@@ -13,16 +14,24 @@ public class FileHandler {
       if (fileName != null) {
         String[] parts = fileName.split("\\.");
         if (parts[parts.length - 1].equalsIgnoreCase("csv")) {
-          message = "<i>Success!</i>";
+          setMessageAndStatus("<i>Success!</i>", "success");
           return true;
         }
-        message = "Error! Die Datei hat ein falsches Format!";
+        setMessageAndStatus("Error! Die Datei hat ein falsches Format!",
+            "error");
       } else {
-        message = "Oh-oh! Irgendetwas ist gewaltig schiefgelaufen! <i>(Dateiname null)</i>";
+        setMessageAndStatus("Oh-oh! Irgendetwas ist gewaltig schiefgelaufen! "
+            + "<i>(Dateiname null)</i>", "error");
       }
     } else {
-      message = "Merkwürdig... irgendwie wurde keine Datei mitgegeben...";
+      setMessageAndStatus("Merkwürdig... irgendwie wurde keine Datei mitgegeben...",
+          "error");
     }
     return false;
+  }
+
+  private void setMessageAndStatus(String message, String messageStatus) {
+    this.message = message;
+    this.messageStatus = messageStatus;
   }
 }
