@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,13 +17,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
+@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class SubmitServiceTest {
   private transient SubmitService service = new SubmitService();
   private transient Fragebogen mockFragebogen;
   private transient TextFrage textfrage;
   private transient Student student;
   private transient Fragebogen fragebogen;
+  private transient List<Fragebogen> fragebogenList;
+  private transient List<Fragebogen> notSubmittedFrageboegen;
 
   @BeforeEach
   public void setUp() {
@@ -81,8 +82,7 @@ public class SubmitServiceTest {
   @Test
   @DisplayName("beantwortete Frageboegen Werden für den Student nicht mehr gezeigt")
   public void getNotSubmittedFrageboegen() {
-    List<Fragebogen> fragebogenList = new ArrayList<>();
-    List<Fragebogen> notSubmittedFrageboegen;
+    fragebogenList = new ArrayList<>();
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
 
@@ -96,8 +96,7 @@ public class SubmitServiceTest {
   @Test
   @DisplayName("nicht beantwortete Frageboegen Werden für den Student gezeigt")
   public void getNotYetSubmittedFrageboegen() {
-    List<Fragebogen> fragebogenList = new ArrayList<>();
-    List<Fragebogen> notSubmittedFrageboegen;
+    fragebogenList = new ArrayList<>();
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
 
@@ -110,7 +109,7 @@ public class SubmitServiceTest {
   @Test
   @DisplayName("finde den richtigen Fragebogen beim suchen")
   public void frageboegenContaining() {
-    List<Fragebogen> fragebogenList = new ArrayList<>();
+    fragebogenList = new ArrayList<>();
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
 
@@ -122,7 +121,7 @@ public class SubmitServiceTest {
   @Test
   @DisplayName("Fragebogen, die das Suchwort nicht haben, werden nicht gefunden")
   public void frageboegenContainingNurSearched() {
-    List<Fragebogen> fragebogenList = new ArrayList<>();
+    fragebogenList = new ArrayList<>();
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
 
