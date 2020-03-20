@@ -70,7 +70,7 @@ public class MultipleChoiceFrage extends Frage {
   @Override
   public void deleteAllAntworten() {
     antworten.clear();
-    auswertung.clear();
+    choices.stream().forEach(x -> auswertung.put(x, (double) 0));
   }
 
   private void aktualisiereErgebnis() {
