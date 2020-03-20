@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +103,18 @@ public class SubmitServiceTest {
     notSubmittedFrageboegen = service.notSubmittedFrageboegen(fragebogenList, student);
 
     assertTrue(notSubmittedFrageboegen.contains(mockFragebogen));
+  }
 
+  @Test
+  @DisplayName("finde den richtigen Fragebogen beim suchen ")
+  public void frageboegenContaining(){
+    List<Fragebogen> fragebogenList = new ArrayList<>();
+    fragebogenList.add(mockFragebogen);
+    fragebogenList.add(fragebogen);
+
+    fragebogen.setProfessorenname("Conrad");
+
+    assertTrue(service.frageboegenContaining(fragebogenList, "Conrad").contains(fragebogen));
+    assertFalse(service.frageboegenContaining(fragebogenList, "Conrad").contains(mockFragebogen));
   }
 }
