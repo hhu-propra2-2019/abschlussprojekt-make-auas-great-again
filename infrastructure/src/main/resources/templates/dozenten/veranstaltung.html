@@ -68,6 +68,20 @@
         <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
         <button class="btn btn-primary" name="newsheetbutton" type="submit">Neuen Fragebogen erstellen</button>
     </form>
+    <div class="row">
+        <div class="card">
+            <div class="card-body">
+                <h2>Studenten hinzufügen:</h2>
+                <div th:if="${message}">
+                    <h2 th:text="${message}"/>
+                </div>
+                <form class="form-horizontal was-validated" method="post" enctype="multipart/form-data" th:action="'/feedback/dozenten/event/addStudenten/' + ${veranstaltung.veranstaltungsNr}">
+                    File to upload:<input type="file" name="file" accept=".csv" />
+                    <input type="submit" value="Upload" />
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>

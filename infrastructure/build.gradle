@@ -54,6 +54,7 @@ dependencies {
     implementation 'org.keycloak.bom:keycloak-adapter-bom:9.0.0'
     implementation 'io.micrometer:micrometer-registry-prometheus'
     testImplementation 'com.c4-soft.springaddons:spring-security-test-keycloack-addons:1.2.0'
+    compile 'org.apache.commons:commons-csv:1.8'
 }
 
 test {
