@@ -7,8 +7,6 @@ import mops.antworten.Antwort;
 @EqualsAndHashCode(of = "id")
 public abstract class Frage {
   @Getter
-  private String fragentext;
-  @Getter
   private transient Long id;
   private boolean isOeffentlich;
 
@@ -17,11 +15,7 @@ public abstract class Frage {
   }
 
   public void aendereOeffentlichkeitsStatus() {
-    if (isOeffentlich) {
-      isOeffentlich = false;
-    } else {
-      isOeffentlich = true;
-    }
+    isOeffentlich = !isOeffentlich;
   }
 
   public boolean isOeffentlich() {

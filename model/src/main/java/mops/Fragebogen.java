@@ -71,17 +71,6 @@ public class Fragebogen {
     }
   }
 
-  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
-  public List<TextFrage> getTextfragen() {
-    List<TextFrage> textFragen = new ArrayList<>();
-    for (Frage frage : fragen) {
-      if (frage instanceof TextFrage) {
-        textFragen.add((TextFrage) frage);
-      }
-    }
-    return textFragen;
-  }
-
   public List<MultipleChoiceFrage> getMultipleChoiceFragen() {
     return fragen.stream()
         .filter(frage -> frage instanceof MultipleChoiceFrage)
