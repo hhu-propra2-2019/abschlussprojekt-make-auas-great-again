@@ -29,10 +29,16 @@ public class DozentEventController {
 
   @GetMapping("")
   @RolesAllowed(ORGA_ROLE)
-  public String getOrganisatorMainPage(KeycloakAuthenticationToken token, Model model) {
+  public String getOrganisatorMainPage(KeycloakAuthenticationToken token, Model model,
+      String search) {
     model.addAttribute("account", createAccountFromPrincipal(token));
-    model.addAttribute("veranstaltungen",
-        veranstaltungen.getAllFromDozent(createDozentFromToken(token)));
+    if (searchNotEmpty(search)) {
+      model.addAttribute("veranstaltungen",
+          veranstaltungen.getAllFromDozentContaining(createDozentFromToken(token), search));
+    } else {
+      model.addAttribute("veranstaltungen",
+          veranstaltungen.getAllFromDozent(createDozentFromToken(token)));
+    }
     return "dozenten/dozent";
   }
 
@@ -73,5 +79,9 @@ public class DozentEventController {
   private Dozent createDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     return new Dozent(principal.getName());
+  }
+
+  private boolean searchNotEmpty(String search) {
+    return !"".equals(search) && (search != null);
   }
 }
