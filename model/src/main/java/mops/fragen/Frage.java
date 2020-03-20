@@ -26,8 +26,6 @@ public abstract class Frage {
 
   public abstract void addAntwort(String antwort);
 
-  public abstract void deleteAllAntworten();
-
   public Frage(Long id) {
     this.id = id;
   }

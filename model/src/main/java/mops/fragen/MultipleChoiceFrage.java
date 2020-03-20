@@ -66,12 +66,6 @@ public class MultipleChoiceFrage extends Frage {
     }
     this.aktualisiereErgebnis();
   }
-  
-  @Override
-  public void deleteAllAntworten() {
-    antworten.clear();
-    choices.stream().forEach(x -> auswertung.put(x, (double) 0));
-  }
 
   private void aktualisiereErgebnis() {
     for (Auswahl auswahl : choices) {
