@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "label")
 @AllArgsConstructor
 public class Auswahl {
   private final Long id;
@@ -17,5 +17,10 @@ public class Auswahl {
   public Auswahl(String label) {
     this.id = (long) new Random().nextInt(1000);
     this.label = label;
+  }
+
+  @Override
+  public String toString() {
+    return label;
   }
 }

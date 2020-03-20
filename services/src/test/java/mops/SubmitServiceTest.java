@@ -5,11 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import mops.antworten.TextAntwort;
+import mops.antworten.Antwort;
 import mops.fragen.TextFrage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<TextAntwort> antworten = textfrage.getAntworten();
+    Set<Antwort> antworten = textfrage.getAntworten();
     assertFalse(antworten.isEmpty());
   }
 
@@ -45,7 +46,7 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<TextAntwort> antworten = textfrage.getAntworten();
+    Set<Antwort> antworten = textfrage.getAntworten();
     assertTrue(antworten.isEmpty());
   }
 
@@ -56,7 +57,7 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<TextAntwort> antworten = textfrage.getAntworten();
+    Set<Antwort> antworten = textfrage.getAntworten();
     assertTrue(antworten.isEmpty());
   }
 }

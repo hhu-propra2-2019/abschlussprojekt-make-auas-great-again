@@ -3,6 +3,7 @@ package mops.fragen;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class MultipleChoiceFrageTest {
 
   @Test

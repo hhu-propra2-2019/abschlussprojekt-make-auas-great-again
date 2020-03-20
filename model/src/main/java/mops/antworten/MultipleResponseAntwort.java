@@ -1,18 +1,18 @@
 package mops.antworten;
 
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import mops.fragen.Auswahl;
 
 public class MultipleResponseAntwort extends Antwort {
   @Getter
-  private transient Set<Auswahl> gewaehlteAntworten;
+  private transient List<Auswahl> gewaehlteAntworten;
 
   public MultipleResponseAntwort(Long id) {
     super(id);
-    gewaehlteAntworten = new HashSet<>();
+    gewaehlteAntworten = new ArrayList<>();
   }
 
   public void addAntwort(Auswahl neueAntwort) {

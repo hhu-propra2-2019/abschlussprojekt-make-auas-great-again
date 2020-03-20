@@ -55,7 +55,8 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   public void deleteChoice(Long id) {
-    choices.remove(new Auswahl(id, ""));
+    Auswahl toRemove = choices.stream().filter(x -> x.getId().equals(id)).findFirst().get();
+    choices.remove(toRemove);
   }
 
   public int getNumberOfChoices() {

@@ -28,5 +28,4 @@ public abstract class Frage {
 
   @Override
   public abstract String toString();
-
 }
