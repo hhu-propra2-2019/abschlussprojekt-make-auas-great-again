@@ -1,4 +1,4 @@
-package mops.fileHandling;
+package mops.filehandling;
 
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;

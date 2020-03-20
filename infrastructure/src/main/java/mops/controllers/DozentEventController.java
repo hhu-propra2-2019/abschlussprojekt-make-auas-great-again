@@ -5,8 +5,7 @@ import javax.annotation.security.RolesAllowed;
 import mops.DateTimeService;
 import mops.Veranstaltung;
 import mops.database.MockVeranstaltungsRepository;
-import mops.fileHandling.CsvReader;
-import mops.fileHandling.FileHandler;
+import mops.filehandling.CsvReader;
 import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -27,7 +26,7 @@ public class DozentEventController {
   private static final String ORGA_ROLE = "ROLE_orga";
   private final transient VeranstaltungsRepository veranstaltungen;
   private final transient DateTimeService datetime = new DateTimeService();
-  private CsvReader csvReader;
+  private transient CsvReader csvReader;
 
   public DozentEventController() {
     veranstaltungen = new MockVeranstaltungsRepository();
@@ -62,7 +61,8 @@ public class DozentEventController {
     model.addAttribute("account", createAccountFromPrincipal(token));
     model.addAttribute("datetime", datetime);
     model.addAttribute("currenttime", LocalDateTime.now());
-    model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
+    model.addAttribute("veranstaltung",
+        veranstaltungen.getVeranstaltungById(veranstaltung));
     return "dozenten/veranstaltung";
   }
 
@@ -70,7 +70,8 @@ public class DozentEventController {
   @RolesAllowed(ORGA_ROLE)
   public String erstelleNeueVeranstaltung(KeycloakAuthenticationToken token,
                                           String veranstaltungsname, String semester) {
-    Veranstaltung neu = new Veranstaltung(veranstaltungsname, semester, createDozentFromToken(token));
+    Veranstaltung neu = new Veranstaltung(veranstaltungsname, semester,
+        createDozentFromToken(token));
     veranstaltungen.save(neu);
     return "redirect:/feedback/dozenten";
   }

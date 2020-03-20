@@ -1,11 +1,10 @@
-package mops.fileHandling;
+package mops.filehandling;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import lombok.Getter;
 import mops.Veranstaltung;
-import mops.controllers.VeranstaltungsRepository;
 import mops.rollen.Student;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -17,10 +16,12 @@ public class CsvReader {
   private String message;
   @Getter
   private String messageStatus;
-  private MultipartFile file;
+  private transient MultipartFile file;
   @Getter
   private Veranstaltung veranstaltung;
-  private VeranstaltungsRepository veranstaltungsRepo;
+  private transient int studentenCounter = 0;
+  private transient Reader reader;
+  private transient CSVParser parser;
 
   public CsvReader(MultipartFile file, Veranstaltung veranstaltung) {
     this.file = file;
@@ -44,10 +45,9 @@ public class CsvReader {
 
   private void readFromFile() {
     try {
-      Reader reader = new InputStreamReader(file.getInputStream());
-      CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT);
+      reader = new InputStreamReader(file.getInputStream());
+      parser = new CSVParser(reader, CSVFormat.DEFAULT);
 
-      int studentenCounter = 0;
       for (final CSVRecord record : parser) {
         for (int i = 0; i < record.size(); i++) {
           final String username = record.get(i);
@@ -60,10 +60,18 @@ public class CsvReader {
 
       setMessageAndStatus(" Es wurden " + studentenCounter
           + " Studenten der Veranstaltung zugeordnet.", messageStatus = "success");
+
     } catch (IOException e) {
-      e.printStackTrace();
       setMessageAndStatus("Es gab einen Fehler beim Lesen der Datei! "
           + "<i><b>(IOException in CsvReader.java)</b></i>", "error");
+    } finally {
+      try {
+        reader.close();
+        parser.close();
+      } catch (IOException e) {
+        setMessageAndStatus("Es gab einen Fehler beim Versuch, den Reader/Parser "
+            + "zu schließen. <i>(IOException in CsvReader.java)</i>", "error");
+      }
     }
   }
 
