@@ -13,7 +13,7 @@ public class FileHandler {
       if (fileName != null) {
         String[] parts = fileName.split("\\.");
         if (parts[parts.length - 1].equalsIgnoreCase("csv")) {
-          message = "Success!";
+          message = "<i>Success!</i>";
           return true;
         }
         message = "Error! Die Datei hat ein falsches Format!";

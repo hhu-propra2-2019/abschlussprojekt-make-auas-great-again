@@ -4,6 +4,7 @@ import javax.annotation.security.RolesAllowed;
 import mops.DateTimeService;
 import mops.Veranstaltung;
 import mops.database.MockVeranstaltungsRepository;
+import mops.fileHandling.CsvReader;
 import mops.fileHandling.FileHandler;
 import mops.rollen.Dozent;
 import mops.security.Account;
@@ -25,7 +26,7 @@ public class DozentEventController {
   private static final String ORGA_ROLE = "ROLE_orga";
   private final transient VeranstaltungsRepository veranstaltungen;
   private final transient DateTimeService datetime = new DateTimeService();
-  private FileHandler fileHandler;
+  private CsvReader csvReader;
 
   public DozentEventController() {
     veranstaltungen = new MockVeranstaltungsRepository();
@@ -71,10 +72,9 @@ public class DozentEventController {
   public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                  @PathVariable Long veranstaltungsNr,
                                  RedirectAttributes redirectAttributes) {
-    fileHandler = new FileHandler();
-    String status = (fileHandler.verifyFile(file)) ? "success" : "error";
-    redirectAttributes.addFlashAttribute("message", fileHandler.getMessage());
-    redirectAttributes.addFlashAttribute("status", status);
+    csvReader = new CsvReader(file);
+    redirectAttributes.addFlashAttribute("message", csvReader.getMessage());
+    redirectAttributes.addFlashAttribute("status", csvReader.getMessageStatus());
     return "redirect:/feedback/dozenten/event/" + veranstaltungsNr.toString();
   }
 
