@@ -29,23 +29,17 @@
                 <br>
                 <br>
                 <form method="post"
-              th:action="@{/feedback/studenten/details/submit(bogennr=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
+                      th:action="@{/feedback/studenten/details/submit(bogennr=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
                     <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">
                         <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
-
                             <div th:replace="fragments/fragen :: textfrage">...</div>
                         </div>
                         <div class="form-group" th:if="${typeChecker.isMultipleChoice(frage)}">
                             <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
-
                                 <div th:replace="fragments/fragen :: singleResponse">...</div>
-
                             </div>
-
                             <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
-
                                 <div th:replace="fragments/fragen :: multipleResponse">...</div>
-
                             </div>
                         </div>
                     </div>
