@@ -76,12 +76,18 @@ public class MultipleChoiceFrage extends Frage {
     return fragentext;
   }
 
-  private Double berechneProzentualenAnteil(int anzahl) {
+  private Double berechneProzentualenAnteil(long anzahl) {
+    if (anzahl == 0L) {
+      return 0.0;
+    }
     return (((double) anzahl) / antworten.size()) * 100;
   }
 
   public Double holeErgebnis(Auswahl auswahl) {
-    int anzahl = (int) choices.stream().filter(choice -> choice.equals(auswahl)).count();
+    long anzahl = antworten.stream()
+        .map(Antwort::toString)
+        .filter(str -> str.equals(auswahl.getLabel()))
+        .count();
     return berechneProzentualenAnteil(anzahl);
   }
 }

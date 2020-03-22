@@ -98,10 +98,10 @@ public class MultipleChoiceTest {
     final Double antwort3 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_3));
     final Double antwort4 = multipleResponseFrage.holeErgebnis(new Auswahl(MR_ANTWORT_4));
 
-    assertEquals(antwort1, 0, 0.03);
-    assertEquals(antwort2, 0, 0.03);
-    assertEquals(antwort3, 0, 0.03);
-    assertEquals(antwort4, 0, 0.03);
+    assertEquals(0, antwort1, 0.03);
+    assertEquals(0, antwort2, 0.03);
+    assertEquals(0, antwort3, 0.03);
+    assertEquals(0, antwort4, 0.03);
   }
 
   @Test
