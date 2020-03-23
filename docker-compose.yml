@@ -9,3 +9,10 @@ services:
     environment:
       - "MYSQL_DATABASE=feedback"
       - "MYSQL_ROOT_PASSWORD=geheim"
+  web:
+    image: gradle:jdk13
+    command: gradle bootRun
+    volumes:
+      - .:/home/gradle
+    ports:
+      - "8080:8080"
