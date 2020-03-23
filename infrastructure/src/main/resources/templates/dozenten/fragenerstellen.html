@@ -97,7 +97,7 @@
                                 <td>
                                     <form class="form-horizontal" method="get"
                                           th:action="'/feedback/dozenten/new/questions/edit/' + ${neuerbogen.bogennr} + '/' + ${frage.id}"
-                                          th:if="${typechecker.isMultipleResponseOrMultipleChoice(frage)}">
+                                          th:if="${typechecker.isMultipleChoice(frage)}">
                                         <input name="veranstaltungid" th:value="${veranstaltung}" type="hidden">
                                         <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">
                                             Auswahl Bearbeiten

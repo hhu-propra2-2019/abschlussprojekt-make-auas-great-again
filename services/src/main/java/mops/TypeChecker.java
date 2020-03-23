@@ -20,10 +20,6 @@ public class TypeChecker {
     return frage instanceof MultipleResponseFrage;
   }
 
-  public static boolean isMultipleResponseOrMultipleChoice(Frage frage) {
-    return TypeChecker.isMultipleChoice(frage) || TypeChecker.isMultipleResponse(frage);
-  }
-
   public static boolean isSingleResponse(Frage frage) {
     return frage instanceof SingleResponseFrage;
   }
