@@ -47,7 +47,8 @@ public class StudentErgebnisController {
                                @RequestParam Long veranstaltungId, String search) {
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungId);
     if (searchNotEmpty(search)) {
-      model.addAttribute("frageboegen", veranstaltung.getFrageboegenContaining(search));
+      model.addAttribute("frageboegen",
+          veranstaltung.getFrageboegenContaining(search));
     } else {
       model.addAttribute("frageboegen", veranstaltung.getFrageboegen());
     }
@@ -61,7 +62,8 @@ public class StudentErgebnisController {
   @GetMapping("/details")
   @RolesAllowed(studentRole)
   public String ergebnisUebersicht(KeycloakAuthenticationToken token, Model model,
-                                   @RequestParam Long veranstaltung, @RequestParam Long fragebogen) {
+                                   @RequestParam Long veranstaltung,
+                                   @RequestParam Long fragebogen) {
     model.addAttribute("fragebogen",
         veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung));
     model.addAttribute("typeChecker", typeChecker);
