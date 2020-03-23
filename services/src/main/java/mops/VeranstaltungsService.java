@@ -13,7 +13,7 @@ public class VeranstaltungsService {
 
   private Veranstaltung randomVeranstaltung() {
     Veranstaltung.VeranstaltungBuilder veranstaltung = Veranstaltung.builder();
-    Dozent dozent = new Dozent("orga1", "jens", "B");
+    Dozent dozent = new Dozent("orga1", "jens", "Bendisposto");
     veranstaltung = veranstaltung.dozent(dozent).name("Programmierung").semester("SOSE2019")
         .studenten(randomStudenten()).frageboegen(frageboegen.randomFrageboegen(10))
         .veranstaltungsNr((long) idGenerator.nextInt(1000));

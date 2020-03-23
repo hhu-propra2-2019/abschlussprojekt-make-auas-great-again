@@ -20,21 +20,21 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <!-- Restlichen Inhalt hier einfügen! -->
-    <h1 class="display-3">Vernstaltungen</h1>
-    <h2 class="display-4" th:text="'Hallo ' + ${account.getName()}">NAME</h2>
-
-    <div class="row row-cols-1 row-cols-md-3">
-        <div class="col mb-3" th:each="veranstaltung,iter :${veranstaltungen}">
-            <div class="card text-center h-100">
-                <img alt="..." class="card-img-top" th:src="@{/vorlesung.jpg}">
-                <div class="card-body">
-                    <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
-                    <a class=" btn btn-primary feedback-button" style="margin: 16px"
-                       th:href="@{/feedback/studenten/ergebnis/frageboegen(veranstaltungId=${veranstaltung.veranstaltungsNr})}"
-                       th:id="'button' + ${iter.index}">
-                        Anzeigen!
-                    </a>
+    <div class="container">
+        <h1 class="display-3 text-center">Vernstaltungen</h1>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-3" th:each="veranstaltung,iter :${veranstaltungen}">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h3>
+                        <p th:text="${veranstaltung.getDozent().getNachname()}"></p>
+                        <p th:text="${veranstaltung.getSemester()}"></p>
+                        <a class=" btn btn-primary btn-sm"
+                           th:href="@{/feedback/studenten/ergebnis/frageboegen(veranstaltungId=${veranstaltung.veranstaltungsNr})}"
+                           th:id="'button' + ${iter.index}">
+                            Anzeigen!
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
