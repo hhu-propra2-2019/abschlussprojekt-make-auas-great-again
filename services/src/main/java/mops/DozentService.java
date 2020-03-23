@@ -43,6 +43,7 @@ public class DozentService {
    * @param fragetext Der Text der Frage
    * @return das neue Fragenobjekt
    */
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
     Random idgenerator = new Random();
     if ("multiplechoice".equals(fragetyp)) {
