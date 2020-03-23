@@ -1,13 +1,14 @@
 package mops;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class DateTimeServiceTest {
-  private final DateTimeService service = new DateTimeService();
+  private final transient DateTimeService service = new DateTimeService();
 
   @Test
   public void neuesLocalDateObjekt() {

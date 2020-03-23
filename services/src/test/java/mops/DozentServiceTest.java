@@ -13,13 +13,17 @@ import mops.fragen.TextFrage;
 import mops.rollen.Dozent;
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class DozentServiceTest {
-  private final DozentService service = new DozentService();
+  private static final String HEINZ_MUSTERMANN = "Heinz Mustermann";
+  private static final String ANALYSIS_I = "Analysis I";
+  private static final String WIE_GEHTS = "Wie geht's?";
+  private final transient DozentService service = new DozentService();
 
   @Test
   public void textFrageWirdKorrektErzeugt() {
     String fragetyp = "textfrage";
-    String fragetext = "Wie geht's?";
+    String fragetext = WIE_GEHTS;
 
     Frage totest = service.createNeueFrageAnhandFragetyp(fragetyp, fragetext);
 
@@ -29,7 +33,7 @@ public class DozentServiceTest {
   @Test
   public void singleResponseFrageWirdKorrektErzeugt() {
     String fragetyp = "multiplechoice";
-    String fragetext = "Wie geht's?";
+    String fragetext = WIE_GEHTS;
 
     Frage totest = service.createNeueFrageAnhandFragetyp(fragetyp, fragetext);
 
@@ -39,7 +43,7 @@ public class DozentServiceTest {
   @Test
   public void multipleResponseFrageWirdKorrektErzeugt() {
     String fragetyp = "multipleresponse";
-    String fragetext = "Wie geht's?";
+    String fragetext = WIE_GEHTS;
 
     Frage totest = service.createNeueFrageAnhandFragetyp(fragetyp, fragetext);
 
@@ -48,8 +52,8 @@ public class DozentServiceTest {
 
   @Test
   public void korrekteFrageWirdZurueckGegeben() {
-    Fragebogen fragebogen = new Fragebogen("Analysis I", "Heinz Mustermann");
-    TextFrage frage = new TextFrage(1L, "Wie geht's?");
+    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I, HEINZ_MUSTERMANN);
+    TextFrage frage = new TextFrage(1L, WIE_GEHTS);
     TextFrage frage2 = new TextFrage(2L, "Sind sie zufrieden mit der Veranstaltung?");
     fragebogen.addFrage(frage);
     fragebogen.addFrage(frage2);
@@ -63,11 +67,11 @@ public class DozentServiceTest {
   public void korrekteTextAntwortWirdZurueckGegeben() {
     TextAntwort antwort = new TextAntwort(1L, "Sehr gut");
     TextAntwort antwort2 = new TextAntwort(2L, "Sehr schlecht");
-    TextFrage frage = new TextFrage(1L, "Wie geht's?");
+    TextFrage frage = new TextFrage(1L, WIE_GEHTS);
     frage.addAntwort(antwort);
     frage.addAntwort(antwort2);
     TextFrage frage2 = new TextFrage(2L, "Sind Sie zufrieden?");
-    Fragebogen fragebogen = new Fragebogen("Analysis I", "Heinz Mustermann");
+    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I, HEINZ_MUSTERMANN);
     fragebogen.addFrage(frage2);
     fragebogen.addFrage(frage);
 
@@ -78,8 +82,8 @@ public class DozentServiceTest {
 
   @Test
   public void korrekteMultipleChoiceFrageWirdZurueckGegeben() {
-    Fragebogen fragebogen = new Fragebogen("Analysis I", "Heinz Mustermann");
-    TextFrage frage = new TextFrage(1L, "Wie geht's?");
+    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I, HEINZ_MUSTERMANN);
+    TextFrage frage = new TextFrage(1L, WIE_GEHTS);
     MultipleChoiceFrage frage2 =
         new MultipleChoiceFrage(2L, "Die Vorlesung ist strukturiert", false);
     MultipleChoiceFrage frage3 = new MultipleChoiceFrage(3L, "Der Dozent ist motiviert", false);
@@ -94,12 +98,12 @@ public class DozentServiceTest {
 
   @Test
   public void alleFrageboegenWerdenEingesammelt() {
-    Fragebogen fragebogen = new Fragebogen("Analysis I", "Heinz Mustermann");
-    Fragebogen fragebogen2 = new Fragebogen("Tutorium zur Analysis I", "Heinz Mustermann");
-    Veranstaltung analysis = new Veranstaltung("Analysis I", "WiSe 2010", new Dozent("heinz001"));
+    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I, HEINZ_MUSTERMANN);
+    Fragebogen fragebogen2 = new Fragebogen("Tutorium zur Analysis I", HEINZ_MUSTERMANN);
+    Veranstaltung analysis = new Veranstaltung(ANALYSIS_I, "WiSe 2010", new Dozent("heinz001"));
     analysis.addFragebogen(fragebogen);
     analysis.addFragebogen(fragebogen2);
-    Fragebogen fragebogen3 = new Fragebogen("Programmierung", "Heinz Mustermann");
+    Fragebogen fragebogen3 = new Fragebogen("Programmierung", HEINZ_MUSTERMANN);
     Veranstaltung prog = new Veranstaltung("Programmierung", "WiSe 2010", new Dozent("heinz001"));
     prog.addFragebogen(fragebogen3);
     List<Veranstaltung> veranstaltungen = List.of(analysis, prog);
