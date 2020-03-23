@@ -21,16 +21,14 @@ public class CustomErrorControllerTest {
 
   private final transient String userrole = "studentin";
   private final transient String usermail = "user@mail.de";
-  private final transient String orgarole = "orga";
-  private final transient String orgamail = "orga@mail.de";
 
   @Autowired
   private transient MockMvc mvc;
 
   @Disabled
   @Test
-  @DisplayName("Weiterleitung zu Errorpage wenn die Dozenten Page aufgerufen wird")
-  @WithMockKeycloackAuth(roles = "studentin", idToken = @WithIDToken(email = usermail))
+  @DisplayName("Weiterleitung zu Errorpage wenn die Dozenten Page von studenten aufgerufen wird")
+  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void studentErrorPageDisplay() throws Exception {
     mvc.perform(get("/dozenten")).andExpect(status().is4xxClientError())
         .andExpect(redirectedUrl("errorpages/.."));
