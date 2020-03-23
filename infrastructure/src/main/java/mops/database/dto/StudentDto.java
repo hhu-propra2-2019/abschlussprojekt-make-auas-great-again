@@ -1,24 +1,27 @@
 package mops.database.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+@AllArgsConstructor
 @Data
 @Table("student")
 public class StudentDto {
 
   @Id
+  Long id;
   String username;
   String vorname;
   String nachname;
 
-  public StudentDto(String username) {
-    this.username = username;
+
+  public static StudentDto create(String username) {
+    return new StudentDto(null, username, null, null);
   }
 
-  public StudentDto(String username, String vorname, String nachname) {
-    this.username = username;
+  public void addVornameNachname(String vorname, String nachname) {
     this.vorname = vorname;
     this.nachname = nachname;
   }

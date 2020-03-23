@@ -2,11 +2,13 @@ package mops.database.dto;
 
 import java.util.HashSet;
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-
+@AllArgsConstructor
 @Data
 @Table("veranstaltung")
 public class VeranstaltungDto {
@@ -15,30 +17,20 @@ public class VeranstaltungDto {
   Long id;
   String name;
   Integer semester;
+  @Column("veranstaltung")
   Set<FragebogenDto> frageboegen;
+  @Column("veranstaltung")
   Set<sBelegtV> studenten;
+  @Column("veranstaltung")
   Set<dOrganisiertV> dozenten;
 
-  public VeranstaltungDto(Long id, String name, Integer semester) {
-    this.id = id;
-    this.name = name;
-    this.semester = semester;
-    this.frageboegen = new HashSet<>();
-    this.studenten = new HashSet<>();
-    this.dozenten = new HashSet<>();
-  }
 
-  public VeranstaltungDto(Long id, String name, Integer semester, Set<FragebogenDto> frageboegen, Set<sBelegtV> studenten, Set<dOrganisiertV> dozenten) {
-    this.id = id;
-    this.name = name;
-    this.semester = semester;
-    this.frageboegen = frageboegen;
-    this.studenten = studenten;
-    this.dozenten = dozenten;
+  public static VeranstaltungDto create(String name, Integer semester) {
+    return new VeranstaltungDto(null, name, semester, new HashSet<>(), new HashSet<>(), new HashSet<>());
   }
 
   public void addStudent(StudentDto student) {
-    studenten.add(new sBelegtV(student.getUsername()));
+    studenten.add(new sBelegtV(student.getId()));
   }
 
   public void addDozent(DozentDto dozent) {

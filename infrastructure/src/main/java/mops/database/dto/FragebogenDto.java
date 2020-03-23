@@ -1,6 +1,5 @@
 package mops.database.dto;
 
-import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,15 +23,9 @@ public class FragebogenDto {
   Set<FrageDto> fragen;
   Set<sBeantwortetF> bearbeitetVon;
 
-  public FragebogenDto(Long id, String name, Integer status, Enum einheit, String startzeit, String endzeit) {
-    this.id = id;
-    this.name = name;
-    this.status = status;
-    this.einheit = einheit;
-    this.startzeit = startzeit;
-    this.endzeit = endzeit;
-    this.fragen = new HashSet<>();
-    this.bearbeitetVon = new HashSet<>();
+
+  public static FragebogenDto create(String name, Enum einheit, String startzeit, String endzeit) {
+    return new FragebogenDto(null, name, 0, einheit, startzeit, endzeit, null, null);
   }
 
   public void addFrage(FrageDto frage) {
@@ -40,6 +33,6 @@ public class FragebogenDto {
   }
 
   void addBeantwortetVonStudent(StudentDto student) {
-    bearbeitetVon.add(new sBeantwortetF(student.getUsername()));
+    bearbeitetVon.add(new sBeantwortetF(student.getId()));
   }
 }

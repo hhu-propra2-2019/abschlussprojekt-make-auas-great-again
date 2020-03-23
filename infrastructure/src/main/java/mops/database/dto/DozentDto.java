@@ -16,4 +16,8 @@ public class DozentDto {
   String nachname;
   String anrede;
 
+  public static DozentDto create(String vorname, String nachname, String anrede) {
+    return new DozentDto(null, vorname, nachname, anrede);
+  }
+
 }

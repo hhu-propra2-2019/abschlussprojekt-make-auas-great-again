@@ -12,4 +12,9 @@ public class FrageDto {
   @Id
   Long id;
   String titel;
+
+  public static FrageDto create(String titel) {
+    return new FrageDto(null, titel);
+  }
 }
+
