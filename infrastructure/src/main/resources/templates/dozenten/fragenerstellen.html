@@ -36,19 +36,17 @@
                         <input th:value="${neuerbogen.veranstaltungsname}" id="veranstaltungsname" name="veranstaltungsname" required type="text">
                     </div>
                     <div class="form-group row">
-                        <label for="veranstaltungstyp">Veranstaltungstyp (aktuell: <span
-                                th:text="${neuerbogen.type}">PRAKTIKUM</span>):
-                        </label>
+                        <label for="veranstaltungstyp">Veranstaltungstyp:</label>
                         <select class="custom-select" id="veranstaltungstyp"
                                 name="veranstaltungstyp"
                                 required>
-                            <option value="VORLESUNG">Vorlesung</option>
-                            <option value="UEBUNG">Übung</option>
-                            <option value="AUFGABE">Aufgabe</option>
-                            <option value="PRAKTIKUM">Praktikum</option>
-                            <option value="DOZENT">Dozent</option>
-                            <option value="BERATUNG">Beratung</option>
-                            <option value="GRUPPE">Gruppe</option>
+                            <option value="VORLESUNG" th:selected="${neuerbogen.type.toString().equals('VORLESUNG')}">Vorlesung</option>
+                            <option value="UEBUNG" th:selected="${neuerbogen.type.toString().equals('UEBUNG')}">Übung</option>
+                            <option value="AUFGABE" th:selected="${neuerbogen.type.toString().equals('AUFGABE')}">Aufgabe</option>
+                            <option value="PRAKTIKUM" th:selected="${neuerbogen.type.toString().equals('PRAKTIKUM')}">Praktikum</option>
+                            <option value="DOZENT" th:selected="${neuerbogen.type.toString().equals('DOZENT')}">Dozent</option>
+                            <option value="BERATUNG" th:selected="${neuerbogen.type.toString().equals('BERATUNG')}">Beratung</option>
+                            <option value="GRUPPE" th:selected="${neuerbogen.type.toString().equals('GRUPPE')}">Gruppe</option>
                         </select>
                     </div>
                     <div class="form-group row">
