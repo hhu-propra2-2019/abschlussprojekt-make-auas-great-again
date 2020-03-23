@@ -1,6 +1,8 @@
 package mops;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 import mops.fragen.Frage;
 import mops.fragen.MultipleResponseFrage;
@@ -38,5 +40,16 @@ public class DozentServiceTest {
     Frage totest = service.createNeueFrageAnhandFragetyp(fragetyp, fragetext);
 
     assertTrue(totest instanceof MultipleResponseFrage);
+  }
+
+  @Test
+  public void korrekteFrageWirdZurueckGegeben() {
+    Fragebogen fragebogen = new Fragebogen("Analysis I", "Heinz Mustermann");
+    TextFrage frage = new TextFrage(1L, "Wie geht's?");
+    fragebogen.addFrage(frage);
+
+    Frage totest = service.getFrage(1L, fragebogen);
+
+    assertEquals(totest, frage);
   }
 }
