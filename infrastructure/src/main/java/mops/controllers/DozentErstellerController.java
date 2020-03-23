@@ -57,6 +57,19 @@ public class DozentErstellerController {
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
   }
 
+  @PostMapping("/recycle/{bogennr}")
+  @RolesAllowed(orgaRole)
+  public String fragebogenWiederverwenden(Long veranstaltungid, RedirectAttributes ra,
+      @PathVariable Long bogennr) {
+    Fragebogen alt = veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltungid);
+    Fragebogen neu = new Fragebogen(alt.getVeranstaltungsname(), alt.getProfessorenname(),
+        dozentservice.getFragenlisteOhneAntworten(alt.getFragen()), alt.getType());
+    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
+    veranstaltung.addFragebogen(neu);
+    ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
+    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
+  }
+
   @PostMapping("/meta/{bogennr}")
   @RolesAllowed(orgaRole)
   public String changeMetadaten(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
