@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-
 import com.c4_soft.springaddons.test.security.context.support.WithIDToken;
 import com.c4_soft.springaddons.test.security.context.support.WithMockKeycloackAuth;
 import org.junit.jupiter.api.Disabled;
@@ -88,5 +87,12 @@ class StudentControllerTest {
     mvc.perform(post("/feedback/student/details/submit/1"))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/student/"));
+  }
+
+  @Test
+  @DisplayName("Student sollte nicht auf die Orga Uebersicht Seite kommen")
+  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
+  public void forbiddenAccessStudent() throws Exception {
+    mvc.perform(get("/feedback/dozenten")).andExpect(status().is4xxClientError());
   }
 }

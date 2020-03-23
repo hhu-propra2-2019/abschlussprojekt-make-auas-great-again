@@ -1,24 +1,21 @@
 package mops.fragen;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
 import mops.antworten.Antwort;
 import mops.antworten.MultipleChoiceAntwort;
-import mops.antworten.MultipleResponseAntwort;
 
 @Getter
 @Setter
 public class MultipleChoiceFrage extends Frage {
+  public static final long ZERO = 0L;
   private transient String fragentext;
   private transient List<Auswahl> choices;
   private boolean hasMultipleResponse;
   private List<Antwort> antworten;
-  private Map<Auswahl, Double> auswertung = new HashMap<>();
 
   public MultipleChoiceFrage(Long id, String fragentext, boolean hasMultipleResponse) {
     super(id);
@@ -55,7 +52,6 @@ public class MultipleChoiceFrage extends Frage {
 
   public void addChoice(Auswahl choice) {
     this.choices.add(choice);
-    auswertung.put(choice, (double) 0);
   }
 
   public boolean containsChoice(String label) {
@@ -78,7 +74,6 @@ public class MultipleChoiceFrage extends Frage {
     if (choices.contains(auswahl)) {
       this.antworten.add(new MultipleChoiceAntwort((long) new Random().nextInt(1000), auswahl));
     }
-    this.aktualisiereErgebnis();
   }
 
   @Override
@@ -91,22 +86,18 @@ public class MultipleChoiceFrage extends Frage {
     return fragentext;
   }
 
-  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
-  private void aktualisiereErgebnis() {
-    for (Auswahl auswahl : choices) {
-      int anzahl = (int) antworten.stream()
-          .map(x -> (MultipleResponseAntwort) x)
-          .filter(x -> x.contains(auswahl))
-          .count();
-      auswertung.put(auswahl, berechneProzentualenAnteil(anzahl));
+  private Double berechneProzentualenAnteil(long anzahl) {
+    if (anzahl == ZERO) {
+      return 0.0;
     }
-  }
-
-  private Double berechneProzentualenAnteil(int anzahl) {
     return (((double) anzahl) / antworten.size()) * 100;
   }
 
   public Double holeErgebnis(Auswahl auswahl) {
-    return auswertung.get(auswahl);
+    long anzahl = antworten.stream()
+        .map(Antwort::toString)
+        .filter(str -> str.equals(auswahl.getLabel()))
+        .count();
+    return berechneProzentualenAnteil(anzahl);
   }
 }

@@ -25,6 +25,22 @@
     <p>Semester: <span th:text="${veranstaltung.semester}">Programmierung</span></p>
     <div class="row">
         <div class="col-sm">
+            <div th:if="${message}">
+                <div th:if="${status == 'success'}">
+                    <div class="alert alert-success" role="alert">
+                        <span th:utext="${message}"></span>
+                    </div>
+                </div>
+                <div th:if="${status == 'error'}">
+                    <div class="alert alert-danger" role="alert">
+                        <span th:utext="${message}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Bereits vorhandene Fragebögen</h3>
@@ -67,14 +83,41 @@
                         </tr>
                         </tbody>
                     </table>
+                    <form class="form-horizontal" th:action="'/feedback/dozenten/new'" method="post">
+                        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+                        <div class="text-center">
+                            <button class="btn btn-primary" name="newsheetbutton" type="submit">Neuen Fragebogen erstellen</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new'">
-        <input id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}" type="hidden">
-        <button class="btn btn-primary" name="newsheetbutton" type="submit">Neuen Fragebogen erstellen</button>
-    </form>
+    <div class="row mt-3">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Studenten hinzufügen:</h2>
+                    <div th:if="${message}">
+                        <div th:if="${status == 'success'}">
+                            <div class="alert alert-success" role="alert">
+                                <span th:utext="${message}"></span>
+                            </div>
+                        </div>
+                        <div th:if="${status == 'error'}">
+                            <div class="alert alert-danger" role="alert">
+                                <span th:utext="${message}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-horizontal was-validated" method="post" enctype="multipart/form-data" th:action="'/feedback/dozenten/event/addStudenten/' + ${veranstaltung.veranstaltungsNr}">
+                        File to upload:<input type="file" name="file" accept=".csv" />
+                        <input type="submit" value="Upload" class="btn btn-primary float-right" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
