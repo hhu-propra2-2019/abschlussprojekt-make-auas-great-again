@@ -11,6 +11,7 @@ import mops.antworten.MultipleChoiceAntwort;
 @Getter
 @Setter
 public class MultipleChoiceFrage extends Frage {
+  public static final long ZERO = 0L;
   private transient String fragentext;
   private transient List<Auswahl> choices;
   private boolean hasMultipleResponse;
@@ -77,7 +78,7 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   private Double berechneProzentualenAnteil(long anzahl) {
-    if (anzahl == 0L) {
+    if (anzahl == ZERO) {
       return 0.0;
     }
     return (((double) anzahl) / antworten.size()) * 100;
