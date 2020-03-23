@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import mops.antworten.TextAntwort;
 import mops.fragen.Frage;
+import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.MultipleResponseFrage;
 import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
@@ -71,5 +72,21 @@ public class DozentServiceTest {
     TextAntwort totest = service.getTextAntwort(1L, 2L, fragebogen);
 
     assertEquals(totest, antwort2);
+  }
+
+  @Test
+  public void korrekteMultipleChoiceFrageWirdZurueckGegeben() {
+    Fragebogen fragebogen = new Fragebogen("Analysis I", "Heinz Mustermann");
+    TextFrage frage = new TextFrage(1L, "Wie geht's?");
+    MultipleChoiceFrage frage2 =
+        new MultipleChoiceFrage(2L, "Die Vorlesung ist strukturiert", false);
+    MultipleChoiceFrage frage3 = new MultipleChoiceFrage(3L, "Der Dozent ist motiviert", false);
+    fragebogen.addFrage(frage);
+    fragebogen.addFrage(frage2);
+    fragebogen.addFrage(frage3);
+
+    Frage totest = service.getMultipleChoiceFrage(2L, fragebogen);
+
+    assertEquals(totest, frage2);
   }
 }
