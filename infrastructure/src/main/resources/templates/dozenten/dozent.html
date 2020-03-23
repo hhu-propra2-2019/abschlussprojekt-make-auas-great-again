@@ -28,7 +28,6 @@
         <div class="row row-cols-1 row-cols-md-3">
             <div class="col mb-3" th:each="veranstaltung : ${veranstaltungen}">
                 <div class="card text-center h-100">
-                    <img alt="..." class="card-img-top" th:src="@{/vorlesung.jpg}">
                     <div class="card-body">
                         <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
                         <form class="form-horizontal"
