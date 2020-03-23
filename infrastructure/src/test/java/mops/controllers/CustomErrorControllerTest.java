@@ -29,10 +29,10 @@ public class CustomErrorControllerTest {
 
   @Disabled
   @Test
-  @DisplayName("Student sollte zu Error Page weitergeleitet werden, wenn die Dozenten Page aufgerufen wird")
+  @DisplayName("Weiterleitung zu Errorpage wenn die Dozenten Page aufgerufen wird")
   @WithMockKeycloackAuth(roles = "studentin", idToken = @WithIDToken(email = usermail))
-  public void StudentErrorPageDisplay() throws Exception {
+  public void studentErrorPageDisplay() throws Exception {
     mvc.perform(get("/dozenten")).andExpect(status().is4xxClientError())
-        .andExpect(redirectedUrl("/error"));
+        .andExpect(redirectedUrl("errorpages/.."));
   }
 }
