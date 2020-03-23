@@ -19,32 +19,24 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <div class="page-wrapper ">
-        <div class="card bg-light">
-            <div class="card-title text-center">
-                <h1 class="page-title" th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
-                <h2 class="text-secondary" th:text="${fragebogen.professorenname}">Professor</h2>
+    <div class="container">
+        <h1 class="page-title" th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
+        <h2 class="text-secondary" th:text="${fragebogen.professorenname}">Professor</h2>
+        <form class="form-group" method="post"
+              th:action="@{/feedback/studenten/details/submit(bogennr=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
+            <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">
+                <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
+                    <div th:replace="fragments/fragen :: textfrage">...</div>
+                </div>
+                <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
+                    <div th:replace="fragments/fragen :: singleResponse">...</div>
+                </div>
+                <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
+                    <div th:replace="fragments/fragen :: multipleResponse">...</div>
+                </div>
             </div>
-            <div class="card-body text-left">
-                <br>
-                <br>
-                <form method="post"
-                      th:action="@{/feedback/studenten/details/submit(bogennr=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
-                    <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">
-                        <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
-                            <div th:replace="fragments/fragen :: textfrage">...</div>
-                        </div>
-                        <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
-                            <div th:replace="fragments/fragen :: singleResponse">...</div>
-                        </div>
-                        <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
-                            <div th:replace="fragments/fragen :: multipleResponse">...</div>
-                        </div>
-                    </div>
-                    <button class="btn btn-dark" type="submit">Submit</button>
-                </form>
-            </div>
-        </div>
+            <button class="btn btn-primary" type="submit">Abgeben</button>
+        </form>
     </div>
 </main>
 </body>
