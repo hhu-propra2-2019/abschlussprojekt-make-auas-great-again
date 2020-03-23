@@ -5,15 +5,45 @@
 <body>
 
 <div class="border-bottom" th:fragment="textAntwort">
-
+    <div th:each="antwort : ${frage.getAntworten()}">
+        <ul class="list-group">
+            <li class="list-group-item" th:text="${antwort.toString()}">Eine Antwort zu einer Textfrage</li>
+        </ul>
+    </div>
 </div>
 
 <div class="border-bottom" th:fragment="singleResponseAntwort">
-
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Label</th>
+            <th scope="col" th:each="choice : ${frage.getChoices()}" th:text="${choice.toString()}">#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">Percent</th>
+            <td th:each="choice : ${frage.getChoices()}" th:text="${frage.holeErgebnis(choice)}">Mark</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="border-bottom" th:fragment="multipleResponseAntwort">
-
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Label</th>
+            <th scope="col" th:each="choice : ${frage.getChoices()}" th:text="${choice.toString()}">#</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">Percent</th>
+            <td th:each="choice : ${frage.getChoices()}" th:text="${frage.holeErgebnis(choice)}">Mark</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 </body>

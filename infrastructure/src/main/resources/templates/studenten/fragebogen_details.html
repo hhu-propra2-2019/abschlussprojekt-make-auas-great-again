@@ -34,13 +34,11 @@
                         <div class="form-group" th:if="${typeChecker.isTextFrage(frage)}">
                             <div th:replace="fragments/fragen :: textfrage">...</div>
                         </div>
-                        <div class="form-group" th:if="${typeChecker.isMultipleChoice(frage)}">
-                            <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
-                                <div th:replace="fragments/fragen :: singleResponse">...</div>
-                            </div>
-                            <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
-                                <div th:replace="fragments/fragen :: multipleResponse">...</div>
-                            </div>
+                        <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
+                            <div th:replace="fragments/fragen :: singleResponse">...</div>
+                        </div>
+                        <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
+                            <div th:replace="fragments/fragen :: multipleResponse">...</div>
                         </div>
                     </div>
                     <button class="btn btn-dark" type="submit">Submit</button>
