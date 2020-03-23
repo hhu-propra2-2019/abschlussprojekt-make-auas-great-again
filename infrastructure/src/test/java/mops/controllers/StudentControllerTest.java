@@ -88,4 +88,11 @@ class StudentControllerTest {
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/student/"));
   }
+
+  @Test
+  @DisplayName("Student sollte nicht auf die Orga Uebersicht Seite kommen")
+  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
+  public void forbiddenAccessStudent() throws Exception {
+    mvc.perform(get("/feedback/dozenten")).andExpect(status().is4xxClientError());
+  }
 }

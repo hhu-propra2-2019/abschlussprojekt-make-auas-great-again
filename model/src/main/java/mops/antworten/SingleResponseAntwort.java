@@ -1,6 +1,6 @@
 package mops.antworten;
 
-public class SingleResponseAntwort extends Antwort {
+public class SingleResponseAntwort extends MultipleChoiceAntwort {
   private transient Integer antwort;
 
   public SingleResponseAntwort(Long id) {

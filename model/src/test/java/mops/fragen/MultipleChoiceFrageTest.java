@@ -18,9 +18,10 @@ class MultipleChoiceFrageTest {
   @Test
   void deleteChoice() {
     MultipleChoiceFrage frage = new MultipleChoiceFrage("Hallo?");
+    Auswahl neu = new Auswahl("Hi");
 
-    frage.addChoice(new Auswahl(1L, "Hi"));
-    frage.deleteChoice(1L);
+    frage.addChoice(neu);
+    frage.deleteChoice(neu.getId());
 
     Assertions.assertFalse(frage.containsChoice("Hi"));
   }
