@@ -3,9 +3,10 @@ package mops;
 import java.util.ArrayList;
 import java.util.List;
 import mops.antworten.TextAntwort;
-import mops.fragen.Auswahl;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.MultipleResponseFrage;
+import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
 
 public class DozentService {
@@ -40,9 +41,13 @@ public class DozentService {
     for (Frage frage : altefragen) {
       if (frage instanceof TextFrage) {
         result.add(new TextFrage(frage.toString()));
+      } else if (frage instanceof SingleResponseFrage) {
+        SingleResponseFrage neuefrage =
+            new SingleResponseFrage(frage.toString(), ((SingleResponseFrage) frage).getChoices());
+        result.add(neuefrage);
       } else {
-        MultipleChoiceFrage neuefrage =
-            new MultipleChoiceFrage(frage.toString(), ((MultipleChoiceFrage) frage).getChoices());
+        MultipleResponseFrage neuefrage = new MultipleResponseFrage(frage.toString(),
+            ((MultipleResponseFrage) frage).getChoices());
         result.add(neuefrage);
       }
     }
