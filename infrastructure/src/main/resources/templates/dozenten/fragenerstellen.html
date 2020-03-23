@@ -52,18 +52,16 @@
                         </select>
                     </div>
                     <div class="form-group row">
-                        <label for="startdatum">Startdatum (aktuell: <span
-                                th:text="${datetime.getGermanFormat(neuerbogen.startdatum)}">Montag</span>):</label>
-                        <input id="startdatum" name="startdatum" required type="date">
+                        <label for="startdatum">Startdatum:</label>
+                        <input id="startdatum" name="startdatum" required th:value="${neuerbogen.startdatum.toLocalDate()}" type="date">
                     </div>
                     <div class="form-group row">
                         <label for="startzeit">Startzeit:</label>
                         <input id="startzeit" name="startzeit" required type="time">
                     </div>
                     <div class="form-group row">
-                        <label for="enddatum">Enddatum (aktuell: <span
-                                th:text="${datetime.getGermanFormat(neuerbogen.enddatum)}">Montag</span>):</label>
-                        <input id="enddatum" name="enddatum" required type="date">
+                        <label for="enddatum">Enddatum:</label>
+                        <input id="enddatum" name="enddatum" required th:value="${neuerbogen.enddatum.toLocalDate()}" type="date">
                     </div>
                     <div class="form-group row">
                         <label for="endzeit">Endzeit: </label>
