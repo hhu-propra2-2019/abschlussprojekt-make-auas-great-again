@@ -1,8 +1,8 @@
 package mops;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
@@ -27,5 +27,14 @@ public class DateTimeServiceTest {
     String result = service.getGermanFormat(totest);
 
     assertEquals("Montag, 23. März 2020", result);
+  }
+
+  @Test
+  public void zeitWirdKorrektFormatiert() {
+    LocalTime totest = LocalTime.of(13, 30);
+
+    String result = service.getTimeFormat(totest);
+
+    assertEquals("13:30", result);
   }
 }
