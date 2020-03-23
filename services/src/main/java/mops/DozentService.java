@@ -2,9 +2,12 @@ package mops;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import mops.antworten.TextAntwort;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.MultipleResponseFrage;
+import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
 
 public class DozentService {
@@ -36,15 +39,19 @@ public class DozentService {
   /**
    * Erzeugt ein passendes Fragenobjekt anhand des übergebenen Fragtyps.
    *
-   * @param fragetyp  Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
+   * @param fragetyp Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
    * @param fragetext Der Text der Frage
    * @return das neue Fragenobjekt
    */
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
+    Random idgenerator = new Random();
     if ("multiplechoice".equals(fragetyp)) {
-      return new MultipleChoiceFrage(fragetext);
-    } else {
+      return new SingleResponseFrage(idgenerator.nextLong(), fragetext, false);
+    } else if ("textfrage".equals(fragetyp)) {
       return new TextFrage(fragetext);
+    } else {
+      return new MultipleResponseFrage(idgenerator.nextLong(), fragetext);
     }
   }
 }
