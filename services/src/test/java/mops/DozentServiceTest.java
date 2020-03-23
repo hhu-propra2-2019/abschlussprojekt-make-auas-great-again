@@ -3,12 +3,14 @@ package mops;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import mops.antworten.TextAntwort;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.MultipleResponseFrage;
 import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
+import mops.rollen.Dozent;
 import org.junit.jupiter.api.Test;
 
 public class DozentServiceTest {
@@ -88,5 +90,23 @@ public class DozentServiceTest {
     Frage totest = service.getMultipleChoiceFrage(2L, fragebogen);
 
     assertEquals(totest, frage2);
+  }
+
+  @Test
+  public void alleFrageboegenWerdenEingesammelt() {
+    Fragebogen fragebogen = new Fragebogen("Analysis I", "Heinz Mustermann");
+    Fragebogen fragebogen2 = new Fragebogen("Tutorium zur Analysis I", "Heinz Mustermann");
+    Veranstaltung analysis = new Veranstaltung("Analysis I", "WiSe 2010", new Dozent("heinz001"));
+    analysis.addFragebogen(fragebogen);
+    analysis.addFragebogen(fragebogen2);
+    Fragebogen fragebogen3 = new Fragebogen("Programmierung", "Heinz Mustermann");
+    Veranstaltung prog = new Veranstaltung("Programmierung", "WiSe 2010", new Dozent("heinz001"));
+    prog.addFragebogen(fragebogen3);
+    List<Veranstaltung> veranstaltungen = List.of(analysis, prog);
+    List<Fragebogen> frageboegen = List.of(fragebogen, fragebogen2, fragebogen3);
+
+    List<Fragebogen> totest = service.holeFrageboegenVomDozent(veranstaltungen);
+
+    assertEquals(totest, frageboegen);
   }
 }
