@@ -68,10 +68,9 @@ public class Fragebogen {
   public boolean contains(String search) {
     if (professorenname.toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN))) {
       return true;
-    } else {
-      return veranstaltungsname.toLowerCase(Locale.GERMAN)
-          .contains(search.toLowerCase(Locale.GERMAN));
     }
+    return veranstaltungsname.toLowerCase(Locale.GERMAN)
+        .contains(search.toLowerCase(Locale.GERMAN));
   }
 
   public List<MultipleChoiceFrage> getMultipleChoiceFragen() {
