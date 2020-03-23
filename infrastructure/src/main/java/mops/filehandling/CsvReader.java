@@ -1,9 +1,11 @@
 package mops.filehandling;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import javax.validation.constraints.Null;
 import lombok.Getter;
 import mops.Veranstaltung;
 import mops.rollen.Student;
@@ -31,8 +33,13 @@ public class CsvReader {
     message = "";
     messageStatus = "";
 
-    if (isFileVerified()) {
-      readFromFile();
+    if (veranstaltung == null) {
+      setMessageAndStatus("Oh nein! Die Veranstaltung wurde nicht mitgegeben! "
+              + "<i>(Parameter null in CsvReader.java)</i>", "error");
+    } else {
+      if (isFileVerified()) {
+        readFromFile();
+      }
     }
 
   }
@@ -65,6 +72,9 @@ public class CsvReader {
     } catch (IOException e) {
       setMessageAndStatus("Es gab einen Fehler beim Lesen der Datei! "
           + "<i><b>(IOException in CsvReader.java)</b></i>", "error");
+    } catch (NullPointerException e) {
+      setMessageAndStatus("Oh je! Der Inhalt der Datei ist leer! "
+          + "<i>(Content null in CsvReader.java)</i>", "error");
     } finally {
       try {
         reader.close();
