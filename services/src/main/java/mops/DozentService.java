@@ -7,6 +7,7 @@ import mops.antworten.TextAntwort;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.MultipleResponseFrage;
+import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
 
 public class DozentService {
@@ -44,7 +45,7 @@ public class DozentService {
    */
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
     if ("multiplechoice".equals(fragetyp)) {
-      return new MultipleChoiceFrage(fragetext);
+      return new SingleResponseFrage(new Random().nextLong(), fragetext, false);
     } else if ("textfrage".equals(fragetyp)) {
       return new TextFrage(fragetext);
     } else {

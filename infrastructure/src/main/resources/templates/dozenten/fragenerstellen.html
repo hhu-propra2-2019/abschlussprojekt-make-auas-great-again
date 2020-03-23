@@ -93,7 +93,7 @@
                             <tr th:each="frage : ${neuerbogen.fragen}">
                                 <td th:text="${frage.toString()}">Die Vorlesung ist strukturiert</td>
                                 <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span
-                                        th:if="${typechecker.isMultipleChoice(frage)}">Multiple Choice-Frage</span><span th:if="${typechecker.isMultipleResponse(frage)}">Multiple Response-Frage</span></td>
+                                        th:if="${typechecker.isSingleResponse(frage)}">Multiple Choice-Frage</span><span th:if="${typechecker.isMultipleResponse(frage)}">Multiple Response-Frage</span></td>
                                 <td>
                                     <form class="form-horizontal" method="get"
                                           th:action="'/feedback/dozenten/new/questions/edit/' + ${neuerbogen.bogennr} + '/' + ${frage.id}"
