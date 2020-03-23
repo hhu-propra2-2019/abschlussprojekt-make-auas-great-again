@@ -46,6 +46,7 @@ public class DozentServiceTest {
   public void korrekteFrageWirdZurueckGegeben() {
     Fragebogen fragebogen = new Fragebogen("Analysis I", "Heinz Mustermann");
     TextFrage frage = new TextFrage(1L, "Wie geht's?");
+    TextFrage frage2 = new TextFrage(2L, "Sind sie zufrieden mit der Veranstaltung?");
     fragebogen.addFrage(frage);
 
     Frage totest = service.getFrage(1L, fragebogen);
