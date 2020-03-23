@@ -44,12 +44,13 @@ public class DozentService {
    * @return das neue Fragenobjekt
    */
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
+    Random idgenerator = new Random();
     if ("multiplechoice".equals(fragetyp)) {
-      return new SingleResponseFrage(new Random().nextLong(), fragetext, false);
+      return new SingleResponseFrage(idgenerator.nextLong(), fragetext, false);
     } else if ("textfrage".equals(fragetyp)) {
       return new TextFrage(fragetext);
     } else {
-      return new MultipleResponseFrage(new Random().nextLong(), fragetext);
+      return new MultipleResponseFrage(idgenerator.nextLong(), fragetext);
     }
   }
 }
