@@ -19,4 +19,13 @@ public class DateTimeServiceTest {
 
     assertEquals(gewuenscht, bekommen);
   }
+
+  @Test
+  public void datumWirdKorrektFormatiert() {
+    LocalDateTime totest = LocalDateTime.of(2020, 3, 23, 0, 0);
+
+    String result = service.getGermanFormat(totest);
+
+    assertEquals("Montag, 23. März 2020", result);
+  }
 }
