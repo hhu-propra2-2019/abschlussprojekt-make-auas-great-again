@@ -89,7 +89,8 @@ public class StudentController {
   public String submitFeedback(KeycloakAuthenticationToken token, @RequestParam Long bogennr,
                                HttpServletRequest req, Model model,
                                @RequestParam Long veranstaltung) {
-    Fragebogen fragebogen = veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltung);
+    Fragebogen fragebogen =
+        veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltung);
     Map<Long, String> antworten = new HashMap<>();
     for (Frage frage : fragebogen.getFragen()) {
       antworten.put(frage.getId(), req.getParameter("answer-" + frage.getId()));

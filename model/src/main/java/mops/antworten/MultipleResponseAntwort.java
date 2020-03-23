@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.Getter;
 import mops.fragen.Auswahl;
 
-public class MultipleResponseAntwort extends Antwort {
+public class MultipleResponseAntwort extends MultipleChoiceAntwort {
   @Getter
   private transient List<Auswahl> gewaehlteAntworten;
 
