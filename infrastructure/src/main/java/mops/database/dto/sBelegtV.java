@@ -10,4 +10,5 @@ public class sBelegtV {
   public sBelegtV(Long student) {
     this.student = student;
   }
+
 }
