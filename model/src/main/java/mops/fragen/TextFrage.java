@@ -14,19 +14,23 @@ public class TextFrage extends Frage {
   public TextFrage(Long id, String fragentext) {
     super(id);
     this.fragentext = fragentext;
-    this.antworten = new HashSet<>();
+    antworten = new HashSet<>();
   }
 
   public TextFrage(String fragentext) {
     super((long) new Random().nextInt(1000));
     this.fragentext = fragentext;
-    this.antworten = new HashSet<>();
+    antworten = new HashSet<>();
   }
 
   @Override
   public void addAntwort(String text) {
     TextAntwort antwort = new TextAntwort((long) new Random().nextInt(1000), text);
-    this.antworten.add(antwort);
+    antworten.add(antwort);
+  }
+
+  public void addAntwort(TextAntwort antwort) {
+    antworten.add(antwort);
   }
 
   @Override
