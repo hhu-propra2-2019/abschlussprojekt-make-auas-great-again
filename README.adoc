@@ -37,5 +37,5 @@ docker-compose up
 
 - Die vollständige Dokumentation befindet sich im Ordner arc-42
 
-include::arc42/arc24.adoc
+include::arc42/arc24.adoc[]
 
