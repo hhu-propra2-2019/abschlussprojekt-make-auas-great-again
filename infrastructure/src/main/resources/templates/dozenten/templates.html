@@ -48,6 +48,15 @@
             </tbody>
         </table>
     </div>
+    <div class="row container">
+        <form class="form-horizontal was-validated" th:action="'/feedback/dozenten/templates'" method="post">
+            <label for="templatename">Template hinzufügen: </label>
+            <div class="input-group mb-3 col-sm-6">
+                <input class="form-control" id="templatename" name="templatename" placeholder="Hier den Namen eingeben" required type="text">
+            </div>
+            <button class="btn btn-primary" name="createbutton" type="submit">Neues Template erstellen</button>
+        </form>
+    </div>
 </main>
 </body>
 </html>

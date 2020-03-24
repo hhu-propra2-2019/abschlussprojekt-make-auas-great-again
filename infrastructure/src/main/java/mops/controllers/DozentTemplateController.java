@@ -1,5 +1,6 @@
 package mops.controllers;
 
+import mops.FragebogenTemplate;
 import mops.database.MockDozentenRepository;
 import mops.rollen.Dozent;
 import mops.security.Account;
@@ -8,6 +9,7 @@ import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -25,6 +27,14 @@ public class DozentTemplateController {
     model.addAttribute("templates", dozent.getTemplates());
     model.addAttribute("account", createAccountFromPrincipal(token));
     return "dozenten/templates";
+  }
+
+  @PostMapping("")
+  public String neuesTemplate(String templatename, KeycloakAuthenticationToken token) {
+    FragebogenTemplate template = new FragebogenTemplate(templatename);
+    Dozent dozent = createDozentFromToken(token);
+    dozent.addTemplate(template);
+    return "redirect:/feedback/dozenten/templates";
   }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
