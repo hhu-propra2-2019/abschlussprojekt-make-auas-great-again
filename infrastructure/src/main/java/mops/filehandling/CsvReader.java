@@ -23,6 +23,7 @@ public class CsvReader {
   private transient int studentenCounter = 0;
   private transient Reader reader;
   private transient CSVParser parser;
+  private final transient String messageError = "error";
 
   public CsvReader(MultipartFile file, Veranstaltung veranstaltung) {
     this.file = file;
@@ -31,10 +32,14 @@ public class CsvReader {
     message = "";
     messageStatus = "";
 
-    if (isFileVerified()) {
+    if (veranstaltung != null && isFileVerified()) {
       readFromFile();
     }
 
+    if (veranstaltung == null) {
+      setMessageAndStatus("Oh nein! Die Veranstaltung wurde scheinbar nicht mitgegeben!"
+          + "<i>(Veranstaltung null in CsvReader.java)</i>", "error");
+    }
   }
 
   private boolean isFileVerified() {
@@ -60,18 +65,21 @@ public class CsvReader {
       }
 
       setMessageAndStatus(" Es wurden " + studentenCounter
-          + " Studenten der Veranstaltung zugeordnet.", messageStatus = "success");
+          + " Studenten der Veranstaltung zugeordnet.", "success");
 
     } catch (IOException e) {
       setMessageAndStatus("Es gab einen Fehler beim Lesen der Datei! "
-          + "<i><b>(IOException in CsvReader.java)</b></i>", "error");
+          + "<i><b>(IOException in CsvReader.java)</b></i>", messageError);
+    } catch (NullPointerException e) {
+      setMessageAndStatus("Oh je! Der Inhalt der Datei ist leer! "
+          + "<i>(Content null in CsvReader.java)</i>", messageError);
     } finally {
       try {
         reader.close();
         parser.close();
       } catch (IOException e) {
         setMessageAndStatus("Es gab einen Fehler beim Versuch, den Reader/Parser "
-            + "zu schließen. <i>(IOException in CsvReader.java)</i>", "error");
+            + "zu schließen. <i>(IOException in CsvReader.java)</i>", messageError);
       }
     }
   }
