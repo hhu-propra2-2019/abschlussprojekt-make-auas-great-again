@@ -1,10 +1,19 @@
 package mops.antworten;
 
-import lombok.AllArgsConstructor;
-import lombok.Value;
+public class SingleResponseAntwort extends MultipleChoiceAntwort {
+  private transient Integer antwort;
 
-@Value
-@AllArgsConstructor
-public class SingleResponseAntwort extends Antwort {
-  private Integer antwort;
+  public SingleResponseAntwort(Long id) {
+    super(id);
+  }
+
+  public SingleResponseAntwort(Long id, Integer antwort) {
+    super(id);
+    this.antwort = antwort;
+  }
+
+  @Override
+  public String toString() {
+    return antwort.toString();
+  }
 }

@@ -1,38 +1,35 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    ...
 </head>
 <body>
 
-<div th:fragment="textfrage">
-
-    <label for="textfrage" th:text="${frage.fragentext}">Label</label>
-    <textarea class="form-control" th:id="'answer-' + ${frage.id}"
-              th:name="'answer-' + ${frage.id}" id="textfrage"></textarea>
+<div class="border-bottom" th:fragment="textfrage">
+    <label for="textfrage" th:text="${frage.toString()}">Label</label>
+    <textarea class="form-control" id="textfrage"
+              th:id="'answer-' + ${frage.id}" th:name="'answer-' + ${frage.id}"></textarea>
 </div>
 
-<div th:fragment="singleResponse">
-
-    <h5 th:text="${frage.fragentext}">Fragetext</h5>
+<div class="border-bottom" th:fragment="singleResponse">
+    <label for="singleResponse" th:text="${frage.toString()}">Label</label>
+    <br>
     <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
-        <input class="form-check-input" th:id="'answer-' + ${frage.id}"
-               th:name="'answer-' + ${frage.id}"
-               th:value="${choice.label}" type="radio" id="singleResponse">
+        <input class="form-check-input" id="singleResponse"
+               th:id="'answer-' + ${frage.id}"
+               th:name="'answer-' + ${frage.id}" th:value="${choice.label}" type="radio">
         <label for="singleResponse" th:text="${choice.label}">Label</label>
     </div>
-
 </div>
 
-<div th:fragment="multipleResponse">
-    <h5 th:text="${frage.fragentext}">Fragetext</h5>
+<div class="border-bottom" th:fragment="multipleResponse">
+    <label for="multipleResponse" th:text="${frage.toString()}">Label</label>
+    <br>
     <div class="form-check form-check-inline" th:each="choice : ${frage.choices}">
-        <input class="form-check-input" th:id="'answer-' + ${frage.id}"
-               th:name="'answer-' + ${frage.id}"
-               th:value="${choice.label}" type="checkbox" id="multipleResponse">
+        <input class="form-check-input" id="multipleResponse"
+               th:id="'answer-' + ${frage.id}"
+               th:name="'answer-' + ${frage.id}" th:value="${choice.label}" type="checkbox">
         <label for="multipleResponse" th:text="${choice.label}">Label</label>
     </div>
-
 </div>
 
 </body>

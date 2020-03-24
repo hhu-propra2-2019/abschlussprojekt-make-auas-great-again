@@ -4,6 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>feedback</title>
     <th:block th:fragment="headcontent">
         <!-- Links, Skripts, Styles hier einfügen! -->
@@ -14,14 +15,31 @@
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
         <ul>
             <li class="active"><a href="/feedback/dozenten">Übersicht</a></li>
-            <li><a href="/feedback/dozenten/watch">Feedback ansehen</a></li>
-            <li><a href="/feedback/dozenten/new">Neuen Fragebogen erstellen</a></li>
+            <li><a href="/feedback/dozenten/event/new">Neue Veranstaltung erstellen</a></li>
         </ul>
     </nav>
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-4 text-center">Dozenten-Übersicht</h1>
-    <h3 class="text-center">Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS.</h3>
+    <h3 class="font-italic text-center">Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS.</h3>
+    <img alt="..." class="rounded mx-auto d-block" src="/hhu.jpg">
+    <div class="container">
+        <h2 class="display-4 text-center">Ihre Veranstaltungen</h2>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-3" th:each="veranstaltung : ${veranstaltungen}">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h3>
+                        <p th:text="${veranstaltung.getSemester()}"></p>
+                        <form class="form-horizontal"
+                              method="get" th:action="'/feedback/dozenten/event/' + ${veranstaltung.veranstaltungsNr}">
+                            <button class="btn btn-primary" name="geteventbutton" type="submit">Details</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>

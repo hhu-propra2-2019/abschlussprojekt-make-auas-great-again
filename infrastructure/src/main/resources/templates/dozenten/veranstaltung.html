@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>feedback</title>
+    <th:block th:fragment="headcontent">
+        <!-- Links, Skripts, Styles hier einfügen! -->
+    </th:block>
+</head>
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <ul>
+            <li><a href="/feedback/dozenten">Übersicht</a></li>
+            <li><a href="/feedback/dozenten/event/new">Neue Veranstaltung erstellen</a></li>
+        </ul>
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <h1 class="display-4 text-center">Veranstaltungsdetails</h1>
+    <h3>Details</h3>
+    <p>Name der Veranstaltung: <span th:text="${veranstaltung.name}">Programmierung</span></p>
+    <p>Semester: <span th:text="${veranstaltung.semester}">Programmierung</span></p>
+    <div class="row">
+        <div class="col-sm">
+            <div th:if="${message}">
+                <div th:if="${status == 'success'}">
+                    <div class="alert alert-success" role="alert">
+                        <span th:utext="${message}"></span>
+                    </div>
+                </div>
+                <div th:if="${status == 'error'}">
+                    <div class="alert alert-danger" role="alert">
+                        <span th:utext="${message}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Bereits vorhandene Fragebögen</h3>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name des Fragebogens</th>
+                            <th>Art</th>
+                            <th>Startzeit</th>
+                            <th>Endzeit</th>
+                            <th>Optionen</th>
+                        </tr>
+                        </thead>
+                        <tbody th:remove="all-but-first">
+                        <tr th:each="fragebogen : ${veranstaltung.frageboegen}">
+                            <td th:text="${fragebogen.veranstaltungsname}">Name</td>
+                            <td th:text="${fragebogen.type}">Vorlesung</td>
+                            <td th:text="${datetime.getGermanFormat(fragebogen.startdatum)}">25. September 2019</td>
+                            <td th:text="${datetime.getGermanFormat(fragebogen.enddatum)}">30. September 2019</td>
+                            <td>
+                                <div class="foo" th:if="${fragebogen.startdatum.isAfter(currenttime)}">
+                                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen.bogennr}">
+                                        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+                                        <button class="btn btn-primary" name="editbutton" type="submit">Fragebogen bearbeiten</button>
+                                    </form>
+                                </div>
+                                <div class="foo" th:if="${fragebogen.startdatum.isBefore(currenttime)}">
+                                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">
+                                        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+                                        <button class="btn btn-primary" name="showbutton" type="submit">Feedback ansehen</button>
+                                    </form>
+                                </div>
+                                <div class="foo" th:if="${fragebogen.enddatum.isBefore(currenttime)}">
+                                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/recycle/' + ${fragebogen.bogennr}">
+                                        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+                                        <button class="btn btn-primary" name="recyclebutton" type="submit">Fragebogen recyceln</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <form class="form-horizontal" th:action="'/feedback/dozenten/new'" method="post">
+                        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+                        <div class="text-center">
+                            <button class="btn btn-primary" name="newsheetbutton" type="submit">Neuen Fragebogen erstellen</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Studenten hinzufügen:</h2>
+                    <div th:if="${message}">
+                        <div th:if="${status == 'success'}">
+                            <div class="alert alert-success" role="alert">
+                                <span th:utext="${message}"></span>
+                            </div>
+                        </div>
+                        <div th:if="${status == 'error'}">
+                            <div class="alert alert-danger" role="alert">
+                                <span th:utext="${message}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="form-horizontal was-validated" method="post" enctype="multipart/form-data" th:action="'/feedback/dozenten/event/addStudenten/' + ${veranstaltung.veranstaltungsNr}">
+                        File to upload:<input type="file" name="file" accept=".csv" />
+                        <input type="submit" value="Upload" class="btn btn-primary float-right" />
+                    </form>
+                    <hr class="col-xs-12">
+                    <form class="form-horizontal was-validated" method="post" th:action="'/feedback/dozenten/event/addStudent/' + ${veranstaltung.veranstaltungsNr}">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Username eingeben" name="newStudent" required >
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="submit" value="StudentIn hinzufügen!" class="btn btn-primary float-right" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

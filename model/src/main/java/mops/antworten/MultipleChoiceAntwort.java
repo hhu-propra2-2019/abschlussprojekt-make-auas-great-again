@@ -1,11 +1,21 @@
 package mops.antworten;
 
-import lombok.AllArgsConstructor;
-import lombok.Value;
 import mops.fragen.Auswahl;
 
-@Value
-@AllArgsConstructor
 public class MultipleChoiceAntwort extends Antwort {
-  private Auswahl antwort;
+  private transient Auswahl antwort;
+
+  public MultipleChoiceAntwort(Long id, Auswahl auswahl) {
+    super(id);
+    this.antwort = auswahl;
+  }
+
+  public MultipleChoiceAntwort(Long id) {
+    super(id);
+  }
+
+  @Override
+  public String toString() {
+    return antwort.toString();
+  }
 }

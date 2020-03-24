@@ -20,10 +20,18 @@
 </header>
 <main th:fragment="bodycontent">
     <!-- Restlichen Inhalt hier einfügen! -->
-    <h2 th:text="${fragebogen.veranstaltungsname}">Feebackübersicht</h2>
-    <div class="col mb-4" th:each="frage :${fragebogen.fragen}">
-        <h3 th:text="${frage.getFragentext()}"></h3>
-        <p>Eine Antwort</p>
+    <h2 class="container" th:text="${fragebogen.veranstaltungsname}">Feebackübersicht</h2>
+    <div class="container" th:each="frage :${fragebogen.fragen}">
+        <h3 th:text="${frage.toString()}"></h3>
+        <div th:if="${typeChecker.isTextFrage(frage)}">
+            <div th:replace="fragments/antworten :: textAntwort">...</div>
+        </div>
+        <div class="form-group" th:if="${typeChecker.isSingleResponse(frage)}">
+            <div th:replace="fragments/antworten :: singleResponseAntwort">...</div>
+        </div>
+        <div class="form-group" th:if="${typeChecker.isMultipleResponse(frage)}">
+            <div th:replace="fragments/antworten :: multipleResponseAntwort">...</div>
+        </div>
     </div>
 </main>
 </body>

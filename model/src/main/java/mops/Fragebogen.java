@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,6 +15,7 @@ import lombok.Setter;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
+import mops.rollen.Student;
 
 
 @Builder
@@ -30,17 +32,29 @@ public class Fragebogen {
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
+  private List<Student> abgegebeneStudierende;
 
-  public Fragebogen(String veranstaltung, String dozent, LocalDateTime start, LocalDateTime ende,
-                    Einheit einheit) {
+  public Fragebogen(String veranstaltung, String dozent) {
     Random idgenerator = new Random();
     this.bogennr = idgenerator.nextLong();
     this.veranstaltungsname = veranstaltung;
     this.professorenname = dozent;
-    this.startdatum = start;
-    this.enddatum = ende;
+    this.startdatum = LocalDateTime.now().plusDays(1);
+    this.enddatum = LocalDateTime.now().plusDays(8);
     this.fragen = new ArrayList<>();
-    this.type = einheit;
+    this.abgegebeneStudierende = new ArrayList<>();
+    this.type = Einheit.VORLESUNG;
+  }
+  
+  public Fragebogen(String veranstaltung, String dozent, List<Frage> fragen, Einheit type) {
+    Random idgenerator = new Random();
+    this.bogennr = idgenerator.nextLong();
+    this.startdatum = LocalDateTime.now().plusDays(1);
+    this.enddatum = LocalDateTime.now().plusDays(8);
+    this.veranstaltungsname = veranstaltung;
+    this.professorenname = dozent;
+    this.fragen = fragen;
+    this.type = type;
   }
 
   /**
@@ -65,45 +79,49 @@ public class Fragebogen {
   public boolean contains(String search) {
     if (professorenname.toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN))) {
       return true;
-    } else {
-      return veranstaltungsname.toLowerCase(Locale.GERMAN)
-          .contains(search.toLowerCase(Locale.GERMAN));
     }
+    return veranstaltungsname.toLowerCase(Locale.GERMAN)
+        .contains(search.toLowerCase(Locale.GERMAN));
   }
 
-  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
-  public List<TextFrage> getTextfragen() {
-    List<TextFrage> textFragen = new ArrayList<>();
-    for (Frage frage : fragen) {
-      if (frage instanceof TextFrage) {
-        textFragen.add((TextFrage) frage);
-      }
-    }
-    return textFragen;
-  }
-
-  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public List<MultipleChoiceFrage> getMultipleChoiceFragen() {
-    List<MultipleChoiceFrage> mult = new ArrayList<>();
-    for (Frage frage : fragen) {
-      if (frage instanceof MultipleChoiceFrage) {
-        mult.add((MultipleChoiceFrage) frage);
-      }
-    }
-    return mult;
+    return fragen.stream()
+        .filter(frage -> frage instanceof MultipleChoiceFrage)
+        .map(frage -> (MultipleChoiceFrage) frage)
+        .collect(Collectors.toList());
   }
 
-  public void loescheFrage(Long id) {
-    Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findAny();
-    frage.ifPresent(value -> fragen.remove(value));
+  public List<TextFrage> getTextFragen() {
+    return fragen.stream()
+        .filter(frage -> frage instanceof TextFrage)
+        .map(frage -> (TextFrage) frage)
+        .collect(Collectors.toList());
+  }
+
+  public void loescheFrageById(Long id) {
+    fragen.remove(new TextFrage(id, ""));
+  }
+
+  public void loescheFrage(Frage frage) {
+    fragen.remove(frage);
   }
 
   public Frage getFrage(Long id) {
-    Optional<Frage> frage = fragen.stream().filter(x -> x.getId().equals(id)).findFirst();
-    return frage.get();
+    Optional<Frage> frage = fragen.stream()
+        .filter(x -> x.getId().equals(id))
+        .findFirst();
+    return frage.orElse(null);
   }
 
   public void addFrage(Frage frage) {
     fragen.add(frage);
+  }
+
+  public void addStudentAsSubmitted(Student student) {
+    abgegebeneStudierende.add(student);
+  }
+
+  public List<Student> getAbgegebeneStudierende() {
+    return abgegebeneStudierende;
   }
 }

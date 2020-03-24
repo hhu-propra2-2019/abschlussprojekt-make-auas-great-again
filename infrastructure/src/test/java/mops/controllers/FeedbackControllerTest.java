@@ -1,6 +1,7 @@
 package mops.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -17,12 +18,15 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 public class FeedbackControllerTest {
+  private final transient String usermail = "user@mail.de";
+  private final transient String orgamail = "orga@mail.de";
+
   @Autowired
   private transient MockMvc mvc;
 
   @Test
   @DisplayName("StudentIn sollte auf feedback/studenten weitergeleitet werden.")
-  @WithMockKeycloackAuth(roles = "studentin", idToken = @WithIDToken(email = "user@mail.de"))
+  @WithMockKeycloackAuth(roles = "studentin", idToken = @WithIDToken(email = usermail))
   public void redirectStudentinAufRichtigeSeite() throws Exception {
     mvc.perform(get("/feedback/")).andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/studenten"));
@@ -30,7 +34,7 @@ public class FeedbackControllerTest {
 
   @Test
   @DisplayName("Orga sollte auf feedback/dozenten weitergeleitet werden.")
-  @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = "orga@mail.de"))
+  @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
   public void redirectOrgaAufRichtigeSeite() throws Exception {
     mvc.perform(get("/feedback/")).andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/dozenten"));
@@ -43,5 +47,19 @@ public class FeedbackControllerTest {
     mvc.perform(get("/feedback/"))
         .andExpect(status().is2xxSuccessful())
         .andExpect(view().name("index"));
+  }
+
+  @Test
+  @DisplayName("Public User Should Be Redirected To Login Page When Attempting To Go To Dozenten")
+  public void loginRedirectionForPublicUsersToDozentPage() throws Exception {
+    mvc.perform(get("/feedback/dozenten")).andExpect(status().is3xxRedirection())
+        .andExpect(((redirectedUrl("/sso/login"))));
+  }
+
+  @Test
+  @DisplayName("Public User Should Be Redirected To Login Page When Attempting To Go To Studenten")
+  public void loginRedirectionForPublicUsersToStudentPage() throws Exception {
+    mvc.perform(get("/feedback/studenten")).andExpect(status().is3xxRedirection())
+        .andExpect(((redirectedUrl("/sso/login"))));
   }
 }

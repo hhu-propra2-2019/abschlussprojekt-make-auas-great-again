@@ -1,24 +1,21 @@
 package mops.fragen;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 import lombok.Getter;
 import lombok.Setter;
+import mops.antworten.Antwort;
 import mops.antworten.MultipleChoiceAntwort;
 
 @Getter
 @Setter
-@SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
 public class MultipleChoiceFrage extends Frage {
+  public static final long ZERO = 0L;
   private transient String fragentext;
   private transient List<Auswahl> choices;
   private boolean hasMultipleResponse;
-  private List<MultipleChoiceAntwort> antworten;
-  private Map<Auswahl, Double> auswertung = new HashMap<>();
+  private List<Antwort> antworten;
 
   public MultipleChoiceFrage(Long id, String fragentext, boolean hasMultipleResponse) {
     super(id);
@@ -36,6 +33,15 @@ public class MultipleChoiceFrage extends Frage {
     this.hasMultipleResponse = false;
     this.antworten = new ArrayList<>();
   }
+  
+  public MultipleChoiceFrage(String fragentext, List<Auswahl> choices) {
+    super((long) new Random().nextInt(1000));
+    this.fragentext = fragentext;
+    this.choices = new ArrayList<>();
+    choices.stream().forEach(x -> this.addChoice(x));
+    this.hasMultipleResponse = false;
+    this.antworten = new ArrayList<>();
+  }
 
   private void fillDummyChoices() {
     this.addChoice(new Auswahl("Trifft voll und ganz zu"));
@@ -46,12 +52,16 @@ public class MultipleChoiceFrage extends Frage {
 
   public void addChoice(Auswahl choice) {
     this.choices.add(choice);
-    auswertung.put(choice, (double) 0);
+  }
+
+  public boolean containsChoice(String label) {
+    return choices.stream()
+        .anyMatch(choice -> choice.toString().equals(label));
   }
 
   public void deleteChoice(Long id) {
-    Optional<Auswahl> antwort = choices.stream().filter(x -> x.getId().equals(id)).findAny();
-    antwort.ifPresent(x -> choices.remove(x));
+    Auswahl toRemove = choices.stream().filter(x -> x.getId().equals(id)).findFirst().get();
+    choices.remove(toRemove);
   }
 
   public int getNumberOfChoices() {
@@ -62,23 +72,32 @@ public class MultipleChoiceFrage extends Frage {
   public void addAntwort(String antwort) {
     Auswahl auswahl = new Auswahl(antwort);
     if (choices.contains(auswahl)) {
-      this.antworten.add(new MultipleChoiceAntwort(auswahl));
+      this.antworten.add(new MultipleChoiceAntwort((long) new Random().nextInt(1000), auswahl));
     }
-    this.aktualisiereErgebnis();
   }
 
-  private void aktualisiereErgebnis() {
-    for (Auswahl auswahl : choices) {
-      long anzahl = antworten.stream().filter(x -> x.getAntwort().equals(auswahl)).count();
-      auswertung.put(auswahl, berechneProzentualenAnteil(anzahl));
-    }
+  @Override
+  public List<Antwort> getAntworten() {
+    return antworten;
+  }
+
+  @Override
+  public String toString() {
+    return fragentext;
   }
 
   private Double berechneProzentualenAnteil(long anzahl) {
+    if (anzahl == ZERO) {
+      return 0.0;
+    }
     return (((double) anzahl) / antworten.size()) * 100;
   }
 
   public Double holeErgebnis(Auswahl auswahl) {
-    return auswertung.get(auswahl);
+    long anzahl = antworten.stream()
+        .map(Antwort::toString)
+        .filter(str -> str.equals(auswahl.getLabel()))
+        .count();
+    return berechneProzentualenAnteil(anzahl);
   }
 }
