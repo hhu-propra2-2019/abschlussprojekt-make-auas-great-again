@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import mops.DozentService;
 import mops.FragebogenTemplate;
 import mops.TypeChecker;
 import mops.database.MockDozentenRepository;
@@ -18,10 +19,12 @@ import mops.security.Account;
 @RequestMapping("/feedback/dozenten/templates")
 public class DozentTemplateController {
   private final DozentRepository dozenten;
+  private final DozentService dozentservice;
   private final TypeChecker typechecker;
 
   public DozentTemplateController() {
     dozenten = new MockDozentenRepository();
+    dozentservice = new DozentService();
     typechecker = new TypeChecker();
   }
 
@@ -49,6 +52,15 @@ public class DozentTemplateController {
     model.addAttribute("typechecker", typechecker);
     model.addAttribute("account", createAccountFromPrincipal(token));
     return "dozenten/edittemplate";
+  }
+
+  @PostMapping("/{templatenr}")
+  public String neueFrage(@PathVariable Long templatenr, KeycloakAuthenticationToken token,
+      String fragetyp, String fragetext) {
+    Dozent dozent = getDozentFromToken(token);
+    FragebogenTemplate template = dozent.getTemplateById(templatenr);
+    template.addFrage(dozentservice.createNeueFrageAnhandFragetyp(fragetyp, fragetext));
+    return "redirect:/feedback/dozenten/templates/" + templatenr;
   }
 
   @PostMapping("/delete/{templatenr}")
