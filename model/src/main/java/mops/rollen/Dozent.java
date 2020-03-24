@@ -16,13 +16,12 @@ public class Dozent {
   private String username;
   private String vorname;
   private String nachname;
-  private List<FragebogenTemplate> templates;
+  private final List<FragebogenTemplate> templates = new ArrayList<>();
 
   public Dozent(String username) {
     this.username = username;
     vorname = "jens";
     nachname = "B";
-    templates = new ArrayList<>();
   }
   
   public void addTemplate(FragebogenTemplate template) {

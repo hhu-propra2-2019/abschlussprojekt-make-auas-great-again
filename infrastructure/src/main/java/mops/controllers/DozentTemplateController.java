@@ -21,6 +21,8 @@ public class DozentTemplateController {
 
   @GetMapping("")
   public String getTemplatePage(Model model, KeycloakAuthenticationToken token) {
+    Dozent dozent = createDozentFromToken(token);
+    model.addAttribute("templates", dozent.getTemplates());
     model.addAttribute("account", createAccountFromPrincipal(token));
     return "dozenten/templates";
   }

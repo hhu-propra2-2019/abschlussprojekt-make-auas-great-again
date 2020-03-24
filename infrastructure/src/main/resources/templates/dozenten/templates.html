@@ -22,7 +22,32 @@
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-4 text-center">Meine Fragebogen-Templates</h1>
-    <p>Hier kommt noch Content rein.</p>
+    <div class="row container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name des Templates</th>
+                <th>Bearbeiten</th>
+                <th>Löschen</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+                <tr th:each="template : ${templates}">
+                    <td th:text="${template.name}">Name</td>
+                    <td>
+                        <form class="form-horizontal" method="get">
+                            <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">Bearbeiten</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="form-horizontal" method="post">
+                            <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 </body>
 </html>
