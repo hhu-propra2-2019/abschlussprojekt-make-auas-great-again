@@ -31,7 +31,7 @@ create table if not exists fragebogen
     status        integer         not null,
     startzeit     datetime,
     endzeit       datetime        not null,
-    veranstaltung bigint unsigned not null,
+    veranstaltung bigint unsigned,
     einheit       enum ('VORLESUNG','UEBUNG','AUFGABE','PRAKTIKUM','DOZENT','BERATUNG','GRUPPE'),
     primary key (id),
     foreign key (veranstaltung)

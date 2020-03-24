@@ -5,6 +5,7 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @AllArgsConstructor
@@ -13,8 +14,10 @@ import org.springframework.data.relational.core.mapping.Table;
 public class FrageDto {
   @Id
   Long id;
-  String fragentext;
+  String fragetext;
+  @Column("frage")
   Set<AntwortDto> antworten;
+  @Column("frage")
   Set<AuswahlDto> auswaehlbar;
 
   public static FrageDto createTextfrage(String text) {
