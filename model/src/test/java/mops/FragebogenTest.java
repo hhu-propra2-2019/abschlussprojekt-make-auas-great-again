@@ -107,4 +107,14 @@ class FragebogenTest {
     Assertions.assertFalse(textFragen.contains(neueFrage));
   }
 
+
+  @Test
+  public void getFrageTest() {
+    TextFrage neueFrage = new TextFrage("lorem");
+    fragebogen.addFrage(neueFrage);
+    TextFrage frage = (TextFrage) fragebogen.getFrage(neueFrage.getId());
+    Assertions.assertEquals(frage.getId(), neueFrage.getId());
+
+  }
+
 }
