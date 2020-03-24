@@ -12,4 +12,8 @@ public class AuswahlDto {
   @Id
   Long id;
   String auswahltext;
+
+  public static AuswahlDto create(String text) {
+    return new AuswahlDto(null, text);
+  }
 }

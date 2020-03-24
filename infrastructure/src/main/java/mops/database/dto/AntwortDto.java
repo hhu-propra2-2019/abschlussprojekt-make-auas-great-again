@@ -31,7 +31,7 @@ public class AntwortDto {
     ausgewaehlt.add(auswahl);
   }
 
-  public void setAntwortenToMultipleChoice(Set<AuswahlDto> auswahlen) {
-    ausgewaehlt = auswahlen;
+  public void addAntwortenToMultipleChoice(Set<AuswahlDto> auswahlen) {
+    ausgewaehlt.addAll(auswahlen);
   }
 }

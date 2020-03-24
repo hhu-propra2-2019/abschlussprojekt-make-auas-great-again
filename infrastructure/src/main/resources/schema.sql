@@ -62,7 +62,7 @@ create table if not exists auswahl
 (
     id          bigint unsigned not null auto_increment,
     auswahltext varchar(100)    not null,
-    frage       bigint unsigned not null,
+    frage       bigint unsigned,
     antwort     bigint unsigned,
     primary key (id),
     foreign key (frage)

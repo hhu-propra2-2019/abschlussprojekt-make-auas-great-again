@@ -5,8 +5,11 @@ import static mops.Einheit.PRAKTIKUM;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import mops.database.dto.AntwortDto;
+import mops.database.dto.AuswahlDto;
 import mops.database.dto.DozentDto;
 import mops.database.dto.FrageDto;
 import mops.database.dto.FragebogenDto;
@@ -29,6 +32,39 @@ public class VeranstaltungJdbcRepositoryTest {
   private transient DozentenJdbcRepository dozentenRepo;
   @Autowired
   private transient FragebogenJdbcRepository fragebogenRepo;
+
+
+  @Test
+  void addAntwortenToFragenToFragebogenToVeranstaltungKnowingId() {
+    FragebogenDto fragebogen = FragebogenDto.create("Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
+    FrageDto frage2 = FrageDto.createMultipleChoicefrage("Wo?");
+    AuswahlDto auswahl1 = AuswahlDto.create("Ja");
+    AuswahlDto auswahl2 = AuswahlDto.create("Nein");
+    frage2.addChoice(auswahl1);
+    frage2.addChoice(auswahl2);
+    fragebogen.addFrage(frage2);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra2", 3);
+    repository.save(veranstaltung);
+    veranstaltung.addFragebogen(fragebogen);
+    repository.save(veranstaltung);
+    fragebogenRepo.save(fragebogen);
+    FragebogenDto fragebogenReturn = fragebogenRepo.findById(1L).get();
+    Set<FrageDto> fragen = fragebogenReturn.getFragen();
+    AntwortDto antwort2 = AntwortDto.createMultipleChoiceAntwort();
+    for (FrageDto frage : fragen) {
+      antwort2.addAntwortToMultipleChoice(AuswahlDto.create(auswahl1.getAuswahltext()));
+      frage.addAnwort(antwort2);
+    }
+    fragebogenReturn.setFragen(fragen);
+    fragebogenRepo.save(fragebogenReturn);
+    FragebogenDto fragebogenReturn2 = fragebogenRepo.findById(1L).get();
+    Set<FrageDto> fragen2 = fragebogenReturn2.getFragen();
+    Set<AntwortDto> antworten = new HashSet<>();
+    for (FrageDto frage : fragen2) {
+      antworten.addAll(frage.getAntworten());
+    }
+    assertThat(antworten).isNotEmpty();
+  }
 
   @Test
   void addFragenToFragebogenToVeranstaltung() {
