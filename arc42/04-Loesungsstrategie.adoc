@@ -21,15 +21,15 @@ mit Hilfe von Gradle-subprojects Feature (genaueres Kapitel 9).
 Zur Verwaltung unserer gemeinsamen Entwicklung nutzen wir all von Github bereitgestellten Dienste zur Strukturierung unserer Anwendung. zu nutzen.
 Das sind im wesentlichen:
 
-    Git-Versionsverwaltungssoftware:
+    * Git-Versionsverwaltungssoftware: +
     Sowohl zur Erfassung von Änderungen an Code oder Dateien
     als auch für das zurückgreifen bei Bedarf auf einen früheren Stand unseres Projektes.
 
-    Github-Issues:
+    * Github-Issues: +
     Wir benutzen Github-Issues zum Melden von Bugs in Code, sodass alle permanent im gleichen Zustand bleiben.
     Issues werden aber auch für alle Änderungen erstellt, die nicht sofort bearbeitet werden können.
 
-    Feature-Branches/Pull-Requests:
+    * Feature-Branches/Pull-Requests: +
     Für alle Features werden neue Branches erstellt, die dann in den Integration-branch gemerget werden.
     Alle unsere Änderungen können nur reviewed in den Integration-branch gemerged werden.
 
