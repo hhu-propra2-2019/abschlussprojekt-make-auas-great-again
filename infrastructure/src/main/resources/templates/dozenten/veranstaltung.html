@@ -108,6 +108,17 @@
                         File to upload:<input type="file" name="file" accept=".csv" />
                         <input type="submit" value="Upload" class="btn btn-primary float-right" />
                     </form>
+                    <hr class="col-xs-12">
+                    <form class="form-horizontal was-validated" method="post" th:action="'/feedback/dozenten/event/addStudent/' + ${veranstaltung.veranstaltungsNr}">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Matrikelnummer eingeben" name="newStudent">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="submit" value="StudentIn hinzufügen!" class="btn btn-primary float-right" />
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

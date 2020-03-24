@@ -1,11 +1,9 @@
 package mops.filehandling;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import javax.validation.constraints.Null;
 import lombok.Getter;
 import mops.Veranstaltung;
 import mops.rollen.Student;
@@ -25,6 +23,7 @@ public class CsvReader {
   private transient int studentenCounter = 0;
   private transient Reader reader;
   private transient CSVParser parser;
+  private final transient String messageError = "error";
 
   public CsvReader(MultipartFile file, Veranstaltung veranstaltung) {
     this.file = file;
@@ -35,7 +34,7 @@ public class CsvReader {
 
     if (veranstaltung == null) {
       setMessageAndStatus("Oh nein! Die Veranstaltung wurde nicht mitgegeben! "
-              + "<i>(Parameter null in CsvReader.java)</i>", "error");
+              + "<i>(Parameter null in CsvReader.java)</i>", messageError);
     } else {
       if (isFileVerified()) {
         readFromFile();
@@ -67,21 +66,21 @@ public class CsvReader {
       }
 
       setMessageAndStatus(" Es wurden " + studentenCounter
-          + " Studenten der Veranstaltung zugeordnet.", messageStatus = "success");
+          + " Studenten der Veranstaltung zugeordnet.", "success");
 
     } catch (IOException e) {
       setMessageAndStatus("Es gab einen Fehler beim Lesen der Datei! "
-          + "<i><b>(IOException in CsvReader.java)</b></i>", "error");
+          + "<i><b>(IOException in CsvReader.java)</b></i>", messageError);
     } catch (NullPointerException e) {
       setMessageAndStatus("Oh je! Der Inhalt der Datei ist leer! "
-          + "<i>(Content null in CsvReader.java)</i>", "error");
+          + "<i>(Content null in CsvReader.java)</i>", messageError);
     } finally {
       try {
         reader.close();
         parser.close();
       } catch (IOException e) {
         setMessageAndStatus("Es gab einen Fehler beim Versuch, den Reader/Parser "
-            + "zu schließen. <i>(IOException in CsvReader.java)</i>", "error");
+            + "zu schließen. <i>(IOException in CsvReader.java)</i>", messageError);
       }
     }
   }
