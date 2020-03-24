@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import mops.fragen.Frage;
+import mops.fragen.TextFrage;
 
 @Getter
 @EqualsAndHashCode(of = "name")
@@ -18,5 +19,9 @@ public class FragebogenTemplate {
 
   public void addFrage(Frage frage) {
     fragen.add(frage);
+  }
+  
+  public void deleteFrageById(Long id) {
+    fragen.remove(fragen.stream().filter(x -> x.getId().equals(id)).findFirst().get());
   }
 }

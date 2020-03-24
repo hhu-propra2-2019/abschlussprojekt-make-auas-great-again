@@ -70,6 +70,15 @@ public class DozentTemplateController {
     return "redirect:/feedback/dozenten/templates";
   }
 
+  @PostMapping("/delete/{templatenr}/{fragennr}")
+  public String deleteFrage(@PathVariable Long templatenr, @PathVariable Long fragennr,
+      KeycloakAuthenticationToken token) {
+    Dozent dozent = getDozentFromToken(token);
+    FragebogenTemplate template = dozent.getTemplateById(templatenr);
+    template.deleteFrageById(fragennr);
+    return "redirect:/feedback/dozenten/templates/" + templatenr;
+  }
+
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     return new Account(principal.getName(),

@@ -43,7 +43,7 @@
                     </form>
                 </td>
                 <td>
-                    <form class="form-horizontal" method="post">
+                    <form class="form-horizontal" th:action="'/feedback/dozenten/templates/delete/' + ${template.id} + '/' + ${frage.id}" method="post">
                         <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
                     </form>
                 </td>
