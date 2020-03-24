@@ -16,6 +16,8 @@ System Github-Actions sichergestellt. +
 Wir nutzen für die Umsetzung von Bounded Contexts nach Domain-Driven Design die Onion-architecture
 mit Hilfe von Gradle-subprojects Feature (genaueres Kapitel 9).
 
+include::09-Entwurfsentscheidungen.adoc[]
+
 = Organisationsentscheidungen
 
 Zur Verwaltung unserer gemeinsamen Entwicklung nutzen wir all von Github bereitgestellten Dienste zur Strukturierung unserer Anwendung. zu nutzen.
