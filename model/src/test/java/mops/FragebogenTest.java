@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
+import mops.rollen.Student;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -117,4 +118,21 @@ class FragebogenTest {
 
   }
 
+  @Test
+  public void addFrageTest() {
+
+    TextFrage neueFrage = new TextFrage("covid19 sucks");
+    fragebogen.addFrage(neueFrage);
+    List<TextFrage> textFragen = fragebogen.getTextFragen();
+    Assertions.assertTrue(textFragen.contains(neueFrage));
+  }
+
+  @Test
+  public void addStudentAsSubmittedTest() {
+    Student student = new Student("nauth");
+    fragebogen.addStudentAsSubmitted(student);
+    List<Student> abgegebeneStudierende = fragebogen.getAbgegebeneStudierende();
+    Assertions.assertTrue(abgegebeneStudierende.contains(student) && student.getUsername().equals("nauth"));
+
+  }
 }
