@@ -9,6 +9,6 @@ Model , Services und infrastructure. +
 
 * In der Services-Schicht befinden sich verschidene Services, die in den Controller benutzt werden und verschiedene Dienste leisten. +
 
-* In der Model-Schicht befinden sich unsere Anwendungsobjekte,die die grundliegende Komponente unseres Projektes realisieren. +
+* In der Model-Schicht befinden sich unsere Anwendungsobjekte,die die grundlegende Komponente unseres Projektes realisieren. +
 
 image:images/onion.png[]
