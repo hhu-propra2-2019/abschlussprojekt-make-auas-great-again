@@ -47,6 +47,13 @@ public class DozentTemplateController {
     return "dozenten/edittemplate";
   }
 
+  @PostMapping("/delete/{templatenr}")
+  public String deleteTemplate(@PathVariable Long templatenr, KeycloakAuthenticationToken token) {
+    Dozent dozent = getDozentFromToken(token);
+    dozent.deleteTemplateById(templatenr);
+    return "redirect:/feedback/dozenten/templates";
+  }
+
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
     return new Account(principal.getName(),

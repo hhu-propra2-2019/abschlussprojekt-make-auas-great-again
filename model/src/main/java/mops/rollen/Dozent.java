@@ -31,4 +31,8 @@ public class Dozent {
   public FragebogenTemplate getTemplateById(Long id) {
     return templates.stream().filter(x -> x.getId().equals(id)).findFirst().get();
   }
+  
+  public void deleteTemplateById(Long id) {
+    templates.remove(getTemplateById(id));
+  }
 }

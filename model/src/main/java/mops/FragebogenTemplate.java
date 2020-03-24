@@ -9,7 +9,7 @@ import lombok.Getter;
 import mops.fragen.Frage;
 
 @Getter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "name")
 @AllArgsConstructor
 public class FragebogenTemplate {
   private final Long id = new Random().nextLong();
