@@ -1,5 +1,6 @@
 package mops.controllers;
 
+import mops.database.MockDozentenRepository;
 import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -12,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/feedback/dozenten/templates")
 public class DozentTemplateController {
+  private final DozentRepository dozenten;
+
+  public DozentTemplateController() {
+    dozenten = new MockDozentenRepository();
+  }
+
   @GetMapping("")
   public String getTemplatePage(Model model, KeycloakAuthenticationToken token) {
     model.addAttribute("account", createAccountFromPrincipal(token));
@@ -27,6 +34,6 @@ public class DozentTemplateController {
 
   private Dozent createDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return new Dozent(principal.getName());
+    return dozenten.getDozentByUsername(principal.getName());
   }
 }
