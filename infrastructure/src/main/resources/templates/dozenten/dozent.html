@@ -23,7 +23,6 @@
     <h1 class="display-4 text-center">Dozenten-Übersicht</h1>
     <h3 class="font-italic text-center">Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS.</h3>
     <div class="container">
-        <img alt="..." class="rounded mx-auto d-block" src="/hhu.jpg">
 
         <div class="row row-cols-1 row-cols-md-3">
             <div class="col mb-3" th:each="veranstaltung : ${veranstaltungen}">
@@ -32,7 +31,7 @@
                         <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
                         <form class="form-horizontal"
                               method="get" th:action="'/feedback/dozenten/event/' + ${veranstaltung.veranstaltungsNr}">
-                            <button class="btn btn-link btn-lg btn-block stretched-link" name="geteventbutton" type="submit"> </button>
+                            <button class="btn btn-link btn-lg btn-block stretched-link" name="geteventbutton" type="submit"></button>
                         </form>
                     </div>
                 </div>
