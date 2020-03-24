@@ -1,1 +1,13 @@
 = Lösungsstrategie
+
+= Technologieentscheidungen
+
+Die Anwendung ist eine Spring-Boot Webapplikation, wobei sie mit Gradle gebaut wird. +
+Der Code im Back-End ist vollständig in Java 13 geschrieben, das Front-End in HTML,
+wobei wir hier zur Anbindung der Views an das Back-End Thymeleaf als Framework
+nutzen. +
+Für eine effiziente Nutzung der Systemressourcen und die Gewährleistung der Lauffähigkeit unserer Anwendung
+auf möglichst vielen Systemen benutzen wir die Containerisierungstechnologie Docker (bzw. docker-compose). +
+Während des Entwicklungsprozesses wird die Codequalität kontinuierlich durch Das Continous-Integration
+System Github-Actions sichergestellt. +
+
