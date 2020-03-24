@@ -25,4 +25,4 @@ Diese Objekte erhält der Controller wiederum durch Anfragen auf die Services od
 
 == Bildliche Darstellung
 
-image:images/onion.png[align="center"]
+image:images/onion.jpg[align="center"]
