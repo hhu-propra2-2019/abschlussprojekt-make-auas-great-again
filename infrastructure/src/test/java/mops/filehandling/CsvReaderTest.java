@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
+import java.nio.charset.StandardCharsets;
 import mops.Veranstaltung;
 import mops.rollen.Dozent;
 import org.junit.Rule;
@@ -26,13 +27,13 @@ public class CsvReaderTest {
         "data",
         "filename.csv",
         "text/csv",
-        "here,are,some,inputs".getBytes());
+        "here,are,some,inputs".getBytes(StandardCharsets.UTF_8));
 
     textfile = new MockMultipartFile(
         "inputs",
         "filename.txt",
         "text/plain",
-         "here,are,a,few,more,inputs".getBytes());
+         "here,are,a,few,more,inputs".getBytes(StandardCharsets.UTF_8));
 
     mockVeranstaltung = new Veranstaltung(
         "TestVeranstaltung",
@@ -80,7 +81,7 @@ public class CsvReaderTest {
         "content",
         null,
         "text/csv",
-         "this,is,unreachable,content".getBytes());
+         "this,is,unreachable,content".getBytes(StandardCharsets.UTF_8));
 
     csvReader = new CsvReader(nullFile, mockVeranstaltung);
 
@@ -96,7 +97,7 @@ public class CsvReaderTest {
   @DisplayName("Leerer Inhalt")
   public void readerComplainsWhenInputEmpty() {
     MockMultipartFile emptyFile = new MockMultipartFile("nodata","input.csv",
-        "text/csv", "".getBytes()
+        "text/csv", "".getBytes(StandardCharsets.UTF_8)
     );
 
     csvReader = new CsvReader(emptyFile, mockVeranstaltung);
