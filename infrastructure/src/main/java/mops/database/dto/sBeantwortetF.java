@@ -4,7 +4,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Table("studentBeantwortetFragebogen")
 public class sBeantwortetF {
-  private Long student;
+  transient Long student;
 
   public sBeantwortetF(Long student) {
     this.student = student;

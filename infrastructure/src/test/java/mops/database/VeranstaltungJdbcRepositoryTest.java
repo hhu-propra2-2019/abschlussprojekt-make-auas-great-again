@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 @DataJdbcTest
 public class VeranstaltungJdbcRepositoryTest {
 
@@ -36,14 +37,15 @@ public class VeranstaltungJdbcRepositoryTest {
 
   @Test
   void addAntwortenToFragenToFragebogenToVeranstaltungKnowingId() {
-    FragebogenDto fragebogen = FragebogenDto.create("Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
+    FragebogenDto fragebogen = FragebogenDto.create(
+        "Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
     FrageDto frage2 = FrageDto.createMultipleChoicefrage("Wo?");
     AuswahlDto auswahl1 = AuswahlDto.create("Ja");
     AuswahlDto auswahl2 = AuswahlDto.create("Nein");
     frage2.addChoice(auswahl1);
     frage2.addChoice(auswahl2);
     fragebogen.addFrage(frage2);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra2", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra5", 3);
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -68,12 +70,13 @@ public class VeranstaltungJdbcRepositoryTest {
 
   @Test
   void addFragenToFragebogenToVeranstaltung() {
-    FragebogenDto fragebogen = FragebogenDto.create("Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
+    FragebogenDto fragebogen = FragebogenDto.create(
+        "Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
     FrageDto frage1 = FrageDto.createTextfrage("Was?");
     FrageDto frage2 = FrageDto.createMultipleChoicefrage("Wo?");
     fragebogen.addFrage(frage1);
     fragebogen.addFrage(frage2);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra2", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra4", 3);
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -88,10 +91,11 @@ public class VeranstaltungJdbcRepositoryTest {
 
   @Test
   void addFragebogenToVeranstaltungTest() {
-    FragebogenDto fragebogen = FragebogenDto.create("Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
+    FragebogenDto fragebogen = FragebogenDto.create(
+        "Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
     FrageDto frage = FrageDto.createTextfrage("Was?");
     fragebogen.addFrage(frage);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra2", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra0", 3);
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -105,7 +109,7 @@ public class VeranstaltungJdbcRepositoryTest {
   void addDozentenToVeranstaltungTest() {
     DozentDto dozent = DozentDto.create("chris", "m", "herr");
     dozentenRepo.save(dozent);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra2", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra1", 3);
     veranstaltung.addDozent(dozent);
     repository.save(veranstaltung);
     List<Set<dOrganisiertV>> dozenten = new ArrayList<>();
