@@ -21,58 +21,65 @@
 <main th:fragment="bodycontent">
     <div class="container">
         <h1 class="display-4 text-center">Fragebogen bearbeiten</h1>
-        <h4 class="text-center">Fragebogen zur Einheit <span th:text="${neuerbogen.type.toString()}">Vorlesung</span>
-            "<span th:text="${neuerbogen.veranstaltungsname}">Programmierung</span>"; verantwortlich: <span
-                    th:text="${neuerbogen.professorenname}">Prof. Dr. Max Mustermann</span>
+        <h4 class="text-center">Fragebogen zur Einheit<span th:text="${neuerbogen.type.toString()}">Vorlesung</span>
+            "<span th:text="${neuerbogen.veranstaltungsname}">Veranstaltung</span>"; verantwortlich:<span
+                    th:text="${neuerbogen.professorenname}">Professorenname</span>
         </h4>
-        <hr>
-        <h3>Metadaten des Fragebogens</h3>
-        <form class="was-validated text-center" method="post"
-              th:action="'/feedback/dozenten/new/meta/' + ${neuerbogen.bogennr}">
-            <div class="form-row">
-                <div class="col-md-4 mb-3">
-                    <div class="form-group row">
-                        <label for="startzeit">Name des Fragebogens:</label>
-                        <input th:value="${neuerbogen.veranstaltungsname}" id="veranstaltungsname" name="veranstaltungsname" required type="text">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Metadaten des Fragebogens</h3>
+                        <form class="was-validated text-center" method="post"
+                              th:action="'/feedback/dozenten/new/meta/' + ${neuerbogen.bogennr}">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-group row">
+                                        <label for="startzeit">Name des Fragebogens:</label>
+                                        <input class="form-control" th:value="${neuerbogen.veranstaltungsname}" id="veranstaltungsname" name="veranstaltungsname" required type="text">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="veranstaltungstyp">Veranstaltungstyp:</label>
+                                        <select class="custom-select" id="veranstaltungstyp"
+                                                name="veranstaltungstyp"
+                                                required>
+                                            <option value="VORLESUNG" th:selected="${neuerbogen.type.toString().equals('VORLESUNG')}">Vorlesung</option>
+                                            <option value="UEBUNG" th:selected="${neuerbogen.type.toString().equals('UEBUNG')}">Übung</option>
+                                            <option value="AUFGABE" th:selected="${neuerbogen.type.toString().equals('AUFGABE')}">Aufgabe</option>
+                                            <option value="PRAKTIKUM" th:selected="${neuerbogen.type.toString().equals('PRAKTIKUM')}">Praktikum</option>
+                                            <option value="DOZENT" th:selected="${neuerbogen.type.toString().equals('DOZENT')}">Dozent</option>
+                                            <option value="BERATUNG" th:selected="${neuerbogen.type.toString().equals('BERATUNG')}">Beratung</option>
+                                            <option value="GRUPPE" th:selected="${neuerbogen.type.toString().equals('GRUPPE')}">Gruppe</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="startdatum">Startdatum: </label>
+                                        <input id="startdatum" name="startdatum" required th:value="${neuerbogen.startdatum.toLocalDate()}" type="date">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="startzeit">Startzeit: </label>
+                                        <input id="startzeit" name="startzeit" required th:value="${datetime.getTimeFormat(neuerbogen.startdatum.toLocalTime())}" type="time">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="enddatum">Enddatum: </label>
+                                        <input id="enddatum" name="enddatum" required th:value="${neuerbogen.enddatum.toLocalDate()}" type="date">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="endzeit">Endzeit: </label>
+                                        <input id="endzeit" name="endzeit" required th:value="${datetime.getTimeFormat(neuerbogen.enddatum.toLocalTime())}" type="time">
+                                    </div>
+                                    <input id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung}"
+                                           type="hidden">
+                                    <button class="btn btn-outline-primary btn-group-sm" name="metabutton" type="submit">Metadaten
+                                        aktualisieren
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group row">
-                        <label for="veranstaltungstyp">Veranstaltungstyp:</label>
-                        <select class="custom-select" id="veranstaltungstyp"
-                                name="veranstaltungstyp"
-                                required>
-                            <option value="VORLESUNG" th:selected="${neuerbogen.type.toString().equals('VORLESUNG')}">Vorlesung</option>
-                            <option value="UEBUNG" th:selected="${neuerbogen.type.toString().equals('UEBUNG')}">Übung</option>
-                            <option value="AUFGABE" th:selected="${neuerbogen.type.toString().equals('AUFGABE')}">Aufgabe</option>
-                            <option value="PRAKTIKUM" th:selected="${neuerbogen.type.toString().equals('PRAKTIKUM')}">Praktikum</option>
-                            <option value="DOZENT" th:selected="${neuerbogen.type.toString().equals('DOZENT')}">Dozent</option>
-                            <option value="BERATUNG" th:selected="${neuerbogen.type.toString().equals('BERATUNG')}">Beratung</option>
-                            <option value="GRUPPE" th:selected="${neuerbogen.type.toString().equals('GRUPPE')}">Gruppe</option>
-                        </select>
-                    </div>
-                    <div class="form-group row">
-                        <label for="startdatum">Startdatum:</label>
-                        <input id="startdatum" name="startdatum" required th:value="${neuerbogen.startdatum.toLocalDate()}" type="date">
-                    </div>
-                    <div class="form-group row">
-                        <label for="startzeit">Startzeit:</label>
-                        <input id="startzeit" name="startzeit" required th:value="${datetime.getTimeFormat(neuerbogen.startdatum.toLocalTime())}" type="time">
-                    </div>
-                    <div class="form-group row">
-                        <label for="enddatum">Enddatum:</label>
-                        <input id="enddatum" name="enddatum" required th:value="${neuerbogen.enddatum.toLocalDate()}" type="date">
-                    </div>
-                    <div class="form-group row">
-                        <label for="endzeit">Endzeit: </label>
-                        <input id="endzeit" name="endzeit" required th:value="${datetime.getTimeFormat(neuerbogen.enddatum.toLocalTime())}" type="time">
-                    </div>
-                    <input id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung}"
-                           type="hidden">
-                    <button class="btn btn-outline-primary btn-group-sm" name="metabutton" type="submit">Metadaten
-                        aktualisieren
-                    </button>
                 </div>
             </div>
-        </form>
+        </div>
         <div class="row">
             <div class="col-sm">
                 <div class="card">
@@ -89,7 +96,7 @@
                             </thead>
                             <tbody th:remove="all-but-first">
                             <tr th:each="frage : ${neuerbogen.fragen}">
-                                <td th:text="${frage.toString()}">Die Vorlesung ist strukturiert</td>
+                                <td th:text="${frage.toString()}">Frage</td>
                                 <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span
                                         th:if="${typechecker.isSingleResponse(frage)}">Multiple Choice-Frage</span><span th:if="${typechecker.isMultipleResponse(frage)}">Multiple Response-Frage</span></td>
                                 <td>
@@ -157,7 +164,7 @@
                     <div class="card-body">
                         <form class="form-horizontal" method="get"
                               th:action="'/feedback/dozenten/event/' + ${veranstaltung}">
-                            <button class="btn btn-primary" name="showbutton" type="submit">Zurück zur Veranstaltung
+                            <button class="btn btn-outline-secondary" name="showbutton" type="submit">Zurück zur Veranstaltung
                             </button>
                         </form>
                     </div>
