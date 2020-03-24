@@ -1,9 +1,12 @@
 package mops.rollen;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import mops.FragebogenTemplate;
 
 @Getter
 @Setter
@@ -13,10 +16,16 @@ public class Dozent {
   private String username;
   private String vorname;
   private String nachname;
+  private List<FragebogenTemplate> templates;
 
   public Dozent(String username) {
     this.username = username;
     vorname = "jens";
     nachname = "B";
+    templates = new ArrayList<>();
+  }
+  
+  public void addTemplate(FragebogenTemplate template) {
+    templates.add(template);
   }
 }
