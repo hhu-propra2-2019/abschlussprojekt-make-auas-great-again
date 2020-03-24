@@ -94,7 +94,7 @@ public class DozentErstellerController {
   public String seiteUmFragenHinzuzufuegen(KeycloakAuthenticationToken token,
       @PathVariable Long bogennr, Model model, Long veranstaltungid) {
     Dozent dozent = getDozentFromToken(token);
-    model.addAttribute("templates", dozent.getTemplates());
+    model.addAttribute("boegenvorlagen", dozent.getTemplates());
     model.addAttribute("typechecker", typechecker);
     model.addAttribute("datetime", datetime);
     model.addAttribute("neuerbogen", veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
