@@ -82,7 +82,8 @@ public class DozentErstellerController {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(bogenvorlage);
     Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
-    template.getFragen().stream().forEach(x -> fragebogen.addFrage(x));
+    List<Frage> fragen = dozentservice.getFragenlisteOhneAntworten(template.getFragen());
+    fragen.stream().forEach(x -> fragebogen.addFrage(x));
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
