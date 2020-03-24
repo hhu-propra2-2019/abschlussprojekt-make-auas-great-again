@@ -32,15 +32,14 @@ public class CsvReader {
     message = "";
     messageStatus = "";
 
-    if (veranstaltung == null) {
-      setMessageAndStatus("Oh nein! Die Veranstaltung wurde nicht mitgegeben! "
-              + "<i>(Parameter null in CsvReader.java)</i>", messageError);
-    } else {
-      if (isFileVerified()) {
-        readFromFile();
-      }
+    if (veranstaltung != null && isFileVerified()) {
+      readFromFile();
     }
 
+    if (veranstaltung == null) {
+      setMessageAndStatus("Oh nein! Die Veranstaltung wurde scheinbar nicht mitgegeben!"
+          + "<i>(Veranstaltung null in CsvReader.java)</i>", "error");
+    }
   }
 
   private boolean isFileVerified() {

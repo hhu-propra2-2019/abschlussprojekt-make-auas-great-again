@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.mock.web.MockMultipartFile;
 
-@SuppressWarnings("PMD") //PMD beschwert sich, dass ich mehrere Assertions pro Test nutze
+@SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
 public class CsvReaderTest {
   private transient MockMultipartFile csvfile;
   private transient MockMultipartFile textfile;
@@ -57,10 +57,10 @@ public class CsvReaderTest {
   public void readerDoesAcceptCsvFile() {
     csvReader = new CsvReader(csvfile, mockVeranstaltung);
 
-    assertEquals("Check message status",
-        "success", csvReader.getMessageStatus()); // NOPMD
+    assertEquals("Was the import successful?",
+        "success", csvReader.getMessageStatus());
     assertThat("Is CsvReader displaying a message saying that 4 students were added?",
-        csvReader.getMessage(), containsString("4")); // NOPMD
+        csvReader.getMessage(), containsString("4"));
   }
 
   @Test
@@ -68,10 +68,10 @@ public class CsvReaderTest {
   public void readerComplainsWhenNoFileWasSent() {
     csvReader = new CsvReader(null, mockVeranstaltung);
 
-    assertEquals("Check message status",
-        "error", csvReader.getMessageStatus()); // NOPMD
+    assertEquals("Does the CsvReader return an error message?",
+        "error", csvReader.getMessageStatus());
     assertThat("Is CsvReader displaying the correct message?",
-        csvReader.getMessage(), containsString("keine Datei")); // NOPMD
+        csvReader.getMessage(), containsString("keine Datei"));
   }
 
   @Test
@@ -111,10 +111,10 @@ public class CsvReaderTest {
   public void readerComplainsWhenVeranstaltungNull() {
     csvReader = new CsvReader(csvfile, null);
 
-    assertEquals("Check message status",
-        "error", csvReader.getMessageStatus()); // NOPMD
+    assertEquals("Is the CsvReader returning an error when 'Veranstaltung' null?",
+        "error", csvReader.getMessageStatus());
     assertThat("Is CsvReader displaying the correct message?",
         csvReader.getMessage(), containsString(
-            "Veranstaltung wurde nicht mitgegeben")); // NOPMD
+            "Veranstaltung wurde scheinbar nicht mitgegeben"));
   }
 }

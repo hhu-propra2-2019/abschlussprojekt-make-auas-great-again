@@ -95,11 +95,9 @@ public class DozentEventController {
                            RedirectAttributes redirectAttributes,
                            String newStudent) {
     Student student = new Student(newStudent);
-    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungsNr);
-    veranstaltung.addStudent(student);
-    veranstaltungen.save(veranstaltung);
+    veranstaltungen.addStudentToVeranstaltungById(student, veranstaltungsNr);
     redirectAttributes.addFlashAttribute("message", newStudent
-        + "wurde erfolgreich hinzugefügt!");
+        + " wurde erfolgreich hinzugefügt!");
     redirectAttributes.addFlashAttribute("status", "success");
     return "redirect:/feedback/dozenten/event/{veranstaltungsNr}";
   }

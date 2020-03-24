@@ -112,7 +112,7 @@
                     <form class="form-horizontal was-validated" method="post" th:action="'/feedback/dozenten/event/addStudent/' + ${veranstaltung.veranstaltungsNr}">
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="text" placeholder="Matrikelnummer eingeben" name="newStudent">
+                                <input type="text" placeholder="Username eingeben" name="newStudent" required >
                             </div>
                             <div class="col-sm-6">
                                 <input type="submit" value="StudentIn hinzufügen!" class="btn btn-primary float-right" />
