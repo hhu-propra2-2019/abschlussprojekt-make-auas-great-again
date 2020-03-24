@@ -1,5 +1,6 @@
 package mops.controllers;
 
+import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import org.keycloak.KeycloakPrincipal;
@@ -15,11 +16,13 @@ import mops.DateTimeService;
 import mops.DozentService;
 import mops.Einheit;
 import mops.Fragebogen;
+import mops.FragebogenTemplate;
 import mops.TypeChecker;
 import mops.Veranstaltung;
 import mops.database.MockDozentenRepository;
 import mops.database.MockVeranstaltungsRepository;
 import mops.fragen.Auswahl;
+import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
 import mops.security.Account;
@@ -71,6 +74,17 @@ public class DozentErstellerController {
     veranstaltung.addFragebogen(neu);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
+  }
+
+  @PostMapping("/questions/template/{bogennr}")
+  public String fuegeTemplateHinzu(@PathVariable Long bogennr, Long bogenvorlage,
+      KeycloakAuthenticationToken token, Long veranstaltungid, RedirectAttributes ra) {
+    Dozent dozent = getDozentFromToken(token);
+    FragebogenTemplate template = dozent.getTemplateById(bogenvorlage);
+    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
+    template.getFragen().stream().forEach(x -> fragebogen.addFrage(x));
+    ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
+    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
 
   @PostMapping("/meta/{bogennr}")
