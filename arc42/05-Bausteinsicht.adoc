@@ -20,6 +20,9 @@ die Datenbank gespeichert.
 == GET-Anfragen
 
 Im Falle von Get-Anfragen, in denen der Nutzer Daten anfragt, wandelt der Controller mit Hilfe von Thymeleaf die Objekte des Modells in HTML-Darstellungen um.
-Diese Objekte erhält der Controller wiederum durch Anfragen auf die Services oder direkt auf die Repositories, welche die Daten beispielsweise aus der Datenbank holen oder aus dem Datenbestand generieren.
+Diese Objekte erhält der Controller wiederum durch Anfragen auf die Services oder direkt auf die Repositories, welche die Daten beispielsweise aus der Datenbank holen oder aus dem Datenbestand generieren. +
 
-image:images/onion.png[]
+
+== Bildliche Darstellung
+
+image:images/onion.png[align="center"]
