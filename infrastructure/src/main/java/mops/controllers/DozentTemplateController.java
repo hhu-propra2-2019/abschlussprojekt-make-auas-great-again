@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import mops.FragebogenTemplate;
+import mops.TypeChecker;
 import mops.database.MockDozentenRepository;
 import mops.rollen.Dozent;
 import mops.security.Account;
@@ -17,9 +18,11 @@ import mops.security.Account;
 @RequestMapping("/feedback/dozenten/templates")
 public class DozentTemplateController {
   private final DozentRepository dozenten;
+  private final TypeChecker typechecker;
 
   public DozentTemplateController() {
     dozenten = new MockDozentenRepository();
+    typechecker = new TypeChecker();
   }
 
   @GetMapping("")
@@ -43,6 +46,7 @@ public class DozentTemplateController {
       KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
     model.addAttribute("template", dozent.getTemplateById(templatenr));
+    model.addAttribute("typechecker", typechecker);
     model.addAttribute("account", createAccountFromPrincipal(token));
     return "dozenten/edittemplate";
   }

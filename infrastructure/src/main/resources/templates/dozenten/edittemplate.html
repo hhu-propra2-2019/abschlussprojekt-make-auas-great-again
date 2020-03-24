@@ -23,7 +23,33 @@
 <main th:fragment="bodycontent">
     <h1 class="display-4 text-center">Template: <span th:text="${template.name}">Test</span></h1>
     <div class="row container">
-        <p>Hier kommt Content rein.</p>
+        <h3 class="card-title">Bereits vorhandene Fragen</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Fragetext</th>
+                <th>Fragetyp</th>
+                <th>Optionen</th>
+                <th>Löschen</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="frage : ${template.fragen}">
+                <td th:text="${frage.toString()}">Die Vorlesung ist strukturiert</td>
+                <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span th:if="${typechecker.isSingleResponse(frage)}">Multiple Choice-Frage</span><span th:if="${typechecker.isMultipleResponse(frage)}">Multiple Response-Frage</span></td>
+                <td>
+                    <form class="form-horizontal" method="get" th:if="${typechecker.isMultipleChoice(frage)}">
+                        <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">Auswahl Bearbeiten</button>
+                    </form>
+                </td>
+                <td>
+                    <form class="form-horizontal" method="post">
+                        <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 </body>
