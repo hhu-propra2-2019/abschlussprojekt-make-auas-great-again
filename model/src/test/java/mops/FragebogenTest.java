@@ -129,10 +129,10 @@ class FragebogenTest {
 
   @Test
   public void addStudentAsSubmittedTest() {
-    Student student = new Student("nauth");
+    Student student = new Student("nauth100");
     fragebogen.addStudentAsSubmitted(student);
     List<Student> abgegebeneStudierende = fragebogen.getAbgegebeneStudierende();
-    Assertions.assertTrue(abgegebeneStudierende.contains(student) && student.getUsername().equals("nauth"));
+    Assertions.assertTrue(abgegebeneStudierende.contains(student));
 
   }
 }

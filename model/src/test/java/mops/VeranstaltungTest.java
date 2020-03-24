@@ -32,8 +32,8 @@ class VeranstaltungTest {
   public void addFragebogen() {
     Fragebogen fragebogen = new Fragebogen("ProPra", "Christian Meter");
     veranstaltung.addFragebogen(fragebogen);
-    List<Fragebogen> FragenList = veranstaltung.getFrageboegen();
-    Assertions.assertTrue(FragenList.contains(fragebogen));
+    List<Fragebogen> fragenlist = veranstaltung.getFrageboegen();
+    Assertions.assertTrue(fragenlist.contains(fragebogen));
 
   }
 
@@ -41,10 +41,16 @@ class VeranstaltungTest {
   public void getFrageboegenContainingTest() {
     Fragebogen fragebogen = new Fragebogen("Algebra", "Benjamin Klopsch");
     veranstaltung.addFragebogen(fragebogen);
-    List<Fragebogen> Tested = veranstaltung.getFrageboegenContaining("Algebra");
-    Assertions.assertEquals(Tested.get(0), fragebogen);
+    List<Fragebogen> tested = veranstaltung.getFrageboegenContaining("Algebra");
+    Assertions.assertEquals(tested.get(0), fragebogen);
 
   }
 
+  @Test
+  public void hasStudentTest() {
+    Student student = new Student("nauth100");
+    veranstaltung.addStudent(student);
+    Assertions.assertTrue(veranstaltung.hasStudent(student));
+  }
 
 }
