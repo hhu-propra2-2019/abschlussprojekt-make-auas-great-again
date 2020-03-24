@@ -3,12 +3,14 @@ package mops;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 
 @Getter
+@AllArgsConstructor
 @EqualsAndHashCode(of = "name")
 public class FragebogenTemplate {
   private final Long id;
