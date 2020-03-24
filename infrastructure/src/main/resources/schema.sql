@@ -41,77 +41,34 @@ create table if not exists fragebogen
 create table if not exists frage
 (
     id         bigint unsigned not null auto_increment,
-    titel      text            not null,
     fragebogen bigint unsigned not null,
+    fragetext  varchar(100)    not null,
     primary key (id),
     foreign key (fragebogen)
         references fragebogen (id)
 );
 
-create table if not exists textFrage
-(
-    id bigint unsigned not null auto_increment,
-    primary key (id),
-    foreign key (id)
-        references frage (id)
-);
-
-create table if not exists multipleResponseFrage
-(
-    id bigint unsigned not null auto_increment,
-    primary key (id),
-    foreign key (id)
-        references frage (id)
-);
-
-create table if not exists singleResponseFrage
-(
-    id bigint unsigned not null auto_increment,
-    primary key (id),
-    foreign key (id)
-        references frage (id)
-);
-
 create table if not exists antwort
 (
-    id bigint unsigned not null auto_increment,
-    primary key (id)
+    id          bigint unsigned not null auto_increment,
+    frage       bigint unsigned not null,
+    textantwort text,
+    primary key (id),
+    foreign key (frage)
+        references frage (id)
 );
 
-create table if not exists textAntwort
+create table if not exists auswahl
 (
-    id      bigint unsigned not null auto_increment,
-    antwort varchar(100),
-    frage   bigint unsigned not null,
+    id          bigint unsigned not null auto_increment,
+    auswahltext varchar(100)    not null,
+    frage       bigint unsigned not null,
+    antwort     bigint unsigned,
     primary key (id),
-    foreign key (id)
-        references antwort (id),
     foreign key (frage)
-        references textFrage (id)
-);
-
-create table if not exists singleResponseAntwort
-(
-    id      bigint unsigned not null auto_increment,
-    antwort bool,
-    frage   bigint unsigned not null,
-    primary key (id),
-    foreign key (id)
-        references antwort (id),
-    foreign key (frage)
-        references singleResponseFrage (id)
-);
-
-create table if not exists multipleResponseAntwort
-(
-    id      bigint unsigned not null auto_increment,
-    antwort integer,
-    frage   bigint unsigned not null,
-    primary key (id),
-    foreign key (id)
-        references antwort (id),
-    foreign key (frage)
-        references multipleResponseFrage (id)
+        references frage (id),
+    foreign key (antwort)
+        references antwort (id)
 );
 
 create table if not exists studentBeantwortetFragebogen
