@@ -20,7 +20,7 @@ include::09-Entwurfsentscheidungen.adoc[]
 
 = Organisationsentscheidungen
 
-Zur Verwaltung unserer gemeinsamen Entwicklung nutzen wir all von Github bereitgestellten Dienste zur Strukturierung unserer Anwendung. zu nutzen.
+Zur Verwaltung unserer gemeinsamen Entwicklung nutzen wir all von Github bereitgestellten Dienste.
 Das sind im wesentlichen:
 
     * Git-Versionsverwaltungssoftware: +
