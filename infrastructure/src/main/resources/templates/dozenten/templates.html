@@ -35,7 +35,7 @@
                 <tr th:each="template : ${templates}">
                     <td th:text="${template.name}">Name</td>
                     <td>
-                        <form class="form-horizontal" method="get">
+                        <form class="form-horizontal" th:action="'/feedback/dozenten/templates/' + ${template.id}" method="get">
                             <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">Bearbeiten</button>
                         </form>
                     </td>

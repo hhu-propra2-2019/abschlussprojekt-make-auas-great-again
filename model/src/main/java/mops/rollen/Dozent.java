@@ -27,4 +27,8 @@ public class Dozent {
   public void addTemplate(FragebogenTemplate template) {
     templates.add(template);
   }
+  
+  public FragebogenTemplate getTemplateById(Long id) {
+    return templates.stream().filter(x -> x.getId().equals(id)).findFirst().get();
+  }
 }
