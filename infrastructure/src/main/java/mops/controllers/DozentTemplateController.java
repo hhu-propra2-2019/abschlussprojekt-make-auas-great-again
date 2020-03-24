@@ -12,6 +12,7 @@ import mops.DozentService;
 import mops.FragebogenTemplate;
 import mops.TypeChecker;
 import mops.database.MockDozentenRepository;
+import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
 import mops.security.Account;
@@ -76,6 +77,16 @@ public class DozentTemplateController {
     return "dozenten/mcedit-template";
   }
 
+  @PostMapping("/{templatenr}/{fragennr}")
+  public String newMultipleChoiceAnswer(@PathVariable Long templatenr, @PathVariable Long fragennr,
+      KeycloakAuthenticationToken token, String antworttext) {
+    Dozent dozent = getDozentFromToken(token);
+    FragebogenTemplate template = dozent.getTemplateById(templatenr);
+    MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
+    frage.addChoice(new Auswahl(antworttext));
+    return "redirect:/feedback/dozenten/templates/" + templatenr + "/" + fragennr;
+  }
+
   @PostMapping("/delete/{templatenr}")
   public String deleteTemplate(@PathVariable Long templatenr, KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
@@ -90,6 +101,17 @@ public class DozentTemplateController {
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     template.deleteFrageById(fragennr);
     return "redirect:/feedback/dozenten/templates/" + templatenr;
+  }
+
+  @PostMapping("/delete/{templatenr}/{fragennr}/{auswahlnr}")
+  public String deleteAntwortmoeglichkeit(@PathVariable Long templatenr,
+      @PathVariable Long fragennr, @PathVariable Long auswahlnr,
+      KeycloakAuthenticationToken token) {
+    Dozent dozent = getDozentFromToken(token);
+    FragebogenTemplate template = dozent.getTemplateById(templatenr);
+    MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
+    frage.deleteChoice(auswahlnr);
+    return "redirect:/feedback/dozenten/templates/" + templatenr + "/" + fragennr;
   }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {

@@ -43,7 +43,7 @@
                             <tr th:each="choice : ${frage.choices}">
                                 <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
                                 <td>
-                                    <form class="form-horizontal" method="post">
+                                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/templates/delete/' + ${template} + '/' + ${frage.id} + '/' + ${choice.id}">
                                         <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">
                                             Löschen
                                         </button>
@@ -60,7 +60,7 @@
             <div class="col-sm">
                 <div class="card">
                     <div class="card-body">
-                        <form class="was-validated" method="post">
+                        <form class="was-validated" method="post" th:action="'/feedback/dozenten/templates/' + ${template} + '/' + ${frage.id}">
                             <div class="form-row">
                                 <div class="col-md-4 mb-3">
                                     <input class="form-control" id="antworttext" name="antworttext"
