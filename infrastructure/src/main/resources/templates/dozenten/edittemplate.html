@@ -51,6 +51,31 @@
             </tbody>
         </table>
     </div>
+    <div class="row col-sm">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Fragen hinzufügen:</h3>
+                <form class="was-validated" method="post">
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <input class="form-control" id="fragetext" name="fragetext" placeholder="Fragetext eingeben" required type="text">
+                            <br>
+                            <div class="form-group">
+                                <select class="custom-select" id="fragetyp" name="fragetyp" required>
+                                    <option value="">Fragetyp wählen:</option>
+                                    <option value="multiplechoice">Multiple Choice-Frage</option>
+                                    <option value="textfrage">Textfrage</option>
+                                    <option value="multipleresponse">Multiple Response-Frage</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>
