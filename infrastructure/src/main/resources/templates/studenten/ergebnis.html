@@ -26,9 +26,9 @@
             <div class="col mb-3" th:each="veranstaltung,iter :${veranstaltungen}">
                 <div class="card text-center h-100">
                     <div class="card-body">
-                        <h3 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h3>
-                        <p th:text="${veranstaltung.getDozent().getNachname()}"></p>
-                        <p th:text="${veranstaltung.getSemester()}"></p>
+                        <h3 class="card-title" th:text="${veranstaltung.getName()}">Veranstaltung</h3>
+                        <p th:text="${veranstaltung.getDozent().getNachname()}">Dozierende</p>
+                        <p th:text="${veranstaltung.getSemester()}">Semester</p>
                         <a class=" btn btn-primary btn-sm"
                            th:href="@{/feedback/studenten/ergebnis/frageboegen(veranstaltungId=${veranstaltung.veranstaltungsNr})}"
                            th:id="'button' + ${iter.index}">
