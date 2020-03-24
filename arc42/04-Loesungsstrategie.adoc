@@ -11,3 +11,7 @@ auf möglichst vielen Systemen benutzen wir die Containerisierungstechnologie Do
 Während des Entwicklungsprozesses wird die Codequalität kontinuierlich durch Das Continous-Integration
 System Github-Actions sichergestellt. +
 
+= Architekturentscheidungen
+
+Wir nutzen für die Umsetzung von Bounded Contexts nach Domain-Driven Design die Onion-architecture
+mit Hilfe von Gradle-subprojects Feature (genaueres Kapitel 9).
