@@ -8,7 +8,7 @@ wobei wir hier zur Anbindung der Views an das Back-End Thymeleaf als Framework
 nutzen. +
 Für eine effiziente Nutzung der Systemressourcen und die Gewährleistung der Lauffähigkeit unserer Anwendung
 auf möglichst vielen Systemen benutzen wir die Containerisierungstechnologie Docker (bzw. docker-compose). +
-Während des Entwicklungsprozesses wird die Codequalität kontinuierlich durch Das Continous-Integration
+Während des Entwicklungsprozesses wird die Codequalität kontinuierlich durch das Continous-Integration
 System Github-Actions sichergestellt. +
 
 = Architekturentscheidungen
