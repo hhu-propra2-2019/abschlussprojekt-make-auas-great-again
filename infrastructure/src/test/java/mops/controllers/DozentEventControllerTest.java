@@ -7,6 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.c4_soft.springaddons.test.security.context.support.WithIDToken;
 import com.c4_soft.springaddons.test.security.context.support.WithMockKeycloackAuth;
+import mops.Veranstaltung;
+import mops.database.MockVeranstaltungsRepository;
+import mops.rollen.Dozent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +48,13 @@ public class DozentEventControllerTest {
   @DisplayName("Orga sollten auf Veranstaltungsdetails zugreifen können")
   @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
   public void correctRedirectForVeranstaltungsDetails() throws Exception {
+    // erstelle eine Fake-Veranstaltung
+    MockVeranstaltungsRepository mockRepo = new MockVeranstaltungsRepository();
+    mockRepo.save(new Veranstaltung(Long.valueOf(1L), "Test",
+        "SoSe2019", new Dozent("Dozent"), null, null));
     mvc.perform(get("/feedback/dozenten/event/1"))
         .andDo(print())
-        .andExpect(status().is2xxSuccessful())
+        .andExpect(status().isOk())
         .andExpect(view().name("dozenten/veranstaltung"));
   }
 }
