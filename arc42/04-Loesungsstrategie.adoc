@@ -15,3 +15,24 @@ System Github-Actions sichergestellt. +
 
 Wir nutzen für die Umsetzung von Bounded Contexts nach Domain-Driven Design die Onion-architecture
 mit Hilfe von Gradle-subprojects Feature (genaueres Kapitel 9).
+
+= Organisationsentscheidungen
+
+Zur Verwaltung unserer gemeinsamen Entwicklung nutzen wir all von Github bereitgestellten Dienste zur Strukturierung unserer Anwendung. zu nutzen.
+Das sind im wesentlichen:
+
+    Git-Versionsverwaltungssoftware:
+    Sowohl zur Erfassung von Änderungen an Code oder Dateien
+    als auch für das zurückgreifen bei Bedarf auf einen früheren Stand unseres Projektes.
+
+    Github-Issues:
+    Wir benutzen Github-Issues zum Melden von Bugs in Code, sodass alle permanent im gleichen Zustand bleiben.
+    Issues werden aber auch für alle Änderungen erstellt, die nicht sofort bearbeitet werden können.
+
+    Feature-Branches/Pull-Requests:
+    Für alle Features werden neue Branches erstellt, die dann in den Integration-branch gemerget werden.
+    Alle unsere Änderungen können nur reviewed in den Integration-branch gemerged werden.
+
+Zusätzlich haben wir beschlossen, jeden Tag zu Beginn und Ende der Arbeitszeit eine Teambesprechung zu führen,
+um alle auf den aktuellsten Stand zu bringen und anstehende Änderungen durchzusprechen und zu priorisieren.
+Wir benutzen die Sprach- und Textchat-Software Discord, um die Kommunikation miteinander erleichtern.
