@@ -26,11 +26,13 @@ public class FragebogenDto {
   @Column("fragebogen")
   Set<FrageDto> fragen;
   @Column("fragebogen")
-  Set<sBeantwortetF> bearbeitetVon;
+  Set<SBeantwortetFDto> bearbeitetVon;
 
 
-  public static FragebogenDto create(String name, Einheit einheit, String startzeit, String endzeit) {
-    return new FragebogenDto(null, name, 0, einheit, startzeit, endzeit, new HashSet<>(), new HashSet<>());
+  public static FragebogenDto create(String name, Einheit einheit,
+                                     String startzeit, String endzeit) {
+    return new FragebogenDto(null, name, 0, einheit,
+        startzeit, endzeit, new HashSet<>(), new HashSet<>());
   }
 
   public void addFrage(FrageDto frage) {
@@ -38,6 +40,6 @@ public class FragebogenDto {
   }
 
   void addBeantwortetVonStudent(StudentDto student) {
-    bearbeitetVon.add(new sBeantwortetF(student.getId()));
+    bearbeitetVon.add(new SBeantwortetFDto(student.getId()));
   }
 }

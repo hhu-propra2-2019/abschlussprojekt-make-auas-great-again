@@ -3,10 +3,10 @@ package mops.database.dto;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("dozentOrganisiertVeranstaltung")
-public class dOrganisiertV {
+public class DOrganisiertVDto {
   transient Long dozent;
 
-  public dOrganisiertV(Long dozent) {
+  public DOrganisiertVDto(Long dozent) {
     this.dozent = dozent;
   }
 }
