@@ -38,7 +38,7 @@
                 <td th:text="${frage.toString()}">Die Vorlesung ist strukturiert</td>
                 <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span th:if="${typechecker.isSingleResponse(frage)}">Multiple Choice-Frage</span><span th:if="${typechecker.isMultipleResponse(frage)}">Multiple Response-Frage</span></td>
                 <td>
-                    <form class="form-horizontal" method="get" th:if="${typechecker.isMultipleChoice(frage)}">
+                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/templates/' + ${template.id} + '/' + ${frage.id}" th:if="${typechecker.isMultipleChoice(frage)}">
                         <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">Auswahl Bearbeiten</button>
                     </form>
                 </td>

@@ -12,6 +12,7 @@ import mops.DozentService;
 import mops.FragebogenTemplate;
 import mops.TypeChecker;
 import mops.database.MockDozentenRepository;
+import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
 import mops.security.Account;
 
@@ -61,6 +62,18 @@ public class DozentTemplateController {
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     template.addFrage(dozentservice.createNeueFrageAnhandFragetyp(fragetyp, fragetext));
     return "redirect:/feedback/dozenten/templates/" + templatenr;
+  }
+
+  @GetMapping("/{templatenr}/{fragennr}")
+  public String editMultipleChoiceQuestion(@PathVariable Long templatenr,
+      @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
+    Dozent dozent = getDozentFromToken(token);
+    FragebogenTemplate template = dozent.getTemplateById(templatenr);
+    MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
+    model.addAttribute("account", createAccountFromPrincipal(token));
+    model.addAttribute("frage", frage);
+    model.addAttribute("template", templatenr);
+    return "dozenten/mcedit-template";
   }
 
   @PostMapping("/delete/{templatenr}")
