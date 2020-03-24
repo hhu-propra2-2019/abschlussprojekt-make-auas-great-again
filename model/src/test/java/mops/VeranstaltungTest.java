@@ -37,5 +37,14 @@ class VeranstaltungTest {
 
   }
 
+  @Test
+  public void getFrageboegenContainingTest() {
+    Fragebogen fragebogen = new Fragebogen("Algebra", "Benjamin Klopsch");
+    veranstaltung.addFragebogen(fragebogen);
+    List<Fragebogen> Tested = veranstaltung.getFrageboegenContaining("Algebra");
+    Assertions.assertEquals(Tested.get(0), fragebogen);
+
+  }
+
 
 }
