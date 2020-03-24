@@ -6,7 +6,7 @@ import mops.controllers.DozentRepository;
 import mops.rollen.Dozent;
 
 public class MockDozentenRepository implements DozentRepository {
-  private final Map<String, Dozent> dozenten = new HashMap<>();
+  private final transient Map<String, Dozent> dozenten = new HashMap<>();
 
   public MockDozentenRepository() {
     dozenten.put("orga1", new Dozent("orga1"));

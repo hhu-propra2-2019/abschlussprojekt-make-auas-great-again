@@ -1,13 +1,5 @@
 package mops.controllers;
 
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import mops.DozentService;
 import mops.FragebogenTemplate;
 import mops.TypeChecker;
@@ -16,13 +8,23 @@ import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
 import mops.security.Account;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/feedback/dozenten/templates")
 public class DozentTemplateController {
-  private final DozentRepository dozenten;
-  private final DozentService dozentservice;
-  private final TypeChecker typechecker;
+  private static final String REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES =
+      "redirect:/feedback/dozenten/templates/";
+  private final transient DozentRepository dozenten;
+  private final transient DozentService dozentservice;
+  private final transient TypeChecker typechecker;
 
   public DozentTemplateController() {
     dozenten = new MockDozentenRepository();
@@ -43,7 +45,7 @@ public class DozentTemplateController {
     FragebogenTemplate template = new FragebogenTemplate(templatename);
     Dozent dozent = getDozentFromToken(token);
     dozent.addTemplate(template);
-    return "redirect:/feedback/dozenten/templates/" + template.getId();
+    return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + template.getId();
   }
 
   @GetMapping("/{templatenr}")
@@ -62,7 +64,7 @@ public class DozentTemplateController {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     template.addFrage(dozentservice.createNeueFrageAnhandFragetyp(fragetyp, fragetext));
-    return "redirect:/feedback/dozenten/templates/" + templatenr;
+    return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr;
   }
 
   @GetMapping("/{templatenr}/{fragennr}")
@@ -84,7 +86,7 @@ public class DozentTemplateController {
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
     frage.addChoice(new Auswahl(antworttext));
-    return "redirect:/feedback/dozenten/templates/" + templatenr + "/" + fragennr;
+    return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr + "/" + fragennr;
   }
 
   @PostMapping("/delete/{templatenr}")
@@ -100,7 +102,7 @@ public class DozentTemplateController {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     template.deleteFrageById(fragennr);
-    return "redirect:/feedback/dozenten/templates/" + templatenr;
+    return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr;
   }
 
   @PostMapping("/delete/{templatenr}/{fragennr}/{auswahlnr}")
@@ -111,7 +113,7 @@ public class DozentTemplateController {
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
     frage.deleteChoice(auswahlnr);
-    return "redirect:/feedback/dozenten/templates/" + templatenr + "/" + fragennr;
+    return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr + "/" + fragennr;
   }
 
   private Account createAccountFromPrincipal(KeycloakAuthenticationToken token) {
