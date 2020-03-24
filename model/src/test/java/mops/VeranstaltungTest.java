@@ -28,5 +28,14 @@ class VeranstaltungTest {
 
   }
 
+  @Test
+  public void addFragebogen() {
+    Fragebogen fragebogen = new Fragebogen("ProPra", "Christian Meter");
+    veranstaltung.addFragebogen(fragebogen);
+    List<Fragebogen> FragenList = veranstaltung.getFrageboegen();
+    Assertions.assertTrue(FragenList.contains(fragebogen));
+
+  }
+
 
 }
