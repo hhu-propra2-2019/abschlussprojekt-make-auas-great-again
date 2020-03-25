@@ -18,8 +18,7 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <h2 class="display-2 text-center">Verfügbare Fragebögen für</h2>
-    <h3 class="display-3 text-center" th:text="${account.getName()}">NAME</h3>
+    <h2 class="display-2 text-center">Verfügbare Fragebögen</h2>
     <img alt="..." class="rounded mx-auto d-block" src="/hhu.jpg">
     <div class="row row-cols-1 row-cols-md-3">
         <div class="col mb-3" th:each="fragebogen,iter :${frageboegen}">
@@ -40,12 +39,13 @@
                      th:src="@{/beratung.jpg}">
                 <div class="card-body">
                     <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
-                    <a )} class=" btn btn-primary feedback-button"
-                       style="margin: 16px"
+                    <a )} class=" btn btn-primary feedback-button "
+
+                       th:text="${fragebogen.veranstaltungsname}"
                        th:href="@{/feedback/studenten/frageboegen/details
                        (fragebogen=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}"
                        th:id="'button' + ${iter.index}">
-                        Feedback Geben!
+
                     </a>
                     <h3 class="card-text">Verfügbar bis:</h3>
                     <div class="enddate" th:text="${fragebogen.enddatum}">Programmierung>Datum</div>
