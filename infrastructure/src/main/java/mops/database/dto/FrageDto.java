@@ -36,5 +36,13 @@ public class FrageDto {
   public void addAnwort(AntwortDto antwort) {
     antworten.add(antwort);
   }
+
+  public boolean isMultipleResponseFrage() {
+    return auswaehlbar.stream().count() > 1;
+  }
+
+  public boolean isSingleResponseFrage() {
+    return auswaehlbar.stream().count() == 1;
+  }
 }
 

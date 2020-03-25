@@ -38,7 +38,7 @@ public class FragebogenDto {
     fragen.add(frage);
   }
 
-  void addBeantwortetVonStudent(StudentDto student) {
+  public void addBeantwortetVonStudent(StudentDto student) {
     bearbeitetVon.add(new SBeantwortetFDto(student.getId()));
   }
 }
