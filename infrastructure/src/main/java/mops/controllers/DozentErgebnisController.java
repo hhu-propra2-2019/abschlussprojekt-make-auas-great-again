@@ -39,8 +39,7 @@ public class DozentErgebnisController {
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
       @PathVariable long bogennr, Model model, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
-    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
-    model.addAttribute("fragebogen", fragebogen);
+    model.addAttribute("fragebogen", veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
     model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute("typechecker", typechecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
@@ -71,8 +70,9 @@ public class DozentErgebnisController {
       RedirectAttributes ra, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     ra.addAttribute("veranstaltungid", veranstaltungid);
-    dozentservice.getTextAntwort(fragennr, antwortnr,
-        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent)).setAntworttext(textfeld);
+    dozentservice.zensiereTextAntwort(
+        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent),
+        fragennr, antwortnr, textfeld);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
@@ -83,8 +83,8 @@ public class DozentErgebnisController {
       RedirectAttributes ra) {
     Dozent dozent = createDozentFromToken(token);
     ra.addAttribute("veranstaltungid", veranstaltungid);
-    dozentservice.getFrage(fragennr, veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
-        .aendereOeffentlichkeitsStatus();
+    dozentservice.aendereOeffentlichkeitVonFrage(
+        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent), fragennr);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 

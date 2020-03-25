@@ -27,6 +27,17 @@ public class DozentService {
   public MultipleChoiceFrage getMultipleChoiceFrage(Long fragennr, Fragebogen fragebogen) {
     return (MultipleChoiceFrage) fragebogen.getFrage(fragennr);
   }
+  
+  public void zensiereTextAntwort(Fragebogen fragebogen, Long fragennr,
+      Long antwortnr, String neuertext) {
+    TextAntwort antwort = this.getTextAntwort(fragennr, antwortnr, fragebogen);
+    antwort.setAntworttext(neuertext);
+  }
+  
+  public void aendereOeffentlichkeitVonFrage(Fragebogen fragebogen, Long fragennr) {
+    Frage frage = fragebogen.getFrage(fragennr);
+    frage.aendereOeffentlichkeitsStatus();
+  }
 
   public TextAntwort getTextAntwort(Long fragennr, Long antwortnr, Fragebogen fragebogen) {
     TextFrage frage = (TextFrage) fragebogen.getFrage(fragennr);
