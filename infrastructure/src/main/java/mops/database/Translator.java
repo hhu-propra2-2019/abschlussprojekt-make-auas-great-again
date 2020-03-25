@@ -1,7 +1,6 @@
 package mops.database;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -13,7 +12,6 @@ import mops.antworten.MultipleChoiceAntwort;
 import mops.antworten.TextAntwort;
 import mops.database.dto.AntwortDto;
 import mops.database.dto.AuswahlDto;
-import mops.database.dto.DOrganisiertVDto;
 import mops.database.dto.FrageDto;
 import mops.database.dto.FragebogenDto;
 import mops.database.dto.SBeantwortetFDto;
@@ -46,20 +44,14 @@ public class Translator {
         .veranstaltungsNr(dto.getId())
         .frageboegen(loadFrageboegen(dto.getFrageboegen()))
         .name(dto.getName())
-        .dozent(loadDozent(dto.getDozenten()))
-        .semester(dto.getSemester().toString())
+        .semester(dto.getSemester())
         .studenten(loadStudentenList(dto.getStudenten()));
     return veranstaltung.build();
   }
 
-  private Dozent loadDozent(Set<DOrganisiertVDto> dozenten) {
-    // TODO Dozenten loading
-    return null;
-  }
-
   private List<Fragebogen> loadFrageboegen(Set<FragebogenDto> frageboegen) {
     return frageboegen.stream()
-        .map(fragebogenDto -> loadFragebogen(fragebogenDto))
+        .map(this::loadFragebogen)
         .collect(Collectors.toList());
   }
 
@@ -85,8 +77,8 @@ public class Translator {
         .collect(Collectors.toList());
   }
 
-  private List<Student> loadStudenten(Set<SBeantwortetFDto> sBeantwortetFDtos) {
-    return sBeantwortetFDtos.stream()
+  private List<Student> loadStudenten(Set<SBeantwortetFDto> sbeantwortetFDtos) {
+    return sbeantwortetFDtos.stream()
         .map(x -> studentenRepo.findById(x.getStudent()))
         .filter(Optional::isPresent)
         .map(Optional::get)
@@ -156,7 +148,7 @@ public class Translator {
   public VeranstaltungDto createVeranstaltungDto(Veranstaltung veranstaltung) {
     VeranstaltungDto veranstaltungDto = VeranstaltungDto.create(veranstaltung.getName(),
         veranstaltung.getSemester());
-    veranstaltungDto.setDozenten(Collections.singleton(createDOrganisiertVDto(veranstaltung.getDozent())));
+    // TODO Set Dozent
     veranstaltungDto.setStudenten(veranstaltung.getStudenten().stream()
         .map(this::createSBelegtVDto)
         .collect(Collectors.toSet()));
@@ -194,10 +186,6 @@ public class Translator {
     return new SBelegtVDto(studentenRepo.findId(student.getUsername()));
   }
 
-  private DOrganisiertVDto createDOrganisiertVDto(Dozent dozent) {
-    return new DOrganisiertVDto(dozentenRepo.findId(dozent.getUsername()));
-  }
-
   private FrageDto createTextFrageDto(TextFrage frage) {
     FrageDto frageDto = FrageDto.createTextfrage(frage.toString());
     for (Antwort antwort : frage.getAntworten()) {
@@ -208,5 +196,13 @@ public class Translator {
 
   private AntwortDto createTextAntwortDto(TextAntwort antwort) {
     return null;
+  }
+
+  public Long findStudentId(Student student) {
+    return studentenRepo.findId(student.getUsername());
+  }
+
+  public Long findDozentenId(Dozent dozent) {
+    return dozentenRepo.findId(dozent.getUsername());
   }
 }

@@ -37,7 +37,7 @@ class TranslatorTest {
     VeranstaltungDto mockVeranstaltung = VeranstaltungDto.create("ProPra", "SOSE2020");
     StudentDto mockStudent = StudentDto.create("studentin");
     DozentDto mockDozent = DozentDto.create("jensben", "Jens",
-        "Bendisposto", "Herr");
+        "Bendisposto");
     FragebogenDto mockFragebogen = FragebogenDto.create("Vorlesungen", Einheit.VORLESUNG,
         LocalDateTime.now().toString(), LocalDateTime.now().plusMinutes(5L).toString());
     mockVeranstaltung.addStudent(mockStudent);

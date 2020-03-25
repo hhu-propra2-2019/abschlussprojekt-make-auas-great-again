@@ -3,7 +3,6 @@ package mops.database;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import mops.Fragebogen;
 import mops.Veranstaltung;
 import mops.database.dto.VeranstaltungDto;
@@ -26,20 +25,14 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
   @Override
   @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public List<Veranstaltung> getAll() {
-    Iterable<VeranstaltungDto> veranstaltungenDtos = veranstaltungenRepo.findAll();
-    List<Veranstaltung> veranstaltungen = new ArrayList<>();
-    for (VeranstaltungDto dto : veranstaltungenDtos) {
-      veranstaltungen.add(translator.loadVeranstaltung(dto));
-    }
-    return veranstaltungen;
+    return loadVeranstaltungen(veranstaltungenRepo.findAll());
   }
 
   @Override
   public List<Veranstaltung> getAllContaining(String search) {
-    return getAll().stream()
-        .filter(veranstaltung -> veranstaltung.contains(search))
-        .collect(Collectors.toList());
+    return loadVeranstaltungen(veranstaltungenRepo.getAllContaining(search));
   }
+
 
   @Override
   public Veranstaltung getVeranstaltungById(Long id) {
@@ -66,47 +59,45 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
 
   @Override
   public List<Veranstaltung> getAllFromStudent(Student student) {
-    // TODO Replace with SQL QUERY
-    return getAll().stream()
-        .filter(ver -> ver.hasStudent(student))
-        .collect(Collectors.toList());
+    Long id = translator.findStudentId(student);
+    return loadVeranstaltungen(veranstaltungenRepo.getAllFromStudent(id));
   }
 
   @Override
   public List<Veranstaltung> getAllFromStudentContaining(Student student, String search) {
-    // TODO Replace with SQL QUERY
-    return getAll().stream()
-        .filter(ver -> ver.hasStudent(student))
-        .filter(ver -> ver.contains(search))
-        .collect(Collectors.toList());
+    Long id = translator.findStudentId(student);
+    return loadVeranstaltungen(veranstaltungenRepo.getAllFromStudentContaining(id, search));
   }
 
   @Override
   public List<Veranstaltung> getAllFromDozent(Dozent dozent) {
-    // TODO Replace with SQL QUERY
-    return getAll().stream()
-        .filter(ver -> ver.hasDozent(dozent))
-        .collect(Collectors.toList());
+    Long id = translator.findDozentenId(dozent);
+    return loadVeranstaltungen(veranstaltungenRepo.getAllFromDozent(id));
   }
 
   @Override
   public List<Veranstaltung> getAllFromDozentContaining(Dozent dozent, String suche) {
-    // TODO Replace with SQL QUERY
-    return getAll().stream()
-        .filter(ver -> ver.hasDozent(dozent))
-        .filter(ver -> ver.contains(suche))
-        .collect(Collectors.toList());
+    Long id = translator.findDozentenId(dozent);
+    return loadVeranstaltungen(veranstaltungenRepo.getAllFromDozentContaining(id, suche));
   }
 
   @Override
   public Fragebogen getFragebogenFromDozentById(Long fragebogen, Dozent dozent) {
-    // TODO SQL QUERY
+    // TODO
     return null;
   }
 
   @Override
   public Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung) {
-    // TODO SQL QUERY
+    // TODO
     return null;
+  }
+
+  private List<Veranstaltung> loadVeranstaltungen(Iterable<VeranstaltungDto> veranstaltungDtos) {
+    List<Veranstaltung> veranstaltungen = new ArrayList<>();
+    for (VeranstaltungDto dto : veranstaltungDtos) {
+      veranstaltungen.add(translator.loadVeranstaltung(dto));
+    }
+    return veranstaltungen;
   }
 }
