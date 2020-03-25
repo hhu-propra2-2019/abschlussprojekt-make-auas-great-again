@@ -26,33 +26,30 @@ import mops.rollen.Student;
 public class Fragebogen {
 
   private final Long bogennr;
-  private String veranstaltungsname;
-  private String professorenname;
+  private String name;
   private List<Frage> fragen;
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
   private List<Student> abgegebeneStudierende;
 
-  public Fragebogen(String veranstaltung, String dozent) {
+  public Fragebogen(String veranstaltung) {
     Random idgenerator = new Random();
     this.bogennr = idgenerator.nextLong();
-    this.veranstaltungsname = veranstaltung;
-    this.professorenname = dozent;
+    this.name = veranstaltung;
     this.startdatum = LocalDateTime.now().plusDays(1);
     this.enddatum = LocalDateTime.now().plusDays(8);
     this.fragen = new ArrayList<>();
     this.abgegebeneStudierende = new ArrayList<>();
     this.type = Einheit.VORLESUNG;
   }
-  
-  public Fragebogen(String veranstaltung, String dozent, List<Frage> fragen, Einheit type) {
+
+  public Fragebogen(String veranstaltung, List<Frage> fragen, Einheit type) {
     Random idgenerator = new Random();
     this.bogennr = idgenerator.nextLong();
     this.startdatum = LocalDateTime.now().plusDays(1);
     this.enddatum = LocalDateTime.now().plusDays(8);
-    this.veranstaltungsname = veranstaltung;
-    this.professorenname = dozent;
+    this.name = veranstaltung;
     this.fragen = fragen;
     this.type = type;
   }
@@ -77,11 +74,7 @@ public class Fragebogen {
    * @return True wenn der Suchbegriff gefunden wurde
    */
   public boolean contains(String search) {
-    if (professorenname.toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN))) {
-      return true;
-    }
-    return veranstaltungsname.toLowerCase(Locale.GERMAN)
-        .contains(search.toLowerCase(Locale.GERMAN));
+    return name.toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN));
   }
 
   public List<MultipleChoiceFrage> getMultipleChoiceFragen() {

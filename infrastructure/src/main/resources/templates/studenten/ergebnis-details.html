@@ -20,7 +20,7 @@
 </header>
 <main th:fragment="bodycontent">
     <!-- Restlichen Inhalt hier einfügen! -->
-    <h2 class="container" th:text="${fragebogen.veranstaltungsname}">Feebackübersicht</h2>
+    <h2 class="container" th:text="${fragebogen.getName()}">Feebackübersicht</h2>
     <div class="container" th:each="frage :${fragebogen.fragen}">
         <h3 th:text="${frage.toString()}"></h3>
         <div th:if="${typeChecker.isTextFrage(frage)}">

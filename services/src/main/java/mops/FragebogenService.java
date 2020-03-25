@@ -56,8 +56,7 @@ public class FragebogenService {
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     fragebogen = fragebogen.startdatum(LocalDateTime.now().plusSeconds(30))
         .enddatum(LocalDateTime.now().plusSeconds(100)).fragen(fragenliste)
-        .professorenname(getRandomProfessor())
-        .veranstaltungsname(name)
+        .name(name)
         .type(einheit)
         .abgegebeneStudierende(new ArrayList<>())
         .bogennr(id);

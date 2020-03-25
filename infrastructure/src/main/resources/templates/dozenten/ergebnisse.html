@@ -21,7 +21,7 @@
 <main th:fragment="bodycontent">
     <div class="container">
         <h1 class="display-4 text-center">Umfrageergebnisse</h1>
-        <h2 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
+        <h2 th:text="${fragebogen.getName()}">Veranstaltung</h1>
             <h3 th:text="${fragebogen.professorenname}">Professor</h2>
         <div th:each="frage : ${fragebogen.fragen}">
             <h3 th:text="${frage.toString()}">Fragetext</h3>
