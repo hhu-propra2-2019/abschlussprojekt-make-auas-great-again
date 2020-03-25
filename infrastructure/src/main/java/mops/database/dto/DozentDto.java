@@ -19,17 +19,12 @@ public class DozentDto {
   String vorname;
   String nachname;
   String anrede;
-  @Column("dozent")
-  Set<VeranstaltungDto> veranstaltungen;
+
   @Column("dozent")
   Set<FragebogenTemplateDto> fragebogenTemplates;
 
   public static DozentDto create(String username, String vorname, String nachname) {
-    return new DozentDto(null, username, vorname, nachname, null, new HashSet<>(), new HashSet<>());
-  }
-
-  public void addVeranstaltung(VeranstaltungDto veranstaltung) {
-    veranstaltungen.add(veranstaltung);
+    return new DozentDto(null, username, vorname, nachname, null, new HashSet<>());
   }
 
   public void addFragebogenTemplate(FragebogenTemplateDto fragebogenTemplate) {
