@@ -63,14 +63,13 @@
                     <div class="foo" th:if="${fragebogen.startdatum.isAfter(currenttime)}">
                         <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen.bogennr}">
                             <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
-                            <button class="btn btn-outline-primary btn-sm" name="editbutton" type="submit">Fragebogen bearbeiten</button>
+                            <button class="btn btn-outline-primary btn-sm btn-block" name="editbutton" type="submit">Fragebogen bearbeiten</button>
                         </form>
                     </div>
-                    <br>
                     <div class="foo" th:if="${fragebogen.startdatum.isBefore(currenttime)}">
                         <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">
                             <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
-                            <button class="btn btn-outline-info btn-sm" name="showbutton" type="submit">Feedback ansehen</button>
+                            <button class="btn btn-outline-info btn-sm btn-block" name="showbutton" type="submit">Feedback ansehen</button>
                         </form>
                     </div>
                 </td>

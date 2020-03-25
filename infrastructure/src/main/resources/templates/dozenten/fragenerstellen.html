@@ -21,10 +21,10 @@
 <main th:fragment="bodycontent">
     <div class="container">
         <h1 class="display-4 text-center">Fragebogen bearbeiten</h1>
-        <h4 class="text-center">Fragebogen zur Einheit <span th:text="${neuerbogen.type.toString()}">Vorlesung</span>
-            "<span th:text="${neuerbogen.veranstaltungsname}">Veranstaltung</span>"; verantwortlich:<span
+        <h3 class="text-center">Fragebogen zu: <span th:text="${neuerbogen.type.toString()}">Vorlesung</span>
+            "<span th:text="${neuerbogen.veranstaltungsname}">Veranstaltung</span>" <br> Verantwortlich: <span
                     th:text="${neuerbogen.professorenname}">Professorenname</span>
-        </h4>
+        </h3>
     </div>
     <br>
     <div class="container">
