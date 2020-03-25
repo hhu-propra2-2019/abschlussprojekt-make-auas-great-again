@@ -56,7 +56,7 @@ public class Translator {
         .collect(Collectors.toList());
   }
 
-  private Fragebogen loadFragebogen(FragebogenDto fragebogenDto) {
+  Fragebogen loadFragebogen(FragebogenDto fragebogenDto) {
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     return fragebogen
         .type(fragebogenDto.getEinheit())

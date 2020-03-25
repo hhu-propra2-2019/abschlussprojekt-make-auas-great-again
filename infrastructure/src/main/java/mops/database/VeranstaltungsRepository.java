@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import mops.Fragebogen;
 import mops.Veranstaltung;
+import mops.database.dto.FragebogenDto;
 import mops.database.dto.VeranstaltungDto;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
@@ -16,16 +17,19 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
   private final transient DozentenJdbcRepository dozentenRepo;
   private final transient StudentenJdbcRepository studentenRepo;
   private transient VeranstaltungJdbcRepository veranstaltungenRepo;
+  private transient FragebogenJdbcRepository fragebogenRepo;
   private transient Translator translator;
 
   public VeranstaltungsRepository(Translator translator,
                                   VeranstaltungJdbcRepository veranstaltungenRepo,
                                   DozentenJdbcRepository dozentenRepo,
-                                  StudentenJdbcRepository studentenRepo) {
+                                  StudentenJdbcRepository studentenRepo,
+                                  FragebogenJdbcRepository fragebogenRepo) {
     this.veranstaltungenRepo = veranstaltungenRepo;
     this.translator = translator;
     this.dozentenRepo = dozentenRepo;
     this.studentenRepo = studentenRepo;
+    this.fragebogenRepo = fragebogenRepo;
   }
 
   @Override
@@ -89,14 +93,14 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
 
   @Override
   public Fragebogen getFragebogenFromDozentById(Long fragebogen, Dozent dozent) {
-    // TODO
-    return null;
+    Optional<FragebogenDto> fragebogenDto = fragebogenRepo.findById(fragebogen);
+    return fragebogenDto.map(dto -> translator.loadFragebogen(dto)).orElse(null);
   }
 
   @Override
   public Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung) {
-    // TODO
-    return null;
+    Optional<FragebogenDto> fragebogenDto = fragebogenRepo.findById(fragebogen);
+    return fragebogenDto.map(dto -> translator.loadFragebogen(dto)).orElse(null);
   }
 
   @Override
@@ -112,11 +116,11 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
     return veranstaltungen;
   }
 
-  public Long findStudentId(Student student) {
+  private Long findStudentId(Student student) {
     return studentenRepo.findId(student.getUsername());
   }
 
-  public Long findDozentenId(Dozent dozent) {
+  private Long findDozentenId(Dozent dozent) {
     return dozentenRepo.findId(dozent.getUsername());
   }
 }

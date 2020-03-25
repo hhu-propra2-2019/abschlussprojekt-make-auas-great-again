@@ -41,7 +41,6 @@ class TranslatorTest {
     FragebogenDto mockFragebogen = FragebogenDto.create("Vorlesungen", Einheit.VORLESUNG,
         LocalDateTime.now().toString(), LocalDateTime.now().plusMinutes(5L).toString());
     mockVeranstaltung.addStudent(mockStudent);
-    mockVeranstaltung.addDozent(mockDozent);
     mockVeranstaltung.addFragebogen(mockFragebogen);
 
     Student student = new Student("studentin");
