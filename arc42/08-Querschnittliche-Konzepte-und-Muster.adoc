@@ -1,1 +1,10 @@
 = Querschnittliche Konzepte und Muster
+
+=== Security
+
+Die Sicherheit unserer Anwendung ist uns wichtig.
+Von daher haben wir für das Anmelden sowie für die verschiedenen Zugriffsrechte das Keycloak-Framework verwendet.
+
+Bei unserer Anwendung war es für uns von zentraler Bedeutung, dass die Feedbacks der Studierende anonym bleiben
+und in keinem Fall aufspürbar sein. Außerdem ist das mehrfache Ausfüllen eines Fragebogen unzulässig.
+
