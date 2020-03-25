@@ -2,14 +2,11 @@
 
 == Grobe Übersicht
 
-Unsere Anwendung besteht aus drei elementaren Schichten: +
-Model , Services und infrastructure. +
+Unsere Anwendung besteht aus drei elementaren Schichten: Model, Services und Infrastructure.
 
-* In der infrastructure-Schicht befinden sich im wesentlichen Controller, die Anfragen über den Webbrowser entgegennehmen. +
-
-* In der Services-Schicht befinden sich verschidene Services, die in den Controller benutzt werden und verschiedene Dienste leisten. +
-
-* In der Model-Schicht befinden sich unsere Anwendungsobjekte,die die grundlegende Komponente unseres Projektes realisieren. +
+- In der Infrastructure-Schicht befinden sich im Wesentlichen Controller, die Anfragen über den Webbrowser entgegennehmen.
+- In der Services-Schicht befinden sich verschiedene Services, die in den Controllern benutzt werden und verschiedene Dienste leisten.
+- In der Model-Schicht befinden sich unsere Anwendungsobjekte, die die grundlegende Komponente unseres Projektes realisieren.
 
 == Post-Anfragen
 
@@ -17,9 +14,9 @@ Im Falle von Post-Anfragen bzw. Formularen wandelt der Controller die Formularda
 Diese Objekte werden falls nötig von den Services weiter verarbeitet und schließlich von dem entsprechenden Repository in
 die Datenbank gespeichert.
 
-== GET-Anfragen
+== Get-Anfragen
 
-Im Falle von Get-Anfragen, in denen der Nutzer Daten anfragt, wandelt der Controller mit Hilfe von Thymeleaf die Objekte des Modells in HTML-Darstellungen um.
+Im Falle von Get-Anfragen wandelt der Controller mit Hilfe von Thymeleaf die Objekte des Modells in HTML-Darstellungen um.
 Diese Objekte erhält der Controller wiederum durch Anfragen auf die Services oder direkt auf die Repositories, welche die Daten beispielsweise aus der Datenbank holen oder aus dem Datenbestand generieren. +
 
 
