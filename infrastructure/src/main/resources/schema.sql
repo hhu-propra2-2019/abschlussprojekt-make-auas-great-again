@@ -13,10 +13,7 @@ create table if not exists veranstaltung
     id       bigint unsigned not null auto_increment,
     name     varchar(50)     not null,
     semester varchar(50)     not null,
-    dozent   bigint unsigned not null,
-    primary key (id),
-    foreign key (dozent)
-        references dozent (id)
+    primary key (id)
 );
 
 create table if not exists student
@@ -106,6 +103,17 @@ create table if not exists studentBelegtVeranstaltung
     primary key (student, veranstaltung),
     foreign key (student)
         references student (id),
+    foreign key (veranstaltung)
+        references veranstaltung (id)
+);
+
+create table if not exists dozentOrganisiertVeranstaltung
+(
+    dozent        bigint unsigned not null,
+    veranstaltung bigint unsigned not null,
+    primary key (dozent, veranstaltung),
+    foreign key (dozent)
+        references dozent (id),
     foreign key (veranstaltung)
         references veranstaltung (id)
 );

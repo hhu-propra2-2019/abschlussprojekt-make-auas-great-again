@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 import mops.database.dto.AntwortDto;
 import mops.database.dto.AuswahlDto;
+import mops.database.dto.DOrganisiertVDto;
 import mops.database.dto.DozentDto;
 import mops.database.dto.FrageDto;
 import mops.database.dto.FragebogenDto;
@@ -39,33 +40,31 @@ public class VeranstaltungJdbcRepositoryTest {
     dozentenRepo.save(d1);
     VeranstaltungDto v1 = VeranstaltungDto.create("veran1", "WS2014");
     VeranstaltungDto v2 = VeranstaltungDto.create("progra", "WS2023");
-    d1.addVeranstaltung(v1);
-    d1.addVeranstaltung(v2);
-    dozentenRepo.save(d1);
+    v1.addDozent(d1);
+    v2.addDozent(d1);
     repository.save(v1);
     repository.save(v2);
-    ArrayList<VeranstaltungDto> liste = new ArrayList<>();
+    ArrayList<Long> liste = new ArrayList<>();
     Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromDozentContaining(
         dozentenRepo.findId("dozent14"), "ver");
-    veranstaltungen.forEach(v -> assertThat(d1.getVeranstaltungen().contains(v)));
-    veranstaltungen.forEach(v -> liste.add(v));
-    assertThat(liste).contains(v1);
-    assertThat(liste).doesNotContain(v2);
+    veranstaltungen.forEach(v -> assertThat(v.getDozenten().contains(d1)));
+    veranstaltungen.forEach(v -> liste.add(v.getId()));
+    assertThat(liste).contains(v1.getId());
+    assertThat(liste).doesNotContain(v2.getId());
   }
 
   @Test
   void findVeranstaltungenForStudentContainingTest() {
     StudentDto s1 = StudentDto.create("student13");
     DozentDto dozent = DozentDto.create("dozent2", "vor2", "nach2");
+    studentenRepo.save(s1);
+    dozentenRepo.save(dozent);
     VeranstaltungDto v1 = VeranstaltungDto.create("veran2", "WS2014");
     VeranstaltungDto v2 = VeranstaltungDto.create("progra", "WS2023");
-    studentenRepo.save(s1);
-    dozent.addVeranstaltung(v1);
-    dozent.addVeranstaltung(v2);
-    dozentenRepo.save(dozent);
+    v1.addDozent(dozent);
+    v2.addDozent(dozent);
     v1.addStudent(s1);
     v2.addStudent(s1);
-    studentenRepo.save(s1);
     repository.save(v1);
     repository.save(v2);
     ArrayList<Long> liste = new ArrayList<>();
@@ -83,15 +82,14 @@ public class VeranstaltungJdbcRepositoryTest {
     DozentDto d1 = DozentDto.create("dozent33", "jens", "ben");
     dozentenRepo.save(d1);
     VeranstaltungDto v1 = VeranstaltungDto.create("veran1", "WS2018");
-    d1.addVeranstaltung(v1);
+    v1.addDozent(d1);
     VeranstaltungDto v2 = VeranstaltungDto.create("veran2", "WS2022");
-    d1.addVeranstaltung(v2);
-    dozentenRepo.save(d1);
+    v2.addDozent(d1);
     repository.save(v1);
     repository.save(v2);
     Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromDozent(
         dozentenRepo.findId("dozent33"));
-    veranstaltungen.forEach(v -> assertThat(d1.getVeranstaltungen().contains(v)));
+    veranstaltungen.forEach(v -> assertThat(v.getDozenten().contains(d1)));
   }
 
   @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
@@ -105,9 +103,8 @@ public class VeranstaltungJdbcRepositoryTest {
     VeranstaltungDto v2 = VeranstaltungDto.create("veran2", "WS2017");
     v1.addStudent(s1);
     v2.addStudent(s1);
-    dozent.addVeranstaltung(v1);
-    dozent.addVeranstaltung(v2);
-    dozentenRepo.save(dozent);
+    v1.addDozent(dozent);
+    v2.addDozent(dozent);
     repository.save(v1);
     repository.save(v2);
     Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromStudent(
@@ -117,23 +114,23 @@ public class VeranstaltungJdbcRepositoryTest {
 
   @Test
   void findVeranstaltungContainingTest() {
+    DozentDto dozent = DozentDto.create("dozent11", "vorn", "nachn");
+    dozentenRepo.save(dozent);
     VeranstaltungDto v1 = VeranstaltungDto.create("aldat", "WS2015");
     VeranstaltungDto v2 = VeranstaltungDto.create("prog", "WS2017");
     VeranstaltungDto v3 = VeranstaltungDto.create("dalten", "WS2016");
-    DozentDto dozent = DozentDto.create("dozent11", "vorn", "nachn");
-    dozent.addVeranstaltung(v1);
-    dozent.addVeranstaltung(v2);
-    dozent.addVeranstaltung(v3);
-    dozentenRepo.save(dozent);
+    v1.addDozent(dozent);
+    v2.addDozent(dozent);
+    v3.addDozent(dozent);
     repository.save(v1);
     repository.save(v2);
     repository.save(v3);
-    ArrayList<VeranstaltungDto> liste = new ArrayList<>();
+    ArrayList<Long> liste = new ArrayList<>();
     Iterable<VeranstaltungDto> veranstaltungen = repository.getAllContaining("al");
-    veranstaltungen.forEach(v -> liste.add(v));
-    assertThat(liste).contains(v1);
-    assertThat(liste).doesNotContain(v2);
-    assertThat(liste).contains(v3);
+    veranstaltungen.forEach(v -> liste.add(v.getId()));
+    assertThat(liste).contains(v1.getId());
+    assertThat(liste).doesNotContain(v2.getId());
+    assertThat(liste).contains(v3.getId());
   }
 
   @Test
@@ -172,8 +169,8 @@ public class VeranstaltungJdbcRepositoryTest {
     fragebogen.addFrage(frage2);
     VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra5", "WS2019");
     DozentDto dozent = DozentDto.create("dozent11", "chris", "r");
-    dozent.addVeranstaltung(veranstaltung);
     dozentenRepo.save(dozent);
+    veranstaltung.addDozent(dozent);
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -206,8 +203,8 @@ public class VeranstaltungJdbcRepositoryTest {
     fragebogen.addFrage(frage2);
     VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra4", "SoSe2018");
     DozentDto dozent = DozentDto.create("dozent7", "vorname", "nachname");
-    dozent.addVeranstaltung(veranstaltung);
     dozentenRepo.save(dozent);
+    veranstaltung.addDozent(dozent);
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -228,8 +225,8 @@ public class VeranstaltungJdbcRepositoryTest {
     fragebogen.addFrage(frage);
     VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra0", "Sose2020");
     DozentDto dozent = DozentDto.create("dozent13", "vor", "nach");
-    dozent.addVeranstaltung(veranstaltung);
     dozentenRepo.save(dozent);
+    veranstaltung.addDozent(dozent);
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -244,12 +241,12 @@ public class VeranstaltungJdbcRepositoryTest {
     DozentDto dozent = DozentDto.create("dozent12", "chris", "m");
     dozentenRepo.save(dozent);
     VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra1", "SoSe2019");
-    dozent.addVeranstaltung(veranstaltung);
-    dozentenRepo.save(dozent);
-    List<Set<VeranstaltungDto>> veranstaltungen = new ArrayList<>();
-    Iterable<DozentDto> result = dozentenRepo.findAll();
-    result.forEach(dto -> veranstaltungen.add(dto.getVeranstaltungen()));
-    assertThat(veranstaltungen).isNotEmpty();
+    veranstaltung.addDozent(dozent);
+    repository.save(veranstaltung);
+    List<Set<DOrganisiertVDto>> dozenten = new ArrayList<>();
+    Iterable<VeranstaltungDto> result = repository.findAll();
+    result.forEach(dto -> dozenten.add(dto.getDozenten()));
+    assertThat(dozenten).isNotEmpty();
   }
 
   @Test
@@ -259,8 +256,8 @@ public class VeranstaltungJdbcRepositoryTest {
     VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra2", "WS2019");
     veranstaltung.addStudent(student1);
     DozentDto dozent = DozentDto.create("dozent12", "vor", "nach");
-    dozent.addVeranstaltung(veranstaltung);
     dozentenRepo.save(dozent);
+    veranstaltung.addDozent(dozent);
     repository.save(veranstaltung);
     List<Set<SBelegtVDto>> studenten = new ArrayList<>();
     Iterable<VeranstaltungDto> result = repository.findAll();
@@ -271,9 +268,9 @@ public class VeranstaltungJdbcRepositoryTest {
   @Test
   void saveVeranstaltungTest() {
     DozentDto dozent = DozentDto.create("orga", "christan", "meter");
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("Propra3", "WS2018");
-    dozent.addVeranstaltung(veranstaltung);
     dozentenRepo.save(dozent);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("Propra3", "WS2018");
+    veranstaltung.addDozent(dozent);
     repository.save(veranstaltung);
     ArrayList<VeranstaltungDto> veranstaltungen = new ArrayList<>();
     Iterable<VeranstaltungDto> result = repository.findAll();
