@@ -22,7 +22,7 @@
 </header>
 <main th:fragment="bodycontent">
     <h1 class="display-4 text-center">Meine Fragebogen-Templates</h1>
-    <div class="row container">
+    <div class="container">
         <table class="table">
             <thead>
             <tr>
@@ -47,14 +47,13 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div class="row container">
         <form class="form-horizontal was-validated" th:action="'/feedback/dozenten/templates'" method="post">
-            <label for="templatename">Template hinzufügen: </label>
-            <div class="input-group mb-3 col-sm-6">
-                <input class="form-control" id="templatename" name="templatename" placeholder="Hier den Namen eingeben" required type="text">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <input class="form-control" id="templatename" name="templatename" placeholder="Hier den Namen eingeben" required type="text">
+                </div>
             </div>
-            <button class="btn btn-primary" name="createbutton" type="submit">Neues Template erstellen</button>
+            <button class="btn btn-outline-primary" name="createbutton" type="submit">Neues Template erstellen</button>
         </form>
     </div>
 </main>
