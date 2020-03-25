@@ -5,13 +5,21 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import mops.antworten.TextAntwort;
+import mops.fragen.Auswahl;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.MultipleResponseFrage;
 import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
+import mops.rollen.Dozent;
 
 public class DozentService {
+  private final transient DateTimeService datetime;
+  
+  public DozentService() {
+    this.datetime = new DateTimeService();
+  }
+  
   /**
    * Holt alle Fragebögen aus der Veranstaltungsliste.
    *
@@ -47,9 +55,53 @@ public class DozentService {
   public Frage getFrage(Long fragennr, Fragebogen fragebogen) {
     return fragebogen.getFrage(fragennr);
   }
+  
+  public void addNeueFrageZuFragebogen(Fragebogen fragebogen, String fragentext, String fragetyp) {
+    Frage frage = this.createNeueFrageAnhandFragetyp(fragetyp, fragentext);
+    fragebogen.addFrage(frage);
+  }
+  
+  public void addMultipleChoiceMoeglichkeit(Fragebogen fragebogen, Long fragennr,
+      String antworttext) {
+    MultipleChoiceFrage frage = this.getMultipleChoiceFrage(fragennr, fragebogen);
+    frage.addChoice(new Auswahl(antworttext));
+  }
+  
+  public void loescheMultipleChoiceMoeglichkeit(Fragebogen fragebogen, Long fragennr,
+      Long antwortnr) {
+    MultipleChoiceFrage frage = this.getMultipleChoiceFrage(fragennr, fragebogen);
+    frage.deleteChoice(antwortnr);
+  }
+  
+  public void loescheFrageAusFragebogen(Fragebogen fragebogen, Long fragennr) {
+    fragebogen.loescheFrageById(fragennr);
+  }
 
   public List<Frage> getFragenlisteOhneAntworten(List<Frage> altefragen) {
     return altefragen.stream().map(x -> x.clone()).collect(Collectors.toList());
+  }
+  
+  public void updateFragebogenMetadaten(Fragebogen fragebogen, String name, String typ,
+      String startdatum, String startzeit, String enddatum, String endzeit) {
+    fragebogen.setVeranstaltungsname(name);
+    fragebogen.setType(Einheit.valueOf(typ));
+    fragebogen.setStartdatum(datetime.getLocalDateTimeFromString(startdatum, startzeit));    
+    fragebogen.setEnddatum(datetime.getLocalDateTimeFromString(enddatum, endzeit));
+  }
+  
+  public Long fuegeFragebogenZuVeranstaltungHinzu(Veranstaltung veranstaltung, Dozent dozent) {
+    Fragebogen neuerbogen = new Fragebogen(veranstaltung.getName(),
+        dozent.getVorname() + " " + dozent.getNachname());
+    veranstaltung.addFragebogen(neuerbogen);
+    return neuerbogen.getBogennr();
+  }
+  
+  public Long kloneFragebogen(Fragebogen fragebogen, Veranstaltung veranstaltung) {
+    Fragebogen neu = new Fragebogen(fragebogen.getVeranstaltungsname(),
+        fragebogen.getProfessorenname(),
+        this.getFragenlisteOhneAntworten(fragebogen.getFragen()), fragebogen.getType());
+    veranstaltung.addFragebogen(neu);
+    return neu.getBogennr();
   }
 
   /**
