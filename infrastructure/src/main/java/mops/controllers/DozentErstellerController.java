@@ -48,7 +48,6 @@ public class DozentErstellerController {
   @RolesAllowed(orgaRole)
   public String addNeuesFormular(KeycloakAuthenticationToken token, Long veranstaltungid,
                                  RedirectAttributes ra) {
-    Dozent dozent = createDozentFromToken(token);
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
     Fragebogen neu =
         new Fragebogen(veranstaltung.getName());

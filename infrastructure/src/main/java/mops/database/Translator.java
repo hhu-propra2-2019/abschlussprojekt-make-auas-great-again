@@ -162,7 +162,7 @@ public class Translator {
     veranstaltungDto.setFrageboegen(veranstaltung.getFrageboegen().stream()
         .map(this::createFragebogenDto)
         .collect(Collectors.toSet()));
-    return null;
+    return veranstaltungDto;
   }
 
   private FragebogenDto createFragebogenDto(Fragebogen fragebogen) {

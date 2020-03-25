@@ -1,5 +1,6 @@
 package mops.database;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -7,6 +8,7 @@ import java.time.LocalDateTime;
 import mops.Einheit;
 import mops.Fragebogen;
 import mops.Veranstaltung;
+import mops.VeranstaltungsService;
 import mops.database.dto.DozentDto;
 import mops.database.dto.FragebogenDto;
 import mops.database.dto.StudentDto;
@@ -19,6 +21,7 @@ import org.junit.jupiter.api.Test;
 class TranslatorTest {
   private transient StudentenJdbcRepository studentenRepo;
   private transient DozentenJdbcRepository dozentenRepo;
+  private transient VeranstaltungsService veranstaltungsService;
   private transient Translator translator;
 
   @BeforeEach
@@ -26,6 +29,7 @@ class TranslatorTest {
     this.studentenRepo = mock(StudentenJdbcRepository.class);
     this.dozentenRepo = mock(DozentenJdbcRepository.class);
     this.translator = new Translator(studentenRepo, dozentenRepo);
+    this.veranstaltungsService = new VeranstaltungsService();
   }
 
   @Test
@@ -54,6 +58,10 @@ class TranslatorTest {
 
   @Test
   void createVeranstaltungDtoTest() {
+    Veranstaltung veranstaltung = veranstaltungsService.randomVeranstaltungen().get(0);
 
+    VeranstaltungDto veranstaltungDto = translator.createVeranstaltungDto(veranstaltung);
+
+    assertEquals("SOSE2019", veranstaltungDto.getSemester());
   }
 }
