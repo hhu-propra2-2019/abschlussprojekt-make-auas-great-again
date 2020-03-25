@@ -42,10 +42,8 @@ public class DozentTemplateController {
 
   @PostMapping("")
   public String neuesTemplate(String templatename, KeycloakAuthenticationToken token) {
-    FragebogenTemplate template = new FragebogenTemplate(templatename);
-    Dozent dozent = getDozentFromToken(token);
-    dozent.addTemplate(template);
-    return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + template.getId();
+    Long templateid = dozentservice.createNewTemplate(getDozentFromToken(token), templatename);
+    return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templateid;
   }
 
   @GetMapping("/{templatenr}")
@@ -62,8 +60,7 @@ public class DozentTemplateController {
   public String neueFrage(@PathVariable Long templatenr, KeycloakAuthenticationToken token,
       String fragetyp, String fragetext) {
     Dozent dozent = getDozentFromToken(token);
-    FragebogenTemplate template = dozent.getTemplateById(templatenr);
-    template.addFrage(dozentservice.createNeueFrageAnhandFragetyp(fragetyp, fragetext));
+    dozentservice.addFrageZuTemplate(dozent, templatenr, fragetyp, fragetext);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr;
   }
 
@@ -71,10 +68,9 @@ public class DozentTemplateController {
   public String editMultipleChoiceQuestion(@PathVariable Long templatenr,
       @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
-    FragebogenTemplate template = dozent.getTemplateById(templatenr);
-    MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
     model.addAttribute("account", createAccountFromPrincipal(token));
-    model.addAttribute("frage", frage);
+    model.addAttribute("frage", dozentservice.getMultipleChoiceFromTemplate(fragennr,
+        dozent, templatenr));
     model.addAttribute("template", templatenr);
     return "dozenten/mcedit-template";
   }
@@ -82,10 +78,8 @@ public class DozentTemplateController {
   @PostMapping("/{templatenr}/{fragennr}")
   public String newMultipleChoiceAnswer(@PathVariable Long templatenr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token, String antworttext) {
-    Dozent dozent = getDozentFromToken(token);
-    FragebogenTemplate template = dozent.getTemplateById(templatenr);
-    MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
-    frage.addChoice(new Auswahl(antworttext));
+    dozentservice.addMultipleChoiceToTemplate(getDozentFromToken(token), templatenr,
+        fragennr, antworttext);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr + "/" + fragennr;
   }
 
@@ -99,9 +93,7 @@ public class DozentTemplateController {
   @PostMapping("/delete/{templatenr}/{fragennr}")
   public String deleteFrage(@PathVariable Long templatenr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token) {
-    Dozent dozent = getDozentFromToken(token);
-    FragebogenTemplate template = dozent.getTemplateById(templatenr);
-    template.deleteFrageById(fragennr);
+    dozentservice.loescheFrageAusTemplate(getDozentFromToken(token), templatenr, fragennr);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr;
   }
 
@@ -109,10 +101,8 @@ public class DozentTemplateController {
   public String deleteAntwortmoeglichkeit(@PathVariable Long templatenr,
       @PathVariable Long fragennr, @PathVariable Long auswahlnr,
       KeycloakAuthenticationToken token) {
-    Dozent dozent = getDozentFromToken(token);
-    FragebogenTemplate template = dozent.getTemplateById(templatenr);
-    MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
-    frage.deleteChoice(auswahlnr);
+    dozentservice.loescheMultipleChoiceAusTemplate(getDozentFromToken(token),
+        templatenr, fragennr, auswahlnr);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr + "/" + fragennr;
   }
 

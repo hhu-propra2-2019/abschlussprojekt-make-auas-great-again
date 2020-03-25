@@ -36,6 +36,12 @@ public class DozentService {
     return (MultipleChoiceFrage) fragebogen.getFrage(fragennr);
   }
   
+  public MultipleChoiceFrage getMultipleChoiceFromTemplate(Long fragennr, Dozent dozent,
+      Long templatenr) {
+    FragebogenTemplate template = dozent.getTemplateById(templatenr);
+    return (MultipleChoiceFrage) template.getMultipleChoiceFrageById(fragennr);
+  }
+  
   public void zensiereTextAntwort(Fragebogen fragebogen, Long fragennr,
       Long antwortnr, String neuertext) {
     TextAntwort antwort = this.getTextAntwort(fragennr, antwortnr, fragebogen);
@@ -67,14 +73,33 @@ public class DozentService {
     frage.addChoice(new Auswahl(antworttext));
   }
   
+  public void addMultipleChoiceToTemplate(Dozent dozent, Long templateid,
+      Long fragennr, String antworttext) {
+    FragebogenTemplate template = dozent.getTemplateById(templateid);
+    MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
+    frage.addChoice(new Auswahl(antworttext));
+  }
+  
   public void loescheMultipleChoiceMoeglichkeit(Fragebogen fragebogen, Long fragennr,
       Long antwortnr) {
     MultipleChoiceFrage frage = this.getMultipleChoiceFrage(fragennr, fragebogen);
     frage.deleteChoice(antwortnr);
   }
   
+  public void loescheMultipleChoiceAusTemplate(Dozent dozent, Long templateid,
+      Long fragennr, Long antwortnr) {
+    FragebogenTemplate template = dozent.getTemplateById(templateid);
+    MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
+    frage.deleteChoice(antwortnr);
+  }
+  
   public void loescheFrageAusFragebogen(Fragebogen fragebogen, Long fragennr) {
     fragebogen.loescheFrageById(fragennr);
+  }
+  
+  public void loescheFrageAusTemplate(Dozent dozent, Long templateid, Long fragennr) {
+    FragebogenTemplate template = dozent.getTemplateById(templateid);
+    template.deleteFrageById(fragennr);
   }
   
   public void addFragenAusTemplateZuFragebogen(Fragebogen fragebogen, Dozent dozent,
@@ -101,6 +126,18 @@ public class DozentService {
         dozent.getVorname() + " " + dozent.getNachname());
     veranstaltung.addFragebogen(neuerbogen);
     return neuerbogen.getBogennr();
+  }
+  
+  public Long createNewTemplate(Dozent dozent, String templatename) {
+    FragebogenTemplate template = new FragebogenTemplate(templatename);
+    dozent.addTemplate(template);
+    return template.getId();
+  }
+  
+  public void addFrageZuTemplate(Dozent dozent, Long templatenr, String fragetyp,
+      String fragentext) {
+    FragebogenTemplate template = dozent.getTemplateById(templatenr);
+    template.addFrage(this.createNeueFrageAnhandFragetyp(fragetyp, fragentext));
   }
   
   public Long kloneFragebogen(Fragebogen fragebogen, Veranstaltung veranstaltung) {
