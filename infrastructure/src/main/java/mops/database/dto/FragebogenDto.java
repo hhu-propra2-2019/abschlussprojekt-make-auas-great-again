@@ -17,7 +17,6 @@ public class FragebogenDto {
   @Id
   Long id;
   String name;
-  Integer status;
   Einheit einheit;
   @DateTimeFormat
   String startzeit;
@@ -31,7 +30,7 @@ public class FragebogenDto {
 
   public static FragebogenDto create(String name, Einheit einheit,
                                      String startzeit, String endzeit) {
-    return new FragebogenDto(null, name, 0, einheit,
+    return new FragebogenDto(null, name, einheit,
         startzeit, endzeit, new HashSet<>(), new HashSet<>());
   }
 

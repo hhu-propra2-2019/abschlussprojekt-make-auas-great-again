@@ -17,7 +17,7 @@ public class VeranstaltungDto {
   @Id
   Long id;
   String name;
-  Integer semester;
+  String semester;
   @Column("veranstaltung")
   Set<FragebogenDto> frageboegen;
   @Column("veranstaltung")
@@ -26,7 +26,7 @@ public class VeranstaltungDto {
   Set<DOrganisiertVDto> dozenten;
 
 
-  public static VeranstaltungDto create(String name, Integer semester) {
+  public static VeranstaltungDto create(String name, String semester) {
     return new VeranstaltungDto(null, name, semester, new HashSet<>(),
         new HashSet<>(), new HashSet<>());
   }

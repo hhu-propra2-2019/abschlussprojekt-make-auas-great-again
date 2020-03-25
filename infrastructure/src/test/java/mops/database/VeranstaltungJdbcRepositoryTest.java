@@ -45,7 +45,7 @@ public class VeranstaltungJdbcRepositoryTest {
     frage2.addChoice(auswahl1);
     frage2.addChoice(auswahl2);
     fragebogen.addFrage(frage2);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra5", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra5", "WS2019");
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -76,7 +76,7 @@ public class VeranstaltungJdbcRepositoryTest {
     FrageDto frage2 = FrageDto.createMultipleChoicefrage("Wo?");
     fragebogen.addFrage(frage1);
     fragebogen.addFrage(frage2);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra4", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra4", "SoSe2018");
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -95,7 +95,7 @@ public class VeranstaltungJdbcRepositoryTest {
         "Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
     FrageDto frage = FrageDto.createTextfrage("Was?");
     fragebogen.addFrage(frage);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra0", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra0", "WS2020");
     repository.save(veranstaltung);
     veranstaltung.addFragebogen(fragebogen);
     repository.save(veranstaltung);
@@ -107,9 +107,9 @@ public class VeranstaltungJdbcRepositoryTest {
 
   @Test
   void addDozentenToVeranstaltungTest() {
-    DozentDto dozent = DozentDto.create("chris", "m", "herr");
+    DozentDto dozent = DozentDto.create("dozent1", "chris", "m", "herr");
     dozentenRepo.save(dozent);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra1", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra1", "SoSe2019");
     veranstaltung.addDozent(dozent);
     repository.save(veranstaltung);
     List<Set<DOrganisiertVDto>> dozenten = new ArrayList<>();
@@ -122,7 +122,7 @@ public class VeranstaltungJdbcRepositoryTest {
   void addStudentenToVeranstaltungTest() {
     StudentDto student1 = StudentDto.create("student1");
     studentenRepo.save(student1);
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra2", 3);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra2", "WS2019");
     veranstaltung.addStudent(student1);
     repository.save(veranstaltung);
     List<Set<SBelegtVDto>> studenten = new ArrayList<>();
@@ -133,7 +133,7 @@ public class VeranstaltungJdbcRepositoryTest {
 
   @Test
   void saveVeranstaltungTest() {
-    VeranstaltungDto veranstaltung = VeranstaltungDto.create("Propra3", 4);
+    VeranstaltungDto veranstaltung = VeranstaltungDto.create("Propra3", "WS2020");
     repository.save(veranstaltung);
     ArrayList<VeranstaltungDto> veranstaltungen = new ArrayList<>();
     Iterable<VeranstaltungDto> result = repository.findAll();

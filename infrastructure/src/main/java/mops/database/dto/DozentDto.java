@@ -12,12 +12,13 @@ public class DozentDto {
 
   @Id
   Long id;
+  String username;
   String vorname;
   String nachname;
   String anrede;
 
-  public static DozentDto create(String vorname, String nachname, String anrede) {
-    return new DozentDto(null, vorname, nachname, anrede);
+  public static DozentDto create(String username, String vorname, String nachname, String anrede) {
+    return new DozentDto(null, username, vorname, nachname, anrede);
   }
 
 }

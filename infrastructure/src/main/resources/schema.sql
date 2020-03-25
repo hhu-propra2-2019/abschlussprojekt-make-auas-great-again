@@ -1,6 +1,7 @@
 create table if not exists dozent
 (
     id       bigint unsigned not null auto_increment,
+    username varchar(50)     not null,
     vorname  varchar(50)     not null,
     nachname varchar(50)     not null,
     anrede   varchar(10)     not null,
@@ -11,7 +12,7 @@ create table if not exists veranstaltung
 (
     id       bigint unsigned not null auto_increment,
     name     varchar(50)     not null,
-    semester integer,
+    semester varchar(50)     not null,
     primary key (id)
 );
 
@@ -28,7 +29,6 @@ create table if not exists fragebogen
 (
     id            bigint unsigned not null auto_increment,
     name          varchar(100)    not null,
-    status        integer         not null,
     startzeit     datetime,
     endzeit       datetime        not null,
     veranstaltung bigint unsigned,
@@ -40,9 +40,10 @@ create table if not exists fragebogen
 
 create table if not exists frage
 (
-    id         bigint unsigned not null auto_increment,
-    fragebogen bigint unsigned not null,
-    fragetext  varchar(100)    not null,
+    id          bigint unsigned not null auto_increment,
+    oeffentlich boolean         not null,
+    fragebogen  bigint unsigned not null,
+    fragetext   varchar(100)    not null,
     primary key (id),
     foreign key (fragebogen)
         references fragebogen (id)

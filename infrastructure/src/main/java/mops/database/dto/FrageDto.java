@@ -15,17 +15,18 @@ public class FrageDto {
   @Id
   Long id;
   String fragetext;
+  Boolean oeffentlich;
   @Column("frage")
   Set<AntwortDto> antworten;
   @Column("frage")
   Set<AuswahlDto> auswaehlbar;
 
   public static FrageDto createTextfrage(String text) {
-    return new FrageDto(null, text, new HashSet<>(), null);
+    return new FrageDto(null, text, false, new HashSet<>(), null);
   }
 
   public static FrageDto createMultipleChoicefrage(String text) {
-    return new FrageDto(null, text, new HashSet<>(), new HashSet<>());
+    return new FrageDto(null, text, false, new HashSet<>(), new HashSet<>());
   }
 
   public void addChoice(AuswahlDto choice) {
