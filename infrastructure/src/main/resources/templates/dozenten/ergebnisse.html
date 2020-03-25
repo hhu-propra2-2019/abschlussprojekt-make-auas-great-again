@@ -19,10 +19,13 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
+    <h1 class="display-4 text-center">Umfrageergebnisse</h1>
+    <div class="container text-center">
+        <h2 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h2>
+        <h2 th:text="${fragebogen.professorenname}">Professor</h2>
+    </div>
+    <br>
     <div class="container">
-        <h1 class="display-4 text-center">Umfrageergebnisse</h1>
-        <h2 th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
-            <h3 th:text="${fragebogen.professorenname}">Professor</h2>
         <div th:each="frage : ${fragebogen.fragen}">
             <h3 th:text="${frage.toString()}">Fragetext</h3>
             <div class="form-group" th:if="${typechecker.isTextFrage(frage)}">
@@ -60,16 +63,20 @@
                 <form class="form-horizontal" method="post"
                       th:action="'/feedback/dozenten/watch/publish/' + ${fragebogen.bogennr} + '/' + ${frage.id}">
                     <input id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung}" type="hidden">
-                    <button class="btn btn-outline-primary btn-sm" name="publishbutton" type="submit"><span
+                    <button class="btn btn-outline-primary" name="publishbutton" type="submit"><span
                             th:if="${frage.isOeffentlich() == false}">Ergebnisse veröffentlichen</span><span
                             th:if="${frage.isOeffentlich()}">Ergebnisse nicht mehr öffentlich anzeigen</span>
                     </button>
                 </form>
             </div>
+            <br>
         </div>
+    </div>
+    <br>
+    <div class="container">
         <form class="form-horizontal" method="get"
               th:action="'/feedback/dozenten/event/' + ${veranstaltung}">
-            <button class="btn btn-primary" name="showbutton" type="submit">Zurück zur Veranstaltung
+            <button class="btn btn-outline-secondary btn-sm" name="showbutton" type="submit">Zurück zur Veranstaltung
             </button>
         </form>
     </div>
