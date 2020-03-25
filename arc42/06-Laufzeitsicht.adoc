@@ -34,3 +34,14 @@ Das Persistieren der Antwoten auf das Fragebogen ist anonym. Das heißt, es wird
 
 * Die Ergebnisse gehören auch zur Veranstaltungen und werden von dem zuständigen Controller aus dem VeranstaltungsRepository geholt.
 
+=== _Fragebogen erstelen_
+
+* Der Controller holt aus dem VeranstaltungsRepository das Fragebogen Objekt bzw. erzeugt ein neues Objekt, wo die Änderungen vorgenommen werden
+wie zum Beispiel das Hinzufügen von Fragen oder die Änderung von Metadaten des Fragebogens .
+
+* Dozenten können ihre eigene Fragebögen erstellen, indem sie neue Fragen schreiben und den Typ der Frage bestimmen.
+Es gibt verschiede Arten von Fragen. Das sind: multipleChoice Fragen, multipleResponse Fragen und text Fragen.
+MultipleResponse Fragen unterscheiden sich von multipleChoice Fragen bei der Antwortsmöglichkeiten, sodass bei der multipleResponse Fragen mehrere Antworten möglich sind.
+Fragen können auch inzwischen gelöscht werden.
+
+* Dozenten können auch den Zeitraum eines Fragebogen festlegen sowie den Name und den Veranstaltungstyp des Fragebogens bestimmen.
