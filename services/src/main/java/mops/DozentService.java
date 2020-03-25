@@ -3,6 +3,7 @@ package mops;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 import mops.antworten.TextAntwort;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
@@ -36,23 +37,8 @@ public class DozentService {
     return fragebogen.getFrage(fragennr);
   }
 
-  @SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
   public List<Frage> getFragenlisteOhneAntworten(List<Frage> altefragen) {
-    List<Frage> result = new ArrayList<>();
-    for (Frage frage : altefragen) {
-      if (frage instanceof TextFrage) {
-        result.add(new TextFrage(frage.toString()));
-      } else if (frage instanceof SingleResponseFrage) {
-        SingleResponseFrage neuefrage =
-            new SingleResponseFrage(frage.toString(), ((SingleResponseFrage) frage).getChoices());
-        result.add(neuefrage);
-      } else {
-        MultipleResponseFrage neuefrage = new MultipleResponseFrage(frage.toString(),
-            ((MultipleResponseFrage) frage).getChoices());
-        result.add(neuefrage);
-      }
-    }
-    return result;
+    return altefragen.stream().map(x -> x.clone()).collect(Collectors.toList());
   }
 
   /**

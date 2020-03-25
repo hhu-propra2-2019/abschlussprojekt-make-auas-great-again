@@ -25,6 +25,8 @@ public abstract class Frage {
   public abstract void addAntwort(String antwort);
 
   public abstract Iterable<Antwort> getAntworten();
+  
+  public abstract Frage clone();
 
   @Override
   public abstract String toString();

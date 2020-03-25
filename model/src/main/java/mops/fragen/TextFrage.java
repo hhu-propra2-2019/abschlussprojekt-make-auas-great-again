@@ -37,6 +37,11 @@ public class TextFrage extends Frage {
   public Set<Antwort> getAntworten() {
     return antworten;
   }
+  
+  @Override
+  public Frage clone() {
+    return new TextFrage(this.fragentext);
+  }
 
   @Override
   public String toString() {

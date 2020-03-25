@@ -9,6 +9,11 @@ public class MultipleResponseFrage extends MultipleChoiceFrage {
 
     super(id, fragentext, true);
   }
+  
+  @Override
+  public Frage clone() {
+    return new MultipleResponseFrage(this.getFragentext(), this.getChoices());
+  }
 
   public MultipleResponseFrage(String fragetext, List<Auswahl> choices) {
     super(fragetext, choices);
