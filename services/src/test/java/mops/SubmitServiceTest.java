@@ -39,8 +39,8 @@ public class SubmitServiceTest {
 
   @Test
   public void valideAntwortWirdGespeichert() {
-    Map<Long, String> antwort = new HashMap<>();
-    antwort.put(Long.valueOf(1), "beispielantwort");
+    Map<Long, List<String>> antwort = new HashMap<>();
+    antwort.put(Long.valueOf(1), List.of("beispielantwort"));
 
     service.saveAntworten(mockFragebogen, antwort);
 
@@ -50,8 +50,8 @@ public class SubmitServiceTest {
 
   @Test
   public void leereAntwortWirdNichtGespeichert() {
-    Map<Long, String> antwort = new HashMap<>();
-    antwort.put(Long.valueOf(1), "");
+    Map<Long, List<String>> antwort = new HashMap<>();
+    antwort.put(Long.valueOf(1), List.of(""));
 
     service.saveAntworten(mockFragebogen, antwort);
 
@@ -61,8 +61,10 @@ public class SubmitServiceTest {
 
   @Test
   public void nullStringWirdIgnoriert() {
-    Map<Long, String> antwort = new HashMap<>();
-    antwort.put(Long.valueOf(1), null);
+    Map<Long, List<String>> antwort = new HashMap<>();
+    List<String> antwortliste = new ArrayList<>();
+    antwortliste.add(null);
+    antwort.put(Long.valueOf(1), antwortliste);
 
     service.saveAntworten(mockFragebogen, antwort);
 

@@ -22,22 +22,17 @@ public class VeranstaltungDto {
   Set<FragebogenDto> frageboegen;
   @Column("veranstaltung")
   Set<SBelegtVDto> studenten;
-  @Column("veranstaltung")
-  Set<DOrganisiertVDto> dozenten;
 
 
   public static VeranstaltungDto create(String name, String semester) {
     return new VeranstaltungDto(null, name, semester, new HashSet<>(),
-        new HashSet<>(), new HashSet<>());
+        new HashSet<>());
   }
 
   public void addStudent(StudentDto student) {
     studenten.add(new SBelegtVDto(student.getId()));
   }
 
-  public void addDozent(DozentDto dozent) {
-    dozenten.add(new DOrganisiertVDto(dozent.getId()));
-  }
 
   public void addFragebogen(FragebogenDto fragebogen) {
     frageboegen.add(fragebogen);

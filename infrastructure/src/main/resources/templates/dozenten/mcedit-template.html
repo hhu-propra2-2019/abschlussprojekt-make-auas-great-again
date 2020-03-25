@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>feedback</title>
+    <th:block th:fragment="headcontent">
+        <!-- Links, Skripts, Styles hier einfügen! -->
+    </th:block>
+</head>
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <ul>
+            <li><a href="/feedback/dozenten">Übersicht</a></li>
+            <li><a href="/feedback/dozenten/templates">Meine Fragebogen-Templates</a></li>
+            <li><a href="/feedback/dozenten/event/new">Neue Veranstaltung erstellen</a></li>
+        </ul>
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <div class="container">
+        <h2 class="text-center">
+            Antwortmöglichkeiten bearbeiten
+        </h2>
+        <h4 class="text-center">
+            Frage: <span th:text="${frage.fragentext}">Die Vorlesung ist strukturiert</span>
+        </h4>
+    </div>
+    <div class="container">
+        <h3 class="display-6">Bereits vorhandene Antwortmöglichkeiten</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Antwortmöglichkeit</th>
+                <th>Löschen</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="choice : ${frage.choices}">
+                <td th:text="${choice.label}">Die Vorlesung ist strukturiert</td>
+                <td>
+                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/templates/delete/' + ${template} + '/' + ${frage.id} + '/' + ${choice.id}">
+                        <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">
+                            Löschen
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <form class="was-validated" method="post" th:action="'/feedback/dozenten/templates/' + ${template} + '/' + ${frage.id}">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <input class="form-control" id="antworttext" name="antworttext"
+                           placeholder="Antwort hinzufügen"
+                           required type="text">
+                </div>
+            </div>
+            <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen
+            </button>
+        </form>
+    </div>
+    <div class="container text-center">
+        <form class="form-horizontal" th:action="'/feedback/dozenten/templates/' + ${template}" method="get">
+            <button class="btn btn-primary" name="showbutton" type="submit">Zurück zum Template
+            </button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
