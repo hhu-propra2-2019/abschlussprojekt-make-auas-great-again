@@ -3,7 +3,9 @@ package mops.database;
 import mops.database.dto.DozentDto;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface DozentenJdbcRepository extends CrudRepository<DozentDto, Long> {
   // TODO
   @Query("")
