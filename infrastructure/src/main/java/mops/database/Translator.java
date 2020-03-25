@@ -12,6 +12,7 @@ import mops.antworten.MultipleChoiceAntwort;
 import mops.antworten.TextAntwort;
 import mops.database.dto.AntwortDto;
 import mops.database.dto.AuswahlDto;
+import mops.database.dto.DozentDto;
 import mops.database.dto.FrageDto;
 import mops.database.dto.FragebogenDto;
 import mops.database.dto.SBeantwortetFDto;
@@ -198,11 +199,8 @@ public class Translator {
     return null;
   }
 
-  public Long findStudentId(Student student) {
-    return studentenRepo.findId(student.getUsername());
-  }
-
-  public Long findDozentenId(Dozent dozent) {
-    return dozentenRepo.findId(dozent.getUsername());
+  public Dozent loadDozent(DozentDto dozentByUsername) {
+    // TODO
+    return null;
   }
 }

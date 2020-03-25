@@ -13,13 +13,19 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class VeranstaltungsRepository implements mops.controllers.VeranstaltungsRepository {
+  private final transient DozentenJdbcRepository dozentenRepo;
+  private final transient StudentenJdbcRepository studentenRepo;
   private transient VeranstaltungJdbcRepository veranstaltungenRepo;
   private transient Translator translator;
 
   public VeranstaltungsRepository(Translator translator,
-                                  VeranstaltungJdbcRepository veranstaltungenRepo) {
+                                  VeranstaltungJdbcRepository veranstaltungenRepo,
+                                  DozentenJdbcRepository dozentenRepo,
+                                  StudentenJdbcRepository studentenRepo) {
     this.veranstaltungenRepo = veranstaltungenRepo;
     this.translator = translator;
+    this.dozentenRepo = dozentenRepo;
+    this.studentenRepo = studentenRepo;
   }
 
   @Override
@@ -59,25 +65,25 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
 
   @Override
   public List<Veranstaltung> getAllFromStudent(Student student) {
-    Long id = translator.findStudentId(student);
+    Long id = findStudentId(student);
     return loadVeranstaltungen(veranstaltungenRepo.getAllFromStudent(id));
   }
 
   @Override
   public List<Veranstaltung> getAllFromStudentContaining(Student student, String search) {
-    Long id = translator.findStudentId(student);
+    Long id = findStudentId(student);
     return loadVeranstaltungen(veranstaltungenRepo.getAllFromStudentContaining(id, search));
   }
 
   @Override
   public List<Veranstaltung> getAllFromDozent(Dozent dozent) {
-    Long id = translator.findDozentenId(dozent);
+    Long id = findDozentenId(dozent);
     return loadVeranstaltungen(veranstaltungenRepo.getAllFromDozent(id));
   }
 
   @Override
   public List<Veranstaltung> getAllFromDozentContaining(Dozent dozent, String suche) {
-    Long id = translator.findDozentenId(dozent);
+    Long id = findDozentenId(dozent);
     return loadVeranstaltungen(veranstaltungenRepo.getAllFromDozentContaining(id, suche));
   }
 
@@ -93,11 +99,24 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
     return null;
   }
 
+  @Override
+  public Dozent getDozentByUsername(String name) {
+    return translator.loadDozent(dozentenRepo.getDozentByUsername(name));
+  }
+
   private List<Veranstaltung> loadVeranstaltungen(Iterable<VeranstaltungDto> veranstaltungDtos) {
     List<Veranstaltung> veranstaltungen = new ArrayList<>();
     for (VeranstaltungDto dto : veranstaltungDtos) {
       veranstaltungen.add(translator.loadVeranstaltung(dto));
     }
     return veranstaltungen;
+  }
+
+  public Long findStudentId(Student student) {
+    return studentenRepo.findId(student.getUsername());
+  }
+
+  public Long findDozentenId(Dozent dozent) {
+    return dozentenRepo.findId(dozent.getUsername());
   }
 }
