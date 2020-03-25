@@ -5,3 +5,5 @@ Diese greifen wiederum auf die jeweiligen Services bzw. Repositories zu,
 welche für die Logik und das Holen der gefragten Daten zuständig sind.
 
 Im Folgenden werden ein paar beispielhafte Laufzeit-Interaktionen skizziert, um dies beispielhaft zu verdeutlichen.
+
+image:images/laufzeit.png[align="center"]
