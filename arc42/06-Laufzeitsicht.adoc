@@ -21,9 +21,16 @@ Durch das Klicken auf die gesuchte Veranstaltung, holt der Controller aus dem Ve
 Dies geschieht mit Hilfe von SubmitService, um zu vermeiden, dass ein Student oder eine Studentin mehrfach das gleiche Fragebogen ausfüllt.
 
 * Der von den Dozenten festgelegten Zeitraum wird mit Thymeleaf und JavaScript gezeigt.
-Die Abgabe eines Feedbacks erfolgt nur in dem entsprechenden Zeitraum, Da nach dem Ablauf der festgelegten Frist wird der Zugriff auf das Fragebogen deaktiviert.
+Die Abgabe eines Feedbacks erfolgt nur in dem entsprechenden Zeitraum, Da nach dem Ablauf der festgelegten Frist der Zugriff auf das Fragebogen deaktiviert wird.
 
 * Klickt man auf das gewünschte Fragebogen, werden von dem Controller alle Fragen geholt, die zu dem Fragebogen gehören.
 
 * Nach dem ausfüllen des Fragebogens kann der Student oder die Studentin das Fragebogen durch Klicken auf den "Abgeben" Button speichern.
 Das Persistieren der Antwoten auf das Fragebogen ist anonym. Das heißt, es wird nicht gespeichert, wer welche Antworten abgegeben hat.
+
+=== _Evaluationsergebnisse sehen_
+
+* Nur mit erfolgeicher Anmeldung können Studierende sich Ergebnisse anschauen, die von den Dozenten veröffentlich worden sind.
+
+* Die Ergebnisse gehören auch zur Veranstaltungen und werden von dem zuständigen Controller aus dem VeranstaltungsRepository geholt.
+
