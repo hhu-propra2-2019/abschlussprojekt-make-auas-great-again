@@ -24,6 +24,7 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
   }
 
   @Override
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public List<Veranstaltung> getAll() {
     Iterable<VeranstaltungDto> veranstaltungenDtos = veranstaltungenRepo.findAll();
     List<Veranstaltung> veranstaltungen = new ArrayList<>();

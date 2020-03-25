@@ -29,6 +29,7 @@ import mops.rollen.Student;
 import org.springframework.stereotype.Service;
 
 @Service
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Translator {
 
   private final transient StudentenJdbcRepository studentenRepo;
