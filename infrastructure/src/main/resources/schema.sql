@@ -28,6 +28,16 @@ create table if not exists student
     primary key (id)
 );
 
+create table if not exists fragebogentemplate
+(
+    id     bigint unsigned not null auto_increment,
+    name   varchar(50)     not null,
+    dozent bigint unsigned not null,
+    primary key (id),
+    foreign key (dozent)
+        references dozent (id)
+);
+
 create table if not exists fragebogen
 (
     id            bigint unsigned not null auto_increment,
@@ -43,13 +53,16 @@ create table if not exists fragebogen
 
 create table if not exists frage
 (
-    id          bigint unsigned not null auto_increment,
-    oeffentlich boolean         not null,
-    fragebogen  bigint unsigned not null,
-    fragetext   varchar(100)    not null,
+    id                 bigint unsigned not null auto_increment,
+    oeffentlich        boolean         not null,
+    fragebogen         bigint unsigned,
+    fragebogentemplate bigint unsigned,
+    fragetext          varchar(100)    not null,
     primary key (id),
     foreign key (fragebogen)
-        references fragebogen (id)
+        references fragebogen (id),
+    foreign key (fragebogentemplate)
+        references fragebogentemplate (id)
 );
 
 create table if not exists antwort
