@@ -22,7 +22,7 @@ Durch das Klicken auf die gesuchte Veranstaltung, holt der Controller aus dem Ve
 Dies geschieht mit Hilfe von SubmitService, um zu vermeiden, dass ein Student oder eine Studentin mehrfach das gleiche Fragebogen ausfüllt.
 
 * Der von den Dozenten festgelegten Zeitraum wird mit Thymeleaf und JavaScript gezeigt.
-Die Abgabe eines Feedbacks erfolgt nur in dem entsprechenden Zeitraum, Da nach dem Ablauf der festgelegten Frist der Zugriff auf das Fragebogen deaktiviert wird.
+Die Abgabe eines Feedbacks erfolgt nur in dem entsprechenden Zeitraum, da nach dem Ablauf der festgelegten Frist der Zugriff auf das Fragebogen deaktiviert wird.
 
 * Klickt man auf das gewünschte Fragebogen, werden von dem Controller alle Fragen geholt, die zu dem Fragebogen gehören.
 
@@ -37,15 +37,15 @@ Das Persistieren der Antwoten auf das Fragebogen ist anonym. Das heißt, es wird
 
 === _Fragebogen erstelen_
 
-* Der Controller holt aus dem VeranstaltungsRepository das Fragebogen Objekt bzw. erzeugt ein neues Objekt, wo die Änderungen vorgenommen werden
-wie zum Beispiel das Hinzufügen von Fragen oder die Änderung von Metadaten des Fragebogens .
+* Der Controller holt aus dem VeranstaltungsRepository das Fragebogen Objekt bzw. erzeugt ein neues Objekt, wo die Änderungen vorgenommen werden, wie zum Beispiel
+das Hinzufügen von Fragen oder die Änderung von Metadaten des Fragebogens .
 
 * Dozenten können ihre eigene Fragebögen erstellen, indem sie neue Fragen schreiben und den Typ der Frage bestimmen.
-Es gibt verschiede Arten von Fragen. Das sind: multipleChoice Fragen, multipleResponse Fragen und text Fragen.
+Es gibt verschiede Typen von Fragen. Das sind: multipleChoice Fragen, multipleResponse Fragen und text Fragen.
 MultipleResponse Fragen unterscheiden sich von multipleChoice Fragen bei der Antwortsmöglichkeiten, sodass bei der multipleResponse Fragen mehrere Antworten möglich sind.
 Fragen können auch inzwischen gelöscht werden.
 
-* Dozenten können auch den Zeitraum eines Fragebogen festlegen sowie den Name und den Veranstaltungstyp des Fragebogens bestimmen.
+* Dozenten können auch den Zeitraum eines Fragebogen festlegen sowie den Namen und den Veranstaltungstyp des Fragebogens bestimmen.
 
 * Durch Klicken auf den "Fragebogen recyclen" Button können Dozenten vorhandene Fragebögen mehrfach verwenden und bearbeiten.
 
