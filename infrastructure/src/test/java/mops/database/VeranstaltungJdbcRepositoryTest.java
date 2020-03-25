@@ -36,6 +36,76 @@ public class VeranstaltungJdbcRepositoryTest {
 
 
   @Test
+  void findVeranstaltungenForDozentTest() {
+    DozentDto d1 = DozentDto.create("dozent1", "jens", "ben", "herr");
+    dozentenRepo.save(d1);
+    VeranstaltungDto v1 = VeranstaltungDto.create("veran1", "WS2020");
+    v1.addDozent(d1);
+    repository.save(v1);
+    VeranstaltungDto v2 = VeranstaltungDto.create("veran2", "WS2021");
+    v2.addDozent(d1);
+    repository.save(v2);
+    Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromDozent(
+        dozentenRepo.findId("dozent1"));
+    veranstaltungen.forEach(v -> assertThat(v.getDozenten().contains(d1)));
+  }
+
+
+  @Test
+  void findVeranstaltungenForStudentTest() {
+    StudentDto s1 = StudentDto.create("student1");
+    studentenRepo.save(s1);
+    VeranstaltungDto v1 = VeranstaltungDto.create("veran1", "WS2020");
+    v1.addStudent(s1);
+    repository.save(v1);
+    VeranstaltungDto v2 = VeranstaltungDto.create("veran2", "WS2021");
+    v2.addStudent(s1);
+    repository.save(v2);
+    Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromStudent(
+        studentenRepo.findId("student1"));
+    veranstaltungen.forEach(v -> assertThat(v.getStudenten().contains(s1)));
+  }
+
+  @Test
+  void findVeranstaltungContainingTest() {
+    VeranstaltungDto v1 = VeranstaltungDto.create("aldat", "WS2020");
+    VeranstaltungDto v2 = VeranstaltungDto.create("prog", "WS2021");
+    VeranstaltungDto v3 = VeranstaltungDto.create("dalten", "WS2021");
+    repository.save(v1);
+    repository.save(v2);
+    repository.save(v3);
+    ArrayList<VeranstaltungDto> liste = new ArrayList<>();
+    Iterable<VeranstaltungDto> veranstaltungen = repository.getAllContaining("al");
+    veranstaltungen.forEach(v -> liste.add(v));
+    assertThat(liste).contains(v1);
+    assertThat(liste).contains(v3);
+  }
+
+  @Test
+  void findDozentByUsernameTest() {
+    DozentDto dozent1 = DozentDto.create("dozent1", "jens", "ben", "herr");
+    DozentDto dozent2 = DozentDto.create("dozent2", "ann", "kathrin", "frau");
+    dozentenRepo.save(dozent1);
+    dozentenRepo.save(dozent2);
+    Long id1 = dozentenRepo.findId("dozent1");
+    Long id2 = dozentenRepo.findId("dozent2");
+    assertThat(dozent1.getId()).isEqualTo(id1);
+    assertThat(dozent2.getId()).isEqualTo(id2);
+  }
+
+  @Test
+  void findStudentByUsernameTest() {
+    StudentDto student1 = StudentDto.create("student1");
+    StudentDto student2 = StudentDto.create("student2");
+    studentenRepo.save(student1);
+    studentenRepo.save(student2);
+    Long id1 = studentenRepo.findId("student1");
+    Long id2 = studentenRepo.findId("student2");
+    assertThat(student1.getId()).isEqualTo(id1);
+    assertThat(student2.getId()).isEqualTo(id2);
+  }
+
+  @Test
   void addAntwortenToFragenToFragebogenToVeranstaltungKnowingId() {
     FragebogenDto fragebogen = FragebogenDto.create(
         "Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
