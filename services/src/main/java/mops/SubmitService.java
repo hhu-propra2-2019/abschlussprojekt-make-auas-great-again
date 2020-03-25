@@ -14,10 +14,12 @@ public class SubmitService {
    * @param fragebogen in den die Antworten gespeichert werden sollen
    * @param antworten Map mit zu speichernden Antworten
    */
-  public void saveAntworten(Fragebogen fragebogen, Map<Long, String> antworten) {
+  public void saveAntworten(Fragebogen fragebogen, Map<Long, List<String>> antwortmap) {
     for (Frage frage : fragebogen.getFragen()) {
-      String antwort = antworten.get(frage.getId());
-      addAntwortIfValid(frage, antwort);
+      List<String> antworten = antwortmap.get(frage.getId());
+      for (String antwort : antworten) {
+        addAntwortIfValid(frage, antwort);
+      }
     }
   }
 
