@@ -18,7 +18,7 @@ Dies geschieht durch die Anmeldungsseite von Keycloack.
 wo sie alle Veranstaltungen, die sie besuchen, sehen können.
 
 * Der Student oder die Studentin kann sich dann aussuchen, für welche Veranstaltung das Feedback abgegeben werden soll.
-Durch das Klicken auf die gesuchte Veranstaltung, holt der Controller aus dem VeranstaltungsRepository alle Fragebogen, die man ausfüllen darf.
+Durch das Klicken auf die gesuchte Veranstaltung, holt der Controller aus dem VeranstaltungsRepository alle Fragebögen, die man ausfüllen darf.
 Dies geschieht mit Hilfe von SubmitService, um zu vermeiden, dass ein Student oder eine Studentin mehrfach das gleiche Fragebogen ausfüllt.
 
 * Der von den Dozenten festgelegten Zeitraum wird mit Thymeleaf und JavaScript gezeigt.
