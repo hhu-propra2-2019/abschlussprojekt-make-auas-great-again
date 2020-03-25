@@ -8,3 +8,17 @@ Von daher haben wir für das Anmelden sowie für die verschiedenen Zugriffsrecht
 Bei unserer Anwendung war es für uns von zentraler Bedeutung, dass die Feedbacks der Studierende anonym bleiben
 und in keinem Fall aufspürbar sein. Außerdem ist das mehrfache Ausfüllen eines Fragebogen unzulässig.
 
+=== User Experienc
+
+Nach der erfolgeichen Anmeldung wird der User an eine zentrale Übersicht für alle seine Veranstaltungen.
+Dies glit sowohl für Studierende als auch für Dozenten.
+
+Alle Funktionen unserer Anwendung sind durch Buttons und navigation Bars leicht erreichbar.
+
+Für alle Veranstaltungen bzw. Fragebögen in der verschiedenen Übersichten gibt es eine implementierte Suchfunktion,
+um die Suche nach dem gewünschten Angebot zu erleichtern.
+
+Die Erstellung von Fragebögen ist duch die zur verfügung stehenden Funktionen für die Dozenten sehr flexible und übersichtlich.
+Fertige Templates für Fragen sowie alte Fragen können sehr leicht von den Dozenten wieder benutzt werden.
+
+Ergebnisse der Evaluationen werden gegebenenfalls in Prozenten berechnet, um die Tendenzen verständlicher auszudrücken.
