@@ -9,5 +9,8 @@ public interface DozentenJdbcRepository extends CrudRepository<DozentDto, Long> 
 
   @Query("select id from dozent where username = :dozent")
   Long findId(@Param("dozent") String dozent);
+
+  @Query("select * from dozent where username = :name")
+  DozentDto getDozentByUsername(@Param("name") String username);
 }
 

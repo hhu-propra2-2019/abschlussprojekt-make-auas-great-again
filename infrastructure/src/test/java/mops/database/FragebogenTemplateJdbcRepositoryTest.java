@@ -20,6 +20,14 @@ public class FragebogenTemplateJdbcRepositoryTest {
   private transient DozentenJdbcRepository dozentenRepo;
 
   @Test
+  void findDozentenByUsernameTest() {
+    DozentDto dozent = DozentDto.create("user1", "chris", "ru");
+    dozentenRepo.save(dozent);
+    DozentDto found = dozentenRepo.getDozentByUsername("user1");
+    assertThat(found).isEqualTo(dozent);
+  }
+
+  @Test
   void createNewTemplateTest() {
     DozentDto dozent = DozentDto.create("orga1", "jens", "ben");
     FragebogenTemplateDto template = FragebogenTemplateDto.create("Testtemplate");
