@@ -6,6 +6,7 @@ welche für die Logik und das Holen der gefragten Daten zuständig sind.
 
 Im Folgenden werden ein paar beispielhafte Laufzeit-Interaktionen skizziert, um dies beispielhaft zu verdeutlichen.
 
+[.thumb]
 image:images/laufzeit.png[align="center"]
 
 === _Feedback geben_
