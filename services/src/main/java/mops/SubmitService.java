@@ -12,11 +12,17 @@ public class SubmitService {
    * Speichern der Antworten einer Umfrage in die Frage.
    *
    * @param fragebogen in den die Antworten gespeichert werden sollen
-   * @param antworten Map mit zu speichernden Antworten
+   * @param antwortmap Map mit zu speichernden Antworten
    */
-  public void saveAntworten(Fragebogen fragebogen, Map<Long, String> antworten) {
+  public void saveAntworten(Fragebogen fragebogen, Map<Long, List<String>> antwortmap) {
     for (Frage frage : fragebogen.getFragen()) {
-      String antwort = antworten.get(frage.getId());
+      addAlleAntworten(antwortmap, frage);
+    }
+  }
+
+  private void addAlleAntworten(Map<Long, List<String>> antwortmap, Frage frage) {
+    List<String> antworten = antwortmap.get(frage.getId());
+    for (String antwort : antworten) {
       addAntwortIfValid(frage, antwort);
     }
   }
