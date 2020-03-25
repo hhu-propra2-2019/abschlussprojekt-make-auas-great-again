@@ -1,10 +1,10 @@
 create table if not exists dozent
 (
     id       bigint unsigned not null auto_increment,
-    username varchar(50)     not null,
+    username varchar(50)     not null UNIQUE,
     vorname  varchar(50)     not null,
     nachname varchar(50)     not null,
-    anrede   varchar(10)     not null,
+    anrede   varchar(10),
     primary key (id)
 );
 
@@ -13,16 +13,19 @@ create table if not exists veranstaltung
     id       bigint unsigned not null auto_increment,
     name     varchar(50)     not null,
     semester varchar(50)     not null,
-    primary key (id)
+    dozent   bigint unsigned not null,
+    primary key (id),
+    foreign key (dozent)
+        references dozent (id)
 );
 
 create table if not exists student
 (
     id       bigint unsigned not null auto_increment,
-    username varchar(50)     not null,
+    username varchar(50)     not null UNIQUE,
     vorname  varchar(50),
     nachname varchar(50),
-    primary key (username)
+    primary key (id)
 );
 
 create table if not exists fragebogen
@@ -74,7 +77,7 @@ create table if not exists auswahl
 
 create table if not exists studentBeantwortetFragebogen
 (
-    student    varchar(50)     not null,
+    student    bigint unsigned not null,
     fragebogen bigint unsigned not null,
     primary key (student, fragebogen),
     foreign key (student)
@@ -85,22 +88,11 @@ create table if not exists studentBeantwortetFragebogen
 
 create table if not exists studentBelegtVeranstaltung
 (
-    student       varchar(50)     not null,
+    student       bigint unsigned not null,
     veranstaltung bigint unsigned not null,
     primary key (student, veranstaltung),
     foreign key (student)
         references student (id),
-    foreign key (veranstaltung)
-        references veranstaltung (id)
-);
-
-create table if not exists dozentOrganisiertVeranstaltung
-(
-    dozent        bigint unsigned not null,
-    veranstaltung bigint unsigned not null,
-    primary key (dozent, veranstaltung),
-    foreign key (dozent)
-        references dozent (id),
     foreign key (veranstaltung)
         references veranstaltung (id)
 );
