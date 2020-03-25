@@ -15,22 +15,23 @@ import mops.fragen.MultipleChoiceFrage;
 public class FragebogenTemplate {
   private final Long id;
   private final String name;
-  private final List<Frage> fragen = new ArrayList<>();
-  
+  private final List<Frage> fragen;
+
   public FragebogenTemplate(String name) {
     Random idgenerator = new Random();
     this.id = idgenerator.nextLong();
     this.name = name;
+    this.fragen = new ArrayList<>();
   }
 
   public void addFrage(Frage frage) {
     fragen.add(frage);
   }
-  
+
   public void deleteFrageById(Long id) {
     fragen.remove(fragen.stream().filter(x -> x.getId().equals(id)).findFirst().get());
   }
-  
+
   public MultipleChoiceFrage getMultipleChoiceFrageById(Long id) {
     return (MultipleChoiceFrage) fragen.stream().filter(x -> x.getId().equals(id))
         .findFirst().get();

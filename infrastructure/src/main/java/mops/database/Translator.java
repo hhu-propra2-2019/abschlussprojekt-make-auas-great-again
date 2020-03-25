@@ -6,15 +6,18 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import mops.Fragebogen;
+import mops.FragebogenTemplate;
 import mops.Veranstaltung;
 import mops.antworten.Antwort;
 import mops.antworten.MultipleChoiceAntwort;
 import mops.antworten.TextAntwort;
 import mops.database.dto.AntwortDto;
 import mops.database.dto.AuswahlDto;
+import mops.database.dto.DOrganisiertVDto;
 import mops.database.dto.DozentDto;
 import mops.database.dto.FrageDto;
 import mops.database.dto.FragebogenDto;
+import mops.database.dto.FragebogenTemplateDto;
 import mops.database.dto.SBeantwortetFDto;
 import mops.database.dto.SBelegtVDto;
 import mops.database.dto.StudentDto;
@@ -149,7 +152,7 @@ public class Translator {
   public VeranstaltungDto createVeranstaltungDto(Veranstaltung veranstaltung) {
     VeranstaltungDto veranstaltungDto = VeranstaltungDto.create(veranstaltung.getName(),
         veranstaltung.getSemester());
-    // TODO Set Dozent
+    veranstaltungDto.setDozenten(Set.of(createDOrganisiertVDto(veranstaltung.getDozent())));
     veranstaltungDto.setStudenten(veranstaltung.getStudenten().stream()
         .map(this::createSBelegtVDto)
         .collect(Collectors.toSet()));
@@ -157,6 +160,10 @@ public class Translator {
         .map(this::createFragebogenDto)
         .collect(Collectors.toSet()));
     return veranstaltungDto;
+  }
+
+  private DOrganisiertVDto createDOrganisiertVDto(Dozent dozent) {
+    return new DOrganisiertVDto(dozentenRepo.findId(dozent.getUsername()));
   }
 
   private FragebogenDto createFragebogenDto(Fragebogen fragebogen) {
@@ -196,11 +203,23 @@ public class Translator {
   }
 
   private AntwortDto createTextAntwortDto(TextAntwort antwort) {
+    // TODO
     return null;
   }
 
-  public Dozent loadDozent(DozentDto dozentByUsername) {
-    // TODO
-    return null;
+  Dozent loadDozent(DozentDto dozentDto) {
+    List<FragebogenTemplate> templates = loadTemplates(dozentDto.getFragebogenTemplates());
+    Dozent dozent = new Dozent(dozentDto.getUsername(), dozentDto.getNachname(),
+        dozentDto.getVorname(), templates);
+    return dozent;
+  }
+
+  private List<FragebogenTemplate> loadTemplates(Set<FragebogenTemplateDto> fragebogenTemplates) {
+    return fragebogenTemplates.stream().map(this::loadTemplate).collect(Collectors.toList());
+  }
+
+  private FragebogenTemplate loadTemplate(FragebogenTemplateDto fragebogenTemplateDto) {
+    return new FragebogenTemplate(fragebogenTemplateDto.getId(), fragebogenTemplateDto.getName(),
+        loadFragen(fragebogenTemplateDto.getFragen()));
   }
 }
