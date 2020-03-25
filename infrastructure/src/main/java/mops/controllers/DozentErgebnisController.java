@@ -2,7 +2,6 @@ package mops.controllers;
 
 import javax.annotation.security.RolesAllowed;
 import mops.DozentService;
-import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.antworten.TextAntwort;
 import mops.database.MockVeranstaltungsRepository;
