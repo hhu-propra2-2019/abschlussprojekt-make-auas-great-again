@@ -29,4 +29,6 @@ public interface VeranstaltungsRepository {
   Fragebogen getFragebogenFromDozentById(Long fragebogen, Dozent dozent);
 
   Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung);
+
+  Dozent getDozentByUsername(String name);
 }

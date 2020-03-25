@@ -3,7 +3,6 @@ package mops.controllers;
 import mops.DozentService;
 import mops.FragebogenTemplate;
 import mops.TypeChecker;
-import mops.database.MockDozentenRepository;
 import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
@@ -22,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DozentTemplateController {
   private static final String REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES =
       "redirect:/feedback/dozenten/templates/";
-  private final transient DozentRepository dozenten;
   private final transient DozentService dozentservice;
   private final transient TypeChecker typechecker;
+  private final transient VeranstaltungsRepository veranstaltungen;
 
-  public DozentTemplateController() {
-    dozenten = new MockDozentenRepository();
+  public DozentTemplateController(mops.database.VeranstaltungsRepository veranstaltungen) {
+    this.veranstaltungen = veranstaltungen;
     dozentservice = new DozentService();
     typechecker = new TypeChecker();
   }
@@ -50,7 +49,7 @@ public class DozentTemplateController {
 
   @GetMapping("/{templatenr}")
   public String templateBearbeitung(@PathVariable Long templatenr,
-      KeycloakAuthenticationToken token, Model model) {
+                                    KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
     model.addAttribute("template", dozent.getTemplateById(templatenr));
     model.addAttribute("typechecker", typechecker);
@@ -60,7 +59,7 @@ public class DozentTemplateController {
 
   @PostMapping("/{templatenr}")
   public String neueFrage(@PathVariable Long templatenr, KeycloakAuthenticationToken token,
-      String fragetyp, String fragetext) {
+                          String fragetyp, String fragetext) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     template.addFrage(dozentservice.createNeueFrageAnhandFragetyp(fragetyp, fragetext));
@@ -69,7 +68,7 @@ public class DozentTemplateController {
 
   @GetMapping("/{templatenr}/{fragennr}")
   public String editMultipleChoiceQuestion(@PathVariable Long templatenr,
-      @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
+                                           @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
@@ -81,7 +80,7 @@ public class DozentTemplateController {
 
   @PostMapping("/{templatenr}/{fragennr}")
   public String newMultipleChoiceAnswer(@PathVariable Long templatenr, @PathVariable Long fragennr,
-      KeycloakAuthenticationToken token, String antworttext) {
+                                        KeycloakAuthenticationToken token, String antworttext) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
@@ -98,7 +97,7 @@ public class DozentTemplateController {
 
   @PostMapping("/delete/{templatenr}/{fragennr}")
   public String deleteFrage(@PathVariable Long templatenr, @PathVariable Long fragennr,
-      KeycloakAuthenticationToken token) {
+                            KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     template.deleteFrageById(fragennr);
@@ -107,8 +106,8 @@ public class DozentTemplateController {
 
   @PostMapping("/delete/{templatenr}/{fragennr}/{auswahlnr}")
   public String deleteAntwortmoeglichkeit(@PathVariable Long templatenr,
-      @PathVariable Long fragennr, @PathVariable Long auswahlnr,
-      KeycloakAuthenticationToken token) {
+                                          @PathVariable Long fragennr, @PathVariable Long auswahlnr,
+                                          KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
@@ -125,6 +124,6 @@ public class DozentTemplateController {
 
   private Dozent getDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return dozenten.getDozentByUsername(principal.getName());
+    return veranstaltungen.getDozentByUsername(principal.getName());
   }
 }

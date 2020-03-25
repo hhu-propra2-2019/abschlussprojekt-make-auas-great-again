@@ -10,8 +10,6 @@ import mops.Fragebogen;
 import mops.FragebogenTemplate;
 import mops.TypeChecker;
 import mops.Veranstaltung;
-import mops.database.MockDozentenRepository;
-import mops.database.MockVeranstaltungsRepository;
 import mops.fragen.Auswahl;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
@@ -37,14 +35,12 @@ public class DozentErstellerController {
       "redirect:/feedback/dozenten/new/questions/";
 
   private final transient VeranstaltungsRepository veranstaltungen;
-  private final transient DozentRepository dozenten;
   private final transient TypeChecker typechecker;
   private final transient DateTimeService datetime;
   private final transient DozentService dozentservice;
 
-  public DozentErstellerController() {
-    veranstaltungen = new MockVeranstaltungsRepository();
-    dozenten = new MockDozentenRepository();
+  public DozentErstellerController(mops.database.VeranstaltungsRepository veranstaltungen) {
+    this.veranstaltungen = veranstaltungen;
     typechecker = new TypeChecker();
     datetime = new DateTimeService();
     dozentservice = new DozentService();
@@ -191,6 +187,6 @@ public class DozentErstellerController {
 
   private Dozent getDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return dozenten.getDozentByUsername(principal.getName());
+    return veranstaltungen.getDozentByUsername(principal.getName());
   }
 }

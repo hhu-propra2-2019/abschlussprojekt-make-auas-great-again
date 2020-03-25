@@ -5,7 +5,6 @@ import mops.DozentService;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.antworten.TextAntwort;
-import mops.database.MockVeranstaltungsRepository;
 import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -28,8 +27,8 @@ public class DozentErgebnisController {
   private final transient TypeChecker typechecker;
   private final transient DozentService dozentservice;
 
-  public DozentErgebnisController() {
-    veranstaltungen = new MockVeranstaltungsRepository();
+  public DozentErgebnisController(mops.database.VeranstaltungsRepository veranstaltungen) {
+    this.veranstaltungen = veranstaltungen;
     typechecker = new TypeChecker();
     dozentservice = new DozentService();
   }
@@ -37,7 +36,7 @@ public class DozentErgebnisController {
   @GetMapping("/{bogennr}")
   @RolesAllowed(orgaRole)
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
-      @PathVariable long bogennr, Model model, Long veranstaltungid) {
+                                             @PathVariable long bogennr, Model model, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
     model.addAttribute("fragebogen", fragebogen);
@@ -50,8 +49,8 @@ public class DozentErgebnisController {
   @GetMapping("/edit/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String bearbeiteTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
-      @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model,
-      Long veranstaltungid) {
+                                     @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model,
+                                     Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     TextAntwort antwort = dozentservice.getTextAntwort(fragennr, antwortnr,
         veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
@@ -67,8 +66,8 @@ public class DozentErgebnisController {
   @PostMapping("/edit/{bogennr}/{fragennr}/{antwortnr}")
   @RolesAllowed(orgaRole)
   public String speichereTextAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
-      @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token,
-      RedirectAttributes ra, Long veranstaltungid) {
+                                     @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token,
+                                     RedirectAttributes ra, Long veranstaltungid) {
     Dozent dozent = createDozentFromToken(token);
     ra.addAttribute("veranstaltungid", veranstaltungid);
     dozentservice.getTextAntwort(fragennr, antwortnr,
@@ -79,8 +78,8 @@ public class DozentErgebnisController {
   @PostMapping("/publish/{bogennr}/{fragennr}")
   @RolesAllowed(orgaRole)
   public String veroeffentlicheErgebnisseEinerFrage(@PathVariable Long bogennr,
-      @PathVariable Long fragennr, KeycloakAuthenticationToken token, Long veranstaltungid,
-      RedirectAttributes ra) {
+                                                    @PathVariable Long fragennr, KeycloakAuthenticationToken token, Long veranstaltungid,
+                                                    RedirectAttributes ra) {
     Dozent dozent = createDozentFromToken(token);
     ra.addAttribute("veranstaltungid", veranstaltungid);
     dozentservice.getFrage(fragennr, veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))

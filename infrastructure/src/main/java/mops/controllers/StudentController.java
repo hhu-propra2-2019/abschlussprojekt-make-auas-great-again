@@ -9,7 +9,6 @@ import mops.Fragebogen;
 import mops.SubmitService;
 import mops.TypeChecker;
 import mops.Veranstaltung;
-import mops.database.MockVeranstaltungsRepository;
 import mops.fragen.Frage;
 import mops.rollen.Student;
 import mops.security.Account;
@@ -31,7 +30,7 @@ public class StudentController {
   private final transient SubmitService submitService = new SubmitService();
   private transient TypeChecker typeChecker = new TypeChecker();
 
-  public StudentController(MockVeranstaltungsRepository veranstaltungen) {
+  public StudentController(mops.database.VeranstaltungsRepository veranstaltungen) {
     this.veranstaltungen = veranstaltungen;
   }
 
