@@ -63,4 +63,8 @@ public class Veranstaltung {
   public boolean hasStudent(Student student) {
     return studenten.contains(student);
   }
+
+  public boolean hasDozent(Dozent dozent) {
+    return this.dozent.equals(dozent);
+  }
 }

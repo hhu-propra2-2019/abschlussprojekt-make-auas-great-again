@@ -10,7 +10,7 @@ import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
+@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class TypeCheckerTest {
 
   @Test
@@ -21,7 +21,7 @@ public class TypeCheckerTest {
 
   @Test
   public void isMultipleChoiceTest() {
-    Frage frage = new MultipleChoiceFrage(Long.valueOf(1), "Wie geht's?", false);
+    Frage frage = new MultipleChoiceFrage(Long.valueOf(1), "Wie geht's?");
     assertTrue(TypeChecker.isMultipleChoice(frage));
   }
 

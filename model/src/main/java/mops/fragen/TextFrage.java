@@ -29,6 +29,11 @@ public class TextFrage extends Frage {
     antworten.add(antwort);
   }
 
+  @Override
+  public void addAntwort(Antwort antwort) {
+    antworten.add(antwort);
+  }
+
   public void addAntwort(TextAntwort antwort) {
     antworten.add(antwort);
   }

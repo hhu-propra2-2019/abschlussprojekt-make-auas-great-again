@@ -14,14 +14,12 @@ public class MultipleChoiceFrage extends Frage {
   public static final long ZERO = 0L;
   private transient String fragentext;
   private transient List<Auswahl> choices;
-  private boolean hasMultipleResponse;
   private List<Antwort> antworten;
 
-  public MultipleChoiceFrage(Long id, String fragentext, boolean hasMultipleResponse) {
+  public MultipleChoiceFrage(Long id, String fragentext) {
     super(id);
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
-    this.hasMultipleResponse = hasMultipleResponse;
     this.antworten = new ArrayList<>();
   }
 
@@ -30,16 +28,14 @@ public class MultipleChoiceFrage extends Frage {
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     fillDummyChoices();
-    this.hasMultipleResponse = false;
     this.antworten = new ArrayList<>();
   }
-  
+
   public MultipleChoiceFrage(String fragentext, List<Auswahl> choices) {
     super((long) new Random().nextInt(1000));
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     choices.stream().forEach(x -> this.addChoice(x));
-    this.hasMultipleResponse = false;
     this.antworten = new ArrayList<>();
   }
 
@@ -74,6 +70,11 @@ public class MultipleChoiceFrage extends Frage {
     if (choices.contains(auswahl)) {
       this.antworten.add(new MultipleChoiceAntwort((long) new Random().nextInt(1000), auswahl));
     }
+  }
+
+  @Override
+  public void addAntwort(Antwort antwort) {
+    antworten.add(antwort);
   }
 
   @Override

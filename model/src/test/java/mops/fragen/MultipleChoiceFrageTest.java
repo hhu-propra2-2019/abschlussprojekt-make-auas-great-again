@@ -28,7 +28,7 @@ class MultipleChoiceFrageTest {
 
   @Test
   void getNumberOfChoices() {
-    MultipleChoiceFrage frage = new MultipleChoiceFrage(1L, "Hallo?", false);
+    MultipleChoiceFrage frage = new MultipleChoiceFrage(1L, "Hallo?");
 
     frage.addChoice(new Auswahl("Hi"));
     frage.addChoice(new Auswahl("Hu"));

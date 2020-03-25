@@ -24,6 +24,8 @@ public abstract class Frage {
 
   public abstract void addAntwort(String antwort);
 
+  public abstract void addAntwort(Antwort antwort);
+
   public abstract Iterable<Antwort> getAntworten();
 
   @Override
