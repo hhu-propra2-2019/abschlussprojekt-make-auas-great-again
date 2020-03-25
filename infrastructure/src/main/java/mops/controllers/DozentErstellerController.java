@@ -1,16 +1,12 @@
 package mops.controllers;
 
-import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import mops.DateTimeService;
 import mops.DozentService;
-import mops.Fragebogen;
-import mops.FragebogenTemplate;
 import mops.TypeChecker;
 import mops.database.MockDozentenRepository;
 import mops.database.MockVeranstaltungsRepository;
-import mops.fragen.Frage;
 import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
