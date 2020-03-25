@@ -15,16 +15,16 @@ public interface VeranstaltungJdbcRepository extends CrudRepository<Veranstaltun
       "select veranstaltung from studentBelegtVeranstaltung where student= :tofind)")
   Set<VeranstaltungDto> getAllFromStudent(@Param("tofind") Long tofind);
 
-  @Query("select * from veranstaltung where dozent in (" +
-      "select id from dozent where id= :tofind)")
+  @Query("select * from veranstaltung where veranstaltung.dozent= :tofind")
   Set<VeranstaltungDto> getAllFromDozent(@Param("tofind") Long tofind);
 
-  @Query("select * from veranstaltung where upper(name) like '%'|| upper(:search) || '%' and id in(" +
-      "select veranstaltung from studentBelegtVeranstaltung where student= :studentid)")
-  Set<VeranstaltungDto> getAllFromStudentContaining(@Param("studentid") Long tofind, @Param("search") String search);
+  @Query("select * from veranstaltung where id in(" +
+      "select veranstaltung from studentBelegtVeranstaltung where student= :tofind)" +
+      "and upper(name) like '%'|| upper(:search) || '%' ")
+  Set<VeranstaltungDto> getAllFromStudentContaining(@Param("tofind") Long tofind, @Param("search") String search);
 
-  @Query("select * from veranstaltung where upper(name) like '%'|| upper(:search) || '%' and id in(" +
-      "select veranstaltung from dozentOrganisiertVeranstaltung where dozent= :dozentid)")
-  Set<VeranstaltungDto> getAllFromDozentContaining(@Param("dozentid") Long tofind, @Param("search") String search);
+  @Query("select * from veranstaltung where veranstaltung.dozent = :tofind " +
+      "and upper(name) like '%'|| upper(:search) || '%' ")
+  Set<VeranstaltungDto> getAllFromDozentContaining(@Param("tofind") Long tofind, @Param("search") String search);
 
 }
