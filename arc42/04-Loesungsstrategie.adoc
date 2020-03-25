@@ -1,1 +1,35 @@
 = Lösungsstrategie
+
+== Technologieentscheidungen
+
+Die Anwendung ist eine Spring-Boot Webapplikation, wobei sie mit Gradle gebaut wird.
+Der Code im Back-End ist vollständig in Java 13 geschrieben, das Front-End in HTML 5 mit Bootstrap4-CSS-Framework,
+wobei wir hier zur Anbindung der Views an das Back-End Thymeleaf als Framework
+nutzen.
+
+Für eine effiziente Nutzung der Systemressourcen und die Gewährleistung der Lauffähigkeit unserer Anwendung
+auf möglichst vielen Systemen benutzen wir die Containerisierungstechnologie Docker (bzw. docker-compose).
+
+Während des Entwicklungsprozesses wird die Codequalität kontinuierlich durch das Continous-Integration
+System Github-Actions sichergestellt.
+
+== Architekturentscheidungen
+
+Wir nutzen für die Umsetzung von Bounded Contexts nach Domain-Driven Design die Onion-architecture
+mit Hilfe von Gradle-Subprojekten (genaueres Kapitel 9).
+
+Kapitel 9:
+include::09-Entwurfsentscheidungen.adoc[]
+
+== Organisationsentscheidungen
+
+Zur Verwaltung unserer gemeinsamen Entwicklung nutzen wir alle von Github bereitgestellten Dienste.
+Das sind im Wesentlichen:
+
+- *Git-Versionsverwaltungssoftware*: Sowohl zur Erfassung von Änderungen an Code oder Dateien als auch für das Zurückgreifen bei Bedarf auf einen früheren Stand unseres Projektes.
+- *Github-Issues*: Wir benutzen Github-Issues zum Melden von Bugs im Code, sodass alle permanent auf dem gleichen Stand bleiben. Issues werden aber auch für alle Änderungen erstellt, die nicht sofort bearbeitet werden können.
+- *Feature-Branches/Pull-Requests*: Für alle Features werden neue Branches erstellt, die dann in den Integrationsbranch gemerget werden. Alle unsere Änderungen können nur reviewed in den Integrationsbranch gemerged werden.
+
+Zusätzlich haben wir beschlossen, jeden Tag zu Beginn und Ende der Arbeitszeit eine Teambesprechung zu führen,
+um alle auf den aktuellsten Stand zu bringen und anstehende Änderungen durchzusprechen und zu priorisieren.
+Wir benutzen die Sprach- und Textchat-Software Discord, um die Kommunikation miteinander zu erleichtern.
