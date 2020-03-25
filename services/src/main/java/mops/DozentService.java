@@ -76,6 +76,13 @@ public class DozentService {
   public void loescheFrageAusFragebogen(Fragebogen fragebogen, Long fragennr) {
     fragebogen.loescheFrageById(fragennr);
   }
+  
+  public void addFragenAusTemplateZuFragebogen(Fragebogen fragebogen, Dozent dozent,
+      Long vorlagenid) {
+    FragebogenTemplate template = dozent.getTemplateById(vorlagenid);
+    List<Frage> fragen = this.getFragenlisteOhneAntworten(template.getFragen());
+    fragen.stream().forEach(x -> fragebogen.addFrage(x));
+  }
 
   public List<Frage> getFragenlisteOhneAntworten(List<Frage> altefragen) {
     return altefragen.stream().map(x -> x.clone()).collect(Collectors.toList());

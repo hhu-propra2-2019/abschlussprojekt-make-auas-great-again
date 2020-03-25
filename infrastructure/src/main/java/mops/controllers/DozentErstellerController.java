@@ -73,10 +73,8 @@ public class DozentErstellerController {
   public String fuegeTemplateHinzu(@PathVariable Long bogennr, Long bogenvorlage,
       KeycloakAuthenticationToken token, Long veranstaltungid, RedirectAttributes ra) {
     Dozent dozent = getDozentFromToken(token);
-    FragebogenTemplate template = dozent.getTemplateById(bogenvorlage);
-    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
-    List<Frage> fragen = dozentservice.getFragenlisteOhneAntworten(template.getFragen());
-    fragen.stream().forEach(x -> fragebogen.addFrage(x));
+    dozentservice.addFragenAusTemplateZuFragebogen(
+        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent), dozent, bogenvorlage);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
