@@ -45,3 +45,5 @@ MultipleResponse Fragen unterscheiden sich von multipleChoice Fragen bei der Ant
 Fragen können auch inzwischen gelöscht werden.
 
 * Dozenten können auch den Zeitraum eines Fragebogen festlegen sowie den Name und den Veranstaltungstyp des Fragebogens bestimmen.
+
+* Durch Klicken auf den "Fragebogen recyclen" Button können Dozenten vorhandene Fragebögen mehrfach verwenden und bearbeiten.
