@@ -21,6 +21,7 @@ public class DozentDto {
   String anrede;
   @Column("dozent")
   Set<VeranstaltungDto> veranstaltungen;
+  @Column("dozent")
   Set<FragebogenTemplateDto> fragebogenTemplates;
 
   public static DozentDto create(String username, String vorname, String nachname) {

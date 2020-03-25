@@ -5,6 +5,7 @@ import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 
@@ -15,6 +16,7 @@ public class FragebogenTemplateDto {
   @Id
   Long id;
   String name;
+  @Column("fragebogentemplate")
   Set<FrageDto> fragen;
 
   public static FragebogenTemplateDto create(String name) {
