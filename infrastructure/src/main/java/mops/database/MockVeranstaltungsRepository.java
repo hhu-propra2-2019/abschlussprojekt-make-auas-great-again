@@ -82,12 +82,14 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
   public Fragebogen getFragebogenFromDozentById(Long id, Dozent dozent) {
     List<Fragebogen> frageboegen = new ArrayList<>();
     getAllFromDozent(dozent).stream().forEach(x -> frageboegen.addAll(x.getFrageboegen()));
-    return frageboegen.stream().filter(x -> x.getBogennr().equals(id)).findFirst().get();
+    return frageboegen.stream().filter(x -> x.getBogennr().equals(id)).findFirst()
+        .orElse(new Fragebogen("", ""));
   }
 
   @Override
   public Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung) {
     return veranstaltungen.get(veranstaltung).getFrageboegen().stream()
-        .filter(bogen -> bogen.getBogennr().equals(fragebogen)).findFirst().get();
+        .filter(bogen -> bogen.getBogennr().equals(fragebogen)).findFirst()
+        .orElse(new Fragebogen("", ""));
   }
 }

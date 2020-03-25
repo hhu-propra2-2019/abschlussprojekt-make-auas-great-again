@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.TextFrage;
 
 @Getter
 @AllArgsConstructor
@@ -28,11 +29,12 @@ public class FragebogenTemplate {
   }
   
   public void deleteFrageById(Long id) {
-    fragen.remove(fragen.stream().filter(x -> x.getId().equals(id)).findFirst().get());
+    fragen.remove(fragen.stream().filter(x -> x.getId().equals(id)).findFirst()
+        .orElse(new TextFrage(id, "")));
   }
   
   public MultipleChoiceFrage getMultipleChoiceFrageById(Long id) {
     return (MultipleChoiceFrage) fragen.stream().filter(x -> x.getId().equals(id))
-        .findFirst().get();
+        .findFirst().orElse(new MultipleChoiceFrage(id, "", false));
   }
 }
