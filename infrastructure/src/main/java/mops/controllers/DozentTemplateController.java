@@ -1,11 +1,8 @@
 package mops.controllers;
 
 import mops.DozentService;
-import mops.FragebogenTemplate;
 import mops.TypeChecker;
 import mops.database.MockDozentenRepository;
-import mops.fragen.Auswahl;
-import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
