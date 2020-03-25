@@ -47,3 +47,11 @@ Fragen können auch inzwischen gelöscht werden.
 * Dozenten können auch den Zeitraum eines Fragebogen festlegen sowie den Name und den Veranstaltungstyp des Fragebogens bestimmen.
 
 * Durch Klicken auf den "Fragebogen recyclen" Button können Dozenten vorhandene Fragebögen mehrfach verwenden und bearbeiten.
+
+=== _Studenten hinzufügen_
+
+* Dozenten können bestimmen, welche Studierende an ihren Fragebögen teilnehmen können, indem sie die Usernames der Studirende als CSV-Datei hochladen.
+Diese Usernames werden von dem Controller aufgenommen und an den VeranstaltungsRepository übergeben, um in die Datenbank bei der gewünschten Veranstaltung gespeichert zu werden.
+Studierende mit den eingegebenen Usernames dürfen dann an allen Fragebögen dieser Veranstaltung teilnehmen.
+
+* Studierende können von den Dozenten auch einzeln per Username hizugefügt werden.
