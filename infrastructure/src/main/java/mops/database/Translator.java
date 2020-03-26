@@ -24,6 +24,8 @@ import mops.database.dto.VeranstaltungDto;
 import mops.fragen.Auswahl;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;
+import mops.fragen.MultipleResponseFrage;
+import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
@@ -134,7 +136,26 @@ public class Translator {
   }
 
   private MultipleChoiceFrage loadMultipleChoiceFrage(FrageDto frage) {
-    MultipleChoiceFrage neueFrage = new MultipleChoiceFrage(frage.getId(),
+    if (frage.isSingleResponseFrage()) {
+      return loadSingleResponseFrage(frage);
+    }
+    return loadMultipleResponseFrage(frage);
+  }
+
+  private MultipleChoiceFrage loadMultipleResponseFrage(FrageDto frage) {
+    MultipleResponseFrage neueFrage = new MultipleResponseFrage(frage.getId(),
+        frage.getFragetext());
+    for (AntwortDto antwortDto : frage.getAntworten()) {
+      neueFrage.addAntwort(loadMultipleChoiceAntwort(antwortDto));
+    }
+    for (AuswahlDto auswahlDto : frage.getAuswaehlbar()) {
+      neueFrage.addChoice(loadAuswahl(auswahlDto));
+    }
+    return neueFrage;
+  }
+
+  private MultipleChoiceFrage loadSingleResponseFrage(FrageDto frage) {
+    SingleResponseFrage neueFrage = new SingleResponseFrage(frage.getId(),
         frage.getFragetext());
     for (AntwortDto antwortDto : frage.getAntworten()) {
       neueFrage.addAntwort(loadMultipleChoiceAntwort(antwortDto));
@@ -195,8 +216,10 @@ public class Translator {
   private FrageDto createFrageDto(Frage frage) {
     if (frage instanceof TextFrage) {
       return createTextFrageDto((TextFrage) frage);
+    } else if (frage instanceof MultipleResponseFrage) {
+      return FrageDto.createMultipleResponsefrage(((MultipleResponseFrage) frage).getFragentext());
     }
-    return null;
+    return FrageDto.createSingleResponsefrage(frage.toString());
   }
 
   private StudentDto createStudentDto(Student student) {

@@ -95,7 +95,7 @@ public class FragebogenService {
 
   private Frage generateSingleResponse() {
     MultipleChoiceFrage frage =
-        new SingleResponseFrage((long) idgenerator.nextInt(100), getRandomFrage(), true);
+        new SingleResponseFrage((long) idgenerator.nextInt(100), getRandomFrage());
     frage.addChoice(new Auswahl("1"));
     frage.addChoice(new Auswahl("2"));
     frage.addChoice(new Auswahl("3"));

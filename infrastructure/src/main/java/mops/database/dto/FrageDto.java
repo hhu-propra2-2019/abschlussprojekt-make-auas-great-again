@@ -16,17 +16,23 @@ public class FrageDto {
   Long id;
   String fragetext;
   Boolean oeffentlich;
+  @Column("isMultipleResponse")
+  Boolean isMultipleResponse;
   @Column("frage")
   Set<AntwortDto> antworten;
   @Column("frage")
   Set<AuswahlDto> auswaehlbar;
 
   public static FrageDto createTextfrage(String text) {
-    return new FrageDto(null, text, false, new HashSet<>(), null);
+    return new FrageDto(null, text, false, false, new HashSet<>(), null);
   }
 
-  public static FrageDto createMultipleChoicefrage(String text) {
-    return new FrageDto(null, text, false, new HashSet<>(), new HashSet<>());
+  public static FrageDto createMultipleResponsefrage(String text) {
+    return new FrageDto(null, text, false, true, new HashSet<>(), new HashSet<>());
+  }
+
+  public static FrageDto createSingleResponsefrage(String text) {
+    return new FrageDto(null, text, false, false, new HashSet<>(), new HashSet<>());
   }
 
   public void addChoice(AuswahlDto choice) {
@@ -38,11 +44,11 @@ public class FrageDto {
   }
 
   public boolean isMultipleResponseFrage() {
-    return auswaehlbar.stream().count() > 1;
+    return isMultipleResponse;
   }
 
   public boolean isSingleResponseFrage() {
-    return auswaehlbar.stream().count() == 1;
+    return !isMultipleResponse;
   }
 }
 

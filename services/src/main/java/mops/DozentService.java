@@ -36,7 +36,7 @@ public class DozentService {
     return fragebogen.getFrage(fragennr);
   }
 
-  @SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
+  @SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
   public List<Frage> getFragenlisteOhneAntworten(List<Frage> altefragen) {
     List<Frage> result = new ArrayList<>();
     for (Frage frage : altefragen) {
@@ -58,7 +58,7 @@ public class DozentService {
   /**
    * Erzeugt ein passendes Fragenobjekt anhand des übergebenen Fragtyps.
    *
-   * @param fragetyp Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
+   * @param fragetyp  Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
    * @param fragetext Der Text der Frage
    * @return das neue Fragenobjekt
    */
@@ -66,7 +66,7 @@ public class DozentService {
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
     Random idgenerator = new Random();
     if ("multiplechoice".equals(fragetyp)) {
-      return new SingleResponseFrage(idgenerator.nextLong(), fragetext, false);
+      return new SingleResponseFrage(idgenerator.nextLong(), fragetext);
     } else if ("textfrage".equals(fragetyp)) {
       return new TextFrage(fragetext);
     } else {
