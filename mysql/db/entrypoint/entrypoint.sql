@@ -238,7 +238,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,'student1',NULL,NULL),(2,'studentin2',NULL,NULL),(3,'studentin3',NULL,NULL),(4,'studentin',NULL,NULL);
+INSERT INTO `student` VALUES (1,'studentin',NULL,NULL),(2,'studentin2',NULL,NULL),(3,'studentin3',NULL,NULL),(4,'studentin1',NULL,NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
