@@ -9,12 +9,12 @@ Im Folgenden werden ein paar beispielhafte Laufzeit-Interaktionen skizziert, um 
 [.thumb]
 image:images/laufzeit.png[align="center"]
 
-=== _Feedback geben_
+=== Feedback geben
 
 * Damit Studierende unser Subsystem nutzen können, müssen sie sich als erstes anmelden.
-Dies geschieht durch die Anmeldungsseite von Keycloack.
+Dies geschieht durch die Anmeldungsseite von Keycloak.
 
-* Nach der erfolgeichen Anmeldung wird der Student bzw. die Studentin auf die Übersichtsseite der Studierende weitergeleitet,
+* Nach der erfolgeichen Anmeldung wird der Student bzw. die Studentin auf die Übersichtsseite der Studenten weitergeleitet,
 wo sie alle Veranstaltungen, die sie besuchen, sehen können.
 
 * Der Student oder die Studentin kann sich dann aussuchen, für welche Veranstaltung das Feedback abgegeben werden soll.
@@ -26,33 +26,33 @@ Die Abgabe eines Feedbacks erfolgt nur in dem entsprechenden Zeitraum, da nach d
 
 * Klickt man auf das gewünschte Fragebogen, werden von dem Controller alle Fragen geholt, die zu dem Fragebogen gehören.
 
-* Nach dem ausfüllen des Fragebogens kann der Student oder die Studentin das Fragebogen durch Klicken auf den "Abgeben" Button speichern.
-Das Persistieren der Antwoten auf das Fragebogen ist anonym. Das heißt, es wird nicht gespeichert, wer welche Antworten abgegeben hat.
+* Nach dem Ausfüllen des Fragebogens kann der Student oder die Studentin das Fragebogen durch Klicken auf den "Abgeben" Button speichern.
+Das Persistieren der Antwoten ist anonym. Das heißt, es wird nicht gespeichert, wer welche Antworten abgegeben hat.
 
-=== _Evaluationsergebnisse sehen_
+=== Evaluationsergebnisse sehen
 
-* Nur mit erfolgeicher Anmeldung können Studierende sich Ergebnisse anschauen, die von den Dozenten veröffentlich worden sind.
+* Nur mit erfolgeicher Anmeldung können Studierende sich Ergebnisse anschauen, die von den Dozenten veröffentlicht worden sind.
 
 * Die Ergebnisse gehören auch zur Veranstaltungen und werden von dem zuständigen Controller aus dem VeranstaltungsRepository geholt.
 
-=== _Fragebogen erstelen_
+=== Fragebogen erstelen
 
 * Der Controller holt aus dem VeranstaltungsRepository das Fragebogen Objekt bzw. erzeugt ein neues Objekt, wo die Änderungen vorgenommen werden, wie zum Beispiel
-das Hinzufügen von Fragen oder die Änderung von Metadaten des Fragebogens .
+das Hinzufügen von Fragen oder die Änderung von Metadaten des Fragebogens.
 
 * Dozenten können ihre eigene Fragebögen erstellen, indem sie neue Fragen schreiben und den Typ der Frage bestimmen.
 Es gibt verschiede Typen von Fragen. Das sind: multipleChoice Fragen, multipleResponse Fragen und text Fragen.
 MultipleResponse Fragen unterscheiden sich von multipleChoice Fragen bei der Antwortsmöglichkeiten, sodass bei der multipleResponse Fragen mehrere Antworten möglich sind.
 Fragen können auch inzwischen gelöscht werden.
 
-* Dozenten können auch den Zeitraum eines Fragebogen festlegen sowie den Namen und den Veranstaltungstyp des Fragebogens bestimmen.
+* Dozenten können auch den Zeitraum eines Fragebogens festlegen sowie den Namen und den Veranstaltungstyp des Fragebogens bestimmen.
 
 * Durch Klicken auf den "Fragebogen recyclen" Button können Dozenten vorhandene Fragebögen mehrfach verwenden und bearbeiten.
 
-=== _Studenten hinzufügen_
+=== Studenten hinzufügen
 
-* Dozenten können bestimmen, welche Studierende an ihren Fragebögen teilnehmen können, indem sie die Usernames der Studirende als CSV-Datei hochladen.
-Diese Usernames werden von dem Controller aufgenommen und an den VeranstaltungsRepository übergeben, um in die Datenbank bei der gewünschten Veranstaltung gespeichert zu werden.
+* Dozenten können bestimmen, welche Studierende an ihren Fragebögen teilnehmen können, indem sie die Usernames der Studenten als CSV-Datei hochladen.
+Diese Usernames werden vom Controller aufgenommen und an das VeranstaltungsRepository übergeben, das die Studenten in der entsprechenden Veranstaltung speichert.
 Studierende mit den eingegebenen Usernames dürfen dann an allen Fragebögen dieser Veranstaltung teilnehmen.
 
 * Studierende können von den Dozenten auch einzeln per Username hizugefügt werden.
