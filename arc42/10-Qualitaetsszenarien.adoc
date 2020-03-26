@@ -4,19 +4,19 @@ Zensur: Da die abgegebenen Feedbacks anonym sind, kann man den Veranstaltungstei
 unangebrachte Kommentare schreiben. Für die Verbesserung der Qualität von den Feedbacks haben deswegen die Dozierenden
 die Möglichkeit, einzelne Antworten zu zensieren.
 
-Security: Um gute Security zu gewährleisten haben wir auf eigene
+Security: Um gute Sicherheit zu gewährleisten haben wir auf eigene
 Implementierung verzichtet und KeyCloak verwendet.
 Hinter KeyCloak steht eine große Community, deshalb
-ist eine bessere Security gegeben als eine eigene
+ist eine bessere Sicherheit gegeben als bei einer eigenen
 Implementierung
 
 Optik: Wir haben am meisten mit Bootstrap gearbeitet und daneben mit JavaScript. Da uns die Optik der Anwendung wichtig
 ist, haben wir Features hinzugefügt, die dabei helfen, dass unsere Anwendung einfacher und schöner aussieht.
-Zum Biespiel live countdown für die Teilnehmer, oder dass das Feedback rot wird, wenn die Zeit bald abläuft.
+Zum Biespiel ein countdown für die Teilnehmer, oder dass das Feedback dargestellt rot wird, wenn der Beantwortungszeitraum bald abläuft.
 
 Code: Wir haben daran gearbeitet, dass unser Code möglichst einfach und strukturiert ist (damit er einfach gelesen
 werden kann und auch offen für Erweiterungen ist), indem wir ihn oft gerefactored und selbst kritisch analysiert haben.
-Auch die gute Kommuinkation und die tägliche Teambesprechungen am Anfang und Ende des Tages haben einen guten Beitrag
-geleistet. Außerdem haben wir gleichzeitig daran gerabeitet, dass unsere Anwendung möglichst einfach für
+Auch die gute Kommunikation und die täglichen Teambesprechungen am Anfang und Ende des Tages haben einen guten Beitrag dafür
+geleistet. Außerdem haben wir gleichzeitig daran gearbeitet, dass unsere Anwendung möglichst einfach für
 Dozierende sowie für die Teilnehmer erscheint, sodass Dozierende beispielsweise in einfachster Weise Fragebögen
 erstellen können, weil damit unserer Meinung nach die Qualität unserer Anwendung besser wird.
