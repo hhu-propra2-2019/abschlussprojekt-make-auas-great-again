@@ -5,20 +5,21 @@
 Die Sicherheit unserer Anwendung ist uns wichtig.
 Von daher haben wir für das Anmelden sowie für die verschiedenen Zugriffsrechte das Keycloak-Framework verwendet.
 
-Bei unserer Anwendung war es für uns von zentraler Bedeutung, dass die Feedbacks der Studierende anonym bleiben
-und in keinem Fall aufspürbar sein. Außerdem ist das mehrfache Ausfüllen eines Fragebogen unzulässig.
+Bei unserer Anwendung war es für uns von zentraler Bedeutung, dass die Feedbacks der Studenten anonym bleiben.
 
-=== User Experienc
+Außerdem ist das mehrfache Ausfüllen eines Fragebogen unzulässig.
 
-Nach der erfolgeichen Anmeldung wird der User an eine zentrale Übersicht für alle seine Veranstaltungen.
+=== User Experience
+
+Nach der erfolgeichen Anmeldung wird der User an eine zentrale Übersicht für alle seine Veranstaltungen weiter geleitet.
 Dies glit sowohl für Studierende als auch für Dozenten.
 
-Alle Funktionen unserer Anwendung sind durch Buttons und navigation Bars leicht erreichbar.
+Alle Funktionen unserer Anwendung sind durch Buttons und Navigation-Bars leicht erreichbar.
 
-Für alle Veranstaltungen bzw. Fragebögen in der verschiedenen Übersichten gibt es eine implementierte Suchfunktion,
+Für alle Veranstaltungen bzw. Fragebögen in den verschiedenen Übersichten gibt es eine Suchfunktion,
 um die Suche nach dem gewünschten Angebot zu erleichtern.
 
-Die Erstellung von Fragebögen ist duch die zur verfügung stehenden Funktionen für die Dozenten sehr flexible und übersichtlich.
+Die Erstellung von Fragebögen ist durch die zu Verfügung stehenden Funktionen für die Dozenten sehr flexibel und übersichtlich.
 Fertige Templates für Fragen sowie alte Fragen können sehr leicht von den Dozenten wieder benutzt werden.
 
 Ergebnisse der Evaluationen werden gegebenenfalls in Prozenten berechnet, um die Tendenzen verständlicher auszudrücken.
