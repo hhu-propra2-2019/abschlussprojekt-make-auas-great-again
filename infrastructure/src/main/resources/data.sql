@@ -28,7 +28,7 @@ values(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),
 (4,1);
 
 insert into fragebogen(id, name, startzeit, endzeit, veranstaltung, einheit)
-values(1, "Fragebogen zum Praktikum", "2020-01-01 12:00:00", "2020-05-01 12:00:00", 2, PRAKTIKUM);
+values(1, "Fragebogen zum Praktikum", "2020-01-01 12:00:00", "2020-05-01 12:00:00", 2, 'PRAKTIKUM');
 
 insert into frage(id, oeffentlich, fragebogen, fragetext)
 values(1, true, 1, "Was war gut?"),
