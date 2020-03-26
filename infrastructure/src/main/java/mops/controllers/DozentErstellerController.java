@@ -57,7 +57,7 @@ public class DozentErstellerController {
     Dozent dozent = getDozentFromToken(token);
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
     Fragebogen neu =
-        new Fragebogen(veranstaltung.getName(), dozent.getVorname() + " " + dozent.getNachname());
+        new Fragebogen(veranstaltung.getName(), veranstaltung.getDozentenNamen());
     veranstaltung.addFragebogen(neu);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neu.getBogennr();
@@ -162,8 +162,8 @@ public class DozentErstellerController {
       RedirectAttributes ra, Long fragebogenid) {
     Dozent dozent = getDozentFromToken(token);
     dozentservice
-        .getMultipleChoiceFrage(fragennr,
-            veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
+    .getMultipleChoiceFrage(fragennr,
+        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
         .addChoice(new Auswahl(antworttext));
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     ra.addAttribute("fragebogenid", fragebogenid);
