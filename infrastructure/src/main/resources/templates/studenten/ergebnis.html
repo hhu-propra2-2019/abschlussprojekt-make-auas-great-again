@@ -25,11 +25,12 @@
         <div class="row row-cols-1 row-cols-md-3">
             <div class="col mb-3" th:each="veranstaltung,iter :${veranstaltungen}">
                 <div class="card text-center h-100">
+                    <img alt="card-img-top" class="rounded  " src="/vorlesung.jpg" />
                     <div class="card-body">
+                        <h2 class="card-title" th:text="${veranstaltung.getName()}"></h2>
                         <a class=" btn btn-link btn-sm stretched-link"
                            th:href="@{/feedback/studenten/ergebnis/frageboegen(veranstaltungId=${veranstaltung.veranstaltungsNr})}"
-                           th:id="'button' + ${iter.index}"
-                           th:text="${veranstaltung.getName()}">
+                           th:id="'button' + ${iter.index}">
                         </a>
                         <p th:text="${veranstaltung.getDozent().getNachname()}"></p>
                         <p th:text="${veranstaltung.getSemester()}"></p>
