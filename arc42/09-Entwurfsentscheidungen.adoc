@@ -2,14 +2,14 @@
 
 == Architektur
 
-=== _Onion Architektur_
+=== Onion Architektur
 
 Zu Beginn hatten wir uns für eine einfache Schichtenarchitektur entschieden, mit der Datenbank auf der untersten Schicht, darüber die Datenrepräsentation in Java, darüber die Business-Logik und auf der obersten Schicht das User Interface.
 
 Bereits am dritten Tag haben wir uns aber doch für eine Onion-Architektur entschieden, da dies das Testing vereinfacht und eine bessere Kapselung der Business-Logik ermöglicht.
 
-Onion-Architektur bietet uns Erweiterbarkeit, Skalierbarkeit und Flexibilität.
-Weiter haben wir uns für ein Onion-Architektur entschieden, um Abhängigkeiten zwischen den verschiedenen Schichten zu minimieren.
+Die Onion-Architektur bietet uns Erweiterbarkeit, Skalierbarkeit und Flexibilität.
+Weiter haben wir uns für eine Onion-Architektur entschieden, um Abhängigkeiten zwischen den verschiedenen Schichten zu minimieren.
 
 Flexibilität ist unter anderem auch dadurch gegeben, dass beispielsweise am Frontend Änderungen
 vorgenommen werden können, ohne dass die Business Logik geändert werden muss.
@@ -19,20 +19,20 @@ Wir unterscheiden aber zwischen zwei Rollen in unserer Modellierung, das sind Do
 
 Während der Analyse haben wir bereits festgestellt,
 dass vor allem alle Objekte in unserem Modell eine enge Beziehung zu dem Veranstaltungsobjekt haben. Von
-daher wurde die Entscheidung getroffen, dass das Veranstaltungsobjekt unser aggregate Root wird.
+daher wurde die Entscheidung getroffen, dass das Veranstaltungsobjekt unser Aggregate-Root wird.
 
-Das Ziel unserer Modellierung war, die Applikation erweiterbar und flexible zu halten.
+Das Ziel unserer Modellierung war, die Applikation erweiterbar und flexibel zu halten.
 Aus diesen Gründen halten wir Onion-Architektur für die beste Architektur, um das Projekt langlebig zu machen.
 
-=== _Vererbung_
+=== Vererbung
 
 Wir verwenden in unserer Anwendung gezielt Vererbung.
-Abstrakte Eltern-Klassen werden beispielsweise sowohl bei der Fragen als auch bei der Antworten benutzt.
+Abstrakte Eltern-Klassen werden beispielsweise sowohl bei den Fragen als auch bei den Antworten benutzt.
 Erweiterungen können so ohne großen Aufwand implementiert werden.
 Das heißt, es können beliebig viele neue Fragetypen bzw. Antworten hinzugefügt werden,
-ohne dass große Änderungen in der Business-Logik vorgenommen werden.
+ohne dass große Änderungen in der Business-Logik vorgenommen werden müssen.
 
-=== _Datenbank_
+=== Datenbank
 
-Im Development Prozess haben wir unsere Funktionalität auf fake Repositories getestet.
-Als persistente Datenbank nutzen wir aber eine SQL-Datenbank, die unter Einsatz von docker-compose File leicht gestartet werden kann.
+Im Development Prozess haben wir Fake Repositories benutzt.
+Als Datenbank nutzen wir aber eine MySQL-Datenbank, die mit Hilfe des docker-compose Files leicht gestartet werden kann.
