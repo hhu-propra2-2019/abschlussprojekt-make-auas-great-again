@@ -1,1 +1,18 @@
 = Qualitätsszenarien
+
+Zensur: Da die abgegebenen Feedbacks anonym sind, kann man den Veranstaltungsteilnehmern keine Warnung geben, wenn sie
+unangebrachte Kommentare schreiben. Für die Verbesserung der Qualität von den Feedbacks haben deswegen die Dozierenden
+die Möglichkeit, einzelne Antworten zu zensieren.
+
+Security: Um gute Security zu gewährleisten haben wir auf eigene
+Implementierung verzichtet und KeyCloak verwendet.
+Hinter KeyCloak steht eine große Community, deshalb
+ist eine bessere Security gegeben als eine eigene
+Implementierung
+
+Code: Wir haben daran gearbeitet, dass unser Code möglichst einfach und strukturiert ist (damit er einfach gelesen
+werden kann und auch offen für Erweiterungen ist), indem wir ihn oft gerefactored und selbst kritisch analysiert haben.
+Auch die gute Kommuinkation und die tägliche Teambesprechungen am Anfang und Ende des Tages haben einen guten Beitrag
+geleistet. Außerdem haben wir gleichzeitig daran gerabeitet, dass unsere Anwendung möglichst einfach für
+Dozierende sowie für die Teilnehmer erscheint, sodass Dozierende beispielsweise in einfachster Weise Fragebögen
+erstellen können, weil damit unserer Meinung nach die Qualität unserer Anwendung besser wird.
