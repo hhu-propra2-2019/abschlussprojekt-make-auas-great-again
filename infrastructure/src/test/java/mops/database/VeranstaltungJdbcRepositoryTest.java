@@ -17,12 +17,14 @@ import mops.database.dto.FragebogenDto;
 import mops.database.dto.SBelegtVDto;
 import mops.database.dto.StudentDto;
 import mops.database.dto.VeranstaltungDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 
 @SuppressWarnings("PMD.DataflowAnomalyAnalysis" + "PMD.JUnitTestContainsTooManyAsserts")
 @DataJdbcTest
+@Disabled
 public class VeranstaltungJdbcRepositoryTest {
 
   @Autowired

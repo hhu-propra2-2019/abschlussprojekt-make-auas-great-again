@@ -7,11 +7,13 @@ import java.util.List;
 import mops.database.dto.DozentDto;
 import mops.database.dto.FrageDto;
 import mops.database.dto.FragebogenTemplateDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 
 @DataJdbcTest
+@Disabled
 public class FragebogenTemplateJdbcRepositoryTest {
 
   @Autowired

@@ -35,6 +35,7 @@ class TranslatorTest {
   }
 
   @Test
+  @SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
   void loadVeranstaltungTest() {
     VeranstaltungDto mockVeranstaltung = VeranstaltungDto.create("ProPra", "SOSE2020");
     StudentDto mockStudent = StudentDto.create("studentin");
@@ -43,6 +44,7 @@ class TranslatorTest {
         "Bendisposto");
     DozentDto mockDozent2 = DozentDto.create("jensben", "Jens",
         "Bendisposto");
+    when(dozentenRepo.findById(any())).thenReturn(java.util.Optional.of(mockDozent1));
     FragebogenDto mockFragebogen = FragebogenDto.create("Vorlesungen", Einheit.VORLESUNG,
         LocalDateTime.now().toString(), LocalDateTime.now().plusMinutes(5L).toString());
     mockFragebogen.setId(1L);
@@ -58,10 +60,10 @@ class TranslatorTest {
 
     Veranstaltung veranstaltung = translator.loadVeranstaltung(mockVeranstaltung);
 
-    assertTrue(veranstaltung.contains("ProPra"));
-    assertTrue(veranstaltung.hasStudent(student));
-    assertTrue(veranstaltung.hasDozent(dozent));
-    assertTrue(veranstaltung.getFrageboegen().contains(fragebogen));
+    assertTrue(veranstaltung.contains("ProPra"), "Veranstaltung nicht gefunden");
+    assertTrue(veranstaltung.hasStudent(student), "student nicht gefunden");
+    assertTrue(veranstaltung.hasDozent(dozent), "dozent nicht gefunden");
+    assertTrue(veranstaltung.getFrageboegen().contains(fragebogen), "fragebogen nicht gefunden");
   }
 
   @Test
@@ -70,6 +72,6 @@ class TranslatorTest {
 
     VeranstaltungDto veranstaltungDto = translator.createVeranstaltungDto(veranstaltung);
 
-    assertEquals("SOSE2019", veranstaltungDto.getSemester());
+    assertEquals("SOSE2019", veranstaltungDto.getSemester(), "Semester falsch");
   }
 }

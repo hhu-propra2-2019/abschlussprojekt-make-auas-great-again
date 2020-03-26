@@ -8,7 +8,7 @@ import mops.FragebogenTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
+@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
     "PMD.JUnitTestContainsTooManyAsserts"})
 public class DozentTest {
   private transient Dozent dozent;
@@ -20,8 +20,8 @@ public class DozentTest {
 
   @Test
   public void korrektesTemplateWirdZurueckGegeben() {
-    FragebogenTemplate template1 = new FragebogenTemplate(1L, "template1");
-    FragebogenTemplate template2 = new FragebogenTemplate(2L, "template2");
+    FragebogenTemplate template1 = new FragebogenTemplate(1L, "template1", null);
+    FragebogenTemplate template2 = new FragebogenTemplate(2L, "template2", null);
     dozent.addTemplate(template1);
     dozent.addTemplate(template2);
 
@@ -32,8 +32,8 @@ public class DozentTest {
 
   @Test
   public void korrektesTemplateWirdGeloescht() {
-    FragebogenTemplate template1 = new FragebogenTemplate(1L, "template1");
-    FragebogenTemplate template2 = new FragebogenTemplate(2L, "template2");
+    FragebogenTemplate template1 = new FragebogenTemplate(1L, "template1", null);
+    FragebogenTemplate template2 = new FragebogenTemplate(2L, "template2", null);
     dozent.addTemplate(template1);
     dozent.addTemplate(template2);
 
