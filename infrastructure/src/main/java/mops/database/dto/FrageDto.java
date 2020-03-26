@@ -16,17 +16,22 @@ public class FrageDto {
   Long id;
   String fragetext;
   Boolean oeffentlich;
+  Boolean ismultipleresponse;
   @Column("frage")
   Set<AntwortDto> antworten;
   @Column("frage")
   Set<AuswahlDto> auswaehlbar;
 
   public static FrageDto createTextfrage(String text) {
-    return new FrageDto(null, text, false, new HashSet<>(), null);
+    return new FrageDto(null, text, false, false, new HashSet<>(), null);
   }
 
-  public static FrageDto createMultipleChoicefrage(String text) {
-    return new FrageDto(null, text, false, new HashSet<>(), new HashSet<>());
+  public static FrageDto createSingleResponsefrage(String text) {
+    return new FrageDto(null, text, false, false, new HashSet<>(), new HashSet<>());
+  }
+
+  public static FrageDto createMultipleResponsefrage(String text) {
+    return new FrageDto(null, text, false, true, new HashSet<>(), new HashSet<>());
   }
 
   public void addChoice(AuswahlDto choice) {

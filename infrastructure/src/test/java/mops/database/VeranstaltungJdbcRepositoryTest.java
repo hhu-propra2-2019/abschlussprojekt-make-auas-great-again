@@ -163,7 +163,7 @@ public class VeranstaltungJdbcRepositoryTest {
   void addAntwortenToFragenToFragebogenToVeranstaltungKnowingId() {
     FragebogenDto fragebogen = FragebogenDto.create(
         "Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
-    FrageDto frage2 = FrageDto.createMultipleChoicefrage("Wo?");
+    FrageDto frage2 = FrageDto.createMultipleResponsefrage("Wo?");
     AuswahlDto auswahl1 = AuswahlDto.create("Ja");
     AuswahlDto auswahl2 = AuswahlDto.create("Nein");
     frage2.addChoice(auswahl1);
@@ -200,7 +200,7 @@ public class VeranstaltungJdbcRepositoryTest {
     FragebogenDto fragebogen = FragebogenDto.create(
         "Fragebogen zum Praktikum", PRAKTIKUM, "2020-01-01 12:00:00", "2020-05-01 12:00:00");
     FrageDto frage1 = FrageDto.createTextfrage("Was?");
-    FrageDto frage2 = FrageDto.createMultipleChoicefrage("Wo?");
+    FrageDto frage2 = FrageDto.createMultipleResponsefrage("Wo?");
     fragebogen.addFrage(frage1);
     fragebogen.addFrage(frage2);
     VeranstaltungDto veranstaltung = VeranstaltungDto.create("propra4", "SoSe2018");

@@ -137,6 +137,7 @@ DROP TABLE IF EXISTS `frage`;
 CREATE TABLE `frage` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `oeffentlich` tinyint(1) NOT NULL,
+  `ismultipleresponse` tinyint(1) NOT NULL,
   `fragebogen` bigint(20) unsigned DEFAULT NULL,
   `fragebogentemplate` bigint(20) unsigned DEFAULT NULL,
   `fragetext` varchar(100) NOT NULL,
@@ -154,7 +155,7 @@ CREATE TABLE `frage` (
 
 LOCK TABLES `frage` WRITE;
 /*!40000 ALTER TABLE `frage` DISABLE KEYS */;
-INSERT INTO `frage` VALUES (1,1,1,NULL,'Was war gut?'),(2,1,1,NULL,'Was war schlecht?'),(3,1,1,NULL,'Warum?'),(4,1,1,NULL,'Bitte ankreuzen wie gut es gefallen hat'),(5,0,NULL,1,'Testfrage');
+INSERT INTO `frage` VALUES (1,1,0,1,NULL,'Was war gut?'),(2,1,0,1,NULL,'Was war schlecht?'),(3,1,0,1,NULL,'Warum?'),(4,1,0,1,NULL,'Bitte ankreuzen wie gut es gefallen hat'),(5,0,0,NULL,1,'Testfrage');
 /*!40000 ALTER TABLE `frage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,4 +331,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-26  9:59:20
+-- Dump completed on 2020-03-26 14:21:22
