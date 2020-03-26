@@ -4,12 +4,12 @@
 
 === Keycloak Security
 
-Als Security System nehmen wir das von Keycloak gelieferte Security Pack. Sollte
-bei Keycloak Probleme auftreten werden, dann sind wir
+Als Security System nehmen wir das von Keycloak gelieferte Security Pack. Sollten
+bei Keycloak Probleme auftreten, dann sind wir
 offensichtlich auch betroffen.
 
 === Anonymität
 
 Falls für ein Fragebogen nur ein Student Feedback abgegeben hat, dann könnte man theoretisch
 aus den Logfiles herausfinden, wer das war.
-Die Lösung dieses Problems ist sehr anspruchsvoll und wurde aus Zeitgründen nicht Implementiert.
+Die Lösung dieses Problems ist sehr anspruchsvoll und wurde aus Zeitgründen nicht implementiert.
