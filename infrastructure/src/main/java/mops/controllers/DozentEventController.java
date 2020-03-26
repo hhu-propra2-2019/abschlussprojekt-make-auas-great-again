@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import javax.annotation.security.RolesAllowed;
 import mops.DateTimeService;
 import mops.Veranstaltung;
-import mops.database.MockVeranstaltungsRepository;
 import mops.filehandling.CsvReader;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
@@ -29,14 +28,14 @@ public class DozentEventController {
   private final transient DateTimeService datetime = new DateTimeService();
   private transient CsvReader csvReader;
 
-  public DozentEventController() {
-    veranstaltungen = new MockVeranstaltungsRepository();
+  public DozentEventController(mops.database.VeranstaltungsRepository veranstaltungen) {
+    this.veranstaltungen = veranstaltungen;
   }
 
   @GetMapping("")
   @RolesAllowed(ORGA_ROLE)
   public String getOrganisatorMainPage(KeycloakAuthenticationToken token, Model model,
-      String search) {
+                                       String search) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     if (searchNotEmpty(search)) {
       model.addAttribute("veranstaltungen",

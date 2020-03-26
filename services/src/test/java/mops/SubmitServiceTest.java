@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
+@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class SubmitServiceTest {
   private transient SubmitService service = new SubmitService();
   private transient Fragebogen mockFragebogen;
@@ -33,7 +33,7 @@ public class SubmitServiceTest {
     textfrage = new TextFrage(Long.valueOf(1), "Beispielfrage");
     when(mockFragebogen.getFragen()).thenReturn(List.of(textfrage));
     student = new Student("studentin");
-    fragebogen = new Fragebogen("Programmierung", "Jens");
+    fragebogen = new Fragebogen("Programmierung");
 
   }
 
@@ -106,29 +106,5 @@ public class SubmitServiceTest {
     notSubmittedFrageboegen = service.notSubmittedFrageboegen(fragebogenList, student);
 
     assertTrue(notSubmittedFrageboegen.contains(mockFragebogen));
-  }
-
-  @Test
-  @DisplayName("finde den richtigen Fragebogen beim suchen")
-  public void frageboegenContaining() {
-    fragebogenList = new ArrayList<>();
-    fragebogenList.add(mockFragebogen);
-    fragebogenList.add(fragebogen);
-
-    fragebogen.setProfessorenname("Conrad");
-
-    assertTrue(service.frageboegenContaining(fragebogenList, "Conrad").contains(fragebogen));
-  }
-
-  @Test
-  @DisplayName("Fragebogen, die das Suchwort nicht haben, werden nicht gefunden")
-  public void frageboegenContainingNurSearched() {
-    fragebogenList = new ArrayList<>();
-    fragebogenList.add(mockFragebogen);
-    fragebogenList.add(fragebogen);
-
-    fragebogen.setProfessorenname("jack");
-
-    assertFalse(service.frageboegenContaining(fragebogenList, "jack").contains(mockFragebogen));
   }
 }

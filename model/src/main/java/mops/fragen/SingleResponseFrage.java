@@ -4,11 +4,8 @@ import java.util.List;
 
 public class SingleResponseFrage extends MultipleChoiceFrage {
 
-  final transient boolean isScala;
-
-  public SingleResponseFrage(Long id, String fragentext, boolean isScala) {
-    super(id, fragentext, false);
-    this.isScala = isScala;
+  public SingleResponseFrage(Long id, String fragentext) {
+    super(id, fragentext);
   }
   
   @Override
@@ -18,6 +15,5 @@ public class SingleResponseFrage extends MultipleChoiceFrage {
 
   public SingleResponseFrage(String fragetext, List<Auswahl> choices) {
     super(fragetext, choices);
-    isScala = false;
   }
 }

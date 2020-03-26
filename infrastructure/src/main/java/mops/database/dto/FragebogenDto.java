@@ -1,5 +1,6 @@
 package mops.database.dto;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -38,7 +39,17 @@ public class FragebogenDto {
     fragen.add(frage);
   }
 
-  void addBeantwortetVonStudent(StudentDto student) {
+  public void addBeantwortetVonStudent(StudentDto student) {
     bearbeitetVon.add(new SBeantwortetFDto(student.getId()));
+  }
+
+  public LocalDateTime getStartzeit() {
+    // TODO Parse Startzeit
+    return LocalDateTime.now();
+  }
+
+  public LocalDateTime getEndzeit() {
+    // TODO Parse Endzeit
+    return LocalDateTime.now();
   }
 }

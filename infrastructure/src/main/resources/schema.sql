@@ -1,13 +1,15 @@
+drop table if exists dozent;
 create table if not exists dozent
 (
     id       bigint unsigned not null auto_increment,
-    username varchar(50)     not null,
+    username varchar(50)     not null UNIQUE,
     vorname  varchar(50)     not null,
     nachname varchar(50)     not null,
-    anrede   varchar(10)     not null,
+    anrede   varchar(10),
     primary key (id)
 );
 
+drop table if exists veranstaltung;
 create table if not exists veranstaltung
 (
     id       bigint unsigned not null auto_increment,
@@ -16,15 +18,28 @@ create table if not exists veranstaltung
     primary key (id)
 );
 
+drop table if exists student;
 create table if not exists student
 (
     id       bigint unsigned not null auto_increment,
-    username varchar(50)     not null,
+    username varchar(50)     not null UNIQUE,
     vorname  varchar(50),
     nachname varchar(50),
-    primary key (username)
+    primary key (id)
 );
 
+drop table if exists fragebogentemplate;
+create table if not exists fragebogentemplate
+(
+    id     bigint unsigned not null auto_increment,
+    name   varchar(50)     not null,
+    dozent bigint unsigned not null,
+    primary key (id),
+    foreign key (dozent)
+        references dozent (id)
+);
+
+drop table if exists fragebogen;
 create table if not exists fragebogen
 (
     id            bigint unsigned not null auto_increment,
@@ -38,17 +53,23 @@ create table if not exists fragebogen
         references veranstaltung (id)
 );
 
+drop table if exists frage;
 create table if not exists frage
 (
-    id          bigint unsigned not null auto_increment,
-    oeffentlich boolean         not null,
-    fragebogen  bigint unsigned not null,
-    fragetext   varchar(100)    not null,
+    id                 bigint unsigned not null auto_increment,
+    oeffentlich        boolean         not null,
+    ismultipleresponse boolean         not null,
+    fragebogen         bigint unsigned,
+    fragebogentemplate bigint unsigned,
+    fragetext          varchar(100)    not null,
     primary key (id),
     foreign key (fragebogen)
-        references fragebogen (id)
+        references fragebogen (id),
+    foreign key (fragebogentemplate)
+        references fragebogentemplate (id)
 );
 
+drop table if exists antwort;
 create table if not exists antwort
 (
     id          bigint unsigned not null auto_increment,
@@ -59,6 +80,7 @@ create table if not exists antwort
         references frage (id)
 );
 
+drop table if exists auswahl;
 create table if not exists auswahl
 (
     id          bigint unsigned not null auto_increment,
@@ -72,9 +94,10 @@ create table if not exists auswahl
         references antwort (id)
 );
 
+drop table if exists studentBeantwortetFragebogen;
 create table if not exists studentBeantwortetFragebogen
 (
-    student    varchar(50)     not null,
+    student    bigint unsigned not null,
     fragebogen bigint unsigned not null,
     primary key (student, fragebogen),
     foreign key (student)
@@ -83,9 +106,10 @@ create table if not exists studentBeantwortetFragebogen
         references fragebogen (id)
 );
 
+drop table if exists studentBelegtVeranstaltung;
 create table if not exists studentBelegtVeranstaltung
 (
-    student       varchar(50)     not null,
+    student       bigint unsigned not null,
     veranstaltung bigint unsigned not null,
     primary key (student, veranstaltung),
     foreign key (student)
@@ -94,6 +118,7 @@ create table if not exists studentBelegtVeranstaltung
         references veranstaltung (id)
 );
 
+drop table if exists dozentOrganisiertVeranstaltung;
 create table if not exists dozentOrganisiertVeranstaltung
 (
     dozent        bigint unsigned not null,

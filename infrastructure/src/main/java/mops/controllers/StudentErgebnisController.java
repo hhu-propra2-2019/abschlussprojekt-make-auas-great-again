@@ -3,7 +3,6 @@ package mops.controllers;
 import javax.annotation.security.RolesAllowed;
 import mops.TypeChecker;
 import mops.Veranstaltung;
-import mops.database.MockVeranstaltungsRepository;
 import mops.rollen.Student;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -22,7 +21,7 @@ public class StudentErgebnisController {
   private final transient VeranstaltungsRepository veranstaltungen;
   private transient TypeChecker typeChecker = new TypeChecker();
 
-  public StudentErgebnisController(MockVeranstaltungsRepository veranstaltungen) {
+  public StudentErgebnisController(mops.database.VeranstaltungsRepository veranstaltungen) {
     this.veranstaltungen = veranstaltungen;
   }
 

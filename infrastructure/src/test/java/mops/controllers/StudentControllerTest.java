@@ -61,6 +61,7 @@ class StudentControllerTest {
   @Test
   @DisplayName("Student sollte auf die 'ergebnis'-Seite weitergeleitet werden.")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
+  @Disabled
   public void correctRedirectForErgebnis() throws Exception {
     mvc.perform(get("/feedback/studenten/ergebnis"))
         .andExpect(status().is2xxSuccessful())

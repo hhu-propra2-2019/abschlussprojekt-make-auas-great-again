@@ -11,7 +11,7 @@ import mops.fragen.TextFrage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
+@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
     "PMD.JUnitTestContainsTooManyAsserts"})
 public class FragebogenTemplateTest {
   private transient FragebogenTemplate template;
@@ -24,7 +24,7 @@ public class FragebogenTemplateTest {
   @Test
   public void korrekteFrageWirdGeloescht() {
     TextFrage text = new TextFrage(1L, "Anmerkungen");
-    SingleResponseFrage mc = new SingleResponseFrage(2L, "Wie geht's?", false);
+    SingleResponseFrage mc = new SingleResponseFrage(2L, "Wie geht's?");
     template.addFrage(mc);
     template.addFrage(text);
 
@@ -37,7 +37,7 @@ public class FragebogenTemplateTest {
   @Test
   public void korrekteMultipleChoiceFrageWirdGeloescht() {
     TextFrage text = new TextFrage(1L, "Anmerkungen");
-    SingleResponseFrage mc = new SingleResponseFrage(2L, "Wie geht's?", false);
+    SingleResponseFrage mc = new SingleResponseFrage(2L, "Wie geht's?");
     MultipleResponseFrage mr = new MultipleResponseFrage(3L, "Welche Termine sind möglich");
     template.addFrage(mr);
     template.addFrage(mc);

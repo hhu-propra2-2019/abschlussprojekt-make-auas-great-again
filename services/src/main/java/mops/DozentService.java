@@ -151,7 +151,7 @@ public class DozentService {
    */
   public void updateFragebogenMetadaten(Fragebogen fragebogen, String name, String typ,
       String startdatum, String startzeit, String enddatum, String endzeit) {
-    fragebogen.setVeranstaltungsname(name);
+    fragebogen.setName(name);
     fragebogen.setType(Einheit.valueOf(typ));
     fragebogen.setStartdatum(datetime.getLocalDateTimeFromString(startdatum, startzeit));
     fragebogen.setEnddatum(datetime.getLocalDateTimeFromString(enddatum, endzeit));
@@ -165,8 +165,7 @@ public class DozentService {
    * @return Die ID des neuen Fragebogens
    */
   public Long fuegeFragebogenZuVeranstaltungHinzu(Veranstaltung veranstaltung, Dozent dozent) {
-    Fragebogen neuerbogen = new Fragebogen(veranstaltung.getName(),
-        dozent.getVorname() + " " + dozent.getNachname());
+    Fragebogen neuerbogen = new Fragebogen(veranstaltung.getName());
     veranstaltung.addFragebogen(neuerbogen);
     return neuerbogen.getBogennr();
   }
@@ -199,8 +198,7 @@ public class DozentService {
    * @return Die ID des neuen Fragebogens
    */
   public Long kloneFragebogen(Fragebogen fragebogen, Veranstaltung veranstaltung) {
-    Fragebogen neu = new Fragebogen(fragebogen.getVeranstaltungsname(),
-        fragebogen.getProfessorenname(),
+    Fragebogen neu = new Fragebogen(fragebogen.getName(),
         getFragenlisteOhneAntworten(fragebogen.getFragen()), fragebogen.getType());
     veranstaltung.addFragebogen(neu);
     return neu.getBogennr();
@@ -209,7 +207,7 @@ public class DozentService {
   /**
    * Erzeugt ein passendes Fragenobjekt anhand des übergebenen Fragtyps.
    *
-   * @param fragetyp Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
+   * @param fragetyp  Der Typ der Frage, entweder 'multiplechoice' oder 'textfrage'
    * @param fragetext Der Text der Frage
    * @return das neue Fragenobjekt
    */
@@ -217,7 +215,7 @@ public class DozentService {
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
     Random idgenerator = new Random();
     if ("multiplechoice".equals(fragetyp)) {
-      return new SingleResponseFrage(idgenerator.nextLong(), fragetext, false);
+      return new SingleResponseFrage(idgenerator.nextLong(), fragetext);
     } else if ("textfrage".equals(fragetyp)) {
       return new TextFrage(fragetext);
     } else {

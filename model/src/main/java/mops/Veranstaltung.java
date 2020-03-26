@@ -1,6 +1,7 @@
 package mops;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -18,11 +19,12 @@ import mops.rollen.Student;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode(of = "veranstaltungsNr")
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Veranstaltung {
   private Long veranstaltungsNr;
   private String name;
   private String semester;
-  private Dozent dozent;
+  private List<Dozent> dozenten;
   private List<Student> studenten;
   private List<Fragebogen> frageboegen;
 
@@ -31,27 +33,42 @@ public class Veranstaltung {
     this.veranstaltungsNr = idgenerator.nextLong();
     this.name = name;
     this.semester = semester;
-    this.dozent = dozent;
+    this.dozenten = new LinkedList<>();
+    dozenten.add(dozent);
     this.studenten = new ArrayList<>();
     this.frageboegen = new ArrayList<>();
   }
 
   public boolean contains(String search) {
-    if (dozent.getNachname().toLowerCase(Locale.GERMAN)
-        .contains(search.toLowerCase(Locale.GERMAN))) {
-      return true;
-    } else {
-      return name.toLowerCase(Locale.GERMAN)
-          .contains(search.toLowerCase(Locale.GERMAN));
+    for (Dozent dozent : dozenten) {
+      if (dozent.getNachname().toLowerCase(Locale.GERMAN)
+          .contains(search.toLowerCase(Locale.GERMAN))) {
+        return true;
+      }
     }
+    return name.toLowerCase(Locale.GERMAN)
+        .contains(search.toLowerCase(Locale.GERMAN));
   }
 
   public void addStudent(Student student) {
     studenten.add(student);
   }
 
+  public String getDozentenNamen() {
+    String result = "";
+    for (Dozent dozent : dozenten) {
+      result += dozent.toString() + ", ";
+    }
+    result = result.substring(0, result.length() - 2);
+    return result;
+  }
+
   public void addFragebogen(Fragebogen fragebogen) {
     frageboegen.add(fragebogen);
+  }
+
+  public void addDozent(Dozent dozent) {
+    dozenten.add(dozent);
   }
 
   public List<Fragebogen> getFrageboegenContaining(String search) {
@@ -62,5 +79,9 @@ public class Veranstaltung {
 
   public boolean hasStudent(Student student) {
     return studenten.contains(student);
+  }
+
+  public boolean hasDozent(Dozent dozent) {
+    return dozenten.contains(dozent);
   }
 }

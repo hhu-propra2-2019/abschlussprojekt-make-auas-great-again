@@ -31,13 +31,14 @@ public class VeranstaltungDto {
         new HashSet<>(), new HashSet<>());
   }
 
+  public void addDozent(DozentDto dozent) {
+    dozenten.add(new DOrganisiertVDto(dozent.getId()));
+  }
+
   public void addStudent(StudentDto student) {
     studenten.add(new SBelegtVDto(student.getId()));
   }
 
-  public void addDozent(DozentDto dozent) {
-    dozenten.add(new DOrganisiertVDto(dozent.getId()));
-  }
 
   public void addFragebogen(FragebogenDto fragebogen) {
     frageboegen.add(fragebogen);

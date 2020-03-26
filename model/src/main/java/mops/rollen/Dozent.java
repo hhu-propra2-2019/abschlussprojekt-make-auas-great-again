@@ -16,23 +16,29 @@ public class Dozent {
   private String username;
   private String vorname;
   private String nachname;
-  private final List<FragebogenTemplate> templates = new ArrayList<>();
+  private List<FragebogenTemplate> templates = new ArrayList<>();
 
   public Dozent(String username) {
     this.username = username;
     vorname = "jens";
     nachname = "B";
   }
-  
+
   public void addTemplate(FragebogenTemplate template) {
     templates.add(template);
   }
-  
+
+
+  @Override
+  public String toString() {
+    return vorname + " " + nachname;
+  }
+
   public FragebogenTemplate getTemplateById(Long id) {
     return templates.stream().filter(x -> x.getId().equals(id)).findFirst()
-        .orElse(new FragebogenTemplate(id, ""));
+        .orElse(new FragebogenTemplate(""));
   }
-  
+
   public void deleteTemplateById(Long id) {
     templates.remove(getTemplateById(id));
   }

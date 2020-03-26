@@ -13,10 +13,16 @@ public class VeranstaltungsService {
 
   private Veranstaltung randomVeranstaltung() {
     Veranstaltung.VeranstaltungBuilder veranstaltung = Veranstaltung.builder();
-    Dozent dozent = new Dozent("orga1", "jens", "Bendisposto");
-    veranstaltung = veranstaltung.dozent(dozent).name("Programmierung").semester("SOSE2019")
-        .studenten(randomStudenten()).frageboegen(frageboegen.randomFrageboegen(10))
-        .veranstaltungsNr((long) idGenerator.nextInt(1000));
+    Dozent dozent = new Dozent("orga1", "jens", "Bendisposto", null);
+    Dozent dozent1 = new Dozent("orga2", "jens", "Bendisposto", null);
+    List<Dozent> dozenten = new ArrayList<>();
+    dozenten.add(dozent);
+    dozenten.add(dozent1);
+    veranstaltung = veranstaltung.dozenten(dozenten).name("Programmierung").semester("SOSE2019");
+    veranstaltung =
+        veranstaltung.dozenten(List.of(dozent)).name("Programmierung").semester("SOSE2019")
+            .studenten(randomStudenten()).frageboegen(frageboegen.randomFrageboegen(10))
+            .veranstaltungsNr((long) idGenerator.nextInt(1000));
     return veranstaltung.build();
   }
 

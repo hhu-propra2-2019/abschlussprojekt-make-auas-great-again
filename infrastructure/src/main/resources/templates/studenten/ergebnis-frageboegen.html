@@ -45,7 +45,7 @@
                      th:if="${typeChecker.isBeratung(fragebogen)}"
                      width="225">
                 <div class="card-body">
-                    <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
+                    <h2 class="card-title" th:text="${fragebogen.getName()}">Programmierung</h2>
                     <a class="btn btn-primary"
                        th:href="@{details(fragebogen=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
                         Ergebnis ansehen</a>
