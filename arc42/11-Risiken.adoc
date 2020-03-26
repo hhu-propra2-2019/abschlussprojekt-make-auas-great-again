@@ -1,1 +1,9 @@
 = Risiken
+
+== Risiken und technische Schulden
+
+=== Keycloack Security
+
+Als Security System nehmen wir das von Keycloack gelieferte Security Pack. Sollte
+bei Keycloack Probleme auftreten/entdeckt werden, dann sind wir
+offensichtlich auch betroffen.
