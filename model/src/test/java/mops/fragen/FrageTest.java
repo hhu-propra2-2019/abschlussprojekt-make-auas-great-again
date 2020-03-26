@@ -18,33 +18,29 @@ public class FrageTest {
   @Test
   public void aendereOeffentlichkeitsStatusMultipleChoiceFrageTest() {
     Frage multiplechoicefrage = new MultipleChoiceFrage("x");
-    boolean before = multiplechoicefrage.isOeffentlich();
     multiplechoicefrage.aendereOeffentlichkeitsStatus();
-    Assertions.assertTrue(before != multiplechoicefrage.isOeffentlich());
+    Assertions.assertTrue(multiplechoicefrage.isOeffentlich());
   }
 
   @Test
   public void aendereOeffentlichkeitsStatusMultipleResponseFrageTest() {
     Frage multipleresponsefrage = new MultipleResponseFrage(0L, "x");
-    boolean before = multipleresponsefrage.isOeffentlich();
     multipleresponsefrage.aendereOeffentlichkeitsStatus();
-    Assertions.assertTrue(before != multipleresponsefrage.isOeffentlich());
+    Assertions.assertTrue(multipleresponsefrage.isOeffentlich());
   }
 
   @Test
   public void aendereOeffentlichkeitsStatusSingleResponseFrageTest() {
     Frage singleresponsefrage = new SingleResponseFrage(1L, "y", false);
-    boolean before = singleresponsefrage.isOeffentlich();
     singleresponsefrage.aendereOeffentlichkeitsStatus();
-    Assertions.assertTrue(before != singleresponsefrage.isOeffentlich());
+    Assertions.assertTrue(singleresponsefrage.isOeffentlich());
   }
 
   @Test
   public void aendereOeffentlichkeitsStatusTextFrageTest() {
     Frage textfrage = new TextFrage(0L, "x");
-    boolean before = textfrage.isOeffentlich();
     textfrage.aendereOeffentlichkeitsStatus();
-    Assertions.assertTrue(before != textfrage.isOeffentlich());
+    Assertions.assertTrue(textfrage.isOeffentlich());
   }
 
 }
