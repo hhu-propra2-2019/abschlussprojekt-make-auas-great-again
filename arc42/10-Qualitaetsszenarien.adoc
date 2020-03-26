@@ -10,6 +10,10 @@ Hinter KeyCloak steht eine große Community, deshalb
 ist eine bessere Security gegeben als eine eigene
 Implementierung
 
+Optik: Wir haben am meisten mit Bootstrap gearbeitet und daneben mit JavaScript. Da uns die Optik der Anwendung wichtig
+ist, haben wir Features hinzugefügt, die dabei helfen, dass unsere Anwendung einfacher und schöner aussieht.
+Zum Biespiel live countdown für die Teilnehmer, oder dass das Feedback rot wird, wenn die Zeit bald abläuft.
+
 Code: Wir haben daran gearbeitet, dass unser Code möglichst einfach und strukturiert ist (damit er einfach gelesen
 werden kann und auch offen für Erweiterungen ist), indem wir ihn oft gerefactored und selbst kritisch analysiert haben.
 Auch die gute Kommuinkation und die tägliche Teambesprechungen am Anfang und Ende des Tages haben einen guten Beitrag
