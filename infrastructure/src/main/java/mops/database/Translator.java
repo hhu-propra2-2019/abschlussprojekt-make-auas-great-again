@@ -216,8 +216,7 @@ public class Translator {
   }
 
   private AntwortDto createTextAntwortDto(TextAntwort antwort) {
-    // TODO
-    return null;
+    return AntwortDto.createTextantwort(antwort.toString());
   }
 
   Dozent loadDozent(DozentDto dozentDto) {
