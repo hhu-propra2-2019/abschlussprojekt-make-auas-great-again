@@ -17,6 +17,10 @@ class VeranstaltungsRepositoryTest {
     this.translator = mock(Translator.class);
   }
 
+  @Test
+  void saveToVeranstaltungTest() {
+
+  }
 
   @Test
   void getAll() {

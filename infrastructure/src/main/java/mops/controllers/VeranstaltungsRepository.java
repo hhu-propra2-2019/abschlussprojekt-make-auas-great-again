@@ -31,4 +31,6 @@ public interface VeranstaltungsRepository {
   Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung);
 
   Dozent getDozentByUsername(String name);
+
+  void saveToVeranstaltung(Fragebogen fragebogen, Long veranstaltungid);
 }

@@ -56,7 +56,12 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
 
   @Override
   public void save(Veranstaltung veranstaltung) {
-    VeranstaltungDto veranstaltungDto = translator.createVeranstaltungDto(veranstaltung);
+    VeranstaltungDto veranstaltungDto;
+    if (veranstaltung.getVeranstaltungsNr() == null) {
+      veranstaltungDto = translator.createVeranstaltungDto(veranstaltung);
+    } else {
+      veranstaltungDto = translator.loadVeranstaltungDto(veranstaltung);
+    }
     veranstaltungenRepo.save(veranstaltungDto);
   }
 
@@ -101,6 +106,19 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
   public Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung) {
     Optional<FragebogenDto> fragebogenDto = fragebogenRepo.findById(fragebogen);
     return fragebogenDto.map(dto -> translator.loadFragebogen(dto)).orElse(null);
+  }
+
+  @Override
+  public void saveToVeranstaltung(Fragebogen fragebogen, Long veranstaltungsId) {
+
+    Optional<VeranstaltungDto> dto = veranstaltungenRepo.findById(veranstaltungsId);
+    if (dto.isPresent()) {
+      Veranstaltung veranstaltung = translator.loadVeranstaltung(dto.get());
+      veranstaltung.updateFragebogen(fragebogen);
+      save(veranstaltung);
+    } else {
+      throw new DataSourceLookupFailureException("Veranstaltung nicht gefunden");
+    }
   }
 
   @Override

@@ -1,26 +1,26 @@
 package mops.fragen;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.Set;
 import mops.antworten.Antwort;
 import mops.antworten.TextAntwort;
 
 public class TextFrage extends Frage {
   private transient String fragentext;
-  private transient Set<Antwort> antworten;
+  private transient List<Antwort> antworten;
 
   public TextFrage(Long id, String fragentext) {
     super(id);
     this.fragentext = fragentext;
-    antworten = new HashSet<>();
+    antworten = new ArrayList<>();
   }
 
   public TextFrage(String fragentext) {
     super((long) new Random().nextInt(1000));
     this.fragentext = fragentext;
-    antworten = new HashSet<>();
+    antworten = new ArrayList<>();
   }
 
   @Override
@@ -39,7 +39,7 @@ public class TextFrage extends Frage {
   }
 
   @Override
-  public Set<Antwort> getAntworten() {
+  public List<Antwort> getAntworten() {
     return antworten;
   }
 

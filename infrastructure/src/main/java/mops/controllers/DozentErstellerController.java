@@ -118,7 +118,9 @@ public class DozentErstellerController {
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr,
                                           KeycloakAuthenticationToken token, RedirectAttributes ra, Long veranstaltungid) {
     Dozent dozent = getDozentFromToken(token);
-    veranstaltungen.getFragebogenFromDozentById(bogennr, dozent).loescheFrageById(fragennr);
+    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
+    fragebogen.loescheFrageById(fragennr);
+    veranstaltungen.saveToVeranstaltung(fragebogen, veranstaltungid);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -154,11 +156,10 @@ public class DozentErstellerController {
   public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
                                           String antworttext, KeycloakAuthenticationToken token, Long veranstaltungid,
                                           RedirectAttributes ra, Long fragebogenid) {
-    Dozent dozent = getDozentFromToken(token);
-    dozentservice
-        .getMultipleChoiceFrage(fragennr,
-            veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
-        .addChoice(new Auswahl(antworttext));
+    // TODO Refactor
+    Fragebogen fragebogen = veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogenid, veranstaltungid);
+    dozentservice.getMultipleChoiceFrage(fragennr, fragebogen).addChoice(new Auswahl(antworttext));
+    veranstaltungen.saveToVeranstaltung(fragebogen, veranstaltungid);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     ra.addAttribute("fragebogenid", fragebogenid);
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;

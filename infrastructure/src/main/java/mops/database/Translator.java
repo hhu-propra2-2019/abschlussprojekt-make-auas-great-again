@@ -1,5 +1,6 @@
 package mops.database;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -196,7 +197,7 @@ public class Translator {
     return new DOrganisiertVDto(dozentenRepo.findId(dozent.getUsername()));
   }
 
-  private FragebogenDto createFragebogenDto(Fragebogen fragebogen) {
+  FragebogenDto createFragebogenDto(Fragebogen fragebogen) {
     FragebogenDto fragebogenDto = FragebogenDto.create(fragebogen.getName(), fragebogen.getType(),
         fragebogen.getStartdatum().toString(),
         fragebogen.getEnddatum().toString());
@@ -254,4 +255,90 @@ public class Translator {
     return new FragebogenTemplate(fragebogenTemplateDto.getId(), fragebogenTemplateDto.getName(),
         loadFragen(fragebogenTemplateDto.getFragen()));
   }
+
+  public VeranstaltungDto loadVeranstaltungDto(Veranstaltung veranstaltung) {
+    VeranstaltungDto veranstaltungDto = new VeranstaltungDto(veranstaltung.getVeranstaltungsNr(),
+        veranstaltung.getName(), veranstaltung.getSemester(), loadFrageboegenDtos(veranstaltung.getFrageboegen()),
+        loadSBelegtVDtos(veranstaltung.getStudenten()), loadDorganisiertVdtos(veranstaltung.getDozenten()));
+    return veranstaltungDto;
+  }
+
+  private Set<DOrganisiertVDto> loadDorganisiertVdtos(List<Dozent> dozenten) {
+    return dozenten.stream().map(this::createDOrganisiertVDto).collect(Collectors.toSet());
+  }
+
+  private Set<SBelegtVDto> loadSBelegtVDtos(List<Student> studenten) {
+    return studenten.stream().map(this::createSBelegtVDto).collect(Collectors.toSet());
+  }
+
+  private Set<FragebogenDto> loadFrageboegenDtos(List<Fragebogen> frageboegen) {
+    return frageboegen.stream().map(this::loadFragebogenDto).collect(Collectors.toSet());
+  }
+
+  private FragebogenDto loadFragebogenDto(Fragebogen fragebogen) {
+    return new FragebogenDto(fragebogen.getBogennr(), fragebogen.getName(), fragebogen.getType(),
+        fragebogen.getStartdatum().toString(), fragebogen.getEnddatum().toString(),
+        loadFragenDtos(fragebogen.getFragen()), loadSBeantwortedFDtos(fragebogen.getAbgegebeneStudierende()));
+  }
+
+  private Set<SBeantwortetFDto> loadSBeantwortedFDtos(List<Student> abgegebeneStudierende) {
+    return abgegebeneStudierende.stream().map(this::createSBeantwortedFDto).collect(Collectors.toSet());
+  }
+
+  private SBeantwortetFDto createSBeantwortedFDto(Student student) {
+    return new SBeantwortetFDto(studentenRepo.findId(student.getUsername()));
+  }
+
+  private Set<FrageDto> loadFragenDtos(List<Frage> fragen) {
+    return fragen.stream().map(this::loadFrageDto).collect(Collectors.toSet());
+  }
+
+  private FrageDto loadFrageDto(Frage frage) {
+    if (frage instanceof TextFrage) {
+      return loadTextFrageDto((TextFrage) frage);
+    } else if (frage instanceof MultipleResponseFrage) {
+      return loadMultipleResponseFrageDto((MultipleResponseFrage) frage);
+    }
+    return loadSingleResponseFrageDto((SingleResponseFrage) frage);
+  }
+
+  private FrageDto loadSingleResponseFrageDto(SingleResponseFrage frage) {
+    return new FrageDto(frage.getId(), frage.toString(), frage.isOeffentlich(), false,
+        loadAntwortDtos(frage.getAntworten()), loadAuswahlDtos(frage.getChoices()));
+  }
+
+  private FrageDto loadMultipleResponseFrageDto(MultipleResponseFrage frage) {
+    return new FrageDto(frage.getId(), frage.toString(), frage.isOeffentlich(), true,
+        loadAntwortDtos(frage.getAntworten()), loadAuswahlDtos(frage.getChoices()));
+  }
+
+  private FrageDto loadTextFrageDto(TextFrage frage) {
+    return new FrageDto(frage.getId(), frage.toString(), frage.isOeffentlich(), false,
+        loadAntwortDtos(frage.getAntworten()), new HashSet<>());
+  }
+
+  private Set<AuswahlDto> loadAuswahlDtos(List<Auswahl> choices) {
+    return choices.stream().map(this::loadAuswahlDto).collect(Collectors.toSet());
+  }
+
+  private AuswahlDto loadAuswahlDto(Auswahl auswahl) {
+    return new AuswahlDto(auswahl.getId(), auswahl.getLabel());
+  }
+
+  private Set<AntwortDto> loadAntwortDtos(List<Antwort> antworten) {
+    return antworten.stream().map(this::loadAntwortDto).collect(Collectors.toSet());
+  }
+
+  private AntwortDto loadAntwortDto(Antwort antwort) {
+    if (antwort instanceof TextAntwort) {
+      return new AntwortDto(antwort.getId(), antwort.toString(), null);
+    }
+    return loadMultipleChoiceAntwortDto((MultipleChoiceAntwort) antwort);
+  }
+
+  private AntwortDto loadMultipleChoiceAntwortDto(MultipleChoiceAntwort antwort) {
+    return new AntwortDto(antwort.getId(), antwort.toString(),
+        loadAuswahlDtos(antwort.getGewaehlteAntworten()));
+  }
+
 }

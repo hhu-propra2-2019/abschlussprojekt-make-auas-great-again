@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import mops.antworten.Antwort;
 import mops.fragen.TextFrage;
 import mops.rollen.Student;
@@ -44,7 +43,7 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<Antwort> antworten = textfrage.getAntworten();
+    List<Antwort> antworten = textfrage.getAntworten();
     assertFalse(antworten.isEmpty());
   }
 
@@ -55,7 +54,7 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<Antwort> antworten = textfrage.getAntworten();
+    List<Antwort> antworten = textfrage.getAntworten();
     assertTrue(antworten.isEmpty());
   }
 
@@ -68,7 +67,7 @@ public class SubmitServiceTest {
 
     service.saveAntworten(mockFragebogen, antwort);
 
-    Set<Antwort> antworten = textfrage.getAntworten();
+    List<Antwort> antworten = textfrage.getAntworten();
     assertTrue(antworten.isEmpty());
   }
 

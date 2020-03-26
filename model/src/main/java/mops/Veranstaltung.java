@@ -39,6 +39,11 @@ public class Veranstaltung {
     this.frageboegen = new ArrayList<>();
   }
 
+  public void updateFragebogen(Fragebogen fragebogen) {
+    frageboegen.remove(fragebogen);
+    frageboegen.add(fragebogen);
+  }
+
   public boolean contains(String search) {
     for (Dozent dozent : dozenten) {
       if (dozent.getNachname().toLowerCase(Locale.GERMAN)

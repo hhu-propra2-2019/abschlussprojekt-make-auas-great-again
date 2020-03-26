@@ -74,10 +74,11 @@ public class StudentController {
   @RolesAllowed(studentRole)
   public String fragebogenDetails(KeycloakAuthenticationToken token, Model model, @RequestParam Long
       fragebogen, @RequestParam Long veranstaltung) {
-    model.addAttribute("fragebogen",
-        veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung));
+    Fragebogen fragebogen1 = veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung);
+    model.addAttribute("fragebogen", fragebogen1);
     model.addAttribute("typeChecker", typeChecker);
-    model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
+    Veranstaltung veranstaltung1 = veranstaltungen.getVeranstaltungById(veranstaltung);
+    model.addAttribute("veranstaltung", veranstaltung1);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "studenten/fragebogen-details";
   }
