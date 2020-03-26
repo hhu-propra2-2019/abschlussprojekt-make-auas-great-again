@@ -1,6 +1,5 @@
 package mops.database;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -64,8 +63,8 @@ public class Translator {
     Fragebogen.FragebogenBuilder fragebogen = Fragebogen.builder();
     return fragebogen
         .type(fragebogenDto.getEinheit())
-        .startdatum(LocalDateTime.parse(fragebogenDto.getStartzeit()))
-        .enddatum(LocalDateTime.parse(fragebogenDto.getEndzeit()))
+        .startdatum(fragebogenDto.getStartzeit())
+        .enddatum(fragebogenDto.getEndzeit())
         .abgegebeneStudierende(loadStudenten(fragebogenDto.getBearbeitetVon()))
         .bogennr(fragebogenDto.getId())
         .name(fragebogenDto.getName())

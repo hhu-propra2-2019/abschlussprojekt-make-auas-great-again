@@ -1,5 +1,6 @@
 package mops.antworten;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import lombok.Getter;
@@ -11,6 +12,7 @@ public class MultipleChoiceAntwort extends Antwort {
 
   public MultipleChoiceAntwort(Long id) {
     super(id);
+    this.gewaehlteAntworten = new ArrayList<>();
   }
 
   @Override
