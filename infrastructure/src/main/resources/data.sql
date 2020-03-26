@@ -31,10 +31,10 @@ values (1, 1),
        (3, 6);
 
 insert into student(id, username)
-values (1, "studentin1"),
+values (1, "studentin"),
        (2, "studentin2"),
        (3, "studentin3"),
-       (4, "studentin");
+       (4, "studentin1");
 
 insert into studentBelegtVeranstaltung(student, veranstaltung)
 values (1, 1),
