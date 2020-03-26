@@ -20,7 +20,7 @@ public class FrageTest {
     Frage multiplechoicefrage = new MultipleChoiceFrage("x");
     boolean before = multiplechoicefrage.isOeffentlich();
     multiplechoicefrage.aendereOeffentlichkeitsStatus();
-    Assertions.assertNotEquals(before, multiplechoicefrage.isOeffentlich());
+    Assertions.assertTrue(before != multiplechoicefrage.isOeffentlich());
   }
 
   @Test
@@ -28,7 +28,7 @@ public class FrageTest {
     Frage multipleresponsefrage = new MultipleResponseFrage(0L, "x");
     boolean before = multipleresponsefrage.isOeffentlich();
     multipleresponsefrage.aendereOeffentlichkeitsStatus();
-    Assertions.assertNotEquals(before, multipleresponsefrage.isOeffentlich());
+    Assertions.assertTrue(before != multipleresponsefrage.isOeffentlich());
   }
 
   @Test
@@ -36,7 +36,7 @@ public class FrageTest {
     Frage singleresponsefrage = new SingleResponseFrage(1L, "y", false);
     boolean before = singleresponsefrage.isOeffentlich();
     singleresponsefrage.aendereOeffentlichkeitsStatus();
-    Assertions.assertNotEquals(before, singleresponsefrage.isOeffentlich());
+    Assertions.assertTrue(before != singleresponsefrage.isOeffentlich());
   }
 
   @Test
@@ -44,7 +44,7 @@ public class FrageTest {
     Frage textfrage = new TextFrage(0L, "x");
     boolean before = textfrage.isOeffentlich();
     textfrage.aendereOeffentlichkeitsStatus();
-    Assertions.assertNotEquals(before, textfrage.isOeffentlich());
+    Assertions.assertTrue(before != textfrage.isOeffentlich());
   }
 
 }
