@@ -25,15 +25,17 @@
 
         <div class="row row-cols-1 row-cols-md-3">
             <div class="col mb-3" th:each="veranstaltung : ${veranstaltungen}">
-                <div class="card text-center h-100">
-                    <div class="card-body">
-
+                <div class="card text-center h-100"  >
+                    <img alt="..." class="rounded mx-auto d-block" src="/hhu.jpg">
+                    <div class="card-body"  >
+                        <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
                         <form class="form-horizontal"
                               method="get" th:action="'/feedback/dozenten/event/' + ${veranstaltung.veranstaltungsNr}">
+
                             <button class="btn btn-link btn-lg btn-block stretched-link"
-                                    name="geteventbutton" type="submit"
-                                    th:text="${veranstaltung.getName()}">
+                                    name="geteventbutton" type="submit">
                             </button>
+
                         </form>
                     </div>
                 </div>
