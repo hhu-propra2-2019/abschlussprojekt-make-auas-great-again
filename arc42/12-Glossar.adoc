@@ -6,19 +6,19 @@
 |Definition
 
 |Dozent
-|Ein User, der Veranstaltungen anliegen und Fragebögen erstellen kann.
-Außerdem kann der Dozent bestimmen, welche Studierende an seinen Fragebögen teilnehmen und
+|Ein User, der Veranstaltungen anlegen und Fragebögen erstellen kann.
+Außerdem kann der Dozent bestimmen, welche Studierende an seinen Fragebögen teilnehmen dürfen und
 welche Egebnisse veröffentlicht werden.
 
 
 |Student
-|Ein User, der Feedbacks abgibt und veröffentlichte Egebnisse sich anschaut.
+|Ein User, der Feedback abgibt und sich veröffentlichte Ergebnisse anschaut.
 
 |Fragebogen
-|Ein Formular, das aus mehreren Fragetypen besteht und von Studirenden ausgefüllt wird.
+|Ein Formular, das aus mehreren Fragetypen besteht und von Studenten ausgefüllt wird.
 
 |Veranstaltung
-|Die Representation einer klassischen Lehrveranstaltung, die von mehreren Studierenden besucht wird,
+|Die Repräsentation einer klassischen Lehrveranstaltung, die von mehreren Studierenden besucht wird,
 aus mehreren Einheiten besteht und von mehreren (oder einem) Dozenten geleitet wird.
 
 |Einheit
@@ -31,4 +31,4 @@ aus mehreren Einheiten besteht und von mehreren (oder einem) Dozenten geleitet w
 |Vom Student abgegebene Antwort auf eine Frage.
 
 |FragebogenTemplate
-|Vorgefertigtes Fragbogen, das von Dozenten mehrfach verwndet wird.
+|Vorgefertigte Fragen, die von Dozenten mehrfach verwendet werden.
