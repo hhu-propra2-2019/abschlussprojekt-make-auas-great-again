@@ -1,1 +1,34 @@
 = Glossar
+
+[cols="1,5" options="header"]
+|===
+|Begriff
+|Definition
+
+|Dozent
+|Ein User, der Veranstaltungen anlegen und Fragebögen erstellen kann.
+Außerdem kann der Dozent bestimmen, welche Studierende an seinen Fragebögen teilnehmen dürfen und
+welche Egebnisse veröffentlicht werden.
+
+
+|Student
+|Ein User, der Feedback abgibt und sich veröffentlichte Ergebnisse anschaut.
+
+|Fragebogen
+|Ein Formular, das aus mehreren Fragetypen besteht und von Studenten ausgefüllt wird.
+
+|Veranstaltung
+|Die Repräsentation einer klassischen Lehrveranstaltung, die von mehreren Studierenden besucht wird,
+aus mehreren Einheiten besteht und von mehreren (oder einem) Dozenten geleitet wird.
+
+|Einheit
+|Abstrahiert die Bestandteile einer Veranstaltung, z.B. Vorlesung, Praktikum, Übung, etc.
+
+|Frage
+|Eine von Dozenten geschriebene Fragestellung.
+
+|Antwort
+|Vom Student abgegebene Antwort auf eine Frage.
+
+|FragebogenTemplate
+|Vorgefertigte Fragen, die von Dozenten mehrfach verwendet werden.
