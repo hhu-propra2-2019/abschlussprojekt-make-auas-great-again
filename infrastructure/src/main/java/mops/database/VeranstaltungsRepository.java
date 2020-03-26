@@ -108,6 +108,7 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
     return translator.loadDozent(dozentenRepo.getDozentByUsername(name));
   }
 
+  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   private List<Veranstaltung> loadVeranstaltungen(Iterable<VeranstaltungDto> veranstaltungDtos) {
     List<Veranstaltung> veranstaltungen = new ArrayList<>();
     for (VeranstaltungDto dto : veranstaltungDtos) {
