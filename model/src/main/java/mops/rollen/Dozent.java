@@ -28,6 +28,12 @@ public class Dozent {
     templates.add(template);
   }
 
+
+  @Override
+  public String toString() {
+    return vorname + " " + nachname;
+  }
+
   public FragebogenTemplate getTemplateById(Long id) {
     return templates.stream().filter(x -> x.getId().equals(id)).findFirst().get();
   }

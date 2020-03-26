@@ -15,6 +15,9 @@ public class VeranstaltungsService {
     Veranstaltung.VeranstaltungBuilder veranstaltung = Veranstaltung.builder();
     Dozent dozent = new Dozent("orga1", "jens", "Bendisposto", null);
     veranstaltung = veranstaltung.dozent(dozent).name("Programmierung").semester("SOSE2019")
+    Dozent dozent = new Dozent("orga1", "jens", "Bendisposto", null);
+    veranstaltung =
+        veranstaltung.dozenten(List.of(dozent)).name("Programmierung").semester("SOSE2019")
         .studenten(randomStudenten()).frageboegen(frageboegen.randomFrageboegen(10))
         .veranstaltungsNr((long) idGenerator.nextInt(1000));
     return veranstaltung.build();

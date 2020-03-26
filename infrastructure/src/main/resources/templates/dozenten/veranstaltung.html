@@ -23,6 +23,7 @@
     <h1 class="display-4 text-center">Veranstaltungsdetails</h1>
     <h3>Details</h3>
     <p>Name der Veranstaltung: <span th:text="${veranstaltung.name}">Programmierung</span></p>
+    <p>Dozenten: <span th:text="${veranstaltung.getDozentenNamen()}"></span></p>
     <p>Semester: <span th:text="${veranstaltung.semester}">Programmierung</span></p>
     <div class="row">
         <div class="col-sm">
