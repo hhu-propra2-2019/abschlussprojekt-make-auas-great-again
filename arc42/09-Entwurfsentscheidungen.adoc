@@ -24,3 +24,12 @@ daher wurde die Entscheidung getroffen, dass das Veranstaltungsobjekt unser aggr
 Das Ziel unserer Modellierung war, die Applikation erweiterbar und flexible zu halten.
 Aus diesen Gründen halten wir Onion-Architektur für die beste Architektur, um das Projekt langlebig zu machen.
 
+=== _Vererbung_
+
+Wir verwenden in unserer Anwendung gezielt Vererbung.
+Abstrakte Eltern-Klassen werden beispielsweise sowohl bei der Fragen als auch bei der Antworten benutzt.
+Erweiterungen können so ohne großen Aufwand implementiert werden.
+Das heißt, es können beliebig viele neue Fragetypen bzw. Antworten hinzugefügt werden,
+ohne dass große Änderungen in der Business-Logik vorgenommen werden.
+
+
