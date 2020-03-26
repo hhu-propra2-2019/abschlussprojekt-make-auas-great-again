@@ -1,5 +1,6 @@
 package mops.controllers;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,8 +23,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -76,13 +75,12 @@ public class DozentEventControllerTest {
   }
 
   @Test
-  @Disabled
   @DisplayName("Können Veranstaltungen erstellt werden?")
   @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
   public void correctRedirectForErstelleNeueVeranstaltung() throws Exception {
     mvc.perform(post("/feedback/dozenten/event/new")
-        .requestAttr("veranstaltungsname", "ProPra 2")
-        .requestAttr("semester", "SoSe2020"))
+        .with(csrf()).param("veranstaltungsname", "ProPra 2")
+        .param("semester", "SoSe2019"))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/dozenten"));
   }
