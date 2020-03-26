@@ -68,7 +68,9 @@ public class MultipleChoiceFrage extends Frage {
   public void addAntwort(String antwort) {
     Auswahl auswahl = new Auswahl(antwort);
     if (choices.contains(auswahl)) {
-      this.antworten.add(new MultipleChoiceAntwort((long) new Random().nextInt(1000), auswahl));
+      MultipleChoiceAntwort neu = new MultipleChoiceAntwort((long) new Random().nextInt(1000));
+      neu.addAntwort(auswahl);
+      this.antworten.add(neu);
     }
   }
 

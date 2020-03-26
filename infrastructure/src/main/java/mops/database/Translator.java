@@ -48,6 +48,7 @@ public class Translator {
         .veranstaltungsNr(dto.getId())
         .frageboegen(loadFrageboegen(dto.getFrageboegen()))
         .name(dto.getName())
+        .dozent(new Dozent("jensben")) // TODO DOZENT RICHTIG SETZTEN!!
         .semester(dto.getSemester())
         .studenten(loadStudentenList(dto.getStudenten()));
     return veranstaltung.build();
@@ -101,10 +102,8 @@ public class Translator {
   }
 
   private Frage loadFrage(FrageDto frage) {
-    if (frage.isMultipleResponseFrage()) {
-      return loadMultipleResponseFrage(frage);
-    } else if (frage.isSingleResponseFrage()) {
-      return loadSingleResponseFrage(frage);
+    if (frage.isMultipleResponseFrage() || frage.isSingleResponseFrage()) {
+      return loadMultipleChoiceFrage(frage);
     }
     return loadTextFrage(frage);
   }
@@ -122,8 +121,7 @@ public class Translator {
     return new TextAntwort(dto.getId(), dto.getTextantwort());
   }
 
-  private MultipleChoiceFrage loadMultipleResponseFrage(FrageDto frage) {
-    // TODO HasMultipleResponce
+  private MultipleChoiceFrage loadMultipleChoiceFrage(FrageDto frage) {
     MultipleChoiceFrage neueFrage = new MultipleChoiceFrage(frage.getId(),
         frage.getFragetext());
     for (AntwortDto antwortDto : frage.getAntworten()) {
@@ -135,18 +133,19 @@ public class Translator {
     return neueFrage;
   }
 
-  private Frage loadSingleResponseFrage(FrageDto frage) {
-    // TODO
-    return null;
-  }
 
   private Auswahl loadAuswahl(AuswahlDto auswahlDto) {
     return new Auswahl(auswahlDto.getId(), auswahlDto.getAuswahltext());
   }
 
   private MultipleChoiceAntwort loadMultipleChoiceAntwort(AntwortDto antwortDto) {
-    // TODO
-    return null;
+    MultipleChoiceAntwort antwort = new MultipleChoiceAntwort(antwortDto.getId());
+    antwort.addAntworten(loadAusgewählt(antwortDto.getAusgewaehlt()));
+    return antwort;
+  }
+
+  private Set<Auswahl> loadAusgewählt(Set<AuswahlDto> ausgewaehlt) {
+    return ausgewaehlt.stream().map(this::loadAuswahl).collect(Collectors.toSet());
   }
 
   public VeranstaltungDto createVeranstaltungDto(Veranstaltung veranstaltung) {
@@ -214,7 +213,8 @@ public class Translator {
     return dozent;
   }
 
-  private List<FragebogenTemplate> loadTemplates(Set<FragebogenTemplateDto> fragebogenTemplates) {
+  private List<FragebogenTemplate> loadTemplates
+      (Set<FragebogenTemplateDto> fragebogenTemplates) {
     return fragebogenTemplates.stream().map(this::loadTemplate).collect(Collectors.toList());
   }
 

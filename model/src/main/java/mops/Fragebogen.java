@@ -25,7 +25,7 @@ import mops.rollen.Student;
 @Setter
 public class Fragebogen {
 
-  private final Long bogennr;
+  private Long bogennr;
   private String name;
   private List<Frage> fragen;
   private LocalDateTime startdatum;

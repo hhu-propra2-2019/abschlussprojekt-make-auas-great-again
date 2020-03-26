@@ -2,7 +2,9 @@ package mops.database;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import mops.Einheit;
@@ -36,16 +38,23 @@ class TranslatorTest {
   void loadVeranstaltungTest() {
     VeranstaltungDto mockVeranstaltung = VeranstaltungDto.create("ProPra", "SOSE2020");
     StudentDto mockStudent = StudentDto.create("studentin");
-    DozentDto mockDozent = DozentDto.create("jensben", "Jens",
+    when(studentenRepo.findById(any())).thenReturn(java.util.Optional.of(mockStudent));
+    DozentDto mockDozent1 = DozentDto.create("jensben", "Jens",
+        "Bendisposto");
+    DozentDto mockDozent2 = DozentDto.create("jensben", "Jens",
         "Bendisposto");
     FragebogenDto mockFragebogen = FragebogenDto.create("Vorlesungen", Einheit.VORLESUNG,
         LocalDateTime.now().toString(), LocalDateTime.now().plusMinutes(5L).toString());
+    mockFragebogen.setId(1L);
     mockVeranstaltung.addStudent(mockStudent);
     mockVeranstaltung.addFragebogen(mockFragebogen);
+    mockVeranstaltung.addDozent(mockDozent1);
+    mockVeranstaltung.addDozent(mockDozent2);
 
     Student student = new Student("studentin");
     Dozent dozent = new Dozent("jensben");
     Fragebogen fragebogen = new Fragebogen("Vorlesungen");
+    fragebogen.setBogennr(1L);
 
     Veranstaltung veranstaltung = translator.loadVeranstaltung(mockVeranstaltung);
 
