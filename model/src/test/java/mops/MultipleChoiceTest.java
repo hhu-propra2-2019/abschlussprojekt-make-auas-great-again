@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
+@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
     "PMD.JUnitTestContainsTooManyAsserts"})
 public class MultipleChoiceTest {
   private static final String MOEGLICHKEIT_4 = "Trifft gar nicht zu";
@@ -26,7 +26,7 @@ public class MultipleChoiceTest {
 
   @BeforeEach
   public void setUp() {
-    singleResponseFrage = new SingleResponseFrage(1L, "Die Vorlesung ist strukturiert", false);
+    singleResponseFrage = new SingleResponseFrage(1L, "Die Vorlesung ist strukturiert");
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_1));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_2));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_3));

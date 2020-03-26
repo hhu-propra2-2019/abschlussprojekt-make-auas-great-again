@@ -116,10 +116,12 @@ public class Translator {
   }
 
   private Frage loadFrage(FrageDto frage) {
-    if (frage.isMultipleResponseFrage() || frage.isSingleResponseFrage()) {
-      return loadMultipleChoiceFrage(frage);
+    if (frage.isTextFrage()) {
+      return loadTextFrage(frage);
+    } else if (frage.isMultipleResponseFrage()) {
+      return loadMultipleResponseFrage(frage);
     }
-    return loadTextFrage(frage);
+    return loadSingleResponseFrage(frage);
   }
 
 
@@ -135,12 +137,6 @@ public class Translator {
     return new TextAntwort(dto.getId(), dto.getTextantwort());
   }
 
-  private MultipleChoiceFrage loadMultipleChoiceFrage(FrageDto frage) {
-    if (frage.isSingleResponseFrage()) {
-      return loadSingleResponseFrage(frage);
-    }
-    return loadMultipleResponseFrage(frage);
-  }
 
   private MultipleChoiceFrage loadMultipleResponseFrage(FrageDto frage) {
     MultipleResponseFrage neueFrage = new MultipleResponseFrage(frage.getId(),
