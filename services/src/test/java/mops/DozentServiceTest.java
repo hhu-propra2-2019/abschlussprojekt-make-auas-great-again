@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 @SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class DozentServiceTest {
-  private static final String HEINZ_MUSTERMANN = "Heinz Mustermann";
   private static final String ANALYSIS_I = "Analysis I";
   private static final String WIE_GEHTS = "Wie geht's?";
   private final transient DozentService service = new DozentService();
