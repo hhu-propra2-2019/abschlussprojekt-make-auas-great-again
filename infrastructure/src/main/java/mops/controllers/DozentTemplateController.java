@@ -8,6 +8,7 @@ import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
 import mops.security.Account;
+import javax.annotation.security.RolesAllowed;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DozentTemplateController {
   private static final String REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES =
       "redirect:/feedback/dozenten/templates/";
+  private static final String ORGA_ROLE = "ROLE_orga";
+
   private final transient DozentRepository dozenten;
   private final transient DozentService dozentservice;
   private final transient TypeChecker typechecker;
@@ -33,6 +36,7 @@ public class DozentTemplateController {
   }
 
   @GetMapping("")
+  @RolesAllowed(ORGA_ROLE)
   public String getTemplatePage(Model model, KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
     model.addAttribute("templates", dozent.getTemplates());
@@ -41,6 +45,7 @@ public class DozentTemplateController {
   }
 
   @PostMapping("")
+  @RolesAllowed(ORGA_ROLE)
   public String neuesTemplate(String templatename, KeycloakAuthenticationToken token) {
     FragebogenTemplate template = new FragebogenTemplate(templatename);
     Dozent dozent = getDozentFromToken(token);
@@ -49,6 +54,7 @@ public class DozentTemplateController {
   }
 
   @GetMapping("/{templatenr}")
+  @RolesAllowed(ORGA_ROLE)
   public String templateBearbeitung(@PathVariable Long templatenr,
       KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
@@ -59,6 +65,7 @@ public class DozentTemplateController {
   }
 
   @PostMapping("/{templatenr}")
+  @RolesAllowed(ORGA_ROLE)
   public String neueFrage(@PathVariable Long templatenr, KeycloakAuthenticationToken token,
       String fragetyp, String fragetext) {
     Dozent dozent = getDozentFromToken(token);
@@ -68,6 +75,7 @@ public class DozentTemplateController {
   }
 
   @GetMapping("/{templatenr}/{fragennr}")
+  @RolesAllowed(ORGA_ROLE)
   public String editMultipleChoiceQuestion(@PathVariable Long templatenr,
       @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
@@ -80,6 +88,7 @@ public class DozentTemplateController {
   }
 
   @PostMapping("/{templatenr}/{fragennr}")
+  @RolesAllowed(ORGA_ROLE)
   public String newMultipleChoiceAnswer(@PathVariable Long templatenr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token, String antworttext) {
     Dozent dozent = getDozentFromToken(token);
@@ -90,6 +99,7 @@ public class DozentTemplateController {
   }
 
   @PostMapping("/delete/{templatenr}")
+  @RolesAllowed(ORGA_ROLE)
   public String deleteTemplate(@PathVariable Long templatenr, KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
     dozent.deleteTemplateById(templatenr);
@@ -97,6 +107,7 @@ public class DozentTemplateController {
   }
 
   @PostMapping("/delete/{templatenr}/{fragennr}")
+  @RolesAllowed(ORGA_ROLE)
   public String deleteFrage(@PathVariable Long templatenr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
@@ -106,6 +117,7 @@ public class DozentTemplateController {
   }
 
   @PostMapping("/delete/{templatenr}/{fragennr}/{auswahlnr}")
+  @RolesAllowed(ORGA_ROLE)
   public String deleteAntwortmoeglichkeit(@PathVariable Long templatenr,
       @PathVariable Long fragennr, @PathVariable Long auswahlnr,
       KeycloakAuthenticationToken token) {
