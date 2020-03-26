@@ -2,6 +2,25 @@
 
 == Architektur
 
+=== _Onion Architektur_
+
 Zu Beginn hatten wir uns für eine einfache Schichtenarchitektur entschieden, mit der Datenbank auf der untersten Schicht, darüber die Datenrepräsentation in Java, darüber die Business-Logik und auf der obersten Schicht das User Interface.
 
 Bereits am dritten Tag haben wir uns aber doch für eine Onion-Architektur entschieden, da dies das Testing vereinfacht und eine bessere Kapselung der Business-Logik ermöglicht.
+
+Onion-Architektur bietet uns Erweiterbarkeit, Skalierbarkeit und Flexibilität.
+Weiter haben wir uns für ein Onion-Architektur entschieden, um Abhängigkeiten zwischen den verschiedenen Schichten zu minimieren.
+
+Flexibilität ist unter anderem auch dadurch gegeben, dass beispielsweise am Frontend Änderungen
+vorgenommen werden können, ohne dass die Business Logik geändert werden muss.
+
+Unsere Modellierung hat klare Struktur und besteht im Wesentlichen aus Veranstaltung, Fragebogen und Fragen.
+Wir unterscheiden aber zwischen zwei Rollen in unserer Modellierung, das sind Dozent und Student, die jeweils verschieden Beziehungen zu den anderen Objekten haben.
+
+Während der Analyse haben wir bereits festgestellt,
+dass vor allem alle Objekte in unserem Modell eine enge Beziehung zu dem Veranstaltungsobjekt haben. Von
+daher wurde die Entscheidung getroffen, dass das Veranstaltungsobjekt unser aggregate Root wird.
+
+Das Ziel unserer Modellierung war, die Applikation erweiterbar und flexible zu halten.
+Aus diesen Gründen halten wir Onion-Architektur für die beste Architektur, um das Projekt langlebig zu machen.
+
