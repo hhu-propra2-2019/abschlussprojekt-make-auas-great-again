@@ -56,7 +56,7 @@ public class Veranstaltung {
   public String getDozentenNamen() {
     String result = "";
     for (Dozent dozent : dozenten) {
-      result += dozent.getNachname() + ", ";
+      result += dozent.toString() + ", ";
     }
     result = result.substring(0, result.length()-2);
     return result;
@@ -68,6 +68,7 @@ public class Veranstaltung {
   
   public void addDozent(Dozent dozent) {
     dozenten.add(dozent);
+    frageboegen.stream().forEach(x -> x.updateDozenten(this.getDozentenNamen()));
   }
 
   public List<Fragebogen> getFrageboegenContaining(String search) {

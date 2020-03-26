@@ -10,6 +10,7 @@ public class MockDozentenRepository implements DozentRepository {
 
   public MockDozentenRepository() {
     dozenten.put("orga1", new Dozent("orga1"));
+    dozenten.put("orga2", new Dozent("orga2", "Heinz", "Mustermann"));
   }
 
   @Override
