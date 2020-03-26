@@ -19,6 +19,7 @@ import mops.rollen.Student;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode(of = "veranstaltungsNr")
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class Veranstaltung {
   private Long veranstaltungsNr;
   private String name;
