@@ -12,7 +12,7 @@ Außerdem ist das mehrfache Ausfüllen eines Fragebogen unzulässig.
 === User Experience
 
 Nach der erfolgeichen Anmeldung wird der User an eine zentrale Übersicht für alle seine Veranstaltungen weiter geleitet.
-Dies glit sowohl für Studierende als auch für Dozenten.
+Dies gilt sowohl für Studierende als auch für Dozenten.
 
 Alle Funktionen unserer Anwendung sind durch Buttons und Navigation-Bars leicht erreichbar.
 
