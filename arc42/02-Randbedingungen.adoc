@@ -1,1 +1,49 @@
 = Randbedingungen
+
+
+### Organisatorische Randbedingungen
+
+|=======
+| Randbedingung          | Hintergrund und Erläuterungen
+
+| Team                   | Al Mutasem alhmeidi, Amin Raslan,
+Christian Morbach, Christian Steller,
+Jan Roßbach, Melina Richard,
+Nassim Uthman, Roger Sellin.
+
+| Zeitplan               | 4 Wochen (02.03.2020 - 27.03.2020)
+
+| Entwicklungswerkzeuge  | Eclipse, Intellij, Docker, Webbrowser, gradle, Discord, hhu Rocketchat
+
+| Versionsverwaltung     | GitHub, GitHub Actions
+
+|=======
+
+
+### Technische Randbedingungen
+
+|=======
+| Randbedingung                                 | Hintergrund und Erläuterungen
+
+| Implementierung in Java 13 als SpringBoot App |
+
+| Ausführbar mit docker-compose up              | Wir wollen, dass die Anwendung unabhängig von System und
+Konfiguration ausführbar ist.
+|=======
+
+
+### Konventionen
+
+|=======
+| Konvention    | Hintergrund und Erläuterungen
+
+| Dokumentation | arc42
+
+| Checkstyle    | Wir benutzen GitHub Actions für Codequalität, PMD, Spotbugs und als Vorlage die Google Java Configuration
+für Checkstyle.
+
+| Sprache       | Wir benutzen eine Mischung aus Englisch und Deutsch. Zum Beispiel: Klassennamen und Variablennamen sind auf
+Deutsch, Methodennamen sind auf Deutsch und Englisch zusammen, commits und pull requests sind auf Englisch.
+
+
+|=======
