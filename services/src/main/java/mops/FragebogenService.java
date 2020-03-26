@@ -15,8 +15,6 @@ import mops.fragen.TextFrage;
 public class FragebogenService {
   private final transient List<String> frage = new ArrayList<>(
       Arrays.asList("Was geht?", "Wie zufrieden sind sie mit dem Angebot?", "Random Question?"));
-  private final transient List<String> professor = new ArrayList<>(
-      Arrays.asList("Jens Bendisposto", "Christian Meter", "Jan Roßbach", "Luke Skywalker"));
   private final transient List<String> vorlesung =
       new ArrayList<>(Arrays.asList("Professioneller Softwareentwicklung im Team",
           "Lineare Algebra I", "Analysis II", "Theoretische Informatik", "Machine Learning"));
@@ -110,12 +108,6 @@ public class FragebogenService {
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(vorlesung.size());
     return vorlesung.get(index);
-  }
-
-  private String getRandomProfessor() {
-    Random randomGenerator = new Random();
-    int index = randomGenerator.nextInt(professor.size());
-    return professor.get(index);
   }
 
   private String getRandomFrage() {
