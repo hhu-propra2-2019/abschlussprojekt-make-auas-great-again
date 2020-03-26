@@ -7,11 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.c4_soft.springaddons.test.security.context.support.WithIDToken;
 import com.c4_soft.springaddons.test.security.context.support.WithMockKeycloackAuth;
-import mops.Fragebogen;
-import mops.Veranstaltung;
-import mops.database.MockVeranstaltungsRepository;
-import mops.rollen.Dozent;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
