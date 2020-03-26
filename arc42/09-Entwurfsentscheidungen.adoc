@@ -32,4 +32,7 @@ Erweiterungen können so ohne großen Aufwand implementiert werden.
 Das heißt, es können beliebig viele neue Fragetypen bzw. Antworten hinzugefügt werden,
 ohne dass große Änderungen in der Business-Logik vorgenommen werden.
 
+=== _Datenbank_
 
+Im Development Prozess haben wir unsere Funktionalität auf fake Repositories getestet.
+Als persistente Datenbank nutzen wir aber eine SQL-Datenbank, die unter Einsatz von docker-compose File leicht gestartet werden kann.
