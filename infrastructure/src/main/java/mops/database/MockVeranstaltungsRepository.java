@@ -68,13 +68,13 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
 
   @Override
   public List<Veranstaltung> getAllFromDozent(Dozent dozent) {
-    return veranstaltungen.values().stream().filter(v -> v.getDozent().equals(dozent))
+    return veranstaltungen.values().stream().filter(v -> v.getDozenten().contains(dozent))
         .collect(Collectors.toList());
   }
 
   @Override
   public List<Veranstaltung> getAllFromDozentContaining(Dozent dozent, String suche) {
-    return veranstaltungen.values().stream().filter(v -> v.getDozent().equals(dozent))
+    return veranstaltungen.values().stream().filter(v -> v.getDozenten().contains(dozent))
         .filter(v -> v.contains(suche)).collect(Collectors.toList());
   }
 
