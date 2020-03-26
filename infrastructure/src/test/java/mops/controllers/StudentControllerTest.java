@@ -1,5 +1,6 @@
 package mops.controllers;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -7,6 +8,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.c4_soft.springaddons.test.security.context.support.WithIDToken;
 import com.c4_soft.springaddons.test.security.context.support.WithMockKeycloackAuth;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import mops.Einheit;
+import mops.Fragebogen;
+import mops.Veranstaltung;
+import mops.database.MockVeranstaltungsRepository;
+import mops.fragen.Frage;
+import mops.fragen.MultipleResponseFrage;
+import mops.fragen.TextFrage;
+import mops.rollen.Dozent;
+import mops.rollen.Student;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -23,6 +37,30 @@ class StudentControllerTest {
   private final transient String userrole = "studentin";
   @Autowired
   private transient MockMvc mvc;
+
+  @BeforeAll
+  public static void init() {
+    Veranstaltung fakeVeranstaltung = new Veranstaltung(
+        Long.valueOf(1L), "TestVeranstaltung", "SoSe2020",
+        new Dozent("Christian Meile"),
+        new ArrayList<Student>(), new ArrayList<Fragebogen>()
+    );
+
+    Fragebogen fakeFragebogen = new Fragebogen(
+        Long.valueOf("1"), fakeVeranstaltung.getName(), "Ben Jendisposto",
+        new ArrayList<Frage>(),
+        LocalDateTime.of(2020, 4, 1, 10, 0),
+        LocalDateTime.of(2020, 8, 1, 2, 30),
+        Einheit.VORLESUNG, new ArrayList<Student>());
+
+    fakeFragebogen.addFrage(new TextFrage(Long.valueOf("1"), "Funktioniert das?"));
+    fakeFragebogen.addFrage(new TextFrage(Long.valueOf("2"), "Feedback:"));
+
+    fakeVeranstaltung.addFragebogen(fakeFragebogen);
+
+    MockVeranstaltungsRepository mvr = new MockVeranstaltungsRepository();
+    mvr.save(fakeVeranstaltung);
+  }
 
   @Test
   @DisplayName("Student sollte auf die student_uebersicht Seite weitergeleitet werden")
@@ -34,10 +72,19 @@ class StudentControllerTest {
 
   @Test
   @DisplayName("Studenten kommen auf die Uebersicht Seite")
-  @Disabled
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void uebersichtSucess() throws Exception {
     mvc.perform(get("/feedback/studenten")).andExpect(status().is2xxSuccessful())
+        .andExpect(view().name("studenten/veranstaltungen"));
+  }
+
+  @Test
+  @DisplayName("Studenten kommen auf die Uebersicht Seite")
+  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
+  public void uebersichtSucessWithSearch() throws Exception {
+    mvc.perform(get("/feedback/studenten")
+        .with(csrf()).param("search", "Suche"))
+        .andExpect(status().is2xxSuccessful())
         .andExpect(view().name("studenten/veranstaltungen"));
   }
 
@@ -59,23 +106,27 @@ class StudentControllerTest {
   }
 
   @Test
-  @DisplayName("Student sollte auf die 'ergebnis'-Seite weitergeleitet werden.")
+  @DisplayName("Studenten sollen Fragenbögen angezeigt bekommen")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
-  public void correctRedirectForErgebnis() throws Exception {
-    mvc.perform(get("/feedback/studenten/ergebnis"))
+  public void frageboegenAnzeigen() throws Exception {
+    mvc.perform(get("/feedback/student/frageboegen")
+        .with(csrf())
+        .param("search", "")
+        .param("veranstaltungsId", "1"))
+        .andDo(MockMvcResultHandlers.print())
         .andExpect(status().is2xxSuccessful())
-        .andExpect(view().name("studenten/ergebnis"));
+        .andExpect(view().name("studenten/fragebogen_uebersicht"));
   }
 
   @Test
-  @DisplayName("Student sollte auf die 'ergebnisUebersicht'-Seite weitergeleitet werden.")
-  @Disabled
+  @DisplayName("Studenten sollen Details zu den Fragebögen angezeigt bekommen")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
-  public void correctRedirectForErgebnisUebersicht() throws Exception {
-    mvc.perform(get("/feedback/studenten/ergebnis/frageboegen")
-        .param("veranstaltungId", "1"))
+  public void fragebogenDetails() throws Exception {
+    mvc.perform(get("/feedback/student/frageboegen/details")
+        .param("fragebogen", "1")
+        .param("veranstaltung", "1"))
         .andExpect(status().is2xxSuccessful())
-        .andExpect(view().name("studenten/ergebnis-frageboegen"));
+        .andExpect(view().name("studenten/fragebogen_uebersicht"));
   }
 
 

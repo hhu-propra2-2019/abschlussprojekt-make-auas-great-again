@@ -11,9 +11,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.c4_soft.springaddons.test.security.context.support.WithIDToken;
 import com.c4_soft.springaddons.test.security.context.support.WithMockKeycloackAuth;
 import com.tngtech.archunit.thirdparty.com.google.common.base.Charsets;
+import java.util.ArrayList;
+import mops.Fragebogen;
 import mops.Veranstaltung;
 import mops.database.MockVeranstaltungsRepository;
 import mops.rollen.Dozent;
+import mops.rollen.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -23,6 +26,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -41,7 +45,7 @@ public class DozentEventControllerTest {
     Veranstaltung mockVeranstaltung = new Veranstaltung(
         Long.valueOf(1L), "Test-Veranstaltung",
         "SoSe2020", new Dozent("testDozent"),
-        null, null);
+        new ArrayList<Student>(), new ArrayList<Fragebogen>());
 
     mockRepo.save(mockVeranstaltung);
   }
@@ -86,16 +90,17 @@ public class DozentEventControllerTest {
   }
 
   @Test
-  @Disabled
   @DisplayName("Können Studenten per Csv-Datei hinzugefügt werden?")
   @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
   public void correctRedirectWhenAddingStudents() throws Exception {
     MockMultipartFile file = new MockMultipartFile("file", "students.csv",
         "text/csv", "Kevin,Ben,Clara".getBytes(Charsets.UTF_8));
     mvc.perform(multipart("/feedback/dozenten/event/addStudenten/1")
-        .file(file))
+        .file(file)
+        .with(csrf()))
         .andExpect(status().isFound())
-        .andExpect(view().name("redirect:/feedback/dozenten/event/1"));
+        .andExpect(view().name("redirect:/feedback/dozenten/event/{veranstaltungsNr}"))
+        .andDo(MockMvcResultHandlers.print());
   }
 
   @Test
