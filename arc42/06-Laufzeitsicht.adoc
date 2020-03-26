@@ -27,11 +27,11 @@ Die Abgabe eines Feedbacks erfolgt nur in dem entsprechenden Zeitraum, da nach d
 * Klickt man auf das gewünschte Fragebogen, werden von dem Controller alle Fragen geholt, die zu dem Fragebogen gehören.
 
 * Nach dem Ausfüllen des Fragebogens kann der Student oder die Studentin das Fragebogen durch Klicken auf den "Abgeben" Button speichern.
-Das Persistieren der Antwoten ist anonym. Das heißt, es wird nicht gespeichert, wer welche Antworten abgegeben hat.
+Das Persistieren der Antworten ist anonym. Das heißt, es wird nicht gespeichert, wer welche Antworten abgegeben hat.
 
 === Evaluationsergebnisse sehen
 
-* Nur mit erfolgeicher Anmeldung können Studierende sich Ergebnisse anschauen, die von den Dozenten veröffentlicht worden sind.
+* Nur mit erfolgreicher Anmeldung können Studierende sich Ergebnisse anschauen, die von den Dozenten veröffentlicht worden sind.
 
 * Die Ergebnisse gehören auch zur Veranstaltungen und werden von dem zuständigen Controller aus dem VeranstaltungsRepository geholt.
 
