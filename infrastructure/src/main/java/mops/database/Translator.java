@@ -27,6 +27,7 @@ import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
+import org.springframework.jdbc.datasource.lookup.DataSourceLookupFailureException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,10 +48,22 @@ public class Translator {
         .veranstaltungsNr(dto.getId())
         .frageboegen(loadFrageboegen(dto.getFrageboegen()))
         .name(dto.getName())
-        .dozent(new Dozent("jensben")) // TODO DOZENT RICHTIG SETZTEN!!
+        .dozenten(loadDozenten(dto.getDozenten()))
         .semester(dto.getSemester())
         .studenten(loadStudentenList(dto.getStudenten()));
     return veranstaltung.build();
+  }
+
+  private List<Dozent> loadDozenten(Set<DOrganisiertVDto> dozenten) {
+    return dozenten.stream().map(this::loadDozentFromOrganisiert).collect(Collectors.toList());
+  }
+
+  private Dozent loadDozentFromOrganisiert(DOrganisiertVDto dOrganisiertVDto) {
+    Optional<DozentDto> dozentDto = dozentenRepo.findById(dOrganisiertVDto.getDozent());
+    if (dozentDto.isPresent()) {
+      return loadDozent(dozentDto.get());
+    }
+    throw new DataSourceLookupFailureException("Dozent nicht gefunden");
   }
 
   private List<Fragebogen> loadFrageboegen(Set<FragebogenDto> frageboegen) {
@@ -150,7 +163,9 @@ public class Translator {
   public VeranstaltungDto createVeranstaltungDto(Veranstaltung veranstaltung) {
     VeranstaltungDto veranstaltungDto = VeranstaltungDto.create(veranstaltung.getName(),
         veranstaltung.getSemester());
-    veranstaltungDto.setDozenten(Set.of(createDOrganisiertVDto(veranstaltung.getDozent())));
+    veranstaltungDto.setDozenten(veranstaltung.getDozenten().stream()
+        .map(this::createDOrganisiertVDto)
+        .collect(Collectors.toSet()));
     veranstaltungDto.setStudenten(veranstaltung.getStudenten().stream()
         .map(this::createSBelegtVDto)
         .collect(Collectors.toSet()));

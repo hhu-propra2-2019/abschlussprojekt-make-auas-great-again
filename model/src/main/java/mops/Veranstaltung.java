@@ -53,23 +53,22 @@ public class Veranstaltung {
   public void addStudent(Student student) {
     studenten.add(student);
   }
-  
+
   public String getDozentenNamen() {
     String result = "";
     for (Dozent dozent : dozenten) {
       result += dozent.toString() + ", ";
     }
-    result = result.substring(0, result.length()-2);
+    result = result.substring(0, result.length() - 2);
     return result;
   }
 
   public void addFragebogen(Fragebogen fragebogen) {
     frageboegen.add(fragebogen);
   }
-  
+
   public void addDozent(Dozent dozent) {
     dozenten.add(dozent);
-    frageboegen.stream().forEach(x -> x.updateDozenten(this.getDozentenNamen()));
   }
 
   public List<Fragebogen> getFrageboegenContaining(String search) {
@@ -83,6 +82,6 @@ public class Veranstaltung {
   }
 
   public boolean hasDozent(Dozent dozent) {
-    return this.dozent.equals(dozent);
+    return dozenten.contains(dozent);
   }
 }

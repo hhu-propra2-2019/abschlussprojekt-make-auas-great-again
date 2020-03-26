@@ -1,9 +1,9 @@
 package mops.controllers;
 
+import javax.annotation.security.RolesAllowed;
 import mops.DozentService;
 import mops.FragebogenTemplate;
 import mops.TypeChecker;
-import mops.database.MockDozentenRepository;
 import mops.fragen.Auswahl;
 import mops.fragen.MultipleChoiceFrage;
 import mops.rollen.Dozent;
@@ -55,7 +55,7 @@ public class DozentTemplateController {
   @GetMapping("/{templatenr}")
   @RolesAllowed(ORGA_ROLE)
   public String templateBearbeitung(@PathVariable Long templatenr,
-      KeycloakAuthenticationToken token, Model model) {
+                                    KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
     model.addAttribute("template", dozent.getTemplateById(templatenr));
     model.addAttribute("typechecker", typechecker);
@@ -66,7 +66,7 @@ public class DozentTemplateController {
   @PostMapping("/{templatenr}")
   @RolesAllowed(ORGA_ROLE)
   public String neueFrage(@PathVariable Long templatenr, KeycloakAuthenticationToken token,
-      String fragetyp, String fragetext) {
+                          String fragetyp, String fragetext) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     template.addFrage(dozentservice.createNeueFrageAnhandFragetyp(fragetyp, fragetext));
@@ -76,7 +76,7 @@ public class DozentTemplateController {
   @GetMapping("/{templatenr}/{fragennr}")
   @RolesAllowed(ORGA_ROLE)
   public String editMultipleChoiceQuestion(@PathVariable Long templatenr,
-      @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
+                                           @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
@@ -89,7 +89,7 @@ public class DozentTemplateController {
   @PostMapping("/{templatenr}/{fragennr}")
   @RolesAllowed(ORGA_ROLE)
   public String newMultipleChoiceAnswer(@PathVariable Long templatenr, @PathVariable Long fragennr,
-      KeycloakAuthenticationToken token, String antworttext) {
+                                        KeycloakAuthenticationToken token, String antworttext) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
@@ -108,7 +108,7 @@ public class DozentTemplateController {
   @PostMapping("/delete/{templatenr}/{fragennr}")
   @RolesAllowed(ORGA_ROLE)
   public String deleteFrage(@PathVariable Long templatenr, @PathVariable Long fragennr,
-      KeycloakAuthenticationToken token) {
+                            KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     template.deleteFrageById(fragennr);
@@ -118,8 +118,8 @@ public class DozentTemplateController {
   @PostMapping("/delete/{templatenr}/{fragennr}/{auswahlnr}")
   @RolesAllowed(ORGA_ROLE)
   public String deleteAntwortmoeglichkeit(@PathVariable Long templatenr,
-      @PathVariable Long fragennr, @PathVariable Long auswahlnr,
-      KeycloakAuthenticationToken token) {
+                                          @PathVariable Long fragennr, @PathVariable Long auswahlnr,
+                                          KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
     FragebogenTemplate template = dozent.getTemplateById(templatenr);
     MultipleChoiceFrage frage = template.getMultipleChoiceFrageById(fragennr);
@@ -136,6 +136,6 @@ public class DozentTemplateController {
 
   private Dozent getDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return dozenten.getDozentByUsername(principal.getName());
+    return veranstaltungen.getDozentByUsername(principal.getName());
   }
 }

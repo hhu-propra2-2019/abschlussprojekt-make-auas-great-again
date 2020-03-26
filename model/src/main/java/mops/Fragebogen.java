@@ -53,10 +53,6 @@ public class Fragebogen {
     this.fragen = fragen;
     this.type = type;
   }
-  
-  public void updateDozenten(String dozenten) {
-    this.professorenname = dozenten;
-  }
 
   /**
    * Gibt den Formularstatus zurück.
