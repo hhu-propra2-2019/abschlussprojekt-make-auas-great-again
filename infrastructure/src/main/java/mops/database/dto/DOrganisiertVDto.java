@@ -7,4 +7,9 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("dozentOrganisiertVeranstaltung")
 public class DOrganisiertVDto {
   transient Long dozent;
+
+  @Override
+  public String toString() {
+    return dozent.toString();
+  }
 }
