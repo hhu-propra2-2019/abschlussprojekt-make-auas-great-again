@@ -61,7 +61,7 @@ insert into frage(id, oeffentlich, fragetyp, fragebogen, fragetext)
 values (1, true, 1, 1, "Was war gut?"),
        (2, true, 1, 1, "Was war schlecht?"),
        (3, true, 1, 1, "Warum?"),
-       (4, true, 1, 1, "Bitte ankreuzen wie gut es gefallen hat");
+       (4, true, 2, 1, "Bitte ankreuzen wie gut es gefallen hat");
 
 insert into antwort(id, frage, textantwort)
 values (1, 1, "Vieles war gut"),
