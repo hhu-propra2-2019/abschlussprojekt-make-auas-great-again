@@ -2,12 +2,6 @@ package mops.controllers;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import mops.DateTimeService;
-import mops.DozentService;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.rollen.Dozent;
-import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -17,6 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import mops.DateTimeService;
+import mops.DozentService;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.Veranstaltung;
+import mops.rollen.Dozent;
+import mops.security.Account;
 
 @Controller
 @RequestMapping("/feedback/dozenten/new")
@@ -44,8 +45,10 @@ public class DozentErstellerController {
   public String addNeuesFormular(KeycloakAuthenticationToken token, Long veranstaltungid,
       RedirectAttributes ra) {
     Dozent dozent = getDozentFromToken(token);
-    Long bogennr = dozentservice.fuegeFragebogenZuVeranstaltungHinzu(
-        veranstaltungen.getVeranstaltungById(veranstaltungid), dozent);
+    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
+    Long bogennr =
+        dozentservice.fuegeFragebogenZuVeranstaltungHinzu(veranstaltung, dozent);
+    veranstaltungen.save(veranstaltung);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -54,9 +57,10 @@ public class DozentErstellerController {
   @RolesAllowed(orgaRole)
   public String fragebogenWiederverwenden(Long veranstaltungid, RedirectAttributes ra,
       @PathVariable Long bogennr) {
+    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
     Long neuebogennr = dozentservice.kloneFragebogen(
         veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltungid),
-        veranstaltungen.getVeranstaltungById(veranstaltungid));
+        veranstaltung);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neuebogennr;
   }
