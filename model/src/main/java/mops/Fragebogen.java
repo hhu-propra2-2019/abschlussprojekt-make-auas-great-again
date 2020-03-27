@@ -45,6 +45,17 @@ public class Fragebogen {
     this.abgegebeneStudierende = new ArrayList<>();
     this.type = Einheit.VORLESUNG;
   }
+  
+  public Fragebogen(String veranstaltung, String dozent, List<Frage> fragen, Einheit type) {
+    Random idgenerator = new Random();
+    this.bogennr = idgenerator.nextLong();
+    this.startdatum = LocalDateTime.now().plusDays(1);
+    this.enddatum = LocalDateTime.now().plusDays(8);
+    this.veranstaltungsname = veranstaltung;
+    this.professorenname = dozent;
+    this.fragen = fragen;
+    this.type = type;
+  }
 
   /**
    * Gibt den Formularstatus zurück.

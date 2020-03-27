@@ -68,7 +68,7 @@ public class StudentController {
     model.addAttribute("veranstaltung", veranstaltung);
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "studenten/fragebogen_uebersicht";
+    return "studenten/fragebogen-uebersicht";
   }
 
   @GetMapping("/frageboegen/details")
@@ -80,7 +80,7 @@ public class StudentController {
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "studenten/fragebogen_details";
+    return "studenten/fragebogen-details";
   }
 
   @PostMapping("/details/submit")
