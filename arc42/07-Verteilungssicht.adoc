@@ -1,1 +1,9 @@
 = Verteilungssicht
+
+== Infrastruktur
+
+Die Datenbank und die Anwendung laufen jeweils in eigenen Docker-Containern.
+Startet man die Anwendung mit Docker-Compose up, werden die zwei Container gestartet und miteinander verbunden.
+Nach außen geben wir nur den Port 8080 der Anwendung frei.
+
+Das Deployment der Anwendung auf einen Server läuft über Docker. Deswegen ist es von dem Betriebssystem unabhängig.

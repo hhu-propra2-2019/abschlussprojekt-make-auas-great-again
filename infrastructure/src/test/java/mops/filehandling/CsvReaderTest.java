@@ -35,6 +35,7 @@ public class CsvReaderTest {
         "text/plain",
         "here,are,a,few,more,inputs".getBytes(StandardCharsets.UTF_8));
 
+
     mockVeranstaltung = new Veranstaltung(
         "TestVeranstaltung",
         "SoSe2069",

@@ -9,3 +9,9 @@ services:
     environment:
       - "MYSQL_DATABASE=feedback"
       - "MYSQL_ROOT_PASSWORD=geheim"
+  feedback:
+    build: .
+    command: java -jar app.jar
+    restart: always
+    ports:
+      - "8080:8080"

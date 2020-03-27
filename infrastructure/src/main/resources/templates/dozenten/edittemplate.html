@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      th:replace="~{mopslayout :: html(name='feedback', headcontent=~{:: headcontent}, navigation=~{:: navigation}, bodycontent=~{:: bodycontent})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>feedback</title>
+    <th:block th:fragment="headcontent">
+        <!-- Links, Skripts, Styles hier einfügen! -->
+    </th:block>
+</head>
+<body>
+<header>
+    <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
+        <ul>
+            <li><a href="/feedback/dozenten">Übersicht</a></li>
+            <li><a href="/feedback/dozenten/templates">Meine Fragebogen-Templates</a></li>
+            <li><a href="/feedback/dozenten/event/new">Neue Veranstaltung erstellen</a></li>
+        </ul>
+    </nav>
+</header>
+<main th:fragment="bodycontent">
+    <div class="container">
+        <h1 class="display-4 text-center">Template: <span th:text="${template.name}">Test</span></h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Fragetext</th>
+                <th>Fragetyp</th>
+                <th>Optionen</th>
+                <th>Löschen</th>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first">
+            <tr th:each="frage : ${template.fragen}">
+                <td th:text="${frage.toString()}">Die Vorlesung ist strukturiert</td>
+                <td><span th:if="${typechecker.isTextFrage(frage)}">Textfrage</span><span th:if="${typechecker.isSingleResponse(frage)}">Multiple Choice-Frage</span><span th:if="${typechecker.isMultipleResponse(frage)}">Multiple Response-Frage</span></td>
+                <td>
+                    <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/templates/' + ${template.id} + '/' + ${frage.id}" th:if="${typechecker.isMultipleChoice(frage)}">
+                        <button class="btn btn-outline-info btn-sm" name="editbutton" type="submit">Auswahl Bearbeiten</button>
+                    </form>
+                </td>
+                <td>
+                    <form class="form-horizontal" th:action="'/feedback/dozenten/templates/delete/' + ${template.id} + '/' + ${frage.id}" method="post">
+                        <button class="btn btn-outline-danger btn-sm" name="deletebutton" type="submit">Löschen</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <form class="was-validated" th:action="'/feedback/dozenten/templates/' + ${template.id}" method="post">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <input class="form-control" id="fragetext" name="fragetext" placeholder="Fragetext eingeben" required type="text">
+                    <br>
+                    <div class="form-group">
+                        <select class="custom-select" id="fragetyp" name="fragetyp" required>
+                            <option value="">Fragetyp wählen:</option>
+                            <option value="multiplechoice">Multiple Choice-Frage</option>
+                            <option value="textfrage">Textfrage</option>
+                            <option value="multipleresponse">Multiple Response-Frage</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

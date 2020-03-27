@@ -29,7 +29,11 @@ public class DateTimeService {
    * @return String
    */
   public String getGermanFormat(LocalDateTime dateTime) {
-    return dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
-        .withLocale(Locale.GERMAN));
+    return dateTime
+        .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(Locale.GERMAN));
+  }
+
+  public String getTimeFormat(LocalTime time) {
+    return time.format(DateTimeFormatter.ofPattern("HH:mm"));
   }
 }

@@ -6,9 +6,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>feedback</title>
-    <th:block th:fragment="headcontent">
-        <!-- Links, Skripts, Styles hier einfügen! -->
-    </th:block>
+
 </head>
 <body>
 <header>
@@ -22,18 +20,22 @@
 <main th:fragment="bodycontent">
     <h1 class="display-4 text-center">Dozenten-Übersicht</h1>
     <h3 class="font-italic text-center">Willkommen auf der Dozenten-Übersicht des Feedback-Subsystems von MOPS.</h3>
+
     <div class="container">
-        <img alt="..." class="rounded mx-auto d-block" src="/hhu.jpg">
-        <h4>Veranstaltungsübersicht</h4>
+
         <div class="row row-cols-1 row-cols-md-3">
             <div class="col mb-3" th:each="veranstaltung : ${veranstaltungen}">
-                <div class="card text-center h-100">
-                    <img alt="..." class="card-img-top" th:src="@{/vorlesung.jpg}">
-                    <div class="card-body">
-                        <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
+                <div class="card text-center h-100"  >
+                    <img alt="card-img-top" class="rounded  " src="/vorlesung.jpg" />
+                    <div class="card-body"  >
+                        <h2 class="card-title" th:text="${veranstaltung.getName()}"></h2>
                         <form class="form-horizontal"
                               method="get" th:action="'/feedback/dozenten/event/' + ${veranstaltung.veranstaltungsNr}">
-                            <button class="btn btn-primary" name="geteventbutton" type="submit">Details</button>
+
+                            <button class="btn btn-link btn-lg btn-block stretched-link"
+                                    name="geteventbutton" type="submit">
+                            </button>
+
                         </form>
                     </div>
                 </div>

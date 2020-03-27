@@ -68,7 +68,7 @@ public class StudentController {
     model.addAttribute("veranstaltung", veranstaltung);
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "studenten/fragebogen_uebersicht";
+    return "studenten/fragebogen-uebersicht";
   }
 
   @GetMapping("/frageboegen/details")
@@ -80,7 +80,7 @@ public class StudentController {
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "studenten/fragebogen_details";
+    return "studenten/fragebogen-details";
   }
 
   @PostMapping("/details/submit")
@@ -91,9 +91,9 @@ public class StudentController {
                                @RequestParam Long veranstaltung) {
     Fragebogen fragebogen =
         veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltung);
-    Map<Long, String> antworten = new HashMap<>();
+    Map<Long, List<String>> antworten = new HashMap<>();
     for (Frage frage : fragebogen.getFragen()) {
-      antworten.put(frage.getId(), req.getParameter("answer-" + frage.getId()));
+      antworten.put(frage.getId(), List.of(req.getParameterValues("answer-" + frage.getId())));
     }
     submitService.saveAntworten(fragebogen, antworten);
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());

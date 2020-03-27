@@ -5,14 +5,11 @@
 <head>
     <meta charset="utf-8">
     <title>Name des Subsystems</title>
-    <th:block th:fragment="headcontent">
-        <!-- Links, Skripts, Styles hier einfügen! -->
-    </th:block>
+
 </head>
 <body>
 <header>
     <nav class="navigation navigation-secondary" is="mops-navigation" th:fragment="navigation">
-        <!-- Navigation als ungeordnete Liste mit einfachen Links hier einfügen! -->
         <ul>
             <li class="active"><a th:href="@{/feedback/studenten}">Übersicht</a></li>
             <li><a th:href="@{/feedback/studenten/ergebnis}">Evaluationsergebnisse</a></li>
@@ -20,21 +17,25 @@
     </nav>
 </header>
 <main th:fragment="bodycontent">
-    <!-- Restlichen Inhalt hier einfügen! -->
-    <h1 class="display-3">Vernstaltungen</h1>
-    <h2 class="display-4" th:text="'Hallo ' + ${account.getName()}">NAME</h2>
+    <div class="container">
+        <h1 class="display-3 text-center">Veranstaltungen</h1>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-3" th:each="veranstaltung,iter :${veranstaltungen}">
+                <div class="card text-center h-100">
+                    <img alt="card-img-top" class="rounded  " src="/vorlesung.jpg" />
 
-    <div class="row row-cols-1 row-cols-md-3">
-        <div class="col mb-3" th:each="veranstaltung,iter :${veranstaltungen}">
-            <div class="card text-center h-100">
-                <img alt="..." class="card-img-top" th:src="@{/vorlesung.jpg}">
-                <div class="card-body">
-                    <h2 class="card-title" th:text="${veranstaltung.getName()}">Programmierung</h2>
-                    <a class=" btn btn-primary feedback-button" style="margin: 16px"
-                       th:href="@{/feedback/studenten/frageboegen(veranstaltungId=${veranstaltung.veranstaltungsNr})}"
-                       th:id="'button' + ${iter.index}">
-                        Anzeigen!
-                    </a>
+                    <div class="card-body">
+                        <h2 class="card-title" th:text="${veranstaltung.getName()}"></h2>
+
+                        <a class=" btn btn-link btn-sm stretched-link"
+                           th:href="@{/feedback/studenten/frageboegen(veranstaltungId=${veranstaltung.veranstaltungsNr})}"
+                           th:id="'button' + ${iter.index}"
+                            >
+                        </a>
+
+                        <p th:text="${veranstaltung.getDozent().getNachname()}"></p>
+                        <p th:text="${veranstaltung.getSemester()}"></p>
+                    </div>
                 </div>
             </div>
         </div>
