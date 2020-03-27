@@ -1,0 +1,53 @@
+
+= image:./images/arc42-logo.png[arc42] Template
+
+// numbering from here on
+:numbered:
+
+<<<<
+// 1. Anforderungen und Ziele
+include::01-Einfuehrung-und-Ziele.adoc[]
+
+<<<<
+// 2. Randbedingungen
+include::02-Randbedingungen.adoc[]
+
+<<<<
+// 3. Kontextabgrenzung
+include::03-Kontextabgrenzung.adoc[]
+
+<<<<
+// 4. Lösungsstrategie
+include::04-Loesungsstrategie.adoc[]
+
+<<<<
+// 5. Bausteinsicht
+include::05-Bausteinsicht.adoc[]
+
+<<<<
+// 6. Laufzeitsicht
+include::06-Laufzeitsicht.adoc[]
+
+<<<<
+// 7. Verteilungssicht
+include::07-Verteilungssicht.adoc[]
+
+<<<<
+// 8. Querschnittliche Konzepte
+include::08-Querschnittliche-Konzepte-und-Muster.adoc[]
+
+<<<<
+// 9. Entscheidungen
+include::09-Entwurfsentscheidungen.adoc[]
+
+<<<<
+// 10. Qualität...
+include::10-Qualitaetsszenarien.adoc[]
+
+<<<<
+// 11. Risiken
+include::11-Risiken.adoc[]
+
+<<<<
+// 12. Glossar
+include::12-Glossar.adoc[]

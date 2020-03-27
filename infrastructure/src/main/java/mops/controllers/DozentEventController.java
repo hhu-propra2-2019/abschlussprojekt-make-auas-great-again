@@ -7,6 +7,7 @@ import mops.Veranstaltung;
 import mops.database.MockVeranstaltungsRepository;
 import mops.filehandling.CsvReader;
 import mops.rollen.Dozent;
+import mops.rollen.Student;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -85,6 +86,19 @@ public class DozentEventController {
     veranstaltungen.save(csvReader.getVeranstaltung());
     redirectAttributes.addFlashAttribute("message", csvReader.getMessage());
     redirectAttributes.addFlashAttribute("status", csvReader.getMessageStatus());
+    return "redirect:/feedback/dozenten/event/{veranstaltungsNr}";
+  }
+
+  @PostMapping("/event/addStudent/{veranstaltungsNr}")
+  @RolesAllowed(ORGA_ROLE)
+  public String addStudent(@PathVariable Long veranstaltungsNr,
+                           RedirectAttributes redirectAttributes,
+                           String newStudent) {
+    Student student = new Student(newStudent);
+    veranstaltungen.addStudentToVeranstaltungById(student, veranstaltungsNr);
+    redirectAttributes.addFlashAttribute("message", newStudent
+        + " wurde erfolgreich hinzugefügt!");
+    redirectAttributes.addFlashAttribute("status", "success");
     return "redirect:/feedback/dozenten/event/{veranstaltungsNr}";
   }
 
