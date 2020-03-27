@@ -174,7 +174,6 @@ public class DozentErstellerController {
                                              KeycloakAuthenticationToken token,
                                              Long veranstaltungid, RedirectAttributes ra,
                                              Long fragebogenid) {
-    Dozent dozent = getDozentFromToken(token);
     dozentservice.getMultipleChoiceFrage(fragennr,
         veranstaltungen.getFragebogenById(bogennr)).deleteChoice(antwortnr);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
