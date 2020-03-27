@@ -97,15 +97,9 @@ public class VeranstaltungsRepository implements mops.controllers.Veranstaltungs
   }
 
   @Override
-  public Fragebogen getFragebogenFromDozentById(Long fragebogen, Dozent dozent) {
+  public Fragebogen getFragebogenById(Long fragebogen) {
     Optional<FragebogenDto> fragebogenDto = fragebogenRepo.findById(fragebogen);
-    return fragebogenDto.map(dto -> translator.loadFragebogen(dto)).orElse(null);
-  }
-
-  @Override
-  public Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung) {
-    Optional<FragebogenDto> fragebogenDto = fragebogenRepo.findById(fragebogen);
-    return fragebogenDto.map(dto -> translator.loadFragebogen(dto)).orElse(null);
+    return fragebogenDto.map(dto -> translator.loadFragebogen(dto)).orElse(new Fragebogen(fragebogen));
   }
 
   @Override

@@ -33,6 +33,16 @@ public class Fragebogen {
   private Einheit type;
   private List<Student> abgegebeneStudierende;
 
+  public Fragebogen(Long id) {
+    this.bogennr = id;
+    this.name = "";
+    this.startdatum = LocalDateTime.now().plusDays(1);
+    this.enddatum = LocalDateTime.now().plusDays(8);
+    this.fragen = new ArrayList<>();
+    this.abgegebeneStudierende = new ArrayList<>();
+    this.type = Einheit.VORLESUNG;
+  }
+
   public Fragebogen(String veranstaltung) {
     Random idgenerator = new Random();
     this.bogennr = idgenerator.nextLong();

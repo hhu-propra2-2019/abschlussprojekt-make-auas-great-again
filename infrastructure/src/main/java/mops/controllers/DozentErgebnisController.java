@@ -5,7 +5,6 @@ import mops.DozentService;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.antworten.TextAntwort;
-import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -37,8 +36,7 @@ public class DozentErgebnisController {
   @RolesAllowed(orgaRole)
   public String getAntwortenEinesFragebogens(KeycloakAuthenticationToken token,
                                              @PathVariable long bogennr, Model model, Long veranstaltungid) {
-    Dozent dozent = createDozentFromToken(token);
-    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen fragebogen = veranstaltungen.getFragebogenById(bogennr);
     model.addAttribute("fragebogen", fragebogen);
     model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute("typechecker", typechecker);
@@ -51,9 +49,8 @@ public class DozentErgebnisController {
   public String bearbeiteTextAntwort(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
                                      @PathVariable Long fragennr, @PathVariable Long antwortnr, Model model,
                                      Long veranstaltungid) {
-    Dozent dozent = createDozentFromToken(token);
     TextAntwort antwort = dozentservice.getTextAntwort(fragennr, antwortnr,
-        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
+        veranstaltungen.getFragebogenById(bogennr));
     model.addAttribute("antwort", antwort);
     model.addAttribute("bogennr", bogennr);
     model.addAttribute("fragennr", fragennr);
@@ -68,10 +65,9 @@ public class DozentErgebnisController {
   public String speichereTextAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
                                      @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token,
                                      RedirectAttributes ra, Long veranstaltungid) {
-    Dozent dozent = createDozentFromToken(token);
     ra.addAttribute("veranstaltungid", veranstaltungid);
     dozentservice.getTextAntwort(fragennr, antwortnr,
-        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent)).setAntworttext(textfeld);
+        veranstaltungen.getFragebogenById(bogennr)).setAntworttext(textfeld);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
@@ -80,9 +76,8 @@ public class DozentErgebnisController {
   public String veroeffentlicheErgebnisseEinerFrage(@PathVariable Long bogennr,
                                                     @PathVariable Long fragennr, KeycloakAuthenticationToken token, Long veranstaltungid,
                                                     RedirectAttributes ra) {
-    Dozent dozent = createDozentFromToken(token);
     ra.addAttribute("veranstaltungid", veranstaltungid);
-    dozentservice.getFrage(fragennr, veranstaltungen.getFragebogenFromDozentById(bogennr, dozent))
+    dozentservice.getFrage(fragennr, veranstaltungen.getFragebogenById(bogennr))
         .aendereOeffentlichkeitsStatus();
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
@@ -92,10 +87,5 @@ public class DozentErgebnisController {
     return new Account(principal.getName(),
         principal.getKeycloakSecurityContext().getIdToken().getEmail(), null,
         token.getAccount().getRoles());
-  }
-
-  private Dozent createDozentFromToken(KeycloakAuthenticationToken token) {
-    KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return new Dozent(principal.getName());
   }
 }

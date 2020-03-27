@@ -63,8 +63,7 @@ public class StudentErgebnisController {
   public String ergebnisUebersicht(KeycloakAuthenticationToken token, Model model,
                                    @RequestParam Long veranstaltung,
                                    @RequestParam Long fragebogen) {
-    model.addAttribute("fragebogen",
-        veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung));
+    model.addAttribute("fragebogen", veranstaltungen.getFragebogenById(fragebogen));
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
     model.addAttribute(account, createAccountFromPrincipal(token));

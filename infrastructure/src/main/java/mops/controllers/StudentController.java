@@ -74,7 +74,7 @@ public class StudentController {
   @RolesAllowed(studentRole)
   public String fragebogenDetails(KeycloakAuthenticationToken token, Model model, @RequestParam Long
       fragebogen, @RequestParam Long veranstaltung) {
-    Fragebogen fragebogen1 = veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung);
+    Fragebogen fragebogen1 = veranstaltungen.getFragebogenById(fragebogen);
     model.addAttribute("fragebogen", fragebogen1);
     model.addAttribute("typeChecker", typeChecker);
     Veranstaltung veranstaltung1 = veranstaltungen.getVeranstaltungById(veranstaltung);
@@ -89,8 +89,7 @@ public class StudentController {
   public String submitFeedback(KeycloakAuthenticationToken token, @RequestParam Long bogennr,
                                HttpServletRequest req, Model model,
                                @RequestParam Long veranstaltung) {
-    Fragebogen fragebogen =
-        veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltung);
+    Fragebogen fragebogen = veranstaltungen.getFragebogenById(bogennr);
     Map<Long, List<String>> antworten = new HashMap<>();
     for (Frage frage : fragebogen.getFragen()) {
       antworten.put(frage.getId(), List.of(req.getParameterValues("answer-" + frage.getId())));

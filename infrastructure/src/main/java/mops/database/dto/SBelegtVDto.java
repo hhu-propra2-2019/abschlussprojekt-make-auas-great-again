@@ -9,4 +9,9 @@ import org.springframework.data.relational.core.mapping.Table;
 public class SBelegtVDto {
   @Getter
   transient Long student;
+
+  @Override
+  public String toString() {
+    return student.toString();
+  }
 }

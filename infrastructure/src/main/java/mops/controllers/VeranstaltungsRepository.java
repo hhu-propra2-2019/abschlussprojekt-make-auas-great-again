@@ -26,9 +26,8 @@ public interface VeranstaltungsRepository {
 
   List<Veranstaltung> getAllFromDozentContaining(Dozent dozent, String suche);
 
-  Fragebogen getFragebogenFromDozentById(Long fragebogen, Dozent dozent);
 
-  Fragebogen getFragebogenByIdFromVeranstaltung(Long fragebogen, Long veranstaltung);
+  Fragebogen getFragebogenById(Long fragebogen);
 
   Dozent getDozentByUsername(String name);
 
