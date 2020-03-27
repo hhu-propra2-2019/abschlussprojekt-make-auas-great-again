@@ -66,19 +66,19 @@
                                 <div class="foo" th:if="${fragebogen.startdatum.isAfter(currenttime)}">
                                     <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/new/questions/' + ${fragebogen.bogennr}">
                                         <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
-                                        <button class="btn btn-primary" name="editbutton" type="submit">Fragebogen bearbeiten</button>
+                                        <button class="btn btn-outline-primary btn-block btn-sm" name="editbutton" type="submit">Fragebogen bearbeiten</button>
                                     </form>
                                 </div>
                                 <div class="foo" th:if="${fragebogen.startdatum.isBefore(currenttime)}">
                                     <form class="form-horizontal" method="get" th:action="'/feedback/dozenten/watch/' + ${fragebogen.bogennr}">
                                         <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
-                                        <button class="btn btn-primary" name="showbutton" type="submit">Feedback ansehen</button>
+                                        <button class="btn btn-outline-info btn-block btn-sm" name="showbutton" type="submit">Feedback ansehen</button>
                                     </form>
                                 </div>
                                 <div class="foo" th:if="${fragebogen.enddatum.isBefore(currenttime)}">
                                     <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new/recycle/' + ${fragebogen.bogennr}">
                                         <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
-                                        <button class="btn btn-primary" name="recyclebutton" type="submit">Fragebogen recyceln</button>
+                                        <button class="btn btn-outline-success btn-block btn-sm" name="recyclebutton" type="submit">Fragebogen recyceln</button>
                                     </form>
                                 </div>
                             </td>
@@ -88,7 +88,7 @@
                     <form class="form-horizontal" th:action="'/feedback/dozenten/new'" method="post">
                         <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
                         <div class="text-center">
-                            <button class="btn btn-primary" name="newsheetbutton" type="submit">Neuen Fragebogen erstellen</button>
+                            <button class="btn btn-outline-success" name="newsheetbutton" type="submit">Neuen Fragebogen erstellen</button>
                         </div>
                     </form>
                 </div>
@@ -114,7 +114,7 @@
                     </div>
                     <form class="form-horizontal was-validated" method="post" enctype="multipart/form-data" th:action="'/feedback/dozenten/event/addStudenten/' + ${veranstaltung.veranstaltungsNr}">
                         File to upload:<input type="file" name="file" accept=".csv" />
-                        <input type="submit" value="Upload" class="btn btn-primary float-right" />
+                        <input type="submit" value="Upload" class="btn btn-outline-secondary float-right" />
                     </form>
                     <hr class="col-xs-12">
                     <form class="form-horizontal was-validated" method="post" th:action="'/feedback/dozenten/event/addStudent/' + ${veranstaltung.veranstaltungsNr}">
@@ -123,7 +123,7 @@
                                 <input type="text" placeholder="Username eingeben" name="newStudent" required >
                             </div>
                             <div class="col-sm-6">
-                                <input type="submit" value="StudentIn hinzufügen!" class="btn btn-primary float-right" />
+                                <input type="submit" value="StudentIn hinzufügen!" class="btn btn-outline-success float-right btn-sm" />
                             </div>
                         </div>
                     </form>
