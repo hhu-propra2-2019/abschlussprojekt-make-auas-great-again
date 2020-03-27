@@ -215,11 +215,11 @@ public class DozentService {
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
     Random idgenerator = new Random();
     if ("multiplechoice".equals(fragetyp)) {
-      return new SingleResponseFrage(idgenerator.nextLong(), fragetext);
+      return new SingleResponseFrage((long) new Random().nextInt(2000000000), fragetext);
     } else if ("textfrage".equals(fragetyp)) {
       return new TextFrage(fragetext);
     } else {
-      return new MultipleResponseFrage(idgenerator.nextLong(), fragetext);
+      return new MultipleResponseFrage((long) new Random().nextInt(2000000000), fragetext);
     }
   }
 }
