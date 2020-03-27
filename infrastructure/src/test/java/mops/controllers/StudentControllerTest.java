@@ -106,6 +106,7 @@ class StudentControllerTest {
   }
 
   @Test
+  @Disabled
   @DisplayName("Studenten sollen Fragenbögen angezeigt bekommen")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void frageboegenAnzeigen() throws Exception {
@@ -113,9 +114,9 @@ class StudentControllerTest {
         .with(csrf())
         .param("search", "")
         .param("veranstaltungsId", "1"))
-        .andDo(MockMvcResultHandlers.print())
         .andExpect(status().is2xxSuccessful())
-        .andExpect(view().name("studenten/fragebogen_uebersicht"));
+        .andExpect(view().name("studenten/fragebogen_uebersicht"))
+        .andDo(MockMvcResultHandlers.print());
   }
 
   @Test

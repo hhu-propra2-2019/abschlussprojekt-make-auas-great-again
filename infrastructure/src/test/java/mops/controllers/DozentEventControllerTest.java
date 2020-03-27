@@ -83,7 +83,8 @@ public class DozentEventControllerTest {
   @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
   public void correctRedirectForErstelleNeueVeranstaltung() throws Exception {
     mvc.perform(post("/feedback/dozenten/event/new")
-        .with(csrf()).param("veranstaltungsname", "ProPra 2")
+        .with(csrf())
+        .param("veranstaltungsname", "ProPra 2")
         .param("semester", "SoSe2019"))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/dozenten"));
@@ -99,8 +100,8 @@ public class DozentEventControllerTest {
         .file(file)
         .with(csrf()))
         .andExpect(status().isFound())
-        .andExpect(view().name("redirect:/feedback/dozenten/event/{veranstaltungsNr}"))
-        .andDo(MockMvcResultHandlers.print());
+        .andExpect(view().name(
+            "redirect:/feedback/dozenten/event/{veranstaltungsNr}"));
   }
 
   @Test
@@ -108,7 +109,8 @@ public class DozentEventControllerTest {
   @DisplayName("Können Studenten per Csv-Datei hinzugefügt werden?")
   @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
   public void correctRedirectWhenAddingOneStudent() throws Exception {
-    mvc.perform(get("/feedback/dozenten/event/addStudent/1"))
+    mvc.perform(get("/feedback/dozenten/event/addStudent/1")
+        .with(csrf()))
         .andExpect(status().isFound())
         .andExpect(view().name("redirect:/feedback/dozenten/event/1"));
   }
