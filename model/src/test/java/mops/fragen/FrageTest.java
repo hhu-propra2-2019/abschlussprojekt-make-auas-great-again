@@ -31,7 +31,7 @@ public class FrageTest {
 
   @Test
   public void aendereOeffentlichkeitsStatusSingleResponseFrageTest() {
-    Frage singleresponsefrage = new SingleResponseFrage(1L, "y", false);
+    Frage singleresponsefrage = new SingleResponseFrage(1L, "y");
     singleresponsefrage.aendereOeffentlichkeitsStatus();
     Assertions.assertTrue(singleresponsefrage.isOeffentlich());
   }
