@@ -24,7 +24,7 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   public MultipleChoiceFrage(String fragentext) {
-    super((long) new Random().nextInt(1000));
+    super((long) new Random().nextInt(2000000000));
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     fillDummyChoices();
@@ -44,7 +44,7 @@ public class MultipleChoiceFrage extends Frage {
   }
   
   public MultipleChoiceFrage(String fragentext, List<Auswahl> choices) {
-    super((long) new Random().nextInt(1000));
+    super((long) new Random().nextInt(2000000000));
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     choices.stream().forEach(x -> this.addChoice(x));
@@ -81,7 +81,7 @@ public class MultipleChoiceFrage extends Frage {
   public void addAntwort(String antwort) {
     Auswahl auswahl = new Auswahl(antwort);
     if (choices.contains(auswahl)) {
-      MultipleChoiceAntwort neu = new MultipleChoiceAntwort((long) new Random().nextInt(1000));
+      MultipleChoiceAntwort neu = new MultipleChoiceAntwort((long) new Random().nextInt(2000000000));
       neu.addAntwort(auswahl);
       this.antworten.add(neu);
     }

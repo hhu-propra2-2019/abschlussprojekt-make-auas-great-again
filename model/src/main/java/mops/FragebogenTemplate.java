@@ -20,7 +20,7 @@ public class FragebogenTemplate {
 
   public FragebogenTemplate(String name) {
     Random idgenerator = new Random();
-    this.id = idgenerator.nextLong();
+    this.id = (long) idgenerator.nextInt(2000000000);
     this.name = name;
     this.fragen = new ArrayList<>();
   }

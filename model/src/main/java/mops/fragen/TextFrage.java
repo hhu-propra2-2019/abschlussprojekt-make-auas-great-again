@@ -24,14 +24,14 @@ public class TextFrage extends Frage {
   }
 
   public TextFrage(String fragentext) {
-    super((long) new Random().nextInt(1000));
+    super((long) new Random().nextInt(2000000000));
     this.fragentext = fragentext;
     antworten = new ArrayList<>();
   }
 
   @Override
   public void addAntwort(String text) {
-    TextAntwort antwort = new TextAntwort((long) new Random().nextInt(1000), text);
+    TextAntwort antwort = new TextAntwort((long) new Random().nextInt(2000000000), text);
     antworten.add(antwort);
   }
 

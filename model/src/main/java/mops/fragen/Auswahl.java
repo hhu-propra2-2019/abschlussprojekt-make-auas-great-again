@@ -15,7 +15,8 @@ public class Auswahl {
   private String label;
 
   public Auswahl(String label) {
-    this.id = (long) new Random().nextInt(1000);
+    Random idgenerator = new Random();
+    this.id = (long) idgenerator.nextInt(2000000000);
     this.label = label;
   }
 
