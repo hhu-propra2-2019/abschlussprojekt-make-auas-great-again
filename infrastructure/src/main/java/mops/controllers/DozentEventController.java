@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import javax.annotation.security.RolesAllowed;
 import mops.DateTimeService;
 import mops.Veranstaltung;
-import mops.database.DatabaseService;
+import mops.database.repos.DatenbankSchnittstelle;
 import mops.filehandling.CsvReader;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
@@ -25,11 +25,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/feedback/dozenten")
 public class DozentEventController {
   private static final String ORGA_ROLE = "ROLE_orga";
-  private final transient DatabaseService db;
+  private final transient DatenbankSchnittstelle db;
   private final transient DateTimeService datetime = new DateTimeService();
   private transient CsvReader csvReader;
 
-  public DozentEventController(DatabaseService db) {
+  public DozentEventController(DatenbankSchnittstelle db) {
     this.db = db;
   }
 
@@ -40,10 +40,10 @@ public class DozentEventController {
     model.addAttribute("account", createAccountFromPrincipal(token));
     if (searchNotEmpty(search)) {
       model.addAttribute("veranstaltungen",
-          veranstaltungen.getAllFromDozentContaining(createDozentFromToken(token), search));
+          db.getVeranstaltungenFromDozentContaining(createDozentFromToken(token), search));
     } else {
       model.addAttribute("veranstaltungen",
-          veranstaltungen.getAllFromDozent(createDozentFromToken(token)));
+          db.getVeranstaltungenFromDozent(createDozentFromToken(token)));
     }
     return "dozenten/dozent";
   }
@@ -62,8 +62,7 @@ public class DozentEventController {
     model.addAttribute("account", createAccountFromPrincipal(token));
     model.addAttribute("datetime", datetime);
     model.addAttribute("currenttime", LocalDateTime.now());
-    model.addAttribute("veranstaltung",
-        veranstaltungen.getVeranstaltungById(veranstaltung));
+    model.addAttribute("veranstaltung", db.getVeranstaltungById(veranstaltung));
     return "dozenten/veranstaltung";
   }
 
@@ -73,7 +72,7 @@ public class DozentEventController {
       String veranstaltungsname, String semester) {
     Veranstaltung neu = new Veranstaltung(veranstaltungsname, semester,
         createDozentFromToken(token));
-    veranstaltungen.save(neu);
+    db.saveVeranstaltung(neu);
     return "redirect:/feedback/dozenten";
   }
 
@@ -82,8 +81,8 @@ public class DozentEventController {
   public String handleFileUpload(@RequestParam("file") MultipartFile file,
       @PathVariable Long veranstaltungsNr,
       RedirectAttributes redirectAttributes) {
-    csvReader = new CsvReader(file, veranstaltungen.getVeranstaltungById(veranstaltungsNr));
-    veranstaltungen.save(csvReader.getVeranstaltung());
+    csvReader = new CsvReader(file, db.getVeranstaltungById(veranstaltungsNr));
+    db.saveVeranstaltung(csvReader.getVeranstaltung());
     redirectAttributes.addFlashAttribute("message", csvReader.getMessage());
     redirectAttributes.addFlashAttribute("status", csvReader.getMessageStatus());
     return "redirect:/feedback/dozenten/event/{veranstaltungsNr}";
@@ -95,10 +94,12 @@ public class DozentEventController {
       RedirectAttributes redirectAttributes,
       String newStudent) {
     Student student = new Student(newStudent);
-    veranstaltungen.addStudentToVeranstaltungById(student, veranstaltungsNr);
+    Veranstaltung veranstaltung = db.getVeranstaltungById(veranstaltungsNr);
+    veranstaltung.addStudent(student);
     redirectAttributes.addFlashAttribute("message", newStudent
         + " wurde erfolgreich hinzugefügt!");
     redirectAttributes.addFlashAttribute("status", "success");
+    db.saveVeranstaltung(veranstaltung);
     return "redirect:/feedback/dozenten/event/{veranstaltungsNr}";
   }
 

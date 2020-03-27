@@ -3,7 +3,7 @@ package mops.controllers;
 import javax.annotation.security.RolesAllowed;
 import mops.DozentService;
 import mops.TypeChecker;
-import mops.database.DatabaseService;
+import mops.database.repos.DatenbankSchnittstelle;
 import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -24,9 +24,9 @@ public class DozentTemplateController {
 
   private final transient DozentService dozentservice;
   private final transient TypeChecker typechecker;
-  private final transient DatabaseService db;
+  private final transient DatenbankSchnittstelle db;
 
-  public DozentTemplateController(DatabaseService db) {
+  public DozentTemplateController(DatenbankSchnittstelle db) {
     this.db = db;
     dozentservice = new DozentService();
     typechecker = new TypeChecker();
@@ -44,7 +44,9 @@ public class DozentTemplateController {
   @PostMapping("")
   @RolesAllowed(ORGA_ROLE)
   public String neuesTemplate(String templatename, KeycloakAuthenticationToken token) {
-    Long templateid = dozentservice.createNewTemplate(getDozentFromToken(token), templatename);
+    Dozent dozent = getDozentFromToken(token);
+    Long templateid = dozentservice.createNewTemplate(dozent, templatename);
+    db.saveDozent(dozent);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templateid;
   }
 
@@ -65,6 +67,7 @@ public class DozentTemplateController {
       String fragetyp, String fragetext) {
     Dozent dozent = getDozentFromToken(token);
     dozentservice.addFrageZuTemplate(dozent, templatenr, fragetyp, fragetext);
+    db.saveDozent(dozent);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr;
   }
 
@@ -84,8 +87,9 @@ public class DozentTemplateController {
   @RolesAllowed(ORGA_ROLE)
   public String newMultipleChoiceAnswer(@PathVariable Long templatenr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token, String antworttext) {
-    dozentservice.addMultipleChoiceToTemplate(getDozentFromToken(token), templatenr,
-        fragennr, antworttext);
+    Dozent dozent = getDozentFromToken(token);
+    dozentservice.addMultipleChoiceToTemplate(dozent, templatenr, fragennr, antworttext);
+    db.saveDozent(dozent);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr + "/" + fragennr;
   }
 
@@ -94,6 +98,7 @@ public class DozentTemplateController {
   public String deleteTemplate(@PathVariable Long templatenr, KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
     dozent.deleteTemplateById(templatenr);
+    db.saveDozent(dozent);
     return "redirect:/feedback/dozenten/templates";
   }
 
@@ -101,7 +106,9 @@ public class DozentTemplateController {
   @RolesAllowed(ORGA_ROLE)
   public String deleteFrage(@PathVariable Long templatenr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token) {
-    dozentservice.loescheFrageAusTemplate(getDozentFromToken(token), templatenr, fragennr);
+    Dozent dozent = getDozentFromToken(token);
+    dozentservice.loescheFrageAusTemplate(dozent, templatenr, fragennr);
+    db.saveDozent(dozent);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr;
   }
 
@@ -110,8 +117,9 @@ public class DozentTemplateController {
   public String deleteAntwortmoeglichkeit(@PathVariable Long templatenr,
       @PathVariable Long fragennr, @PathVariable Long auswahlnr,
       KeycloakAuthenticationToken token) {
-    dozentservice.loescheMultipleChoiceAusTemplate(getDozentFromToken(token),
-        templatenr, fragennr, auswahlnr);
+    Dozent dozent = getDozentFromToken(token);
+    dozentservice.loescheMultipleChoiceAusTemplate(dozent, templatenr, fragennr, auswahlnr);
+    db.saveDozent(dozent);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr + "/" + fragennr;
   }
 
@@ -124,6 +132,6 @@ public class DozentTemplateController {
 
   private Dozent getDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return veranstaltungen.getDozentByUsername(principal.getName());
+    return db.getDozentByUsername(principal.getName());
   }
 }

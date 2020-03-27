@@ -1,5 +1,6 @@
 package mops.database.dto;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -17,8 +18,8 @@ public class FragebogenDto {
   @Id
   private Long id;
   private String name;
-  private String startzeit;
-  private String endzeit;
+  private LocalDateTime startzeit;
+  private LocalDateTime endzeit;
   private Einheit einheit;
   
   @Column("fragebogen")

@@ -31,6 +31,13 @@ public class MultipleChoiceFrage extends Frage {
     this.antworten = new ArrayList<>();
   }
   
+  public MultipleChoiceFrage(Long id, String fragentext, List<Auswahl> choices, List<Antwort> antworten) {
+    super(id);
+    this.fragentext = fragentext;
+    this.choices = choices;
+    this.antworten = antworten;
+  }
+  
   @Override
   public Frage clone() {
     return new MultipleChoiceFrage(fragentext, choices);

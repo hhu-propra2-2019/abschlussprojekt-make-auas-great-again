@@ -11,6 +11,12 @@ public class TextFrage extends Frage {
   private transient String fragentext;
   private transient List<Antwort> antworten;
 
+  public TextFrage(Long id, String fragentext, List<Antwort> antworten) {
+    super(id);
+    this.fragentext = fragentext;
+    this.antworten = antworten;
+  }
+
   public TextFrage(Long id, String fragentext) {
     super(id);
     this.fragentext = fragentext;
@@ -42,10 +48,10 @@ public class TextFrage extends Frage {
   public List<Antwort> getAntworten() {
     return antworten;
   }
-  
+
   @Override
   public Frage clone() {
-    return new TextFrage(this.fragentext);
+    return new TextFrage(fragentext);
   }
 
   @Override

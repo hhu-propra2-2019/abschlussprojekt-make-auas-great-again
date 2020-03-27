@@ -2,7 +2,9 @@ package mops.antworten;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public abstract class Antwort {
   @Getter

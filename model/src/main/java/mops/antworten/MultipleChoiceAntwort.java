@@ -12,7 +12,12 @@ public class MultipleChoiceAntwort extends Antwort {
 
   public MultipleChoiceAntwort(Long id) {
     super(id);
-    this.gewaehlteAntworten = new ArrayList<>();
+    gewaehlteAntworten = new ArrayList<>();
+  }
+
+  public MultipleChoiceAntwort(Long id, List<Auswahl> choices) {
+    super(id);
+    gewaehlteAntworten = choices;
   }
 
   @Override

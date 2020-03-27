@@ -19,4 +19,8 @@ public class AntwortDto {
   
   @Column("antwort")
   private Set<AuswahlDto> auswahlen;
+  
+  public boolean isTextAntwort() {
+    return !textantwort.isEmpty() && auswahlen.isEmpty();
+  }
 }

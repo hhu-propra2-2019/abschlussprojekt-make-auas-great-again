@@ -16,7 +16,7 @@ import mops.DozentService;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.Veranstaltung;
-import mops.database.DatabaseService;
+import mops.database.repos.DatenbankSchnittstelle;
 import mops.rollen.Dozent;
 import mops.security.Account;
 
@@ -29,12 +29,12 @@ public class DozentErstellerController {
   private static final String REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS =
       "redirect:/feedback/dozenten/new/questions/";
 
-  private final transient DatabaseService db;
+  private final transient DatenbankSchnittstelle db;
   private final transient TypeChecker typechecker;
   private final transient DateTimeService datetime;
   private final transient DozentService dozentservice;
 
-  public DozentErstellerController(DatabaseService db) {
+  public DozentErstellerController(DatenbankSchnittstelle db) {
     this.db = db;
     typechecker = new TypeChecker();
     datetime = new DateTimeService();
@@ -46,10 +46,10 @@ public class DozentErstellerController {
   public String addNeuesFormular(KeycloakAuthenticationToken token, Long veranstaltungid,
       RedirectAttributes ra) {
     Dozent dozent = getDozentFromToken(token);
-    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
+    Veranstaltung veranstaltung = db.getVeranstaltungById(veranstaltungid);
     Long bogennr =
         dozentservice.fuegeFragebogenZuVeranstaltungHinzu(veranstaltung, dozent);
-    veranstaltungen.save(veranstaltung);
+    db.saveVeranstaltung(veranstaltung);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -58,11 +58,11 @@ public class DozentErstellerController {
   @RolesAllowed(orgaRole)
   public String fragebogenWiederverwenden(Long veranstaltungid, RedirectAttributes ra,
       @PathVariable Long bogennr) {
-    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungid);
-    Long neuebogennr = dozentservice.kloneFragebogen(
-        veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltungid),
-        veranstaltung);
+    Veranstaltung veranstaltung = db.getVeranstaltungById(veranstaltungid);
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
+    Long neuebogennr = dozentservice.kloneFragebogen(fragebogen, veranstaltung);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
+    db.saveVeranstaltung(veranstaltung);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neuebogennr;
   }
 
@@ -71,9 +71,9 @@ public class DozentErstellerController {
   public String fuegeTemplateHinzu(@PathVariable Long bogennr, Long bogenvorlage,
       KeycloakAuthenticationToken token, Long veranstaltungid, RedirectAttributes ra) {
     Dozent dozent = getDozentFromToken(token);
-    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     dozentservice.addFragenAusTemplateZuFragebogen(fragebogen, dozent, bogenvorlage);
-    veranstaltungen.saveToVeranstaltung(fragebogen, veranstaltungid);
+    db.saveFragebogen(fragebogen);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -82,12 +82,12 @@ public class DozentErstellerController {
   @RolesAllowed(orgaRole)
   public String changeMetadaten(KeycloakAuthenticationToken token, @PathVariable Long bogennr,
       HttpServletRequest req, RedirectAttributes ra, Long veranstaltungid) {
-    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, getDozentFromToken(token));
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     dozentservice.updateFragebogenMetadaten(fragebogen, req.getParameter("veranstaltungsname"),
         req.getParameter("veranstaltungstyp"),
         req.getParameter("startdatum"), req.getParameter("startzeit"),
         req.getParameter("enddatum"), req.getParameter("endzeit"));
-    veranstaltungen.saveToVeranstaltung(fragebogen, veranstaltungid);
+    db.saveFragebogen(fragebogen);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -100,7 +100,7 @@ public class DozentErstellerController {
     model.addAttribute("boegenvorlagen", dozent.getTemplates());
     model.addAttribute("typechecker", typechecker);
     model.addAttribute("datetime", datetime);
-    model.addAttribute("neuerbogen", veranstaltungen.getFragebogenFromDozentById(bogennr, dozent));
+    model.addAttribute("neuerbogen", db.getFragebogenById(bogennr));
     model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "dozenten/fragenerstellen";
@@ -110,10 +110,9 @@ public class DozentErstellerController {
   @RolesAllowed(orgaRole)
   public String loescheFrageAusFragebogen(@PathVariable Long bogennr, @PathVariable Long fragennr,
       KeycloakAuthenticationToken token, RedirectAttributes ra, Long veranstaltungid) {
-    Dozent dozent = getDozentFromToken(token);
-    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     dozentservice.loescheFrageAusFragebogen(fragebogen, fragennr);
-    veranstaltungen.saveToVeranstaltung(fragebogen, veranstaltungid);
+    db.saveFragebogen(fragebogen);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -122,10 +121,9 @@ public class DozentErstellerController {
   @RolesAllowed(orgaRole)
   public String addTextfrage(@PathVariable Long bogennr, String fragetext, String fragetyp,
       KeycloakAuthenticationToken token, RedirectAttributes ra, Long veranstaltungid) {
-    Dozent dozent = getDozentFromToken(token);
-    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     dozentservice.addNeueFrageZuFragebogen(fragebogen, fragetext, fragetyp);
-    veranstaltungen.saveToVeranstaltung(fragebogen, veranstaltungid);
+    db.saveFragebogen(fragebogen);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
   }
@@ -135,9 +133,8 @@ public class DozentErstellerController {
   public String seiteUmAntwortmoeglichkeitenHinzuzufuegen(Model model,
       KeycloakAuthenticationToken token, @PathVariable Long bogennr, @PathVariable Long fragennr,
       Long veranstaltungid) {
-    Dozent dozent = getDozentFromToken(token);
-    model.addAttribute("frage", dozentservice.getMultipleChoiceFrage(fragennr,
-        veranstaltungen.getFragebogenFromDozentById(bogennr, dozent)));
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
+    model.addAttribute("frage", dozentservice.getMultipleChoiceFrage(fragennr, fragebogen));
     model.addAttribute("fragebogen", bogennr);
     model.addAttribute("veranstaltung", veranstaltungid);
     model.addAttribute(account, createAccountFromPrincipal(token));
@@ -149,10 +146,9 @@ public class DozentErstellerController {
   public String neueMultipleChoiceAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
       String antworttext, KeycloakAuthenticationToken token, Long veranstaltungid,
       RedirectAttributes ra, Long fragebogenid) {
-    Fragebogen fragebogen =
-        veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogenid, veranstaltungid);
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     dozentservice.addMultipleChoiceMoeglichkeit(fragebogen, fragennr, antworttext);
-    veranstaltungen.saveToVeranstaltung(fragebogen, veranstaltungid);
+    db.saveFragebogen(fragebogen);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     ra.addAttribute("fragebogenid", fragebogenid);
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
@@ -163,10 +159,9 @@ public class DozentErstellerController {
   public String loescheMultipleChoiceAntwort(@PathVariable Long bogennr,
       @PathVariable Long fragennr, @PathVariable Long antwortnr, KeycloakAuthenticationToken token,
       Long veranstaltungid, RedirectAttributes ra, Long fragebogenid) {
-    Dozent dozent = getDozentFromToken(token);
-    Fragebogen fragebogen = veranstaltungen.getFragebogenFromDozentById(bogennr, dozent);
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     dozentservice.loescheMultipleChoiceMoeglichkeit(fragebogen, fragennr, antwortnr);
-    veranstaltungen.saveToVeranstaltung(fragebogen, veranstaltungid);
+    db.saveFragebogen(fragebogen);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     ra.addAttribute("fragebogenid", fragebogenid);
     return "redirect:/feedback/dozenten/new/questions/edit/" + bogennr + "/" + fragennr;
@@ -181,6 +176,6 @@ public class DozentErstellerController {
 
   private Dozent getDozentFromToken(KeycloakAuthenticationToken token) {
     KeycloakPrincipal principal = (KeycloakPrincipal) token.getPrincipal();
-    return veranstaltungen.getDozentByUsername(principal.getName());
+    return db.getDozentByUsername(principal.getName());
   }
 }

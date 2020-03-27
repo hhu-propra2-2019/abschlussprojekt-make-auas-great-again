@@ -24,4 +24,8 @@ public class FrageDto {
   
   @Column("frage")
   private Set<AuswahlDto> auswahlen;
+  
+  public boolean isTextFrage() {
+    return auswahlen.isEmpty();
+  }
 }

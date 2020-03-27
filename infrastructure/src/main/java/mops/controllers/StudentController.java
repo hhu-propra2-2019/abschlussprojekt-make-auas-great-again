@@ -9,7 +9,7 @@ import mops.Fragebogen;
 import mops.SubmitService;
 import mops.TypeChecker;
 import mops.Veranstaltung;
-import mops.database.DatabaseService;
+import mops.database.repos.DatenbankSchnittstelle;
 import mops.fragen.Frage;
 import mops.rollen.Student;
 import mops.security.Account;
@@ -27,11 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class StudentController {
   public static final String studentRole = "ROLE_studentin";
   private final transient String account = "account";
-  private final transient DatabaseService db;
+  private final transient DatenbankSchnittstelle db;
   private final transient SubmitService submitService = new SubmitService();
   private transient TypeChecker typeChecker = new TypeChecker();
 
-  public StudentController(DatabaseService db) {
+  public StudentController(DatenbankSchnittstelle db) {
     this.db = db;
   }
 
@@ -41,10 +41,9 @@ public class StudentController {
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
     if (searchNotEmpty(search)) {
       model.addAttribute("veranstaltungen",
-          veranstaltungen.getAllFromStudentContaining(student, search));
+          db.getVeranstaltungenFromStudentContaining(student, search));
     } else {
-      model.addAttribute("veranstaltungen",
-          veranstaltungen.getAllFromStudent(student));
+      model.addAttribute("veranstaltungen", db.getVeranstaltungenFromStudent(student));
     }
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "studenten/veranstaltungen";
@@ -54,7 +53,7 @@ public class StudentController {
   @RolesAllowed(studentRole)
   public String fragebogen(KeycloakAuthenticationToken token,
       Model model, String search, Long veranstaltungId) {
-    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungId);
+    Veranstaltung veranstaltung = db.getVeranstaltungById(veranstaltungId);
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
     List<Fragebogen> notSubmittedFrageboegen = submitService
         .notSubmittedFrageboegen(veranstaltung.getFrageboegen(), student);
@@ -75,10 +74,10 @@ public class StudentController {
   @RolesAllowed(studentRole)
   public String fragebogenDetails(KeycloakAuthenticationToken token, Model model, @RequestParam Long
       fragebogen, @RequestParam Long veranstaltung) {
-    Fragebogen fragebogen1 = veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung);
+    Fragebogen fragebogen1 = db.getFragebogenById(fragebogen);
     model.addAttribute("fragebogen", fragebogen1);
     model.addAttribute("typeChecker", typeChecker);
-    Veranstaltung veranstaltung1 = veranstaltungen.getVeranstaltungById(veranstaltung);
+    Veranstaltung veranstaltung1 = db.getVeranstaltungById(veranstaltung);
     model.addAttribute("veranstaltung", veranstaltung1);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "studenten/fragebogen-details";
@@ -90,8 +89,7 @@ public class StudentController {
   public String submitFeedback(KeycloakAuthenticationToken token, @RequestParam Long bogennr,
       HttpServletRequest req, Model model,
       @RequestParam Long veranstaltung) {
-    Fragebogen fragebogen =
-        veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltung);
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     Map<Long, List<String>> antworten = new HashMap<>();
     for (Frage frage : fragebogen.getFragen()) {
       antworten.put(frage.getId(), List.of(req.getParameterValues("answer-" + frage.getId())));
@@ -99,6 +97,7 @@ public class StudentController {
     submitService.saveAntworten(fragebogen, antworten);
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
     submitService.addStudentAsSubmitted(fragebogen, student);
+    db.saveFragebogen(fragebogen);
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "redirect:/feedback/studenten";
   }

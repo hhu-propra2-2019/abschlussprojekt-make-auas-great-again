@@ -1,5 +1,6 @@
 package mops.fragen;
 
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import mops.antworten.Antwort;
@@ -26,8 +27,9 @@ public abstract class Frage {
 
   public abstract void addAntwort(Antwort antwort);
 
-  public abstract Iterable<Antwort> getAntworten();
-  
+  public abstract List<Antwort> getAntworten();
+
+  @Override
   public abstract Frage clone();
 
   @Override
