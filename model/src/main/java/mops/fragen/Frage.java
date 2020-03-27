@@ -29,8 +29,7 @@ public abstract class Frage {
 
   public abstract List<Antwort> getAntworten();
 
-  @Override
-  public abstract Frage clone();
+  public abstract Frage klonen();
 
   @Override
   public abstract String toString();

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table("veranstaltung")
+@SuppressWarnings("PMD")
 public class VeranstaltungDto {
   @Id
   private Long id;

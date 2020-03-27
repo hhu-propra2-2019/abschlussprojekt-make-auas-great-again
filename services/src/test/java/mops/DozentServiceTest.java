@@ -14,7 +14,8 @@ import mops.fragen.TextFrage;
 import mops.rollen.Dozent;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
+@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
+    "PMD.JUnitTestContainsTooManyAsserts"})
 public class DozentServiceTest {
   private static final String ANALYSIS_I = "Analysis I";
   private static final String WIE_GEHTS = "Wie geht's?";

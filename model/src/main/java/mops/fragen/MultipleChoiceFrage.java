@@ -39,7 +39,7 @@ public class MultipleChoiceFrage extends Frage {
   }
   
   @Override
-  public Frage clone() {
+  public Frage klonen() {
     return new MultipleChoiceFrage(fragentext, choices);
   }
   

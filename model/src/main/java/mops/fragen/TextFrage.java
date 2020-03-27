@@ -50,7 +50,7 @@ public class TextFrage extends Frage {
   }
 
   @Override
-  public Frage clone() {
+  public Frage klonen() {
     return new TextFrage(fragentext);
   }
 

@@ -135,7 +135,7 @@ public class DozentService {
   }
 
   public List<Frage> getFragenlisteOhneAntworten(List<Frage> altefragen) {
-    return altefragen.stream().map(x -> x.clone()).collect(Collectors.toList());
+    return altefragen.stream().map(x -> x.klonen()).collect(Collectors.toList());
   }
 
   /**
@@ -215,11 +215,11 @@ public class DozentService {
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
     Random idgenerator = new Random();
     if ("multiplechoice".equals(fragetyp)) {
-      return new SingleResponseFrage((long) new Random().nextInt(2000000000), fragetext);
+      return new SingleResponseFrage((long) idgenerator.nextInt(2000000000), fragetext);
     } else if ("textfrage".equals(fragetyp)) {
-      return new TextFrage(fragetext);
+      return new TextFrage((long) idgenerator.nextInt(2000000000), fragetext);
     } else {
-      return new MultipleResponseFrage((long) new Random().nextInt(2000000000), fragetext);
+      return new MultipleResponseFrage((long) idgenerator.nextInt(2000000000), fragetext);
     }
   }
 }

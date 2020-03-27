@@ -17,7 +17,7 @@ public class MultipleResponseFrage extends MultipleChoiceFrage {
   }
 
   @Override
-  public Frage clone() {
+  public Frage klonen() {
     return new MultipleResponseFrage(getFragentext(), getChoices());
   }
 
