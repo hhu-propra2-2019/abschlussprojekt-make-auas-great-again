@@ -1,0 +1,23 @@
+= Kontextabgrenzung
+
+== Fachliche Abgrenzung
+
+Unser Subsystem sammelt und verwaltet Feedback zu bestimmten Einheiten. Die Verwaltung dieser Einheiten
+(beispielsweise das Erstellen der Übungsblätter oder das Vorlesungsverzeichnis) liegt jedoch außerhalb des
+Zuständigkeitsbereiches unseres Systems.
+
+Dozierende: erstellen Fragebögen zu den verschiedenen Veranstaltungstypen (Vorlesung, Übung, Praktium, Gruppe) oder
+auch zu Dozierenden oder Beratung. Dozierende bestimmen den Zeitraum (Datum und Uhrzeit), in dem Feedbacks abgegeben
+werden können. Außerdem haben sie die Möglichkeit, wenn sie sich die Ergebnisse ansehen, unangebrachte Antworten zu
+zensieren und die Ergebnisse der Feedbacks für die Veranstaltungsteilnehmer zu veröffentlichen.
+
+Studierende: geben anonym Feedback zu den einzelnen Veranstaltungen ab, an denen sie teilnehmen. Jede Teilnehmerin bzw.
+jeder Teilnehmer kann nur ein Feedback zu jeder einzelnen Veranstaltung geben. Wenn der für die Abgabe freigeschaltete
+Zeitraum fast zu Ende ist, wird der entsprechende Fragebogen rot markiert, um die Aufmerksamkeit der Teilnehmer
+anzuziehen.
+
+
+== Technische Abgrenzung
+
+Wir benutzen JDBC als Protokoll für unsere Datenbank und da unsere Anwendung über Docker läuft, wird keine spezielle
+Hardware für benötigt.

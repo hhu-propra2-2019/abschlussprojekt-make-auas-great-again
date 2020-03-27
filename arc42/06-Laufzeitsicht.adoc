@@ -1,1 +1,58 @@
 = Laufzeitsicht
+
+Die während der Laufzeit benötigten Daten werden den Views von den zuständigen Controllern übergeben.
+Diese greifen wiederum auf die jeweiligen Services bzw. Repositories zu,
+welche für die Logik und das Holen der gefragten Daten zuständig sind.
+
+Im Folgenden werden ein paar beispielhafte Laufzeit-Interaktionen skizziert, um dies beispielhaft zu verdeutlichen.
+
+[.thumb]
+image:images/laufzeit.png[align="center"]
+
+=== Feedback geben
+
+* Damit Studierende unser Subsystem nutzen können, müssen sie sich als erstes anmelden.
+Dies geschieht durch die Anmeldungsseite von Keycloak.
+
+* Nach der erfolgeichen Anmeldung wird der Student bzw. die Studentin auf die Übersichtsseite der Studenten weitergeleitet,
+wo sie alle Veranstaltungen, die sie besuchen, sehen können.
+
+* Der Student oder die Studentin kann sich dann aussuchen, für welche Veranstaltung das Feedback abgegeben werden soll.
+Durch das Klicken auf die gesuchte Veranstaltung, holt der Controller aus dem VeranstaltungsRepository alle Fragebögen, die man ausfüllen darf.
+Dies geschieht mit Hilfe von SubmitService, um zu vermeiden, dass ein Student oder eine Studentin mehrfach das gleiche Fragebogen ausfüllt.
+
+* Der von den Dozenten festgelegten Zeitraum wird mit Thymeleaf und JavaScript gezeigt.
+Die Abgabe eines Feedbacks erfolgt nur in dem entsprechenden Zeitraum, da nach dem Ablauf der festgelegten Frist der Zugriff auf das Fragebogen deaktiviert wird.
+
+* Klickt man auf das gewünschte Fragebogen, werden von dem Controller alle Fragen geholt, die zu dem Fragebogen gehören.
+
+* Nach dem Ausfüllen des Fragebogens kann der Student oder die Studentin das Fragebogen durch Klicken auf den "Abgeben" Button speichern.
+Das Persistieren der Antworten ist anonym. Das heißt, es wird nicht gespeichert, wer welche Antworten abgegeben hat.
+
+=== Evaluationsergebnisse sehen
+
+* Nur mit erfolgreicher Anmeldung können Studierende sich Ergebnisse anschauen, die von den Dozenten veröffentlicht worden sind.
+
+* Die Ergebnisse gehören auch zur Veranstaltungen und werden von dem zuständigen Controller aus dem VeranstaltungsRepository geholt.
+
+=== Fragebogen erstelen
+
+* Der Controller holt aus dem VeranstaltungsRepository das Fragebogen Objekt bzw. erzeugt ein neues Objekt, wo die Änderungen vorgenommen werden, wie zum Beispiel
+das Hinzufügen von Fragen oder die Änderung von Metadaten des Fragebogens.
+
+* Dozenten können ihre eigene Fragebögen erstellen, indem sie neue Fragen schreiben und den Typ der Frage bestimmen.
+Es gibt verschiede Typen von Fragen. Das sind: multipleChoice Fragen, multipleResponse Fragen und text Fragen.
+MultipleResponse Fragen unterscheiden sich von multipleChoice Fragen bei der Antwortsmöglichkeiten, sodass bei der multipleResponse Fragen mehrere Antworten möglich sind.
+Fragen können auch inzwischen gelöscht werden.
+
+* Dozenten können auch den Zeitraum eines Fragebogens festlegen sowie den Namen und den Veranstaltungstyp des Fragebogens bestimmen.
+
+* Durch Klicken auf den "Fragebogen recyclen" Button können Dozenten vorhandene Fragebögen mehrfach verwenden und bearbeiten.
+
+=== Studenten hinzufügen
+
+* Dozenten können bestimmen, welche Studierende an ihren Fragebögen teilnehmen können, indem sie die Usernames der Studenten als CSV-Datei hochladen.
+Diese Usernames werden vom Controller aufgenommen und an das VeranstaltungsRepository übergeben, das die Studenten in der entsprechenden Veranstaltung speichert.
+Studierende mit den eingegebenen Usernames dürfen dann an allen Fragebögen dieser Veranstaltung teilnehmen.
+
+* Studierende können von den Dozenten auch einzeln per Username hizugefügt werden.
