@@ -21,6 +21,9 @@ public class AntwortDto {
   private Set<AuswahlDto> auswahlen;
   
   public boolean isTextAntwort() {
+    if (auswahlen == null || textantwort == null) {
+      return true;
+    }
     return !textantwort.isEmpty() && auswahlen.isEmpty();
   }
 }
