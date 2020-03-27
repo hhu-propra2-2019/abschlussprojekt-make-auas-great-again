@@ -18,8 +18,8 @@ public class FragebogenDto {
   @Id
   private Long id;
   private String name;
-  private LocalDateTime startzeit;
-  private LocalDateTime endzeit;
+  private String startzeit;
+  private String endzeit;
   private Einheit einheit;
   
   @Column("fragebogen")

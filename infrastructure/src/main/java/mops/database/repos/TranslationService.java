@@ -1,6 +1,7 @@
 package mops.database.repos;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,11 +54,16 @@ class TranslationService {
     Long bogennr = dto.getId();
     String name = dto.getName();
     List<Frage> fragen = dto.getFragen().stream().map(this::load).collect(Collectors.toList());
-    LocalDateTime startdatum = dto.getStartzeit();
-    LocalDateTime enddatum = dto.getEndzeit();
+    LocalDateTime startdatum = parseDateTime(dto.getStartzeit());
+    LocalDateTime enddatum = parseDateTime(dto.getEndzeit());
     Einheit einheit = dto.getEinheit();
     List<Student> bearbeitet = loadBeantworter(dto.getBearbeitet());
     return new Fragebogen(bogennr, name, fragen, startdatum, enddatum, einheit, bearbeitet);
+  }
+  
+  private LocalDateTime parseDateTime(String timestamp) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    return LocalDateTime.parse(timestamp, formatter);
   }
   
   public Student load(StudentDto dto) {
@@ -108,12 +114,17 @@ class TranslationService {
     Long id = obj.getBogennr();
     String name = obj.getName();
     Set<FrageDto> fragen = obj.getFragen().stream().map(this::unload).collect(Collectors.toSet());
-    LocalDateTime startdatum = obj.getStartdatum();
-    LocalDateTime enddatum = obj.getEnddatum();
+    String startdatum = formatDateTime(obj.getStartdatum());
+    String enddatum = formatDateTime(obj.getEnddatum());
     Einheit einheit = obj.getType();
     Set<StudentBeantwortetFragebogenDto> sbf = obj.getAbgegebeneStudierende().stream()
         .map(this::unloadSbF).collect(Collectors.toSet());
     return new FragebogenDto(id, name, startdatum, enddatum, einheit, fragen, sbf);
+  }
+  
+  private String formatDateTime(LocalDateTime obj) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    return obj.format(formatter);
   }
   
   private StudentBeantwortetFragebogenDto unloadSbF(Student obj) {
