@@ -32,7 +32,7 @@ public class StudentEgebnisControllerTest {
   }
 
   @Test
-  @DisplayName("Studenten kommen auf die FrageboegenUebersicht Seite")
+  @DisplayName("Studenten kommen auf die ergebnis/FrageboegenUebersicht Seite")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void ergebnisBoegen() throws Exception {
     mvc.perform(get("/feedback/studenten/ergebnis/frageboegen")

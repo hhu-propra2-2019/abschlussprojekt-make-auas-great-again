@@ -34,7 +34,6 @@ class StudentControllerTest {
 
   @Test
   @DisplayName("Studenten kommen auf die Uebersicht Seite")
-  @Disabled
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void uebersichtSucess() throws Exception {
     mvc.perform(get("/feedback/studenten")).andExpect(status().is2xxSuccessful())
@@ -49,50 +48,19 @@ class StudentControllerTest {
   }
 
   @Test
-  @Disabled
-  @DisplayName("Student sollte auf die 'student_details'-Seite weitergeleitet werden.")
-  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
-  public void correctRedirectForDetails() throws Exception {
-    mvc.perform(get("/feedback/studenten/details").param("id", "1"))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(view().name("studenten/student_details"));
-  }
-
-  @Test
-  @DisplayName("Student sollte auf die 'ergebnis'-Seite weitergeleitet werden.")
-  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
-  public void correctRedirectForErgebnis() throws Exception {
-    mvc.perform(get("/feedback/studenten/ergebnis"))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(view().name("studenten/ergebnis"));
-  }
-
-  @Test
-  @DisplayName("Student sollte auf die 'ergebnisUebersicht'-Seite weitergeleitet werden.")
-  @Disabled
-  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
-  public void correctRedirectForErgebnisUebersicht() throws Exception {
-    mvc.perform(get("/feedback/studenten/ergebnis/frageboegen")
-        .param("veranstaltungId", "1"))
-        .andExpect(status().is2xxSuccessful())
-        .andExpect(view().name("studenten/ergebnis-frageboegen"));
-  }
-
-
-  @Test
-  @Disabled
-  @DisplayName("Student soll Feedback abgeben können.")
-  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
-  public void correctRedirectForFeedbackPost() throws Exception {
-    mvc.perform(post("/feedback/student/details/submit/1"))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/feedback/student/"));
-  }
-
-  @Test
   @DisplayName("Student sollte nicht auf die Orga Uebersicht Seite kommen")
   @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
   public void forbiddenAccessStudent() throws Exception {
     mvc.perform(get("/feedback/dozenten")).andExpect(status().is4xxClientError());
+  }
+
+  @Test
+  @DisplayName("Studenten kommen auf die Frageboegen-Uebersicht Seite")
+  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
+  public void fragebogen() throws Exception {
+    mvc.perform(get("/feedback/studenten/frageboegen")
+        .param("veranstaltungId" , "1"))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(view().name("studenten/fragebogen_uebersicht"));
   }
 }
