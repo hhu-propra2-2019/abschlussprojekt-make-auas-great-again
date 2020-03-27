@@ -16,7 +16,7 @@ import mops.DozentService;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.Veranstaltung;
-import mops.database.repos.DatenbankSchnittstelle;
+import mops.database.DatenbankSchnittstelle;
 import mops.rollen.Dozent;
 import mops.security.Account;
 

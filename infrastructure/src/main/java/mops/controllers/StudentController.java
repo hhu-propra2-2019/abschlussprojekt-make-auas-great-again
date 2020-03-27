@@ -9,7 +9,7 @@ import mops.Fragebogen;
 import mops.SubmitService;
 import mops.TypeChecker;
 import mops.Veranstaltung;
-import mops.database.repos.DatenbankSchnittstelle;
+import mops.database.DatenbankSchnittstelle;
 import mops.fragen.Frage;
 import mops.rollen.Student;
 import mops.security.Account;

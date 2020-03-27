@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import javax.annotation.security.RolesAllowed;
 import mops.DateTimeService;
 import mops.Veranstaltung;
-import mops.database.repos.DatenbankSchnittstelle;
+import mops.database.DatenbankSchnittstelle;
 import mops.filehandling.CsvReader;
 import mops.rollen.Dozent;
 import mops.rollen.Student;

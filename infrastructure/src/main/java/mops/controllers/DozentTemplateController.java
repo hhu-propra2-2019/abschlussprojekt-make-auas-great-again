@@ -3,7 +3,7 @@ package mops.controllers;
 import javax.annotation.security.RolesAllowed;
 import mops.DozentService;
 import mops.TypeChecker;
-import mops.database.repos.DatenbankSchnittstelle;
+import mops.database.DatenbankSchnittstelle;
 import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;

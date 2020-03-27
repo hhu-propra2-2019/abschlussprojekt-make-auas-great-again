@@ -1,4 +1,4 @@
-package mops.database.repos;
+package mops.database;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +26,8 @@ import mops.database.dto.StudentBeantwortetFragebogenDto;
 import mops.database.dto.StudentBelegtVeranstaltungDto;
 import mops.database.dto.StudentDto;
 import mops.database.dto.VeranstaltungDto;
+import mops.database.repos.DozentRepository;
+import mops.database.repos.StudentRepository;
 import mops.fragen.Auswahl;
 import mops.fragen.Frage;
 import mops.fragen.MultipleChoiceFrage;

@@ -14,7 +14,7 @@ import mops.DozentService;
 import mops.Fragebogen;
 import mops.TypeChecker;
 import mops.antworten.TextAntwort;
-import mops.database.repos.DatenbankSchnittstelle;
+import mops.database.DatenbankSchnittstelle;
 import mops.security.Account;
 
 @Controller

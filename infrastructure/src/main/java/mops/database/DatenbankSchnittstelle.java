@@ -1,4 +1,4 @@
-package mops.database.repos;
+package mops.database;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +9,9 @@ import mops.Veranstaltung;
 import mops.database.dto.DozentDto;
 import mops.database.dto.FragebogenDto;
 import mops.database.dto.VeranstaltungDto;
+import mops.database.repos.DozentRepository;
+import mops.database.repos.FragebogenRepository;
+import mops.database.repos.VeranstaltungRepository;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
 
