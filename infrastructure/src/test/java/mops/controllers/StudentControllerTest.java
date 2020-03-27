@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -63,4 +64,19 @@ class StudentControllerTest {
         .andExpect(status().is2xxSuccessful())
         .andExpect(view().name("studenten/fragebogen_uebersicht"));
   }
+
+  @Test
+  @DisplayName("Studenten kommen auf die fragebogen-details Seite")
+  @WithMockKeycloackAuth(roles = userrole, idToken = @WithIDToken(email = usermail))
+  public void fragebogenDetails() throws Exception {
+    LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+    requestParams.add("veranstaltung", "1");
+    requestParams.add("fragebogen", "0");
+
+    mvc.perform(get("/feedback/studenten/frageboegen/details")
+        .params(requestParams))
+        .andExpect(status().is2xxSuccessful())
+        .andExpect(view().name("studenten/fragebogen_details"));
+  }
+
 }
