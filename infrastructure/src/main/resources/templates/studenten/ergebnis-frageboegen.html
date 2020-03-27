@@ -41,7 +41,7 @@
                          src="/beratung.jpg">
 
                     <div class="card-body">
-                        <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}"></h2>
+                        <h2 class="card-title" th:text="${fragebogen.name}"></h2>
                         <a class="btn btn-link btn-sm stretched-link"
                            th:href="@{details(fragebogen=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}"
 

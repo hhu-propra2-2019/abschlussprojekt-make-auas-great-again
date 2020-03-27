@@ -38,10 +38,10 @@
                 <img alt="card-img-top" class="rounded"  th:if="${typeChecker.isBeratung(fragebogen)}"
                      src="/beratung.jpg">
                 <div class="card-body">
-                    <h2 class="card-title" th:text="${fragebogen.veranstaltungsname}">Programmierung</h2>
+                    <h2 class="card-title" th:text="${fragebogen.name}">Programmierung</h2>
                     <a  class=" btn btn-primary feedback-button stretched-link"
 
-                       th:text="${fragebogen.veranstaltungsname}"
+                       th:text="${fragebogen.name}"
                        th:href="@{/feedback/studenten/frageboegen/details
                        (fragebogen=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}"
                        th:id="'button' + ${iter.index}">

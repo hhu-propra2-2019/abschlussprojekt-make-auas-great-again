@@ -23,8 +23,7 @@
     <div class="container">
         <h1 class="display-4 text-center">Fragebogen bearbeiten</h1>
         <h3 class="text-center">Fragebogen zu: <span th:text="${neuerbogen.type.toString()}">Vorlesung</span>
-            "<span th:text="${neuerbogen.veranstaltungsname}">Veranstaltung</span>" <br> Verantwortlich: <span
-                    th:text="${neuerbogen.professorenname}">Professorenname</span>
+            "<span th:text="${neuerbogen.name}">Veranstaltung</span>"
         </h3>
     </div>
     <br>
@@ -35,7 +34,7 @@
             <div class="form-row">
                 <div class="col-md-4 mb-3">
                     <label for="startzeit">Name des Fragebogens:</label>
-                    <input class="form-control" th:value="${neuerbogen.veranstaltungsname}" id="veranstaltungsname" name="veranstaltungsname" required type="text">
+                    <input class="form-control" th:value="${neuerbogen.name}" id="veranstaltungsname" name="veranstaltungsname" required type="text">
                     <label for="veranstaltungstyp">Veranstaltungstyp:</label>
                     <select class="custom-select" id="veranstaltungstyp"
                             name="veranstaltungstyp"
@@ -131,6 +130,21 @@
                     <button class="btn btn-outline-primary" name="addbutton" type="submit">hinzufügen</button>
                 </div>
             </div>
+        </form>
+    </div>
+    <div class="container">
+        <h2>Fragen aus Template hinzufügen:</h2>
+        <form class="was-validated" method="post"
+              th:action="'/feedback/dozenten/new/questions/template/' + ${neuerbogen.bogennr}">
+            <select class="custom-select" id="bogenvorlage" name="bogenvorlage" required>
+                <div th:each="bogenvorlage : ${boegenvorlagen}">
+                    <option th:text="${bogenvorlage.name}" th:value="${bogenvorlage.id}">Vorlage
+                    </option>
+                </div>
+            </select>
+            <input name="veranstaltungid" th:value="${veranstaltung}" type="hidden">
+            <button class="btn btn-outline-primary" name="templatebutton" type="submit">hinzufügen
+            </button>
         </form>
     </div>
     <br>
