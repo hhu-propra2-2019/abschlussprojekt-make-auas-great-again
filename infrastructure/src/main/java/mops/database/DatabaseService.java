@@ -23,17 +23,6 @@ public class DatabaseService {
   
   public Fragebogen getFragebogenById(Long bogennr) {
     FragebogenDto dto = fragebogenrepo.getFragebogenById(bogennr);
-    return this.load(dto);
-  }
-  
-  public Fragebogen load(FragebogenDto dto) {
-    return new Fragebogen(dto.getId(),
-        dto.getName(),
-        List.of(dto.getFragen().stream().map(x -> load(x)).collect(Collectors.toList())),
-        null, null, null, null);
-  }
-  
-  public Frage load(FrageDto dto) {
-    
+    return TranslationService.load(dto);
   }
 }
