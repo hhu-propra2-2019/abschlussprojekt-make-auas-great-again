@@ -16,7 +16,7 @@ public class FrageDto {
   @Id
   private Long id;
   private Boolean oeffentlich;
-  private Boolean ismultipleresponse;
+  private Long fragetyp;
   private String fragetext;
   
   @Column("frage")
@@ -26,6 +26,14 @@ public class FrageDto {
   private Set<AuswahlDto> auswahlen;
   
   public boolean isTextFrage() {
-    return auswahlen.isEmpty();
+    return fragetyp == 1L;
+  }
+  
+  public boolean isMultipleChoice() {
+    return fragetyp == 2L;
+  }
+  
+  public boolean isMultipleResponse() {
+    return fragetyp == 3L;
   }
 }

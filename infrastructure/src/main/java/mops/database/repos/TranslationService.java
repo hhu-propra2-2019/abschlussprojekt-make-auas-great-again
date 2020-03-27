@@ -157,12 +157,12 @@ class TranslationService {
       Set<AuswahlDto> auswahl = ((MultipleChoiceFrage) obj).getChoices().stream()
           .map(this::unload).collect(Collectors.toSet());
       if (obj instanceof SingleResponseFrage) {
-        return new FrageDto(id, oeffentlich, false, fragetext, antworten, auswahl);
+        return new FrageDto(id, oeffentlich, 2L, fragetext, antworten, auswahl);
       } else {
-        return new FrageDto(id, oeffentlich, true, fragetext, antworten, auswahl);
+        return new FrageDto(id, oeffentlich, 3L, fragetext, antworten, auswahl);
       }
     }
-    return new FrageDto(id, oeffentlich, false, fragetext, antworten, new HashSet<>());
+    return new FrageDto(id, oeffentlich, 1L, fragetext, antworten, new HashSet<>());
   }
   
   private AntwortDto unload(Antwort obj) {
@@ -209,7 +209,7 @@ class TranslationService {
     }
     List<Auswahl> choices = dto.getAuswahlen().stream().map(this::load)
         .collect(Collectors.toList());
-    if (dto.getIsmultipleresponse()) {
+    if (dto.isMultipleResponse()) {
       return new MultipleResponseFrage(id, fragetext, choices, antworten);
     }
     return new SingleResponseFrage(id, fragetext, choices, antworten);

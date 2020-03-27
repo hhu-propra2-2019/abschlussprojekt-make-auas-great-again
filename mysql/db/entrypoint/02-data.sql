@@ -55,13 +55,13 @@ values ("studentin", 1),
        ("studentin1", 1);
 
 insert into fragebogen(id, name, startzeit, endzeit, veranstaltung, einheit)
-values (1, "Fragebogen zum Praktikum", "2020-01-01 12:00:00", "2020-05-01 12:00:00", 2, 'PRAKTIKUM');
+values (1, "Fragebogen zum Praktikum", "2020-01-01 12:00:00.000", "2020-05-01 12:00:00.000", 2, 'PRAKTIKUM');
 
-insert into frage(id, oeffentlich, ismultipleresponse, fragebogen, fragetext)
-values (1, true, false, 1, "Was war gut?"),
-       (2, true, false, 1, "Was war schlecht?"),
-       (3, true, false, 1, "Warum?"),
-       (4, true, false, 1, "Bitte ankreuzen wie gut es gefallen hat");
+insert into frage(id, oeffentlich, fragetyp, fragebogen, fragetext)
+values (1, true, 1, 1, "Was war gut?"),
+       (2, true, 1, 1, "Was war schlecht?"),
+       (3, true, 1, 1, "Warum?"),
+       (4, true, 1, 1, "Bitte ankreuzen wie gut es gefallen hat");
 
 insert into antwort(id, frage, textantwort)
 values (1, 1, "Vieles war gut"),
@@ -89,5 +89,5 @@ values ("studentin2", 1),
 insert into fragebogentemplate(id, name, dozent)
     value (1, "Vorlage", "orga1");
 
-insert into frage(id, oeffentlich, ismultipleresponse, fragebogentemplate, fragetext)
-values (5, false, false, 1, "Testfrage");
+insert into frage(id, oeffentlich, fragetyp, fragebogentemplate, fragetext)
+values (5, false, 1, 1, "Testfrage");

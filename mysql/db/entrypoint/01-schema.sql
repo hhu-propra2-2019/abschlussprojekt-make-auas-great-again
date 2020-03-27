@@ -53,7 +53,7 @@ create table if not exists frage
 (
     id bigint not null UNIQUE,
     oeffentlich boolean not null,
-    ismultipleresponse boolean not null,
+    fragetyp bigint not null,
     fragebogen bigint,
     fragebogentemplate bigint,
     fragetext varchar(100) not null,
