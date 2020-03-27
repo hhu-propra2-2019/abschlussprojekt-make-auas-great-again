@@ -26,12 +26,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 public class DozentEventControllerTest {
+  private final transient String orga = "orga";
   private final transient String orgamail = "orga@mail.de";
   private transient MockVeranstaltungsRepository mockRepo;
 
@@ -52,7 +52,7 @@ public class DozentEventControllerTest {
 
   @Test
   @DisplayName("Orga sollten auf dozenten/dozent weitergeleitet werden")
-  @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
+  @WithMockKeycloackAuth(roles = orga, idToken = @WithIDToken(email = orgamail))
   public void redirectOrgaToCorrectPage() throws Exception {
     mvc.perform(get("/feedback/dozenten"))
         .andExpect(status().is2xxSuccessful())
@@ -61,7 +61,7 @@ public class DozentEventControllerTest {
 
   @Test
   @DisplayName("VeranstaltungsErstellerseite soll geöffnet werden")
-  @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
+  @WithMockKeycloackAuth(roles = orga, idToken = @WithIDToken(email = orgamail))
   public void correctRedirectForVeranstaltungsErstellerSeite() throws Exception {
     mvc.perform(get("/feedback/dozenten/event/new"))
         .andExpect(status().is2xxSuccessful())
@@ -70,7 +70,7 @@ public class DozentEventControllerTest {
 
   @Test
   @DisplayName("Orga sollten auf Veranstaltungsdetails zugreifen können")
-  @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
+  @WithMockKeycloackAuth(roles = orga, idToken = @WithIDToken(email = orgamail))
   public void correctRedirectForVeranstaltungsDetails() throws Exception {
     mvc.perform(get("/feedback/dozenten/event/1"))
         .andDo(print())
@@ -80,7 +80,7 @@ public class DozentEventControllerTest {
 
   @Test
   @DisplayName("Können Veranstaltungen erstellt werden?")
-  @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
+  @WithMockKeycloackAuth(roles = orga, idToken = @WithIDToken(email = orgamail))
   public void correctRedirectForErstelleNeueVeranstaltung() throws Exception {
     mvc.perform(post("/feedback/dozenten/event/new")
         .with(csrf())
@@ -92,7 +92,7 @@ public class DozentEventControllerTest {
 
   @Test
   @DisplayName("Können Studenten per Csv-Datei hinzugefügt werden?")
-  @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
+  @WithMockKeycloackAuth(roles = orga, idToken = @WithIDToken(email = orgamail))
   public void correctRedirectWhenAddingStudents() throws Exception {
     MockMultipartFile file = new MockMultipartFile("file", "students.csv",
         "text/csv", "Kevin,Ben,Clara".getBytes(Charsets.UTF_8));
@@ -107,7 +107,7 @@ public class DozentEventControllerTest {
   @Test
   @Disabled
   @DisplayName("Können Studenten per Csv-Datei hinzugefügt werden?")
-  @WithMockKeycloackAuth(roles = "orga", idToken = @WithIDToken(email = orgamail))
+  @WithMockKeycloackAuth(roles = orga, idToken = @WithIDToken(email = orgamail))
   public void correctRedirectWhenAddingOneStudent() throws Exception {
     mvc.perform(get("/feedback/dozenten/event/addStudent/1")
         .with(csrf()))

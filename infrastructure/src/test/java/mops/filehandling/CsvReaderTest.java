@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.mock.web.MockMultipartFile;
 
+@SuppressWarnings("PMD")
 public class CsvReaderTest {
   private transient MockMultipartFile csvfile;
   private transient MockMultipartFile textfile;
@@ -22,13 +23,13 @@ public class CsvReaderTest {
   @BeforeEach
   public void init() {
     csvfile = new MockMultipartFile(
-        "data",
+        "csvdata",
         "filename.csv",
         "text/csv",
         "here,are,some,inputs".getBytes());
 
     textfile = new MockMultipartFile(
-        "data",
+        "textdata",
         "filename.txt",
         "text/plain",
          "here,are,a,few,more,inputs".getBytes());
@@ -70,7 +71,7 @@ public class CsvReaderTest {
   @DisplayName("Dateiname null")
   public void readerComplainsWhenFileNameIsEmpty() {
     MockMultipartFile nullFile = new MockMultipartFile(
-        "data",
+        "nullfile",
         null,
         "text/csv",
          "this,is,unreachable,content".getBytes());
@@ -88,10 +89,10 @@ public class CsvReaderTest {
   @DisplayName("Leerer Inhalt")
   public void readerComplainsWhenInputEmpty() {
     MockMultipartFile emptyFile = new MockMultipartFile(
-      "data",
-      "input.csv",
-      "text/csv",
-       "".getBytes()
+        "nocontent",
+        "input.csv",
+        "text/csv",
+        "".getBytes()
     );
 
     csvReader = new CsvReader(emptyFile, mockVeranstaltung);

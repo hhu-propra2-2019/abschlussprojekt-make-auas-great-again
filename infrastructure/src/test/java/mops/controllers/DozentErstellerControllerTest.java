@@ -58,7 +58,6 @@ public class DozentErstellerControllerTest {
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/feedback/dozenten/new/questions/"))
         .andDo(MockMvcResultHandlers.print());
-    System.out.println(mvr.getVeranstaltungById(Long.valueOf(1)).getFrageboegen().size());
   }
 
   @Test
