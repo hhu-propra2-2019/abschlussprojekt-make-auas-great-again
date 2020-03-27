@@ -9,6 +9,7 @@ import mops.Fragebogen;
 import mops.SubmitService;
 import mops.TypeChecker;
 import mops.Veranstaltung;
+import mops.database.DatabaseService;
 import mops.fragen.Frage;
 import mops.rollen.Student;
 import mops.security.Account;
@@ -26,12 +27,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class StudentController {
   public static final String studentRole = "ROLE_studentin";
   private final transient String account = "account";
-  private final transient VeranstaltungsRepository veranstaltungen;
+  private final transient DatabaseService db;
   private final transient SubmitService submitService = new SubmitService();
   private transient TypeChecker typeChecker = new TypeChecker();
 
-  public StudentController(mops.database.VeranstaltungsRepository veranstaltungen) {
-    this.veranstaltungen = veranstaltungen;
+  public StudentController(DatabaseService db) {
+    this.db = db;
   }
 
   @GetMapping("")
@@ -52,7 +53,7 @@ public class StudentController {
   @GetMapping("/frageboegen")
   @RolesAllowed(studentRole)
   public String fragebogen(KeycloakAuthenticationToken token,
-                           Model model, String search, Long veranstaltungId) {
+      Model model, String search, Long veranstaltungId) {
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungId);
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
     List<Fragebogen> notSubmittedFrageboegen = submitService
@@ -87,8 +88,8 @@ public class StudentController {
   @RolesAllowed(studentRole)
   @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public String submitFeedback(KeycloakAuthenticationToken token, @RequestParam Long bogennr,
-                               HttpServletRequest req, Model model,
-                               @RequestParam Long veranstaltung) {
+      HttpServletRequest req, Model model,
+      @RequestParam Long veranstaltung) {
     Fragebogen fragebogen =
         veranstaltungen.getFragebogenByIdFromVeranstaltung(bogennr, veranstaltung);
     Map<Long, List<String>> antworten = new HashMap<>();

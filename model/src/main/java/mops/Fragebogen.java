@@ -35,7 +35,7 @@ public class Fragebogen {
 
   public Fragebogen(String veranstaltung) {
     Random idgenerator = new Random();
-    this.bogennr = idgenerator.nextLong();
+    this.bogennr = (long) idgenerator.nextInt(2000000000);
     this.name = veranstaltung;
     this.startdatum = LocalDateTime.now().plusDays(1);
     this.enddatum = LocalDateTime.now().plusDays(8);

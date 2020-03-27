@@ -2,32 +2,28 @@ package mops.database.dto;
 
 import java.util.HashSet;
 import java.util.Set;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table("dozent")
 public class DozentDto {
-
   @Id
-  Long id;
-  String username;
-  String vorname;
-  String nachname;
-  String anrede;
-
+  private String username;
+  private String vorname;
+  private String nachname;
+  
   @Column("dozent")
-  Set<FragebogenTemplateDto> fragebogenTemplates;
-
-  public static DozentDto create(String username, String vorname, String nachname) {
-    return new DozentDto(null, username, vorname, nachname, null, new HashSet<>());
-  }
-
-  public void addFragebogenTemplate(FragebogenTemplateDto fragebogenTemplate) {
-    fragebogenTemplates.add(fragebogenTemplate);
+  private Set<FragebogenTemplateDto> templates;
+  
+  public DozentDto(String username) {
+    this.username = username;
+    this.templates = new HashSet<>();
   }
 }

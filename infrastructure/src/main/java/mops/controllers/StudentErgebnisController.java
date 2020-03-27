@@ -3,6 +3,7 @@ package mops.controllers;
 import javax.annotation.security.RolesAllowed;
 import mops.TypeChecker;
 import mops.Veranstaltung;
+import mops.database.DatabaseService;
 import mops.rollen.Student;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -18,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class StudentErgebnisController {
   public static final String studentRole = "ROLE_studentin";
   private final transient String account = "account";
-  private final transient VeranstaltungsRepository veranstaltungen;
+  private final transient DatabaseService db;
   private transient TypeChecker typeChecker = new TypeChecker();
 
-  public StudentErgebnisController(mops.database.VeranstaltungsRepository veranstaltungen) {
-    this.veranstaltungen = veranstaltungen;
+  public StudentErgebnisController(DatabaseService db) {
+    this.db = db;
   }
 
   @GetMapping("")
@@ -43,7 +44,7 @@ public class StudentErgebnisController {
   @GetMapping("/frageboegen")
   @RolesAllowed(studentRole)
   public String ergebnisBoegen(KeycloakAuthenticationToken token, Model model,
-                               @RequestParam Long veranstaltungId, String search) {
+      @RequestParam Long veranstaltungId, String search) {
     Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungId);
     if (searchNotEmpty(search)) {
       model.addAttribute("frageboegen",
@@ -61,8 +62,8 @@ public class StudentErgebnisController {
   @GetMapping("/details")
   @RolesAllowed(studentRole)
   public String ergebnisUebersicht(KeycloakAuthenticationToken token, Model model,
-                                   @RequestParam Long veranstaltung,
-                                   @RequestParam Long fragebogen) {
+      @RequestParam Long veranstaltung,
+      @RequestParam Long fragebogen) {
     model.addAttribute("fragebogen",
         veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung));
     model.addAttribute("typeChecker", typeChecker);

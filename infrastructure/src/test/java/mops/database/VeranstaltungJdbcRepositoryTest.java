@@ -37,84 +37,6 @@ public class VeranstaltungJdbcRepositoryTest {
   private transient FragebogenJdbcRepository fragebogenRepo;
 
   @Test
-  void findVeranstaltungenForDozentContainingTest() {
-    DozentDto d1 = DozentDto.create("dozent14", "jens", "ben");
-    dozentenRepo.save(d1);
-    VeranstaltungDto v1 = VeranstaltungDto.create("veran1", "WS2014");
-    VeranstaltungDto v2 = VeranstaltungDto.create("progra", "WS2023");
-    v1.addDozent(d1);
-    v2.addDozent(d1);
-    repository.save(v1);
-    repository.save(v2);
-    ArrayList<Long> liste = new ArrayList<>();
-    Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromDozentContaining(
-        dozentenRepo.findId("dozent14"), "ver");
-    veranstaltungen.forEach(v -> assertThat(v.getDozenten().contains(d1)));
-    veranstaltungen.forEach(v -> liste.add(v.getId()));
-    assertThat(liste).contains(v1.getId());
-    assertThat(liste).doesNotContain(v2.getId());
-  }
-
-  @Test
-  void findVeranstaltungenForStudentContainingTest() {
-    StudentDto s1 = StudentDto.create("student13");
-    DozentDto dozent = DozentDto.create("dozent2", "vor2", "nach2");
-    studentenRepo.save(s1);
-    dozentenRepo.save(dozent);
-    VeranstaltungDto v1 = VeranstaltungDto.create("veran2", "WS2014");
-    VeranstaltungDto v2 = VeranstaltungDto.create("progra", "WS2023");
-    v1.addDozent(dozent);
-    v2.addDozent(dozent);
-    v1.addStudent(s1);
-    v2.addStudent(s1);
-    repository.save(v1);
-    repository.save(v2);
-    ArrayList<Long> liste = new ArrayList<>();
-    Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromStudentContaining(
-        studentenRepo.findId("student13"), "ver");
-    veranstaltungen.forEach(v -> liste.add(v.getId()));
-    veranstaltungen.forEach(v -> assertThat(v.getStudenten().contains(s1)));
-    assertThat(liste).contains(v1.getId());
-    assertThat(liste).doesNotContain(v2.getId());
-  }
-
-  @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
-  @Test
-  void findVeranstaltungenForDozentTest() {
-    DozentDto d1 = DozentDto.create("dozent33", "jens", "ben");
-    dozentenRepo.save(d1);
-    VeranstaltungDto v1 = VeranstaltungDto.create("veran1", "WS2018");
-    v1.addDozent(d1);
-    VeranstaltungDto v2 = VeranstaltungDto.create("veran2", "WS2022");
-    v2.addDozent(d1);
-    repository.save(v1);
-    repository.save(v2);
-    Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromDozent(
-        dozentenRepo.findId("dozent33"));
-    veranstaltungen.forEach(v -> assertThat(v.getDozenten().contains(d1)));
-  }
-
-  @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
-  @Test
-  void findVeranstaltungenForStudentTest() {
-    StudentDto s1 = StudentDto.create("student31");
-    studentenRepo.save(s1);
-    DozentDto dozent = DozentDto.create("orga6", "vor", "nach");
-    dozentenRepo.save(dozent);
-    VeranstaltungDto v1 = VeranstaltungDto.create("veran1", "WS2015");
-    VeranstaltungDto v2 = VeranstaltungDto.create("veran2", "WS2017");
-    v1.addStudent(s1);
-    v2.addStudent(s1);
-    v1.addDozent(dozent);
-    v2.addDozent(dozent);
-    repository.save(v1);
-    repository.save(v2);
-    Iterable<VeranstaltungDto> veranstaltungen = repository.getAllFromStudent(
-        studentenRepo.findId("student31"));
-    veranstaltungen.forEach(v -> assertThat(v.getStudenten().contains(s1)));
-  }
-
-  @Test
   void findVeranstaltungContainingTest() {
     DozentDto dozent = DozentDto.create("dozent11", "vorn", "nachn");
     dozentenRepo.save(dozent);
@@ -133,30 +55,6 @@ public class VeranstaltungJdbcRepositoryTest {
     assertThat(liste).contains(v1.getId());
     assertThat(liste).doesNotContain(v2.getId());
     assertThat(liste).contains(v3.getId());
-  }
-
-  @Test
-  void findDozentByUsernameTest() {
-    DozentDto dozent1 = DozentDto.create("orga11", "jens", "ben");
-    DozentDto dozent2 = DozentDto.create("orga12", "ann", "kathrin");
-    dozentenRepo.save(dozent1);
-    dozentenRepo.save(dozent2);
-    Long id1 = dozentenRepo.findId("orga11");
-    Long id2 = dozentenRepo.findId("orga12");
-    assertThat(dozent1.getId()).isEqualTo(id1);
-    assertThat(dozent2.getId()).isEqualTo(id2);
-  }
-
-  @Test
-  void findStudentByUsernameTest() {
-    StudentDto student1 = StudentDto.create("student11");
-    StudentDto student2 = StudentDto.create("student22");
-    studentenRepo.save(student1);
-    studentenRepo.save(student2);
-    Long id1 = studentenRepo.findId("student11");
-    Long id2 = studentenRepo.findId("student22");
-    assertThat(student1.getId()).isEqualTo(id1);
-    assertThat(student2.getId()).isEqualTo(id2);
   }
 
   @Test
@@ -214,7 +112,7 @@ public class VeranstaltungJdbcRepositoryTest {
     List<Set<FragebogenDto>> frageboegen = new ArrayList<>();
     Iterable<VeranstaltungDto> result = repository.findAll();
     result.forEach(dto -> frageboegen.add(dto.getFrageboegen()));
-    List<FragebogenDto> bogen = new ArrayList<FragebogenDto>(frageboegen.get(0));
+    List<FragebogenDto> bogen = new ArrayList<>(frageboegen.get(0));
     bogen.forEach(b -> fragen.add(b.getFragen()));
     assertThat(fragen).isNotEmpty();
   }

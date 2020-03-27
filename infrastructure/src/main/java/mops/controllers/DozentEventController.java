@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import javax.annotation.security.RolesAllowed;
 import mops.DateTimeService;
 import mops.Veranstaltung;
+import mops.database.DatabaseService;
 import mops.filehandling.CsvReader;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
@@ -24,18 +25,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/feedback/dozenten")
 public class DozentEventController {
   private static final String ORGA_ROLE = "ROLE_orga";
-  private final transient VeranstaltungsRepository veranstaltungen;
+  private final transient DatabaseService db;
   private final transient DateTimeService datetime = new DateTimeService();
   private transient CsvReader csvReader;
 
-  public DozentEventController(mops.database.VeranstaltungsRepository veranstaltungen) {
-    this.veranstaltungen = veranstaltungen;
+  public DozentEventController(DatabaseService db) {
+    this.db = db;
   }
 
   @GetMapping("")
   @RolesAllowed(ORGA_ROLE)
   public String getOrganisatorMainPage(KeycloakAuthenticationToken token, Model model,
-                                       String search) {
+      String search) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     if (searchNotEmpty(search)) {
       model.addAttribute("veranstaltungen",
@@ -57,7 +58,7 @@ public class DozentEventController {
   @GetMapping("/event/{veranstaltung}")
   @RolesAllowed(ORGA_ROLE)
   public String getVeranstaltungsDetails(KeycloakAuthenticationToken token, Model model,
-                                         @PathVariable Long veranstaltung) {
+      @PathVariable Long veranstaltung) {
     model.addAttribute("account", createAccountFromPrincipal(token));
     model.addAttribute("datetime", datetime);
     model.addAttribute("currenttime", LocalDateTime.now());
@@ -69,7 +70,7 @@ public class DozentEventController {
   @PostMapping("/event/new")
   @RolesAllowed(ORGA_ROLE)
   public String erstelleNeueVeranstaltung(KeycloakAuthenticationToken token,
-                                          String veranstaltungsname, String semester) {
+      String veranstaltungsname, String semester) {
     Veranstaltung neu = new Veranstaltung(veranstaltungsname, semester,
         createDozentFromToken(token));
     veranstaltungen.save(neu);
@@ -79,8 +80,8 @@ public class DozentEventController {
   @PostMapping("/event/addStudenten/{veranstaltungsNr}")
   @RolesAllowed(ORGA_ROLE)
   public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                 @PathVariable Long veranstaltungsNr,
-                                 RedirectAttributes redirectAttributes) {
+      @PathVariable Long veranstaltungsNr,
+      RedirectAttributes redirectAttributes) {
     csvReader = new CsvReader(file, veranstaltungen.getVeranstaltungById(veranstaltungsNr));
     veranstaltungen.save(csvReader.getVeranstaltung());
     redirectAttributes.addFlashAttribute("message", csvReader.getMessage());
@@ -91,8 +92,8 @@ public class DozentEventController {
   @PostMapping("/event/addStudent/{veranstaltungsNr}")
   @RolesAllowed(ORGA_ROLE)
   public String addStudent(@PathVariable Long veranstaltungsNr,
-                           RedirectAttributes redirectAttributes,
-                           String newStudent) {
+      RedirectAttributes redirectAttributes,
+      String newStudent) {
     Student student = new Student(newStudent);
     veranstaltungen.addStudentToVeranstaltungById(student, veranstaltungsNr);
     redirectAttributes.addFlashAttribute("message", newStudent
@@ -114,6 +115,6 @@ public class DozentEventController {
   }
 
   private boolean searchNotEmpty(String search) {
-    return !"".equals(search) && (search != null);
+    return !"".equals(search) && search != null;
   }
 }

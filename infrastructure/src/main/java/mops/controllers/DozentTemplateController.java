@@ -3,6 +3,7 @@ package mops.controllers;
 import javax.annotation.security.RolesAllowed;
 import mops.DozentService;
 import mops.TypeChecker;
+import mops.database.DatabaseService;
 import mops.rollen.Dozent;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -23,10 +24,10 @@ public class DozentTemplateController {
 
   private final transient DozentService dozentservice;
   private final transient TypeChecker typechecker;
-  private final transient VeranstaltungsRepository veranstaltungen;
+  private final transient DatabaseService db;
 
-  public DozentTemplateController(mops.database.VeranstaltungsRepository veranstaltungen) {
-    this.veranstaltungen = veranstaltungen;
+  public DozentTemplateController(DatabaseService db) {
+    this.db = db;
     dozentservice = new DozentService();
     typechecker = new TypeChecker();
   }
@@ -50,7 +51,7 @@ public class DozentTemplateController {
   @GetMapping("/{templatenr}")
   @RolesAllowed(ORGA_ROLE)
   public String templateBearbeitung(@PathVariable Long templatenr,
-                                    KeycloakAuthenticationToken token, Model model) {
+      KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
     model.addAttribute("template", dozent.getTemplateById(templatenr));
     model.addAttribute("typechecker", typechecker);
@@ -61,7 +62,7 @@ public class DozentTemplateController {
   @PostMapping("/{templatenr}")
   @RolesAllowed(ORGA_ROLE)
   public String neueFrage(@PathVariable Long templatenr, KeycloakAuthenticationToken token,
-                          String fragetyp, String fragetext) {
+      String fragetyp, String fragetext) {
     Dozent dozent = getDozentFromToken(token);
     dozentservice.addFrageZuTemplate(dozent, templatenr, fragetyp, fragetext);
     return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templatenr;
@@ -70,7 +71,7 @@ public class DozentTemplateController {
   @GetMapping("/{templatenr}/{fragennr}")
   @RolesAllowed(ORGA_ROLE)
   public String editMultipleChoiceQuestion(@PathVariable Long templatenr,
-                                           @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
+      @PathVariable Long fragennr, KeycloakAuthenticationToken token, Model model) {
     Dozent dozent = getDozentFromToken(token);
     model.addAttribute("account", createAccountFromPrincipal(token));
     model.addAttribute("frage", dozentservice.getMultipleChoiceFromTemplate(fragennr,
