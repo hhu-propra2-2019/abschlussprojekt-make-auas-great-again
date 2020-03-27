@@ -24,6 +24,8 @@ public class MockVeranstaltungsRepository implements VeranstaltungsRepository {
     for (Veranstaltung veranstaltung : veranstaltungList) {
       veranstaltungen.put(veranstaltung.getVeranstaltungsNr(), veranstaltung);
     }
+    Veranstaltung veranstaltung = veranstaltungList.get(0);
+    veranstaltungen.put(1L, veranstaltung);
   }
 
   @Override
