@@ -24,7 +24,7 @@ public class CsvReaderTest {
   @BeforeEach
   public void init() {
     csvfile = new MockMultipartFile(
-        "data",
+        "csvdata",
         "filename.csv",
         "text/csv",
         "here,are,some,inputs".getBytes(StandardCharsets.UTF_8));

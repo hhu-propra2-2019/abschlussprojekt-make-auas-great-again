@@ -32,6 +32,7 @@ public class CsvReader {
     message = "";
     messageStatus = "";
 
+
     if (veranstaltung != null && isFileVerified()) {
       readFromFile();
     }
