@@ -1,7 +1,7 @@
 package mops.database.repos;
 
-import org.springframework.data.repository.CrudRepository;
 import mops.database.dto.StudentDto;
+import org.springframework.data.repository.CrudRepository;
 
 public interface StudentRepository extends CrudRepository<StudentDto, String> {
 

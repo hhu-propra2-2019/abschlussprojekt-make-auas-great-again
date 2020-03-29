@@ -66,7 +66,10 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   public void deleteChoice(Long id) {
-    Auswahl toRemove = choices.stream().filter(x -> x.getId().equals(id)).findFirst()
+    Auswahl toRemove = choices
+        .stream()
+        .filter(x -> x.getId().equals(id))
+        .findFirst()
         .orElse(new Auswahl(""));
     choices.remove(toRemove);
   }
@@ -79,7 +82,7 @@ public class MultipleChoiceFrage extends Frage {
   public void addAntwort(String antwort) {
     Auswahl auswahl = new Auswahl(antwort);
     if (choices.contains(auswahl)) {
-      MultipleChoiceAntwort neu = new MultipleChoiceAntwort();
+      MultipleChoiceAntwort neu = new MultipleChoiceAntwort(new ArrayList<>());
       neu.addAntwort(auswahl);
       this.antworten.add(neu);
     }

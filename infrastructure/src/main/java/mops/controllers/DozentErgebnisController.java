@@ -1,6 +1,12 @@
 package mops.controllers;
 
 import javax.annotation.security.RolesAllowed;
+import mops.DozentService;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.antworten.TextAntwort;
+import mops.database.DatenbankSchnittstelle;
+import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -10,12 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import mops.DozentService;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.antworten.TextAntwort;
-import mops.database.DatenbankSchnittstelle;
-import mops.security.Account;
 
 @Controller
 @RequestMapping("/feedback/dozenten/watch")
@@ -66,7 +66,6 @@ public class DozentErgebnisController {
       @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token,
       RedirectAttributes ra, Long veranstaltungid) {
     ra.addAttribute("veranstaltungid", veranstaltungid);
-    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     db.zensiereTextAntwort(antwortnr, textfeld);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }

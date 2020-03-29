@@ -10,7 +10,7 @@ import mops.fragen.MultipleChoiceFrage;
 import mops.fragen.TextFrage;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings( {"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
+@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class TypeCheckerTest {
 
   @Test

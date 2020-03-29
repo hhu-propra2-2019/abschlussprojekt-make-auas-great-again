@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import mops.antworten.TextAntwort;
 import mops.fragen.Frage;
@@ -117,9 +118,10 @@ public class DozentServiceTest {
 
   @Test
   public void multipleChoiceFrageAusTemplateWirdKorrektGeholt() {
-    FragebogenTemplate template = new FragebogenTemplate("Test");
-    Dozent dozent = new Dozent("heinz001");
-    SingleResponseFrage frage1 = new SingleResponseFrage(1L, "Testfrage1");
+    FragebogenTemplate template = new FragebogenTemplate(1L, "Test", new ArrayList<>());
+    Dozent dozent = new Dozent("heinz001", "Heinz", "Mustermann", new ArrayList<>());
+    SingleResponseFrage frage1 =
+        new SingleResponseFrage(1L, "Testfrage1", false, new ArrayList<>(), new ArrayList<>());
     template.addFrage(frage1);
     template.addFrage(new MultipleResponseFrage(2L, "Testfrage2"));
     dozent.addTemplate(template);

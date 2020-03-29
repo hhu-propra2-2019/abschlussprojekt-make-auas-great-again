@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import mops.Einheit;
 import mops.Fragebogen;
@@ -36,6 +35,7 @@ import mops.fragen.SingleResponseFrage;
 import mops.fragen.TextFrage;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
@@ -63,11 +63,6 @@ class TranslationService {
     return new Fragebogen(bogennr, name, fragen, startdatum, enddatum, einheit, bearbeitet);
   }
   
-  private LocalDateTime parseDateTime(String timestamp) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-    return LocalDateTime.parse(timestamp, formatter);
-  }
-  
   public Student load(StudentDto dto) {
     String username = dto.getUsername();
     return new Student(username);
@@ -91,6 +86,40 @@ class TranslationService {
     return new FragebogenTemplate(id, name, fragen);
   }
   
+  private Antwort load(AntwortDto dto) {
+    Long id = dto.getId();
+    if (dto.isTextAntwort()) {
+      String textantwort = dto.getTextantwort();
+      return new TextAntwort(id, textantwort);
+    }
+    List<Auswahl> choices = dto.getAuswahlen().stream().map(this::load)
+        .collect(Collectors.toList());
+    return new MultipleChoiceAntwort(id, choices);
+  }
+
+  private Auswahl load(AuswahlDto dto) {
+    Long id = dto.getId();
+    String auswahltext = dto.getAuswahltext();
+    return new Auswahl(id, auswahltext);
+  }
+
+  private Frage load(FrageDto dto) {
+    Long id = dto.getId();
+    Boolean oeffentlich = dto.getOeffentlich();
+    String fragetext = dto.getFragetext();
+    List<Antwort> antworten = dto.getAntworten().stream().map(this::load)
+        .collect(Collectors.toList());
+    if (dto.isTextFrage()) {
+      return new TextFrage(id, oeffentlich, fragetext, antworten);
+    }
+    List<Auswahl> choices = dto.getAuswahlen().stream().map(this::load)
+        .collect(Collectors.toList());
+    if (dto.isMultipleResponse()) {
+      return new MultipleResponseFrage(id, fragetext, oeffentlich, choices, antworten);
+    }
+    return new SingleResponseFrage(id, fragetext, oeffentlich, choices, antworten);
+  }
+  
   public VeranstaltungDto unload(Veranstaltung obj) {
     Long id = obj.getVeranstaltungsNr();
     String name = obj.getName();
@@ -108,14 +137,6 @@ class TranslationService {
     }
   }
   
-  private StudentBelegtVeranstaltungDto unloadSbV(Student obj) {
-    return new StudentBelegtVeranstaltungDto(obj.getUsername());
-  }
-  
-  private DozentOrganisiertVeranstaltungDto unloadDoV(Dozent obj) {
-    return new DozentOrganisiertVeranstaltungDto(obj.getUsername());
-  }
-  
   public FragebogenDto unload(Fragebogen obj) {
     Long id = obj.getBogennr();
     String name = obj.getName();
@@ -130,15 +151,6 @@ class TranslationService {
     } else {
       return new FragebogenDto(name, startdatum, enddatum, einheit, fragen, sbf);
     }
-  }
-  
-  private String formatDateTime(LocalDateTime obj) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-    return obj.format(formatter);
-  }
-  
-  private StudentBeantwortetFragebogenDto unloadSbF(Student obj) {
-    return new StudentBeantwortetFragebogenDto(obj.getUsername());
   }
   
   public DozentDto unload(Dozent obj) {
@@ -216,40 +228,6 @@ class TranslationService {
       return new AuswahlDto(label);
     }
   }
-  
-  private Antwort load(AntwortDto dto) {
-    Long id = dto.getId();
-    if (dto.isTextAntwort()) {
-      String textantwort = dto.getTextantwort();
-      return new TextAntwort(id, textantwort);
-    }
-    List<Auswahl> choices = dto.getAuswahlen().stream().map(this::load)
-        .collect(Collectors.toList());
-    return new MultipleChoiceAntwort(id, choices);
-  }
-
-  private Auswahl load(AuswahlDto dto) {
-    Long id = dto.getId();
-    String auswahltext = dto.getAuswahltext();
-    return new Auswahl(id, auswahltext);
-  }
-
-  private Frage load(FrageDto dto) {
-    Long id = dto.getId();
-    Boolean oeffentlich = dto.getOeffentlich();
-    String fragetext = dto.getFragetext();
-    List<Antwort> antworten = dto.getAntworten().stream().map(this::load)
-        .collect(Collectors.toList());
-    if (dto.isTextFrage()) {
-      return new TextFrage(id, oeffentlich, fragetext, antworten);
-    }
-    List<Auswahl> choices = dto.getAuswahlen().stream().map(this::load)
-        .collect(Collectors.toList());
-    if (dto.isMultipleResponse()) {
-      return new MultipleResponseFrage(id, fragetext, oeffentlich, choices, antworten);
-    }
-    return new SingleResponseFrage(id, fragetext, oeffentlich, choices, antworten);
-  }
 
   private List<Dozent> loadOrganisatoren(Set<DozentOrganisiertVeranstaltungDto> dtos) {
     return dtos.stream().map(this::getDozentDtoFromOrganisiert).map(this::load)
@@ -276,5 +254,27 @@ class TranslationService {
   
   private StudentDto getStudentDtoFromBelegt(StudentBelegtVeranstaltungDto dto) {
     return studentrepo.findById(dto.getStudent()).get();
+  }
+  
+  private LocalDateTime parseDateTime(String timestamp) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    return LocalDateTime.parse(timestamp, formatter);
+  }
+  
+  private StudentBelegtVeranstaltungDto unloadSbV(Student obj) {
+    return new StudentBelegtVeranstaltungDto(obj.getUsername());
+  }
+  
+  private DozentOrganisiertVeranstaltungDto unloadDoV(Dozent obj) {
+    return new DozentOrganisiertVeranstaltungDto(obj.getUsername());
+  }
+  
+  private String formatDateTime(LocalDateTime obj) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+    return obj.format(formatter);
+  }
+  
+  private StudentBeantwortetFragebogenDto unloadSbF(Student obj) {
+    return new StudentBeantwortetFragebogenDto(obj.getUsername());
   }
 }

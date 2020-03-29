@@ -17,13 +17,13 @@ class MultipleChoiceFrageTest {
 
   @Test
   void deleteChoice() {
-    MultipleChoiceFrage frage = new MultipleChoiceFrage("Hallo?");
-    Auswahl neu = new Auswahl("Hi");
+    MultipleChoiceFrage frage = new MultipleChoiceFrage(1L, "Hallo?");
+    Auswahl neu = new Auswahl(1L, "Hi");
 
     frage.addChoice(neu);
-    frage.deleteChoice(neu.getId());
+    frage.deleteChoice(1L);
 
-    Assertions.assertFalse(frage.containsChoice("Hi"));
+    Assertions.assertFalse(frage.getChoices().contains(neu));
   }
 
   @Test

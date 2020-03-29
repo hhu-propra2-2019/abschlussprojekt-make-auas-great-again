@@ -111,7 +111,7 @@ class FragebogenTest {
 
   @Test
   public void getFrageTest() {
-    TextFrage neueFrage = new TextFrage("lorem");
+    TextFrage neueFrage = new TextFrage(1L, false, "lorem", List.of());
     fragebogen.addFrage(neueFrage);
     TextFrage frage = (TextFrage) fragebogen.getFrage(neueFrage.getId());
     Assertions.assertEquals(frage, neueFrage);

@@ -2,6 +2,14 @@ package mops.controllers;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
+import mops.DateTimeService;
+import mops.DozentService;
+import mops.Fragebogen;
+import mops.TypeChecker;
+import mops.Veranstaltung;
+import mops.database.DatenbankSchnittstelle;
+import mops.rollen.Dozent;
+import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.stereotype.Controller;
@@ -11,14 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import mops.DateTimeService;
-import mops.DozentService;
-import mops.Fragebogen;
-import mops.TypeChecker;
-import mops.Veranstaltung;
-import mops.database.DatenbankSchnittstelle;
-import mops.rollen.Dozent;
-import mops.security.Account;
 
 @Controller
 @RequestMapping("/feedback/dozenten/new")
@@ -59,13 +59,13 @@ public class DozentErstellerController {
       @PathVariable Long bogennr) {
     Veranstaltung veranstaltung = db.getVeranstaltungById(veranstaltungid);
     Fragebogen fragebogen = db.getFragebogenById(bogennr);
-    Long neuebogennr = dozentservice.kloneFragebogen(fragebogen, veranstaltung);
+    dozentservice.kloneFragebogen(fragebogen, veranstaltung);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     db.saveVeranstaltung(veranstaltung);
     return "redirect:/feedback/dozenten/event/" + veranstaltungid;
   }
 
-  @SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
+  @SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
   @PostMapping("/questions/template/{bogennr}")
   public String fuegeTemplateHinzu(@PathVariable Long bogennr, Long bogenvorlage,
       KeycloakAuthenticationToken token, Long veranstaltungid, RedirectAttributes ra) {

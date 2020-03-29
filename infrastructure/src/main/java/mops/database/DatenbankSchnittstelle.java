@@ -2,11 +2,9 @@ package mops.database;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import mops.Fragebogen;
 import mops.Veranstaltung;
-import mops.antworten.TextAntwort;
 import mops.database.dto.DozentDto;
 import mops.database.dto.FragebogenDto;
 import mops.database.dto.VeranstaltungDto;
@@ -16,6 +14,7 @@ import mops.database.repos.VeranstaltungRepository;
 import mops.fragen.Frage;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
