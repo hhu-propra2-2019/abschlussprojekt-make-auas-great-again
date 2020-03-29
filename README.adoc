@@ -13,6 +13,11 @@ endif::[]
 
 Dieses Subsystem der "Modularen Online Plattform für Studierende" (Mops) implementiert das Management und die Abgabe der Studentenbefragungen an der HHU.
 
+== Hinweise zu Branches
+
+IMPORTANT: *Im Branch `master` sowie im `Integrationsbranch` befindet sich eine stabile Version – jedoch ohne Datenbankanbindung. Eine Version mit Datenbankanbindung befindet sich im Branch `datenbank-anbindung`, diese enthält jedoch noch vereinzelte Bugs.*
+
+
 == Warum ein Feedback System?
 
 Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
@@ -38,4 +43,3 @@ docker-compose up
 - Die vollständige Dokumentation befindet sich im Ordner arc-42
 
 include::arc42/arc24.adoc[]
-
