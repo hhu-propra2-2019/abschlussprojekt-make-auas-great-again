@@ -17,7 +17,7 @@ public class TextFrage extends Frage {
   }
 
   public TextFrage(Long id, String fragentext) {
-    super(id);
+    super(id, false);
     this.fragentext = fragentext;
     antworten = new ArrayList<>();
   }

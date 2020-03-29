@@ -16,7 +16,7 @@ public class MultipleChoiceFrage extends Frage {
   private List<Antwort> antworten;
 
   public MultipleChoiceFrage(Long id, String fragentext) {
-    super(id);
+    super(id, false);
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     this.antworten = new ArrayList<>();
@@ -25,7 +25,6 @@ public class MultipleChoiceFrage extends Frage {
   public MultipleChoiceFrage(String fragentext) {
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
-    fillDummyChoices();
     this.antworten = new ArrayList<>();
   }
   
@@ -47,13 +46,6 @@ public class MultipleChoiceFrage extends Frage {
     this.choices = new ArrayList<>();
     choices.stream().forEach(x -> this.addChoice(x));
     this.antworten = new ArrayList<>();
-  }
-
-  private void fillDummyChoices() {
-    this.addChoice(new Auswahl("Trifft voll und ganz zu"));
-    this.addChoice(new Auswahl("Trifft zu"));
-    this.addChoice(new Auswahl("Trifft eher nicht zu"));
-    this.addChoice(new Auswahl("Trifft überhaupt nicht zu"));
   }
 
   public void addChoice(Auswahl choice) {

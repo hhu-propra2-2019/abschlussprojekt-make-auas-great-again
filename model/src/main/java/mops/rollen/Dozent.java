@@ -28,7 +28,6 @@ public class Dozent {
     templates.add(template);
   }
 
-
   @Override
   public String toString() {
     return vorname + " " + nachname;

@@ -1,7 +1,9 @@
 package mops.antworten;
 
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
 public class TextAntwort extends Antwort {
   @Setter
   private transient String antworttext;
@@ -12,10 +14,6 @@ public class TextAntwort extends Antwort {
 
   public TextAntwort(Long id, String antworttext) {
     super(id);
-    this.antworttext = antworttext;
-  }
-
-  public TextAntwort(String antworttext) {
     this.antworttext = antworttext;
   }
 

@@ -1,7 +1,6 @@
 package mops;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -129,35 +128,5 @@ public class DozentServiceTest {
     MultipleChoiceFrage totest = service.getMultipleChoiceFromTemplate(1L, dozent, 1L);
 
     assertEquals(totest, frage1);
-  }
-
-  @Test
-  public void textAntwortWirdKorrektZensiert() {
-    TextFrage frage = new TextFrage(1L, WIE_GEHTS);
-    TextAntwort antwort1 = new TextAntwort(1L, "Schlecht");
-    TextAntwort antwort2 = new TextAntwort(2L, "Sehr schlecht");
-    frage.addAntwort(antwort1);
-    frage.addAntwort(antwort2);
-    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I);
-    fragebogen.addFrage(frage);
-
-    service.zensiereTextAntwort(fragebogen, 1L, 2L, "Sehr sehr schlecht");
-
-    assertEquals(antwort1.toString(), "Schlecht");
-    assertEquals(antwort2.toString(), "Sehr sehr schlecht");
-  }
-
-  @Test
-  public void korrekteFrageWirdVeroeffentlicht() {
-    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I);
-    TextFrage frage = new TextFrage(1L, WIE_GEHTS);
-    TextFrage frage2 = new TextFrage(2L, "Die Vorlesung ist strukturiert");
-    fragebogen.addFrage(frage);
-    fragebogen.addFrage(frage2);
-
-    service.aendereOeffentlichkeitVonFrage(fragebogen, 1L);
-
-    assertTrue(frage.isOeffentlich());
-    assertFalse(frage2.isOeffentlich());
   }
 }

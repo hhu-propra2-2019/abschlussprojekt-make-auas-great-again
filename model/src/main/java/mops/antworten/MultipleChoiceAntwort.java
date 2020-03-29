@@ -3,10 +3,12 @@ package mops.antworten;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mops.fragen.Auswahl;
 
+@AllArgsConstructor
 @NoArgsConstructor
 public class MultipleChoiceAntwort extends Antwort {
   @Getter
@@ -19,10 +21,6 @@ public class MultipleChoiceAntwort extends Antwort {
 
   public MultipleChoiceAntwort(Long id, List<Auswahl> choices) {
     super(id);
-    gewaehlteAntworten = choices;
-  }
-
-  public MultipleChoiceAntwort(List<Auswahl> choices) {
     gewaehlteAntworten = choices;
   }
 

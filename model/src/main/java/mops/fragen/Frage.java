@@ -1,26 +1,19 @@
 package mops.fragen;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import mops.antworten.Antwort;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public abstract class Frage {
   @Getter
   private transient Long id;
   private transient boolean oeffentlich;
-
-  public Frage(Long id) {
-    this.id = id;
-  }
-
-  public Frage(Long id, boolean oeffentlich) {
-    this.id = id;
-    this.oeffentlich = oeffentlich;
-  }
 
   public void aendereOeffentlichkeitsStatus() {
     oeffentlich = !oeffentlich;
