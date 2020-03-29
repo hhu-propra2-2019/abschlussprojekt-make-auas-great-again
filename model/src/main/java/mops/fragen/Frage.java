@@ -17,6 +17,11 @@ public abstract class Frage {
     this.id = id;
   }
 
+  public Frage(Long id, boolean oeffentlich) {
+    this.id = id;
+    this.oeffentlich = oeffentlich;
+  }
+
   public void aendereOeffentlichkeitsStatus() {
     oeffentlich = !oeffentlich;
   }

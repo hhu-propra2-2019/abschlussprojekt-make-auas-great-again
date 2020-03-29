@@ -13,9 +13,9 @@ public class SingleResponseFrage extends MultipleChoiceFrage {
     super(fragentext);
   }
 
-  public SingleResponseFrage(Long id, String fragentext, List<Auswahl> choices,
-      List<Antwort> antworten) {
-    super(id, fragentext, choices, antworten);
+  public SingleResponseFrage(Long id, String fragentext, Boolean oeffentlich,
+      List<Auswahl> choices, List<Antwort> antworten) {
+    super(id, fragentext, oeffentlich, choices, antworten);
   }
 
   @Override

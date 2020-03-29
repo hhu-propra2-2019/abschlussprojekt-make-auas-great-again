@@ -30,8 +30,9 @@ public class MultipleChoiceFrage extends Frage {
     this.antworten = new ArrayList<>();
   }
   
-  public MultipleChoiceFrage(Long id, String fragentext, List<Auswahl> choices, List<Antwort> antworten) {
-    super(id);
+  public MultipleChoiceFrage(Long id, String fragentext, Boolean oeffentlich,
+      List<Auswahl> choices, List<Antwort> antworten) {
+    super(id, oeffentlich);
     this.fragentext = fragentext;
     this.choices = choices;
     this.antworten = antworten;

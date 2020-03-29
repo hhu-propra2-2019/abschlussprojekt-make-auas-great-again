@@ -10,8 +10,8 @@ public class TextFrage extends Frage {
   private transient String fragentext;
   private transient List<Antwort> antworten;
 
-  public TextFrage(Long id, String fragentext, List<Antwort> antworten) {
-    super(id);
+  public TextFrage(Long id, Boolean oeffentlich, String fragentext, List<Antwort> antworten) {
+    super(id, oeffentlich);
     this.fragentext = fragentext;
     this.antworten = antworten;
   }

@@ -12,9 +12,9 @@ public class MultipleResponseFrage extends MultipleChoiceFrage {
     super(fragentext);
   }
 
-  public MultipleResponseFrage(Long id, String fragentext, List<Auswahl> choices,
-      List<Antwort> antworten) {
-    super(id, fragentext, choices, antworten);
+  public MultipleResponseFrage(Long id, String fragentext, Boolean oeffentlich,
+      List<Auswahl> choices, List<Antwort> antworten) {
+    super(id, fragentext, oeffentlich, choices, antworten);
   }
 
   @Override

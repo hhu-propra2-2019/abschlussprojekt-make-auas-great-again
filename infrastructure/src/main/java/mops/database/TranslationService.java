@@ -236,18 +236,19 @@ class TranslationService {
 
   private Frage load(FrageDto dto) {
     Long id = dto.getId();
+    Boolean oeffentlich = dto.getOeffentlich();
     String fragetext = dto.getFragetext();
     List<Antwort> antworten = dto.getAntworten().stream().map(this::load)
         .collect(Collectors.toList());
     if (dto.isTextFrage()) {
-      return new TextFrage(id, fragetext, antworten);
+      return new TextFrage(id, oeffentlich, fragetext, antworten);
     }
     List<Auswahl> choices = dto.getAuswahlen().stream().map(this::load)
         .collect(Collectors.toList());
     if (dto.isMultipleResponse()) {
-      return new MultipleResponseFrage(id, fragetext, choices, antworten);
+      return new MultipleResponseFrage(id, fragetext, oeffentlich, choices, antworten);
     }
-    return new SingleResponseFrage(id, fragetext, choices, antworten);
+    return new SingleResponseFrage(id, fragetext, oeffentlich, choices, antworten);
   }
 
   private List<Dozent> loadOrganisatoren(Set<DozentOrganisiertVeranstaltungDto> dtos) {
