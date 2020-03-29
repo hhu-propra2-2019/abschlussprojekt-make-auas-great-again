@@ -67,8 +67,7 @@ public class DozentErgebnisController {
       RedirectAttributes ra, Long veranstaltungid) {
     ra.addAttribute("veranstaltungid", veranstaltungid);
     Fragebogen fragebogen = db.getFragebogenById(bogennr);
-    dozentservice.zensiereTextAntwort(fragebogen, fragennr, antwortnr, textfeld);
-    db.saveFragebogen(fragebogen);
+    db.zensiereTextAntwort(antwortnr, textfeld);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
@@ -79,8 +78,7 @@ public class DozentErgebnisController {
       RedirectAttributes ra) {
     Fragebogen fragebogen = db.getFragebogenById(bogennr);
     ra.addAttribute("veranstaltungid", veranstaltungid);
-    dozentservice.aendereOeffentlichkeitVonFrage(fragebogen, fragennr);
-    db.saveFragebogen(fragebogen);
+    db.aendereOeffentlichkeitsStatus(fragebogen, fragennr);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 

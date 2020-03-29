@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import mops.Fragebogen;
 import mops.Veranstaltung;
+import mops.antworten.TextAntwort;
 import mops.database.dto.DozentDto;
 import mops.database.dto.FragebogenDto;
 import mops.database.dto.VeranstaltungDto;
 import mops.database.repos.DozentRepository;
 import mops.database.repos.FragebogenRepository;
 import mops.database.repos.VeranstaltungRepository;
+import mops.fragen.Frage;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
 
@@ -75,5 +77,18 @@ public class DatenbankSchnittstelle {
   public Dozent saveDozent(Dozent dozent) {
     DozentDto dto = dozentrepo.save(translator.unload(dozent));
     return translator.load(dto);
+  }
+  
+  public void aendereOeffentlichkeitsStatus(Fragebogen fragebogen, Long frageid) {
+    Frage frage = fragebogen.getFrage(frageid);
+    if (frage.isOeffentlich()) {
+      fragebogenrepo.markQuestionAsPrivateById(frageid);
+    } else {
+      fragebogenrepo.markQuestionAsPublicById(frageid);
+    }
+  }
+  
+  public void zensiereTextAntwort(Long antwortnr, String neueantwort) {
+    fragebogenrepo.zensiereTextAntwortById(neueantwort, antwortnr);
   }
 }
