@@ -45,9 +45,9 @@ public class DozentTemplateController {
   @RolesAllowed(ORGA_ROLE)
   public String neuesTemplate(String templatename, KeycloakAuthenticationToken token) {
     Dozent dozent = getDozentFromToken(token);
-    Long templateid = dozentservice.createNewTemplate(dozent, templatename);
+    dozentservice.createNewTemplate(dozent, templatename);
     db.saveDozent(dozent);
-    return REDIRECT_FEEDBACK_DOZENTEN_TEMPLATES + templateid;
+    return "redirect:/feedback/dozenten/templates";
   }
 
   @GetMapping("/{templatenr}")

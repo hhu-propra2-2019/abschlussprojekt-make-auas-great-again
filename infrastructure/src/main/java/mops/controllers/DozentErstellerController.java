@@ -47,11 +47,10 @@ public class DozentErstellerController {
       RedirectAttributes ra) {
     Dozent dozent = getDozentFromToken(token);
     Veranstaltung veranstaltung = db.getVeranstaltungById(veranstaltungid);
-    Long bogennr =
-        dozentservice.fuegeFragebogenZuVeranstaltungHinzu(veranstaltung, dozent);
+    dozentservice.fuegeFragebogenZuVeranstaltungHinzu(veranstaltung, dozent);
     db.saveVeranstaltung(veranstaltung);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
-    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + bogennr;
+    return "redirect:/feedback/dozenten/event/" + veranstaltungid;
   }
 
   @PostMapping("/recycle/{bogennr}")
@@ -63,7 +62,7 @@ public class DozentErstellerController {
     Long neuebogennr = dozentservice.kloneFragebogen(fragebogen, veranstaltung);
     ra.addAttribute(VERANSTALTUNG_ID, veranstaltungid);
     db.saveVeranstaltung(veranstaltung);
-    return REDIRECT_FEEDBACK_DOZENTEN_NEW_QUESTIONS + neuebogennr;
+    return "redirect:/feedback/dozenten/event/" + veranstaltungid;
   }
 
   @SuppressWarnings( {"PMD.DataflowAnomalyAnalysis"})
