@@ -2,7 +2,6 @@ package mops;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import mops.antworten.TextAntwort;
 import mops.fragen.Auswahl;
@@ -213,7 +212,6 @@ public class DozentService {
    */
   @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
-    Random idgenerator = new Random();
     if ("multiplechoice".equals(fragetyp)) {
       return new SingleResponseFrage(fragetext);
     } else if ("textfrage".equals(fragetyp)) {

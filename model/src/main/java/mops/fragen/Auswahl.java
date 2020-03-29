@@ -1,6 +1,5 @@
 package mops.fragen;
 
-import java.util.Random;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
