@@ -63,19 +63,19 @@ values (1, true, 1, 1, "Was war gut?"),
        (3, true, 1, 1, "Warum?"),
        (4, true, 2, 1, "Bitte ankreuzen wie gut es gefallen hat");
 
-insert into antwort(id, frage, textantwort)
-values (1, 1, "Vieles war gut"),
-       (2, 1, "Manches"),
-       (3, 1, "Gar nichts"),
-       (4, 2, "Garnichts"),
-       (5, 2, "Es hat mir alles gefallen"),
-       (6, 3, "Weiß nicht"),
-       (7, 3, "Warum nicht?");
+insert into antwort(id, antworttyp, frage, textantwort)
+values (1, 1, 1, "Vieles war gut"),
+       (2, 1, 1, "Manches"),
+       (3, 1, 1, "Gar nichts"),
+       (4, 1, 2, "Garnichts"),
+       (5, 1, 2, "Es hat mir alles gefallen"),
+       (6, 1, 3, "Weiß nicht"),
+       (7, 1, 3, "Warum nicht?");
 
-insert into antwort(id, frage)
-values (8, 4),
-       (9, 4),
-       (10, 4);
+insert into antwort(id, antworttyp, frage)
+values (8, 2, 4),
+       (9, 2, 4),
+       (10, 2, 4);
 
 insert into auswahl(id, auswahltext, frage, antwort)
 values (1, "Sehr gut", 4, 8),

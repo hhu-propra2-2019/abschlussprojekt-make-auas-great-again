@@ -172,10 +172,10 @@ class TranslationService {
     if (obj instanceof MultipleChoiceAntwort) {
       Set<AuswahlDto> auswahl = ((MultipleChoiceAntwort) obj).getGewaehlteAntworten().stream()
           .map(this::unload).collect(Collectors.toSet());
-      return new AntwortDto(id, "", auswahl);
+      return new AntwortDto(id, "", 2L, auswahl);
     }
     String text = obj.toString();
-    return new AntwortDto(id, text, new HashSet<>());
+    return new AntwortDto(id, text, 1L, new HashSet<>());
   }
   
   private AuswahlDto unload(Auswahl obj) {

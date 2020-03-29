@@ -67,6 +67,7 @@ create table if not exists antwort
 (
     id bigint not null,
     frage bigint not null,
+    antworttyp bigint not null,
     textantwort text,
     primary key (id),
     foreign key (frage) references frage (id)
