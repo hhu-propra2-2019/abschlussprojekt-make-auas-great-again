@@ -65,7 +65,6 @@ public class DozentErstellerController {
     return "redirect:/feedback/dozenten/event/" + veranstaltungid;
   }
 
-  @SuppressWarnings({"PMD.DataflowAnomalyAnalysis"})
   @PostMapping("/questions/template/{bogennr}")
   public String fuegeTemplateHinzu(@PathVariable Long bogennr, Long bogenvorlage,
       KeycloakAuthenticationToken token, Long veranstaltungid, RedirectAttributes ra) {

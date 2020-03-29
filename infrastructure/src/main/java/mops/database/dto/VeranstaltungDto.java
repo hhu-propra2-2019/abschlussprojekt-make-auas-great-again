@@ -12,22 +12,22 @@ import org.springframework.data.relational.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table("veranstaltung")
-@SuppressWarnings("PMD")
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class VeranstaltungDto {
   @Id
   private Long id;
   private String name;
   private String semester;
-  
+
   @Column("veranstaltung")
   private Set<FragebogenDto> frageboegen;
-  
+
   @Column("veranstaltung")
   private Set<StudentBelegtVeranstaltungDto> belegt;
-  
+
   @Column("veranstaltung")
   private Set<DozentOrganisiertVeranstaltungDto> organisiert;
-  
+
   public VeranstaltungDto(String name, String semester, Set<FragebogenDto> frageboegen,
       Set<StudentBelegtVeranstaltungDto> belegt,
       Set<DozentOrganisiertVeranstaltungDto> organisiert) {
