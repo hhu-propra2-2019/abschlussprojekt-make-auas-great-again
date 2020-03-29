@@ -15,8 +15,7 @@ Dieses Subsystem der "Modularen Online Plattform für Studierende" (Mops) implem
 
 == Hinweise zu Branches
 
-IMPORTANT: *Im Branch `master` sowie im `Integrationsbranch` befindet sich eine stabile Version – jedoch ohne Datenbankanbindung. Eine Version mit Datenbankanbindung befindet sich im Branch `datenbank-anbindung`, diese enthält jedoch noch vereinzelte Bugs.*
-
+IMPORTANT: *Im Branch `master` befindet sich eine stabile Version – jedoch ohne Datenbankanbindung. Eine Version mit Datenbankanbindung befindet sich im `Integrationsbranch`, diese enthält jedoch noch vereinzelte Bugs.*
 
 == Warum ein Feedback System?
 
