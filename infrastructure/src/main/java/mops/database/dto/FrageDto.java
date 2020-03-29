@@ -36,4 +36,13 @@ public class FrageDto {
   public boolean isMultipleResponse() {
     return fragetyp == 3L;
   }
+  
+  public FrageDto(Boolean oeffentlich, Long fragetyp, String fragetext,
+      Set<AntwortDto> antworten, Set<AuswahlDto> auswahlen) {
+    this.oeffentlich = oeffentlich;
+    this.fragetyp = fragetyp;
+    this.fragetext = fragetext;
+    this.antworten = antworten;
+    this.auswahlen = auswahlen;
+  }
 }

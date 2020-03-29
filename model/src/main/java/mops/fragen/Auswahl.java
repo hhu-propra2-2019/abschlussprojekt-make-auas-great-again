@@ -10,13 +10,11 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "label")
 @AllArgsConstructor
 public class Auswahl {
-  private final Long id;
+  private Long id;
   @Setter
   private String label;
 
   public Auswahl(String label) {
-    Random idgenerator = new Random();
-    this.id = (long) idgenerator.nextInt(2000000000);
     this.label = label;
   }
 

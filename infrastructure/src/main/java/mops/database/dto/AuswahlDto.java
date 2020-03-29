@@ -14,4 +14,8 @@ public class AuswahlDto {
   @Id
   private Long id;
   private String auswahltext;
+  
+  public AuswahlDto(String auswahltext) {
+    this.auswahltext = auswahltext;
+  }
 }

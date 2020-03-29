@@ -3,7 +3,6 @@ package mops.fragen;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import mops.antworten.Antwort;
 import mops.antworten.TextAntwort;
 
@@ -24,14 +23,13 @@ public class TextFrage extends Frage {
   }
 
   public TextFrage(String fragentext) {
-    super((long) new Random().nextInt(2000000000));
     this.fragentext = fragentext;
     antworten = new ArrayList<>();
   }
 
   @Override
   public void addAntwort(String text) {
-    TextAntwort antwort = new TextAntwort((long) new Random().nextInt(2000000000), text);
+    TextAntwort antwort = new TextAntwort(text);
     antworten.add(antwort);
   }
 

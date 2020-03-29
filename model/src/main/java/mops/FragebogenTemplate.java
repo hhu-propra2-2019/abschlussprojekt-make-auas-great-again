@@ -14,13 +14,11 @@ import mops.fragen.TextFrage;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "name")
 public class FragebogenTemplate {
-  private final Long id;
+  private Long id;
   private final String name;
   private final List<Frage> fragen;
 
   public FragebogenTemplate(String name) {
-    Random idgenerator = new Random();
-    this.id = (long) idgenerator.nextInt(2000000000);
     this.name = name;
     this.fragen = new ArrayList<>();
   }

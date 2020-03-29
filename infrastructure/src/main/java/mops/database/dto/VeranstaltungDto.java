@@ -27,4 +27,14 @@ public class VeranstaltungDto {
   
   @Column("veranstaltung")
   private Set<DozentOrganisiertVeranstaltungDto> organisiert;
+  
+  public VeranstaltungDto(String name, String semester, Set<FragebogenDto> frageboegen,
+      Set<StudentBelegtVeranstaltungDto> belegt,
+      Set<DozentOrganisiertVeranstaltungDto> organisiert) {
+    this.name = name;
+    this.semester = semester;
+    this.frageboegen = frageboegen;
+    this.belegt = belegt;
+    this.organisiert = organisiert;
+  }
 }

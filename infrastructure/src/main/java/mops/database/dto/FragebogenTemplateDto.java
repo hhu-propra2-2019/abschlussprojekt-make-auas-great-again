@@ -19,4 +19,9 @@ public class FragebogenTemplateDto {
   
   @Column("fragebogentemplate")
   private Set<FrageDto> fragen;
+  
+  public FragebogenTemplateDto(String name, Set<FrageDto> fragen) {
+    this.name = name;
+    this.fragen = fragen;
+  }
 }

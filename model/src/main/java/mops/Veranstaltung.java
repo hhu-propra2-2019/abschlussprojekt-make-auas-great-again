@@ -29,8 +29,6 @@ public class Veranstaltung {
   private List<Fragebogen> frageboegen;
 
   public Veranstaltung(String name, String semester, Dozent dozent) {
-    Random idgenerator = new Random();
-    this.veranstaltungsNr = (long) idgenerator.nextInt(2000000000);
     this.name = name;
     this.semester = semester;
     this.dozenten = new LinkedList<>();

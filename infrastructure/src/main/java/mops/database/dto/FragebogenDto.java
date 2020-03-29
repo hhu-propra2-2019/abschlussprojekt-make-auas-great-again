@@ -26,4 +26,14 @@ public class FragebogenDto {
   
   @Column("fragebogen")
   private Set<StudentBeantwortetFragebogenDto> bearbeitet;
+  
+  public FragebogenDto(String name, String startzeit, String endzeit, Einheit einheit,
+      Set<FrageDto> fragen, Set<StudentBeantwortetFragebogenDto> bearbeitet) {
+    this.name = name;
+    this.startzeit = startzeit;
+    this.endzeit = endzeit;
+    this.einheit = einheit;
+    this.fragen = fragen;
+    this.bearbeitet = bearbeitet;
+  }
 }

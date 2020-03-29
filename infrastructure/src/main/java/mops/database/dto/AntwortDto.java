@@ -24,4 +24,10 @@ public class AntwortDto {
   public boolean isTextAntwort() {
     return antworttyp == 1L;
   }
+  
+  public AntwortDto(String textantwort, Long antworttyp, Set<AuswahlDto> auswahlen) {
+    this.textantwort = textantwort;
+    this.antworttyp = antworttyp;
+    this.auswahlen = auswahlen;
+  }
 }

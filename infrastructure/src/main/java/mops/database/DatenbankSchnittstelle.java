@@ -62,15 +62,18 @@ public class DatenbankSchnittstelle {
     return dtos.stream().map(translator::load).collect(Collectors.toList());
   }
   
-  public void saveVeranstaltung(Veranstaltung veranstaltung) {
-    veranstaltungsrepo.save(translator.unload(veranstaltung));
+  public Veranstaltung saveVeranstaltung(Veranstaltung veranstaltung) {
+    VeranstaltungDto dto = veranstaltungsrepo.save(translator.unload(veranstaltung));
+    return translator.load(dto);
   }
   
-  public void saveFragebogen(Fragebogen fragebogen) {
-    fragebogenrepo.save(translator.unload(fragebogen));
+  public Fragebogen saveFragebogen(Fragebogen fragebogen) {
+    FragebogenDto dto = fragebogenrepo.save(translator.unload(fragebogen));
+    return translator.load(dto);
   }
   
-  public void saveDozent(Dozent dozent) {
-    dozentrepo.save(translator.unload(dozent));
+  public Dozent saveDozent(Dozent dozent) {
+    DozentDto dto = dozentrepo.save(translator.unload(dozent));
+    return translator.load(dto);
   }
 }

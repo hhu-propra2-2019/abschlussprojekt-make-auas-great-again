@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import mops.fragen.Auswahl;
 
+@NoArgsConstructor
 public class MultipleChoiceAntwort extends Antwort {
   @Getter
   private transient List<Auswahl> gewaehlteAntworten;
@@ -17,6 +19,10 @@ public class MultipleChoiceAntwort extends Antwort {
 
   public MultipleChoiceAntwort(Long id, List<Auswahl> choices) {
     super(id);
+    gewaehlteAntworten = choices;
+  }
+
+  public MultipleChoiceAntwort(List<Auswahl> choices) {
     gewaehlteAntworten = choices;
   }
 

@@ -3,8 +3,10 @@ package mops.fragen;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import mops.antworten.Antwort;
 
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public abstract class Frage {
   @Getter

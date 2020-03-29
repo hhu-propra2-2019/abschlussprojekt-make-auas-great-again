@@ -9,6 +9,10 @@ public class SingleResponseFrage extends MultipleChoiceFrage {
     super(id, fragentext);
   }
 
+  public SingleResponseFrage(String fragentext) {
+    super(fragentext);
+  }
+
   public SingleResponseFrage(Long id, String fragentext, List<Auswahl> choices,
       List<Antwort> antworten) {
     super(id, fragentext, choices, antworten);

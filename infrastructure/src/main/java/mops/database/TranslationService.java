@@ -101,7 +101,11 @@ class TranslationService {
         .collect(Collectors.toSet());
     Set<DozentOrganisiertVeranstaltungDto> dov = obj.getDozenten().stream().map(this::unloadDoV)
         .collect(Collectors.toSet());
-    return new VeranstaltungDto(id, name, semester, frageboegen, sbv, dov);
+    if (id != null) {
+      return new VeranstaltungDto(id, name, semester, frageboegen, sbv, dov);
+    } else {
+      return new VeranstaltungDto(name, semester, frageboegen, sbv, dov);
+    }
   }
   
   private StudentBelegtVeranstaltungDto unloadSbV(Student obj) {
@@ -121,7 +125,11 @@ class TranslationService {
     Einheit einheit = obj.getType();
     Set<StudentBeantwortetFragebogenDto> sbf = obj.getAbgegebeneStudierende().stream()
         .map(this::unloadSbF).collect(Collectors.toSet());
-    return new FragebogenDto(id, name, startdatum, enddatum, einheit, fragen, sbf);
+    if (id != null) {
+      return new FragebogenDto(id, name, startdatum, enddatum, einheit, fragen, sbf);
+    } else {
+      return new FragebogenDto(name, startdatum, enddatum, einheit, fragen, sbf);
+    }
   }
   
   private String formatDateTime(LocalDateTime obj) {
@@ -146,7 +154,11 @@ class TranslationService {
     Long id = obj.getId();
     String name = obj.getName();
     Set<FrageDto> fragen = obj.getFragen().stream().map(this::unload).collect(Collectors.toSet());
-    return new FragebogenTemplateDto(id, name, fragen);
+    if (id != null) {
+      return new FragebogenTemplateDto(id, name, fragen);
+    } else {
+      return new FragebogenTemplateDto(name, fragen);
+    }
   }
   
   private FrageDto unload(Frage obj) {
@@ -155,16 +167,29 @@ class TranslationService {
     Boolean oeffentlich = obj.isOeffentlich();
     Set<AntwortDto> antworten = obj.getAntworten().stream().map(this::unload)
         .collect(Collectors.toSet());
-    if (obj instanceof MultipleChoiceFrage) {
-      Set<AuswahlDto> auswahl = ((MultipleChoiceFrage) obj).getChoices().stream()
-          .map(this::unload).collect(Collectors.toSet());
-      if (obj instanceof SingleResponseFrage) {
-        return new FrageDto(id, oeffentlich, 2L, fragetext, antworten, auswahl);
-      } else {
-        return new FrageDto(id, oeffentlich, 3L, fragetext, antworten, auswahl);
+    if (id != null) {
+      if (obj instanceof MultipleChoiceFrage) {
+        Set<AuswahlDto> auswahl = ((MultipleChoiceFrage) obj).getChoices().stream()
+            .map(this::unload).collect(Collectors.toSet());
+        if (obj instanceof SingleResponseFrage) {
+          return new FrageDto(id, oeffentlich, 2L, fragetext, antworten, auswahl);
+        } else {
+          return new FrageDto(id, oeffentlich, 3L, fragetext, antworten, auswahl);
+        }
       }
+      return new FrageDto(id, oeffentlich, 1L, fragetext, antworten, new HashSet<>());
+    } else {
+      if (obj instanceof MultipleChoiceFrage) {
+        Set<AuswahlDto> auswahl = ((MultipleChoiceFrage) obj).getChoices().stream()
+            .map(this::unload).collect(Collectors.toSet());
+        if (obj instanceof SingleResponseFrage) {
+          return new FrageDto(oeffentlich, 2L, fragetext, antworten, auswahl);
+        } else {
+          return new FrageDto(oeffentlich, 3L, fragetext, antworten, auswahl);
+        }
+      }
+      return new FrageDto(oeffentlich, 1L, fragetext, antworten, new HashSet<>());
     }
-    return new FrageDto(id, oeffentlich, 1L, fragetext, antworten, new HashSet<>());
   }
   
   private AntwortDto unload(Antwort obj) {
@@ -175,13 +200,21 @@ class TranslationService {
       return new AntwortDto(id, "", 2L, auswahl);
     }
     String text = obj.toString();
-    return new AntwortDto(id, text, 1L, new HashSet<>());
+    if (id != null) {
+      return new AntwortDto(id, text, 1L, new HashSet<>());
+    } else {
+      return new AntwortDto(text, 1L, new HashSet<>());
+    }
   }
   
   private AuswahlDto unload(Auswahl obj) {
     Long id = obj.getId();
     String label = obj.getLabel();
-    return new AuswahlDto(id, label);
+    if (id != null) {
+      return new AuswahlDto(id, label);
+    } else {
+      return new AuswahlDto(label);
+    }
   }
   
   private Antwort load(AntwortDto dto) {

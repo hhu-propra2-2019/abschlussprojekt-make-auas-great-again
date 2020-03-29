@@ -15,6 +15,10 @@ public class TextAntwort extends Antwort {
     this.antworttext = antworttext;
   }
 
+  public TextAntwort(String antworttext) {
+    this.antworttext = antworttext;
+  }
+
   @Override
   public String toString() {
     return antworttext;

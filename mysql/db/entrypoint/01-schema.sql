@@ -10,7 +10,7 @@ create table if not exists dozent
 drop table if exists veranstaltung;
 create table if not exists veranstaltung
 (
-    id bigint not null UNIQUE,
+    id bigint not null UNIQUE auto_increment,
     name varchar(50) not null,
     semester varchar(50) not null,
     primary key (id)
@@ -28,7 +28,7 @@ create table if not exists student
 drop table if exists fragebogentemplate;
 create table if not exists fragebogentemplate
 (
-    id bigint not null UNIQUE,
+    id bigint not null UNIQUE auto_increment,
     name varchar(50) not null,
     dozent varchar(50) not null,
     primary key (id),
@@ -38,7 +38,7 @@ create table if not exists fragebogentemplate
 drop table if exists fragebogen;
 create table if not exists fragebogen
 (
-    id bigint not null UNIQUE,
+    id bigint not null UNIQUE auto_increment,
     name varchar(100) not null,
     startzeit varchar(100) not null,
     endzeit varchar(100) not null,
@@ -51,7 +51,7 @@ create table if not exists fragebogen
 drop table if exists frage;
 create table if not exists frage
 (
-    id bigint not null UNIQUE,
+    id bigint not null UNIQUE auto_increment,
     oeffentlich boolean not null,
     fragetyp bigint not null,
     fragebogen bigint,
@@ -65,7 +65,7 @@ create table if not exists frage
 drop table if exists antwort;
 create table if not exists antwort
 (
-    id bigint not null,
+    id bigint not null UNIQUE auto_increment,
     frage bigint not null,
     antworttyp bigint not null,
     textantwort text,
@@ -76,7 +76,7 @@ create table if not exists antwort
 drop table if exists auswahl;
 create table if not exists auswahl
 (
-    id bigint not null,
+    id bigint not null UNIQUE auto_increment,
     auswahltext varchar(100) not null,
     frage bigint,
     antwort bigint,

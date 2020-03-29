@@ -34,8 +34,6 @@ public class Fragebogen {
   private List<Student> abgegebeneStudierende;
 
   public Fragebogen(String veranstaltung) {
-    Random idgenerator = new Random();
-    this.bogennr = (long) idgenerator.nextInt(2000000000);
     this.name = veranstaltung;
     this.startdatum = LocalDateTime.now().plusDays(1);
     this.enddatum = LocalDateTime.now().plusDays(8);
@@ -45,8 +43,6 @@ public class Fragebogen {
   }
 
   public Fragebogen(String veranstaltung, List<Frage> fragen, Einheit type) {
-    Random idgenerator = new Random();
-    this.bogennr = idgenerator.nextLong();
     this.startdatum = LocalDateTime.now().plusDays(1);
     this.enddatum = LocalDateTime.now().plusDays(8);
     this.name = veranstaltung;

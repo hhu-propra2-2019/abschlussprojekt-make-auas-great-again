@@ -4,11 +4,12 @@ import java.util.List;
 import mops.antworten.Antwort;
 
 public class MultipleResponseFrage extends MultipleChoiceFrage {
-
-
   public MultipleResponseFrage(Long id, String fragentext) {
-
     super(id, fragentext);
+  }
+
+  public MultipleResponseFrage(String fragentext) {
+    super(fragentext);
   }
 
   public MultipleResponseFrage(Long id, String fragentext, List<Auswahl> choices,
