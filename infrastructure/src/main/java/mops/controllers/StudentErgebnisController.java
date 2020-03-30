@@ -43,7 +43,7 @@ public class StudentErgebnisController {
   @GetMapping("/frageboegen")
   @RolesAllowed(studentRole)
   public String ergebnisBoegen(KeycloakAuthenticationToken token, Model model,
-      @RequestParam Long veranstaltungId, String search) {
+                               @RequestParam Long veranstaltungId, String search) {
     Veranstaltung veranstaltung = db.getVeranstaltungById(veranstaltungId);
     if (searchNotEmpty(search)) {
       model.addAttribute("frageboegen",
@@ -61,13 +61,13 @@ public class StudentErgebnisController {
   @GetMapping("/details")
   @RolesAllowed(studentRole)
   public String ergebnisUebersicht(KeycloakAuthenticationToken token, Model model,
-      @RequestParam Long veranstaltung,
-      @RequestParam Long fragebogen) {
+                                   @RequestParam Long veranstaltung,
+                                   @RequestParam Long fragebogen) {
     model.addAttribute("fragebogen", db.getFragebogenById(fragebogen));
     model.addAttribute("typeChecker", typeChecker);
     model.addAttribute("veranstaltung", db.getVeranstaltungById(veranstaltung));
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "/studenten/ergebnis-details";
+    return "studenten/ergebnis-details";
   }
 
   private boolean searchNotEmpty(String search) {
