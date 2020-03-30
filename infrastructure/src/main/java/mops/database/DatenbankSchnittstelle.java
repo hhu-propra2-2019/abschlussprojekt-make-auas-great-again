@@ -77,17 +77,4 @@ public class DatenbankSchnittstelle {
     DozentDto dto = dozentrepo.save(translator.unload(dozent));
     return translator.load(dto);
   }
-  
-  public void aendereOeffentlichkeitsStatus(Fragebogen fragebogen, Long frageid) {
-    Frage frage = fragebogen.getFrage(frageid);
-    if (frage.isOeffentlich()) {
-      fragebogenrepo.markQuestionAsPrivateById(frageid);
-    } else {
-      fragebogenrepo.markQuestionAsPublicById(frageid);
-    }
-  }
-  
-  public void zensiereTextAntwort(Long antwortnr, String neueantwort) {
-    fragebogenrepo.zensiereTextAntwortById(neueantwort, antwortnr);
-  }
 }

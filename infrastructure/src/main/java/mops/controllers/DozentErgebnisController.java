@@ -65,8 +65,10 @@ public class DozentErgebnisController {
   public String speichereTextAntwort(@PathVariable Long bogennr, @PathVariable Long fragennr,
       @PathVariable Long antwortnr, String textfeld, KeycloakAuthenticationToken token,
       RedirectAttributes ra, Long veranstaltungid) {
+    Fragebogen fragebogen = db.getFragebogenById(bogennr);
     ra.addAttribute("veranstaltungid", veranstaltungid);
-    db.zensiereTextAntwort(antwortnr, textfeld);
+    dozentservice.zensiereTextAntwort(fragebogen, fragennr, antwortnr, textfeld);
+    db.saveFragebogen(fragebogen);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 
@@ -76,8 +78,9 @@ public class DozentErgebnisController {
       @PathVariable Long fragennr, KeycloakAuthenticationToken token, Long veranstaltungid,
       RedirectAttributes ra) {
     Fragebogen fragebogen = db.getFragebogenById(bogennr);
+    dozentservice.aendereOeffentlichkeitVonFrage(fragebogen, fragennr);
     ra.addAttribute("veranstaltungid", veranstaltungid);
-    db.aendereOeffentlichkeitsStatus(fragebogen, fragennr);
+    db.saveFragebogen(fragebogen);
     return "redirect:/feedback/dozenten/watch/" + bogennr;
   }
 

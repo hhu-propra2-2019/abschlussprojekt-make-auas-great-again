@@ -192,6 +192,17 @@ public class DozentService {
     return neu.getBogennr();
   }
 
+  public void zensiereTextAntwort(Fragebogen fragebogen, Long fragennr, Long antwortnr,
+      String neuertext) {
+    TextAntwort antwort = getTextAntwort(fragennr, antwortnr, fragebogen);
+    antwort.setAntworttext(neuertext);
+  }
+
+  public void aendereOeffentlichkeitVonFrage(Fragebogen fragebogen, Long fragennr) {
+    Frage frage = fragebogen.getFrage(fragennr);
+    frage.aendereOeffentlichkeitsStatus();
+  }
+
   /**
    * Erzeugt ein passendes Fragenobjekt anhand des übergebenen Fragtyps.
    *
