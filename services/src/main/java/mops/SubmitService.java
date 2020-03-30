@@ -39,6 +39,7 @@ public class SubmitService {
   public List<Fragebogen> notSubmittedFrageboegen(List<Fragebogen> frageboegen, Student student) {
     return frageboegen.stream()
         .filter(fragebogen -> !fragebogen.getAbgegebeneStudierende().contains(student))
+        .filter(Fragebogen::hatAngefangen)
         .collect(Collectors.toList());
   }
 

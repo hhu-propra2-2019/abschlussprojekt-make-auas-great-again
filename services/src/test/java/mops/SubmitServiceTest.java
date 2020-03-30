@@ -28,7 +28,7 @@ public class SubmitServiceTest {
   @BeforeEach
   public void setUp() {
     mockFragebogen = mock(Fragebogen.class);
-    textfrage = new TextFrage(Long.valueOf(1), "Beispielfrage");
+    textfrage = new TextFrage(1L, "Beispielfrage");
     when(mockFragebogen.getFragen()).thenReturn(List.of(textfrage));
     student = new Student("studentin");
     fragebogen = new Fragebogen("Programmierung");
@@ -38,7 +38,7 @@ public class SubmitServiceTest {
   @Test
   public void valideAntwortWirdGespeichert() {
     Map<Long, List<String>> antwort = new HashMap<>();
-    antwort.put(Long.valueOf(1), List.of("beispielantwort"));
+    antwort.put(1L, List.of("beispielantwort"));
 
     service.saveAntworten(mockFragebogen, antwort);
 
@@ -49,7 +49,7 @@ public class SubmitServiceTest {
   @Test
   public void leereAntwortWirdNichtGespeichert() {
     Map<Long, List<String>> antwort = new HashMap<>();
-    antwort.put(Long.valueOf(1), List.of(""));
+    antwort.put(1L, List.of(""));
 
     service.saveAntworten(mockFragebogen, antwort);
 
@@ -62,7 +62,7 @@ public class SubmitServiceTest {
     Map<Long, List<String>> antwort = new HashMap<>();
     List<String> antwortliste = new ArrayList<>();
     antwortliste.add(null);
-    antwort.put(Long.valueOf(1), antwortliste);
+    antwort.put(1L, antwortliste);
 
     service.saveAntworten(mockFragebogen, antwort);
 
@@ -99,6 +99,7 @@ public class SubmitServiceTest {
     fragebogenList = new ArrayList<>();
     fragebogenList.add(mockFragebogen);
     fragebogenList.add(fragebogen);
+    when(mockFragebogen.hatAngefangen()).thenReturn(true);
 
     service.addStudentAsSubmitted(fragebogen, student);
     notSubmittedFrageboegen = service.notSubmittedFrageboegen(fragebogenList, student);

@@ -112,4 +112,8 @@ public class Fragebogen {
   public List<Student> getAbgegebeneStudierende() {
     return abgegebeneStudierende;
   }
+
+  public boolean hatAngefangen() {
+    return LocalDateTime.now().isAfter(startdatum);
+  }
 }
