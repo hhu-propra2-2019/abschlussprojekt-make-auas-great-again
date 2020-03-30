@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import mops.fragen.Frage;
 import mops.rollen.Student;
 
-@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class SubmitService {
   /**
    * Speichern der Antworten einer Umfrage in die Frage.
@@ -28,7 +27,7 @@ public class SubmitService {
   }
 
   private void addAntwortIfValid(Frage frage, String antwort) {
-    if ((antwort != null) && !antwort.equals("")) {
+    if (antwort != null && !antwort.equals("")) {
       frage.addAntwort(antwort);
     }
   }

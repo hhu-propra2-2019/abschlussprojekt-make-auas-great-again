@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Formular Methods Test")
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class FragebogenTest {
 
   private transient Fragebogen fragebogen;

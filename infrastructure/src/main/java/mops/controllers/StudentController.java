@@ -85,7 +85,6 @@ public class StudentController {
 
   @PostMapping("/details/submit")
   @RolesAllowed(studentRole)
-  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public String submitFeedback(KeycloakAuthenticationToken token, @RequestParam Long bogennr,
       HttpServletRequest req, Model model,
       @RequestParam Long veranstaltung) {

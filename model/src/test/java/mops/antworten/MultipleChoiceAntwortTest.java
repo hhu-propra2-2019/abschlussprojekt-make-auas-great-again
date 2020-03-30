@@ -4,7 +4,6 @@ import mops.fragen.Auswahl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class MultipleChoiceAntwortTest {
 
   @Test

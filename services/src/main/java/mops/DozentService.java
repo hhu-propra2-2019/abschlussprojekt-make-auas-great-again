@@ -199,7 +199,6 @@ public class DozentService {
    * @param fragetext Der Text der Frage
    * @return das neue Fragenobjekt
    */
-  @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
   public Frage createNeueFrageAnhandFragetyp(String fragetyp, String fragetext) {
     if ("multiplechoice".equals(fragetyp)) {
       return new SingleResponseFrage(fragetext);

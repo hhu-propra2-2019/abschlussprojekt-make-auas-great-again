@@ -10,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
-    "PMD.JUnitTestContainsTooManyAsserts"})
 public class MultipleChoiceTest {
   private static final String MOEGLICHKEIT_4 = "Trifft gar nicht zu";
   private static final String MOEGLICHKEIT_3 = "Trifft eher nicht zu";

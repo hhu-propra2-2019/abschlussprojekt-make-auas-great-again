@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class FeedbackApplicationTests {
 
   @Test
-  @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
   void contextLoads() {
 
   }

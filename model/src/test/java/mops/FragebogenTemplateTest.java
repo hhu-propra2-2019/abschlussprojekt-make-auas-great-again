@@ -11,8 +11,6 @@ import mops.fragen.TextFrage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
-    "PMD.JUnitTestContainsTooManyAsserts"})
 public class FragebogenTemplateTest {
   private transient FragebogenTemplate template;
 

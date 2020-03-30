@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class StudentControllerTest {
   private final transient String usermail = "user@mail.de";
   private final transient String userrole = "studentin";

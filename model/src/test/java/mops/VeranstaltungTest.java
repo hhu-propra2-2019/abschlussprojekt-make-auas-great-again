@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Veranstaltung Methods Test")
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class VeranstaltungTest {
 
   private transient Veranstaltung veranstaltung;
