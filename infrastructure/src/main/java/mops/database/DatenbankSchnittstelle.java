@@ -11,7 +11,6 @@ import mops.database.dto.VeranstaltungDto;
 import mops.database.repos.DozentRepository;
 import mops.database.repos.FragebogenRepository;
 import mops.database.repos.VeranstaltungRepository;
-import mops.fragen.Frage;
 import mops.rollen.Dozent;
 import mops.rollen.Student;
 import org.springframework.stereotype.Service;
