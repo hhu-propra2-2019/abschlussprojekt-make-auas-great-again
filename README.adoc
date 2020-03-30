@@ -13,10 +13,6 @@ endif::[]
 
 Dieses Subsystem der "Modularen Online Plattform für Studierende" (Mops) implementiert das Management und die Abgabe der Studentenbefragungen an der HHU.
 
-== Hinweise zu Branches
-
-IMPORTANT: *Im Branch `master` befindet sich eine stabile Version – jedoch ohne Datenbankanbindung. Eine Version mit Datenbankanbindung befindet sich im `Integrationsbranch`, diese enthält jedoch noch vereinzelte Bugs.*
-
 == Warum ein Feedback System?
 
 Die Verteilung von Umfragen auf Papier ist aufwändig und nicht universell.
