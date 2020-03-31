@@ -16,6 +16,10 @@ public class Auswahl {
   public Auswahl(String label) {
     this.label = label;
   }
+  
+  public Auswahl klonen() {
+    return new Auswahl(this.label);
+  }
 
   @Override
   public String toString() {

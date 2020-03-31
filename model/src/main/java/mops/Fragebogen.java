@@ -47,6 +47,7 @@ public class Fragebogen {
     this.name = veranstaltung;
     this.fragen = fragen;
     this.type = type;
+    this.abgegebeneStudierende = new ArrayList<>();
   }
 
   /**

@@ -2,6 +2,7 @@ package mops.fragen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import mops.antworten.Antwort;
@@ -38,7 +39,9 @@ public class MultipleChoiceFrage extends Frage {
   
   @Override
   public Frage klonen() {
-    return new MultipleChoiceFrage(fragentext, choices);
+    List<Auswahl> auswahlen =
+        choices.stream().map(x -> x.klonen()).collect(Collectors.toList());
+    return new MultipleChoiceFrage(fragentext, auswahlen);
   }
   
   public MultipleChoiceFrage(String fragentext, List<Auswahl> choices) {

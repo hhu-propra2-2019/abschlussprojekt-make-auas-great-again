@@ -1,6 +1,7 @@
 package mops.fragen;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import mops.antworten.Antwort;
 
 public class SingleResponseFrage extends MultipleChoiceFrage {
@@ -20,7 +21,9 @@ public class SingleResponseFrage extends MultipleChoiceFrage {
 
   @Override
   public Frage klonen() {
-    return new SingleResponseFrage(getFragentext(), getChoices());
+    List<Auswahl> auswahlen =
+        getChoices().stream().map(x -> x.klonen()).collect(Collectors.toList());
+    return new SingleResponseFrage(getFragentext(), auswahlen);
   }
 
   public SingleResponseFrage(String fragetext, List<Auswahl> choices) {
