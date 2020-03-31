@@ -2,6 +2,7 @@ package mops;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import mops.fragen.Auswahl;
 import mops.fragen.MultipleResponseFrage;
 import mops.fragen.SingleResponseFrage;
@@ -9,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage",
-    "PMD.JUnitTestContainsTooManyAsserts"})
 public class MultipleChoiceTest {
   private static final String MOEGLICHKEIT_4 = "Trifft gar nicht zu";
   private static final String MOEGLICHKEIT_3 = "Trifft eher nicht zu";
@@ -26,14 +25,17 @@ public class MultipleChoiceTest {
 
   @BeforeEach
   public void setUp() {
-    singleResponseFrage = new SingleResponseFrage(1L, "Die Vorlesung ist strukturiert", false);
+    singleResponseFrage =
+        new SingleResponseFrage(1L, "Die Vorlesung ist strukturiert", false, new ArrayList<>(),
+            new ArrayList<>());
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_1));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_2));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_3));
     singleResponseFrage.addChoice(new Auswahl(MOEGLICHKEIT_4));
 
     multipleResponseFrage = new MultipleResponseFrage(2L,
-        "Welche Programmiersprachen beherrscht du bereits?");
+        "Welche Programmiersprachen beherrscht du bereits?", false, new ArrayList<>(),
+        new ArrayList<>());
     multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_1));
     multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_2));
     multipleResponseFrage.addChoice(new Auswahl(MR_ANTWORT_3));
@@ -135,11 +137,5 @@ public class MultipleChoiceTest {
     singleResponseFrage.addChoice(new Auswahl("Trifft überhaupt nicht zu"));
 
     assertEquals(5, singleResponseFrage.getNumberOfChoices());
-  }
-
-  @Test
-  @DisplayName("Werden die Antworten einer MR-Frage korrekt gespeichert?")
-  public void multipleResponseAntwortTest() {
-    multipleResponseFrage.addAntwort(MR_ANTWORT_1);
   }
 }

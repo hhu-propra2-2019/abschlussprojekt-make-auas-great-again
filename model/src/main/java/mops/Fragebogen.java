@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,36 +24,30 @@ import mops.rollen.Student;
 @Setter
 public class Fragebogen {
 
-  private final Long bogennr;
-  private String veranstaltungsname;
-  private String professorenname;
+  private Long bogennr;
+  private String name;
   private List<Frage> fragen;
   private LocalDateTime startdatum;
   private LocalDateTime enddatum;
   private Einheit type;
   private List<Student> abgegebeneStudierende;
 
-  public Fragebogen(String veranstaltung, String dozent) {
-    Random idgenerator = new Random();
-    this.bogennr = idgenerator.nextLong();
-    this.veranstaltungsname = veranstaltung;
-    this.professorenname = dozent;
+  public Fragebogen(String veranstaltung) {
+    this.name = veranstaltung;
     this.startdatum = LocalDateTime.now().plusDays(1);
     this.enddatum = LocalDateTime.now().plusDays(8);
     this.fragen = new ArrayList<>();
     this.abgegebeneStudierende = new ArrayList<>();
     this.type = Einheit.VORLESUNG;
   }
-  
-  public Fragebogen(String veranstaltung, String dozent, List<Frage> fragen, Einheit type) {
-    Random idgenerator = new Random();
-    this.bogennr = idgenerator.nextLong();
+
+  public Fragebogen(String veranstaltung, List<Frage> fragen, Einheit type) {
     this.startdatum = LocalDateTime.now().plusDays(1);
     this.enddatum = LocalDateTime.now().plusDays(8);
-    this.veranstaltungsname = veranstaltung;
-    this.professorenname = dozent;
+    this.name = veranstaltung;
     this.fragen = fragen;
     this.type = type;
+    this.abgegebeneStudierende = new ArrayList<>();
   }
 
   /**
@@ -77,11 +70,7 @@ public class Fragebogen {
    * @return True wenn der Suchbegriff gefunden wurde
    */
   public boolean contains(String search) {
-    if (professorenname.toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN))) {
-      return true;
-    }
-    return veranstaltungsname.toLowerCase(Locale.GERMAN)
-        .contains(search.toLowerCase(Locale.GERMAN));
+    return name.toLowerCase(Locale.GERMAN).contains(search.toLowerCase(Locale.GERMAN));
   }
 
   public List<MultipleChoiceFrage> getMultipleChoiceFragen() {
@@ -123,5 +112,9 @@ public class Fragebogen {
 
   public List<Student> getAbgegebeneStudierende() {
     return abgegebeneStudierende;
+  }
+
+  public boolean hatAngefangen() {
+    return LocalDateTime.now().isAfter(startdatum);
   }
 }

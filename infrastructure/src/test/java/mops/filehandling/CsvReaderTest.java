@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.mock.web.MockMultipartFile;
 
-@SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
 public class CsvReaderTest {
   private transient MockMultipartFile csvfile;
   private transient MockMultipartFile textfile;

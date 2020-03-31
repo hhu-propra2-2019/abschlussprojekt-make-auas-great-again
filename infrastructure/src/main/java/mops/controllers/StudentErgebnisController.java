@@ -3,7 +3,7 @@ package mops.controllers;
 import javax.annotation.security.RolesAllowed;
 import mops.TypeChecker;
 import mops.Veranstaltung;
-import mops.database.MockVeranstaltungsRepository;
+import mops.database.DatenbankSchnittstelle;
 import mops.rollen.Student;
 import mops.security.Account;
 import org.keycloak.KeycloakPrincipal;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class StudentErgebnisController {
   public static final String studentRole = "ROLE_studentin";
   private final transient String account = "account";
-  private final transient VeranstaltungsRepository veranstaltungen;
+  private final transient DatenbankSchnittstelle db;
   private transient TypeChecker typeChecker = new TypeChecker();
 
-  public StudentErgebnisController(MockVeranstaltungsRepository veranstaltungen) {
-    this.veranstaltungen = veranstaltungen;
+  public StudentErgebnisController(DatenbankSchnittstelle db) {
+    this.db = db;
   }
 
   @GetMapping("")
@@ -32,10 +32,9 @@ public class StudentErgebnisController {
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
     if (searchNotEmpty(search)) {
       model.addAttribute("veranstaltungen",
-          veranstaltungen.getAllFromStudentContaining(student, search));
+          db.getVeranstaltungenFromStudentContaining(student, search));
     } else {
-      model.addAttribute("veranstaltungen",
-          veranstaltungen.getAllFromStudent(student));
+      model.addAttribute("veranstaltungen", db.getVeranstaltungenFromStudent(student));
     }
     model.addAttribute(account, createAccountFromPrincipal(token));
     return "studenten/ergebnis";
@@ -45,7 +44,7 @@ public class StudentErgebnisController {
   @RolesAllowed(studentRole)
   public String ergebnisBoegen(KeycloakAuthenticationToken token, Model model,
                                @RequestParam Long veranstaltungId, String search) {
-    Veranstaltung veranstaltung = veranstaltungen.getVeranstaltungById(veranstaltungId);
+    Veranstaltung veranstaltung = db.getVeranstaltungById(veranstaltungId);
     if (searchNotEmpty(search)) {
       model.addAttribute("frageboegen",
           veranstaltung.getFrageboegenContaining(search));
@@ -64,12 +63,11 @@ public class StudentErgebnisController {
   public String ergebnisUebersicht(KeycloakAuthenticationToken token, Model model,
                                    @RequestParam Long veranstaltung,
                                    @RequestParam Long fragebogen) {
-    model.addAttribute("fragebogen",
-        veranstaltungen.getFragebogenByIdFromVeranstaltung(fragebogen, veranstaltung));
+    model.addAttribute("fragebogen", db.getFragebogenById(fragebogen));
     model.addAttribute("typeChecker", typeChecker);
-    model.addAttribute("veranstaltung", veranstaltungen.getVeranstaltungById(veranstaltung));
+    model.addAttribute("veranstaltung", db.getVeranstaltungById(veranstaltung));
     model.addAttribute(account, createAccountFromPrincipal(token));
-    return "/studenten/ergebnis-details";
+    return "studenten/ergebnis-details";
   }
 
   private boolean searchNotEmpty(String search) {

@@ -32,7 +32,7 @@
                            th:href="@{/feedback/studenten/ergebnis/frageboegen(veranstaltungId=${veranstaltung.veranstaltungsNr})}"
                            th:id="'button' + ${iter.index}">
                         </a>
-                        <p th:text="${veranstaltung.getDozent().getNachname()}"></p>
+                        <p th:text="${veranstaltung.getDozentenNamen()}"></p>
                         <p th:text="${veranstaltung.getSemester()}"></p>
 
                     </div>

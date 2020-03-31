@@ -58,7 +58,7 @@
                         </thead>
                         <tbody th:remove="all-but-first">
                         <tr th:each="fragebogen : ${veranstaltung.frageboegen}">
-                            <td th:text="${fragebogen.veranstaltungsname}">Name</td>
+                            <td th:text="${fragebogen.getName()}">Name</td>
                             <td th:text="${fragebogen.type}">Vorlesung</td>
                             <td th:text="${datetime.getGermanFormat(fragebogen.startdatum)}">25. September 2019</td>
                             <td th:text="${datetime.getGermanFormat(fragebogen.enddatum)}">30. September 2019</td>
@@ -85,8 +85,9 @@
                         </tr>
                         </tbody>
                     </table>
-                    <form class="form-horizontal" th:action="'/feedback/dozenten/new'" method="post">
-                        <input type="hidden" id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}">
+                    <form class="form-horizontal" method="post" th:action="'/feedback/dozenten/new'">
+                        <input id="veranstaltungid" name="veranstaltungid" th:value="${veranstaltung.veranstaltungsNr}"
+                               type="hidden">
                         <div class="text-center">
                             <button class="btn btn-outline-success" name="newsheetbutton" type="submit">Neuen Fragebogen erstellen</button>
                         </div>
@@ -117,10 +118,11 @@
                         <input type="submit" value="Upload" class="btn btn-outline-secondary float-right" />
                     </form>
                     <hr class="col-xs-12">
-                    <form class="form-horizontal was-validated" method="post" th:action="'/feedback/dozenten/event/addStudent/' + ${veranstaltung.veranstaltungsNr}">
+                    <form class="form-horizontal was-validated" method="post"
+                          th:action="'/feedback/dozenten/event/addStudent/' + ${veranstaltung.veranstaltungsNr}">
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="text" placeholder="Username eingeben" name="newStudent" required >
+                                <input name="newStudent" placeholder="Username eingeben" required type="text">
                             </div>
                             <div class="col-sm-6">
                                 <input type="submit" value="StudentIn hinzufügen!" class="btn btn-outline-success float-right btn-sm" />

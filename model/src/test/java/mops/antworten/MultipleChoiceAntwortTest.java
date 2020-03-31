@@ -4,18 +4,17 @@ import mops.fragen.Auswahl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
-class MultipleResponseAntwortTest {
+class MultipleChoiceAntwortTest {
 
   @Test
   void testToStringEmptyAntwort() {
-    MultipleResponseAntwort antwort = new MultipleResponseAntwort(1L);
+    MultipleChoiceAntwort antwort = new MultipleChoiceAntwort(1L);
     Assertions.assertEquals(antwort.toString(), "");
   }
 
   @Test
   void testToString() {
-    MultipleResponseAntwort antwort = new MultipleResponseAntwort(1L);
+    MultipleChoiceAntwort antwort = new MultipleChoiceAntwort(1L);
     antwort.addAntwort(new Auswahl("1"));
     antwort.addAntwort(new Auswahl("3"));
     antwort.addAntwort(new Auswahl("5"));

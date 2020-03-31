@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Formular Methods Test")
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class FragebogenTest {
 
   private transient Fragebogen fragebogen;
@@ -20,7 +19,7 @@ class FragebogenTest {
   public void setUp() {
     LocalDateTime startdatum = LocalDateTime.of(2020, 3, 3, 6, 30);
     LocalDateTime enddatum = LocalDateTime.of(2020, 3, 20, 6, 30);
-    fragebogen = new Fragebogen("Programming", "Sam");
+    fragebogen = new Fragebogen("Programming");
     fragebogen.setStartdatum(startdatum);
     fragebogen.setEnddatum(enddatum);
   }
@@ -111,7 +110,7 @@ class FragebogenTest {
 
   @Test
   public void getFrageTest() {
-    TextFrage neueFrage = new TextFrage("lorem");
+    TextFrage neueFrage = new TextFrage(1L, false, "lorem", List.of());
     fragebogen.addFrage(neueFrage);
     TextFrage frage = (TextFrage) fragebogen.getFrage(neueFrage.getId());
     Assertions.assertEquals(frage, neueFrage);

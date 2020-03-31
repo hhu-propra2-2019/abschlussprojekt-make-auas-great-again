@@ -1,33 +1,27 @@
 package mops.database.dto;
 
-import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table("fragebogentemplate")
 public class FragebogenTemplateDto {
   @Id
-  Long id;
-  String name;
+  private Long id;
+  private String name;
+  
   @Column("fragebogentemplate")
-  Set<FrageDto> fragen;
-
-  public static FragebogenTemplateDto create(String name) {
-    return new FragebogenTemplateDto(null, name, new HashSet<>());
-  }
-
-  public void addFrage(FrageDto frage) {
-    fragen.add(frage);
-  }
-
-  public void addFragen(Set<FrageDto> fragen) {
-    fragen.addAll(fragen);
+  private Set<FrageDto> fragen;
+  
+  public FragebogenTemplateDto(String name, Set<FrageDto> fragen) {
+    this.name = name;
+    this.fragen = fragen;
   }
 }

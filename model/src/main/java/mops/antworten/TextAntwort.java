@@ -1,7 +1,9 @@
 package mops.antworten;
 
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
 public class TextAntwort extends Antwort {
   @Setter
   private transient String antworttext;

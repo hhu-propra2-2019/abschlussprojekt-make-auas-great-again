@@ -20,8 +20,7 @@
 </header>
 <main th:fragment="bodycontent">
     <div class="container">
-        <h1 class="page-title" th:text="${fragebogen.veranstaltungsname}">Veranstaltung</h1>
-        <h2 class="text-secondary" th:text="${fragebogen.professorenname}">Professor</h2>
+        <h1 class="page-title" th:text="${fragebogen.getName()}">Veranstaltung</h1>
         <form class="form-group" method="post"
               th:action="@{/feedback/studenten/details/submit(bogennr=${fragebogen.bogennr},veranstaltung=${veranstaltung.veranstaltungsNr})}">
             <div th:each="frage : ${fragebogen.fragen}" th:id="${frage.id}">

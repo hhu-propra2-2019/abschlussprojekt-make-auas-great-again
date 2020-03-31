@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("Veranstaltung Methods Test")
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 class VeranstaltungTest {
 
   private transient Veranstaltung veranstaltung;
@@ -30,7 +29,7 @@ class VeranstaltungTest {
 
   @Test
   public void addFragebogen() {
-    Fragebogen fragebogen = new Fragebogen("ProPra", "Christian Meter");
+    Fragebogen fragebogen = new Fragebogen("ProPra");
     veranstaltung.addFragebogen(fragebogen);
     List<Fragebogen> fragenlist = veranstaltung.getFrageboegen();
     Assertions.assertTrue(fragenlist.contains(fragebogen));
@@ -39,7 +38,7 @@ class VeranstaltungTest {
 
   @Test
   public void getFrageboegenContainingTest() {
-    Fragebogen fragebogen = new Fragebogen("Algebra", "Benjamin Klopsch");
+    Fragebogen fragebogen = new Fragebogen("Algebra");
     veranstaltung.addFragebogen(fragebogen);
     List<Fragebogen> tested = veranstaltung.getFrageboegenContaining("Algebra");
     Assertions.assertEquals(tested.get(0), fragebogen);

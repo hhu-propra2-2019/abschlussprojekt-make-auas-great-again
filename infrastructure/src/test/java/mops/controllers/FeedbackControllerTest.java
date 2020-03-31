@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 public class FeedbackControllerTest {
   private final transient String usermail = "user@mail.de";
   private final transient String orgamail = "orga@mail.de";
@@ -53,13 +52,13 @@ public class FeedbackControllerTest {
   @DisplayName("Public User Should Be Redirected To Login Page When Attempting To Go To Dozenten")
   public void loginRedirectionForPublicUsersToDozentPage() throws Exception {
     mvc.perform(get("/feedback/dozenten")).andExpect(status().is3xxRedirection())
-        .andExpect(((redirectedUrl("/sso/login"))));
+        .andExpect(redirectedUrl("/sso/login"));
   }
 
   @Test
   @DisplayName("Public User Should Be Redirected To Login Page When Attempting To Go To Studenten")
   public void loginRedirectionForPublicUsersToStudentPage() throws Exception {
     mvc.perform(get("/feedback/studenten")).andExpect(status().is3xxRedirection())
-        .andExpect(((redirectedUrl("/sso/login"))));
+        .andExpect(redirectedUrl("/sso/login"));
   }
 }

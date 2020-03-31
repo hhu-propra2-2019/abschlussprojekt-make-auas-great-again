@@ -16,10 +16,7 @@ allprojects {
         configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     }
     pmd {
-        ruleSets = [
-                "category/java/errorprone.xml",
-                "category/java/bestpractices.xml",
-        ]
+        ruleSets = []
+        ruleSetConfig = resources.text.fromFile("${rootDir}/config/pmd/excludeSomeRules.xml")
     }
 }
-

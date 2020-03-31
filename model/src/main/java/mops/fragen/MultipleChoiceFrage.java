@@ -2,7 +2,7 @@ package mops.fragen;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.stream.Collectors;
 import lombok.Getter;
 import lombok.Setter;
 import mops.antworten.Antwort;
@@ -14,40 +14,41 @@ public class MultipleChoiceFrage extends Frage {
   public static final long ZERO = 0L;
   private transient String fragentext;
   private transient List<Auswahl> choices;
-  private boolean hasMultipleResponse;
   private List<Antwort> antworten;
 
-  public MultipleChoiceFrage(Long id, String fragentext, boolean hasMultipleResponse) {
-    super(id);
+  public MultipleChoiceFrage(Long id, String fragentext) {
+    super(id, false);
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
-    this.hasMultipleResponse = hasMultipleResponse;
     this.antworten = new ArrayList<>();
   }
 
   public MultipleChoiceFrage(String fragentext) {
-    super((long) new Random().nextInt(1000));
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
-    fillDummyChoices();
-    this.hasMultipleResponse = false;
     this.antworten = new ArrayList<>();
   }
   
+  public MultipleChoiceFrage(Long id, String fragentext, Boolean oeffentlich,
+      List<Auswahl> choices, List<Antwort> antworten) {
+    super(id, oeffentlich);
+    this.fragentext = fragentext;
+    this.choices = choices;
+    this.antworten = antworten;
+  }
+  
+  @Override
+  public Frage klonen() {
+    List<Auswahl> auswahlen =
+        choices.stream().map(x -> x.klonen()).collect(Collectors.toList());
+    return new MultipleChoiceFrage(fragentext, auswahlen);
+  }
+  
   public MultipleChoiceFrage(String fragentext, List<Auswahl> choices) {
-    super((long) new Random().nextInt(1000));
     this.fragentext = fragentext;
     this.choices = new ArrayList<>();
     choices.stream().forEach(x -> this.addChoice(x));
-    this.hasMultipleResponse = false;
     this.antworten = new ArrayList<>();
-  }
-
-  private void fillDummyChoices() {
-    this.addChoice(new Auswahl("Trifft voll und ganz zu"));
-    this.addChoice(new Auswahl("Trifft zu"));
-    this.addChoice(new Auswahl("Trifft eher nicht zu"));
-    this.addChoice(new Auswahl("Trifft überhaupt nicht zu"));
   }
 
   public void addChoice(Auswahl choice) {
@@ -60,7 +61,11 @@ public class MultipleChoiceFrage extends Frage {
   }
 
   public void deleteChoice(Long id) {
-    Auswahl toRemove = choices.stream().filter(x -> x.getId().equals(id)).findFirst().get();
+    Auswahl toRemove = choices
+        .stream()
+        .filter(x -> x.getId().equals(id))
+        .findFirst()
+        .orElse(new Auswahl(""));
     choices.remove(toRemove);
   }
 
@@ -72,8 +77,15 @@ public class MultipleChoiceFrage extends Frage {
   public void addAntwort(String antwort) {
     Auswahl auswahl = new Auswahl(antwort);
     if (choices.contains(auswahl)) {
-      this.antworten.add(new MultipleChoiceAntwort((long) new Random().nextInt(1000), auswahl));
+      MultipleChoiceAntwort neu = new MultipleChoiceAntwort(new ArrayList<>());
+      neu.addAntwort(auswahl);
+      this.antworten.add(neu);
     }
+  }
+
+  @Override
+  public void addAntwort(Antwort antwort) {
+    antworten.add(antwort);
   }
 
   @Override

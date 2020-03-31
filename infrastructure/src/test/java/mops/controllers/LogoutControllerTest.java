@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 public class LogoutControllerTest {
   private final transient String usermail = "user@mail.de";
   private final transient String orgamail = "orga@mail.de";

@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 public class CustomErrorControllerTest {
 
   private final transient String userrole = "studentin";

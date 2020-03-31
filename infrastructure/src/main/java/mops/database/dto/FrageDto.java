@@ -1,45 +1,48 @@
 package mops.database.dto;
 
-import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table("frage")
 public class FrageDto {
   @Id
-  Long id;
-  String fragetext;
-  Boolean oeffentlich;
-  Boolean ismultipleresponse;
+  private Long id;
+  private Boolean oeffentlich;
+  private Long fragetyp;
+  private String fragetext;
+  
   @Column("frage")
-  Set<AntwortDto> antworten;
+  private Set<AntwortDto> antworten;
+  
   @Column("frage")
-  Set<AuswahlDto> auswaehlbar;
-
-  public static FrageDto createTextfrage(String text) {
-    return new FrageDto(null, text, false, false, new HashSet<>(), null);
+  private Set<AuswahlDto> auswahlen;
+  
+  public boolean isTextFrage() {
+    return fragetyp == 1L;
   }
-
-  public static FrageDto createSingleResponsefrage(String text) {
-    return new FrageDto(null, text, false, false, new HashSet<>(), new HashSet<>());
+  
+  public boolean isMultipleChoice() {
+    return fragetyp == 2L;
   }
-
-  public static FrageDto createMultipleResponsefrage(String text) {
-    return new FrageDto(null, text, false, true, new HashSet<>(), new HashSet<>());
+  
+  public boolean isMultipleResponse() {
+    return fragetyp == 3L;
   }
-
-  public void addChoice(AuswahlDto choice) {
-    auswaehlbar.add(choice);
-  }
-
-  public void addAnwort(AntwortDto antwort) {
-    antworten.add(antwort);
+  
+  public FrageDto(Boolean oeffentlich, Long fragetyp, String fragetext,
+      Set<AntwortDto> antworten, Set<AuswahlDto> auswahlen) {
+    this.oeffentlich = oeffentlich;
+    this.fragetyp = fragetyp;
+    this.fragetext = fragetext;
+    this.antworten = antworten;
+    this.auswahlen = auswahlen;
   }
 }
-

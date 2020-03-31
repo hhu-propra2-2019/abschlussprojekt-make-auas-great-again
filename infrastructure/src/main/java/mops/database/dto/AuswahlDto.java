@@ -2,18 +2,20 @@ package mops.database.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table("auswahl")
 public class AuswahlDto {
   @Id
-  Long id;
-  String auswahltext;
-
-  public static AuswahlDto create(String text) {
-    return new AuswahlDto(null, text);
+  private Long id;
+  private String auswahltext;
+  
+  public AuswahlDto(String auswahltext) {
+    this.auswahltext = auswahltext;
   }
 }

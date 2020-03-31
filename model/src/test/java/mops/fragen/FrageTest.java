@@ -3,7 +3,6 @@ package mops.fragen;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
 public class FrageTest {
 
   /**
@@ -31,7 +30,7 @@ public class FrageTest {
 
   @Test
   public void aendereOeffentlichkeitsStatusSingleResponseFrageTest() {
-    Frage singleresponsefrage = new SingleResponseFrage(1L, "y", false);
+    Frage singleresponsefrage = new SingleResponseFrage(1L, "y");
     singleresponsefrage.aendereOeffentlichkeitsStatus();
     Assertions.assertTrue(singleresponsefrage.isOeffentlich());
   }

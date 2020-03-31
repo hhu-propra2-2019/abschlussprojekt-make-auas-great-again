@@ -3,6 +3,7 @@ package mops;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import mops.antworten.TextAntwort;
 import mops.fragen.Frage;
@@ -13,9 +14,7 @@ import mops.fragen.TextFrage;
 import mops.rollen.Dozent;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestsShouldIncludeAssert", "PMD.JUnitAssertionsShouldIncludeMessage"})
 public class DozentServiceTest {
-  private static final String HEINZ_MUSTERMANN = "Heinz Mustermann";
   private static final String ANALYSIS_I = "Analysis I";
   private static final String WIE_GEHTS = "Wie geht's?";
   private final transient DozentService service = new DozentService();
@@ -52,7 +51,7 @@ public class DozentServiceTest {
 
   @Test
   public void korrekteFrageWirdZurueckGegeben() {
-    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I, HEINZ_MUSTERMANN);
+    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I);
     TextFrage frage = new TextFrage(1L, WIE_GEHTS);
     TextFrage frage2 = new TextFrage(2L, "Sind sie zufrieden mit der Veranstaltung?");
     fragebogen.addFrage(frage);
@@ -71,7 +70,7 @@ public class DozentServiceTest {
     frage.addAntwort(antwort);
     frage.addAntwort(antwort2);
     TextFrage frage2 = new TextFrage(2L, "Sind Sie zufrieden?");
-    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I, HEINZ_MUSTERMANN);
+    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I);
     fragebogen.addFrage(frage2);
     fragebogen.addFrage(frage);
 
@@ -82,11 +81,11 @@ public class DozentServiceTest {
 
   @Test
   public void korrekteMultipleChoiceFrageWirdZurueckGegeben() {
-    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I, HEINZ_MUSTERMANN);
+    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I);
     TextFrage frage = new TextFrage(1L, WIE_GEHTS);
     MultipleChoiceFrage frage2 =
-        new MultipleChoiceFrage(2L, "Die Vorlesung ist strukturiert", false);
-    MultipleChoiceFrage frage3 = new MultipleChoiceFrage(3L, "Der Dozent ist motiviert", false);
+        new MultipleChoiceFrage(2L, "Die Vorlesung ist strukturiert");
+    MultipleChoiceFrage frage3 = new MultipleChoiceFrage(3L, "Der Dozent ist motiviert");
     fragebogen.addFrage(frage);
     fragebogen.addFrage(frage2);
     fragebogen.addFrage(frage3);
@@ -98,12 +97,12 @@ public class DozentServiceTest {
 
   @Test
   public void alleFrageboegenWerdenEingesammelt() {
-    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I, HEINZ_MUSTERMANN);
-    Fragebogen fragebogen2 = new Fragebogen("Tutorium zur Analysis I", HEINZ_MUSTERMANN);
+    Fragebogen fragebogen = new Fragebogen(ANALYSIS_I);
+    Fragebogen fragebogen2 = new Fragebogen("Tutorium zur Analysis I");
     Veranstaltung analysis = new Veranstaltung(ANALYSIS_I, "WiSe 2010", new Dozent("heinz001"));
     analysis.addFragebogen(fragebogen);
     analysis.addFragebogen(fragebogen2);
-    Fragebogen fragebogen3 = new Fragebogen("Programmierung", HEINZ_MUSTERMANN);
+    Fragebogen fragebogen3 = new Fragebogen("Programmierung");
     Veranstaltung prog = new Veranstaltung("Programmierung", "WiSe 2010", new Dozent("heinz001"));
     prog.addFragebogen(fragebogen3);
     List<Veranstaltung> veranstaltungen = List.of(analysis, prog);
@@ -112,5 +111,20 @@ public class DozentServiceTest {
     List<Fragebogen> totest = service.holeFrageboegenVomDozent(veranstaltungen);
 
     assertEquals(totest, frageboegen);
+  }
+
+  @Test
+  public void multipleChoiceFrageAusTemplateWirdKorrektGeholt() {
+    FragebogenTemplate template = new FragebogenTemplate(1L, "Test", new ArrayList<>());
+    Dozent dozent = new Dozent("heinz001", "Heinz", "Mustermann", new ArrayList<>());
+    SingleResponseFrage frage1 =
+        new SingleResponseFrage(1L, "Testfrage1", false, new ArrayList<>(), new ArrayList<>());
+    template.addFrage(frage1);
+    template.addFrage(new MultipleResponseFrage(2L, "Testfrage2"));
+    dozent.addTemplate(template);
+
+    MultipleChoiceFrage totest = service.getMultipleChoiceFromTemplate(1L, dozent, 1L);
+
+    assertEquals(totest, frage1);
   }
 }

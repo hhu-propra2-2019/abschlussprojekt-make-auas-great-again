@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import mops.fragen.Frage;
 import mops.rollen.Student;
 
-@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class SubmitService {
   /**
    * Speichern der Antworten einer Umfrage in die Frage.
@@ -22,13 +21,13 @@ public class SubmitService {
 
   private void addAlleAntworten(Map<Long, List<String>> antwortmap, Frage frage) {
     List<String> antworten = antwortmap.get(frage.getId());
-    for (String antwort : antworten) {
-      addAntwortIfValid(frage, antwort);
+    if (antworten != null) {
+      antworten.stream().forEach(x -> addAntwortIfValid(frage, x));
     }
   }
 
   private void addAntwortIfValid(Frage frage, String antwort) {
-    if ((antwort != null) && !antwort.equals("")) {
+    if (antwort != null && !antwort.equals("")) {
       frage.addAntwort(antwort);
     }
   }
@@ -40,6 +39,7 @@ public class SubmitService {
   public List<Fragebogen> notSubmittedFrageboegen(List<Fragebogen> frageboegen, Student student) {
     return frageboegen.stream()
         .filter(fragebogen -> !fragebogen.getAbgegebeneStudierende().contains(student))
+        .filter(Fragebogen::hatAngefangen)
         .collect(Collectors.toList());
   }
 
