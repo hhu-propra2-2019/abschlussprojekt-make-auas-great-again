@@ -91,7 +91,10 @@ public class StudentController {
     Fragebogen fragebogen = db.getFragebogenById(bogennr);
     Map<Long, List<String>> antworten = new HashMap<>();
     for (Frage frage : fragebogen.getFragen()) {
-      antworten.put(frage.getId(), List.of(req.getParameterValues("answer-" + frage.getId())));
+      String[] antwort = req.getParameterValues("answer-" + frage.getId());
+      if (antwort != null) {
+        antworten.put(frage.getId(), List.of(antwort));
+      }
     }
     submitService.saveAntworten(fragebogen, antworten);
     Student student = new Student(((KeycloakPrincipal) token.getPrincipal()).getName());
