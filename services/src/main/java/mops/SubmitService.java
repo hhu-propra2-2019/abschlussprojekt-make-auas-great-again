@@ -22,9 +22,7 @@ public class SubmitService {
   private void addAlleAntworten(Map<Long, List<String>> antwortmap, Frage frage) {
     List<String> antworten = antwortmap.get(frage.getId());
     if (antworten != null) {
-      for (String antwort : antworten) {
-        addAntwortIfValid(frage, antwort);
-      }
+      antworten.stream().forEach(x -> addAntwortIfValid(frage, x));
     }
   }
 
